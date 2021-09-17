@@ -1,115 +1,63 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
+import React from 'react'
+import {View, Text} from 'react-native'
+import { NavigationContainer } from "@react-navigation/native";
+import StackNav from './src/navigation/stackNav'
+import 'react-native-gesture-handler';
 
-import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import { enableScreens } from 'react-native-screens'
+// import { Provider } from 'react-redux'
+// import { store } from './src/redux/store/store'
+// import { SplashScreen } from './src/screen/common/splash/splashScreen';
+// import { WelcomePage } from './src/screen/login/welcomePage/welcomePage';
+import client from './src/connection/client';
+import { ApolloProvider } from '@apollo/react-hooks';
+import { Alert } from 'react-native';
+// import messaging from '@react-native-firebase/messaging';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 
-const Section: React.FC<{
-  title: string;
-}> = ({children, title}) => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
 
-const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+//네비게이션 사용시 렌더 성능 향상
+// enableScreens()
 
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
+export default function App () {
+	
+	//push notification
+	// const getToken = async () => {
+	// 	const token = await messaging().getToken();
+	// 	console.log("token : ", token)
+	// }
+	// React.useEffect(() => {
+	// 	getToken();
+	// 	const unsubscribe = messaging().onMessage(async remoteMessage => {
+	// 	  Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+	// 	});
+	
+	// 	return unsubscribe;
+	//   }, []);
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+	// const [splash, setSplash] = React.useState(true);
+	// React.useEffect(() => {
+	//   setTimeout(() => {
+	// 	setSplash(false);
+	//   }, 1000);
+	// }, []);
 
-export default App;
+	return (
+		// splash 
+		// ?
+		// <SplashScreen />
+		// : 
+
+		// <Provider store={store}>
+			<ApolloProvider client={client}>
+				<NavigationContainer>
+					<StackNav />
+				</NavigationContainer>
+			</ApolloProvider>
+		// </Provider>
+
+
+	)
+
+}
