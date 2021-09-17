@@ -1,5 +1,4 @@
-
-import { gql } from '@apollo/client';
+import { gql } from 'apollo-boost'
 import React from 'react'
 import { View, StyleSheet, TextInput, Touchable, TouchableOpacityBase, TouchableOpacity, Text, Button } from 'react-native';
 import { useQuery, useMutation,  } from '@apollo/react-hooks';
@@ -30,19 +29,16 @@ export function home({route, navigation } : any) {
 
     const [chatList, setChatList] = React.useState<any>([])
     console.log(chatListData)
-    React.useEffect(() =>{
-        if(chatListData && chatListData.chats){
-            setChatList(chatListData.chats)
-        }
-    },[chatListData])
+    // React.useEffect(() =>{
+    //     if(chatListData && chatListData.chats){
+    //         setChatList(chatListData.chats)
+    //     }
+    // },[chatListData])
 
 
         return (
             <View style={{ backgroundColor : 'white', flex : 1}}>
                 <View style={{borderWidth : 1, borderColor : 'black'}}>
-                    
-                    {console.log(chatList, )}
-                    <Text>{chatList}</Text>
                     <Button onPress={() => navigation.navigate("Login")} title="adslkjfdjskf" />
                 </View>
             </View>

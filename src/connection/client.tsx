@@ -6,17 +6,17 @@ import { OperationDefinitionNode } from 'graphql';
 
 // graphql api 주소
 const wsLink = new WebSocketLink({
-    uri: `ws://192.168.35.182:3000/graphql`,
+    // uri: `ws://192.168.35.182:3000/graphql`,
     // uri: `ws://192.168.0.39:3000/graphql`,
-    // uri: `ws://carnorm.com:3000/graphql`,
-    options: {
-      reconnect: true,
-    },
+    uri: `ws://carnorm.com:3000/graphql`,
+    // options: {
+    //   reconnect: true,
+    // },
   });
 
-const httpLink = new HttpLink({
-    uri: 'http://192.168.35.182:3000/graphql',
-    // uri: 'http://carnorm.com:3000/graphql',
+const httpLink = createUploadLink({
+    // uri: 'http://192.168.35.182:3000/graphql',
+    uri: 'http://carnorm.com:3000/graphql',
     // uri: 'http://192.168.0.39:3000/graphql',
 });
 

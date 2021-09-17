@@ -22,7 +22,7 @@ const Stack = createStackNavigator();
 export const StackNav: React.FC<testProps> = ({}) => {
         return (
                 <Stack.Navigator initialRouteName = "Home" >
-                    <Stack.Screen name="Home" component={bottomTabNav} />
+                    <Stack.Screen name="aa" component={bottomTabNav} />
                     <Stack.Screen name="Login" component={testPage} />
                 </Stack.Navigator>
         );
