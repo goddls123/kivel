@@ -25,25 +25,24 @@ interface home {
 export function home({route, navigation } : any) {
 
     const [test, setTest] = React.useState<string>()
-    const {data, loading, error } = useQuery(GET_CHAT_LIST);
-    React.useEffect(() => {
-        if(loading){
-            setTest("loading")
-        }
-        if(data && data.chats){
-            setTest(data.chats)
-        }
-    },[data])
+    const {data : chatListData, loading : chatListLoading, error : chatListError, subscribeToMore } = useQuery(GET_CHAT_LIST);
 
 
+    const [chatList, setChatList] = React.useState<any>([])
+    console.log(chatListData)
+    React.useEffect(() =>{
+        if(chatListData && chatListData.chats){
+            setChatList(chatListData.chats)
+        }
+    },[chatListData])
 
 
         return (
             <View style={{ backgroundColor : 'white', flex : 1}}>
                 <View style={{borderWidth : 1, borderColor : 'black'}}>
                     
-
-                    <Text>{test}</Text>
+                    {console.log(chatList, )}
+                    <Text>{chatList}</Text>
                     <Button onPress={() => navigation.navigate("Login")} title="adslkjfdjskf" />
                 </View>
             </View>
