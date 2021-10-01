@@ -1,18 +1,13 @@
 import { gql } from 'apollo-boost'
 import React from 'react'
 import { View, StyleSheet, TextInput, Touchable, TouchableOpacityBase, TouchableOpacity, Text, Button } from 'react-native';
-import { useQuery, useMutation,  } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 
 
 const GET_CHAT_LIST = gql`
-  query { 
-    chats {
-        chat_id
-        chat_room_id
-        content
-        send_time
-        deleteYn
-        type
+query{
+    findChatRoom(roomId : "1"){
+      chat_room_id
     }
   }
 `;
@@ -21,19 +16,16 @@ interface home {
 
 }
 
-export function home({route, navigation } : any) {
 
-    const [test, setTest] = React.useState<string>()
-    const {data : chatListData, loading : chatListLoading, error : chatListError, subscribeToMore } = useQuery(GET_CHAT_LIST);
 
+export function Home({route, navigation } : any) {
+
+
+    const { loading, error, data } = useQuery(GET_CHAT_LIST);
 
     const [chatList, setChatList] = React.useState<any>([])
-    console.log(chatListData)
-    // React.useEffect(() =>{
-    //     if(chatListData && chatListData.chats){
-    //         setChatList(chatListData.chats)
-    //     }
-    // },[chatListData])
+  
+
 
 
         return (

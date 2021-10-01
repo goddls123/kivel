@@ -1,3 +1,4 @@
+
 import { ApolloClient, HttpLink, split, InMemoryCache } from '@apollo/client';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
@@ -9,14 +10,16 @@ const wsLink = new WebSocketLink({
     // uri: `ws://192.168.35.182:3000/graphql`,
     // uri: `ws://192.168.0.39:3000/graphql`,
     uri: `ws://carnorm.com:3000/graphql`,
-    // options: {
-    //   reconnect: true,
-    // },
+    // uri: 'http://192.168.35.114:3000/graphql',
+    options: {
+      reconnect: true,
+    },
   });
 
-const httpLink = createUploadLink({
+const httpLink = new HttpLink({
     // uri: 'http://192.168.35.182:3000/graphql',
     uri: 'http://carnorm.com:3000/graphql',
+    // uri: 'http://192.168.35.114:3000/graphql'
     // uri: 'http://192.168.0.39:3000/graphql',
 });
 
