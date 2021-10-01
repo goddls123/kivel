@@ -16,7 +16,24 @@ interface home {
 
 }
 
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
 
+var graphql = JSON.stringify({
+  query: "query{\r\n  files{\r\n    create_date\r\n    modify_date\r\n    originalName\r\n    fileName\r\n    size\r\n    extension\r\n  }\r\n}",
+  variables: {}
+})
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: graphql,
+  redirect: 'follow'
+};
+
+fetch("http://carnorm.com:3000/graphql", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log('result : ',result))
+  .catch(error => console.log('error', error));
 
 export function Home({route, navigation } : any) {
 
@@ -26,7 +43,7 @@ export function Home({route, navigation } : any) {
     const [chatList, setChatList] = React.useState<any>([])
   
 
-
+    console.log(`graphql=> data : ${data} , loading : ${loading} , error : ${error}`);
 
         return (
             <View style={{ backgroundColor : 'white', flex : 1}}>
