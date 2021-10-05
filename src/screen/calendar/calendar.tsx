@@ -3,6 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import React, {useState} from 'react';
 import {Alert, ScrollView, StyleSheet} from 'react-native';
 import {View, TouchableOpacity, Text} from 'react-native';
+// import { Calendar } from 'react-native-toggle-calendar'
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import { schedule } from '../../types/calendarTypes';
 import { stackInterface } from '../../types/navigationParam';

@@ -5,8 +5,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {schedule_data} from '../test/testData';
 import {MainProfile} from './components/MainProfile';
 import {ScheduleButton} from './components/ScheduleButton';
-import Modal from 'react-native-modal';
-import {assertLeafType} from 'graphql';
 import {ScheduleModalView} from './components/ScheduleModalView';
 import { RouteProp, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack';
