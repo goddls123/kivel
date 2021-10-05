@@ -1,0 +1,111 @@
+import {
+  KakaoOAuthToken,
+  KakaoProfile,
+  getProfile as getKakaoProfile,
+  login as kakaoLogin,
+  logout as kakaoLogout,
+  unlink,
+  KakaoAccessTokenInfo,
+  getAccessToken,
+} from '@react-native-seoul/kakao-login';
+// import {NaverLogin} from '@react-native-seoul/naver-login';
+import axios, {AxiosError} from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
+////////////////////////////네이버////////////////////////////
+// const androidkeys = {
+//   kConsumerKey: 'QuWkmldDj4pP3aPAq59I',
+//   kConsumerSecret: '6RQek41Dcj',
+//   kServiceAppName: '키블',
+// };
+
+// export const signInWithNaver = async () => {
+//   return new Promise((resolve, reject) => {
+//     NaverLogin.login(androidkeys, (err, token) => {
+//       console.log(`\n\n  Token is fetched  :: ${token} \n\n`);
+//       if (err) {
+//         reject(err);
+//         return;
+//       }
+//       resolve(token);
+//     });
+//   });
+// };
+
+// export const logoutWithNaver = async () => {
+//   NaverLogin.logout();
+//   console.log('logout successed');
+// };
+
+// export const logInWithNaver = async () => {
+//   signInWithNaver().then((token: any) => {
+//     console.log(token);
+
+//     axios
+//       .post(
+//         //'http://carnorm:3000/',
+//         'https://55ec6208-0341-4f5c-9661-b169939fb5eb.mock.pstmn.io/token/login',
+//         {
+//           headers: {
+//             Authorization: `Basic ${token.accessToken}`,
+//           },
+//         },
+//       )
+//       .then(response => {
+// 		  if(response.status == 200){
+// 				AsyncStorage.setItem('ACT', token.accessToken)
+// 				AsyncStorage.setItem('RFT', token.refreshToken)
+//         AsyncStorage.setItem('platform', 'NAVER')
+// 		  }
+//       })
+//       .catch((err: AxiosError | Error) => {
+//         console.log(err.message);
+//         logoutWithNaver();
+//       });
+//   });
+// };
+
+////////////////////////////네이버////////////////////////////
+
+////////////////////////////카카오////////////////////////////
+
+export const logInWithKakao = async () => {
+  await kakaoLogin().then((token: KakaoOAuthToken) => {
+    console.log
+    axios
+      .post(
+        //'http://carnorm:3000/',
+        'https://55ec6208-0341-4f5c-9661-b169939fb5eb.mock.pstmn.io/token/login',
+        {
+          headers: {
+            'content-type': 'application/json',
+            Authorization: `Basic ${token.accessToken}`,
+          },
+        },
+      )
+      .then(response => {
+        console.log(response);
+        // logoutKakao()
+      })
+      .catch((err: AxiosError | Error) => {
+        console.log(err.message);
+        logoutKakao();
+      });
+  });
+};
+
+export const unlinkKakao = async (): Promise<string> => {
+  const message = await unlink();
+
+  return message;
+};
+
+export const logoutKakao = async (): Promise<string> => {
+  const message = await kakaoLogout();
+
+  console.log(message);
+  return message;
+};
+
+////////////////////////////카카오////////////////////////////
