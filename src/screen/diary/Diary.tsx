@@ -79,7 +79,7 @@ export function Diary(props: diaryProps) {
               return(
                 <ImageModal                 
                   resizeMode='contain'
-                  modalImageResizeMode='center'
+                  modalImageResizeMode='contain'
                   key={id}
                   source={{uri: imageUri}}
                   style={styles.imageStyle}

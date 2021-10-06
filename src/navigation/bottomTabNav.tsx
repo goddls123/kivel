@@ -6,6 +6,9 @@ import { homeTab } from '../screen/home/homeTab';
 import topTabNav from './topTabNav';
 import { aa } from '../screen/chat/aa';
 import { chatTab } from '../screen/chat/chatTab';
+import { loginButton } from '../screen/login/loginButton';
+import { chattest1 } from '../screen/chat/chattest1';
+
 
 
 
@@ -21,6 +24,8 @@ export default function bottomTabNav() {
 			<Tab.Screen name="home" component={homeTab}	options={{headerShown : false}} />
 			<Tab.Screen name="chat" component={chatTab} options={{headerShown : false}} />
 			<Tab.Screen name="diary" component={topTabNav} options={{headerShown : false}} />
+			<Tab.Screen name="chatTest1" component={chattest1} options={{headerShown : false}} />
+			<Tab.Screen name="login" component={loginButton} options={{headerShown : false}} />
 			
 	  	</Tab.Navigator>
     )

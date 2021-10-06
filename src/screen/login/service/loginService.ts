@@ -72,26 +72,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const logInWithKakao = async () => {
   await kakaoLogin().then((token: KakaoOAuthToken) => {
-    console.log
-    axios
-      .post(
-        //'http://carnorm:3000/',
-        'https://55ec6208-0341-4f5c-9661-b169939fb5eb.mock.pstmn.io/token/login',
-        {
-          headers: {
-            'content-type': 'application/json',
-            Authorization: `Basic ${token.accessToken}`,
-          },
-        },
-      )
-      .then(response => {
-        console.log(response);
-        // logoutKakao()
-      })
-      .catch((err: AxiosError | Error) => {
-        console.log(err.message);
-        logoutKakao();
-      });
+    console.log(token)
+    AsyncStorage.setItem('ACT', token.accessToken)
+    AsyncStorage.setItem('RFT', token.refreshToken)
+    AsyncStorage.setItem('platform', 'KAKAO')
+
   });
 };
 
