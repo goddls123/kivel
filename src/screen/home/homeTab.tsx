@@ -19,7 +19,7 @@ interface homeTabProps {
   route : RouteProp<stackInterface,'Calendar'>;
 }
 
-export function homeTab({navigation, route}: homeTabProps) {
+export function homeTab(props : homeTabProps) {
   //////////// Todo
   //	profile, 이번주 일정, 이번주 과제 받아오고 패치
   const [profile, setProfile] = React.useState();
@@ -61,7 +61,7 @@ export function homeTab({navigation, route}: homeTabProps) {
 
       {/* 주간 일정 */}
       <View style={styles.scheduleContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate('Calendar')}>
+        <TouchableOpacity onPress={() => props.navigation.navigate('Calendar')}>
           <Text>주간 일정 +</Text>
         </TouchableOpacity>
 

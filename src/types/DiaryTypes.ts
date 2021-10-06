@@ -1,4 +1,4 @@
-export interface diaryProps {
+export interface diary {
 	note_id : number,
 	date	: Date,
 	title : string,

@@ -10,9 +10,13 @@ import {
 } from 'react-native';
 import {Divider} from '../common/divider';
 import {SIZE_HEIGHT, SIZE_WIDTH} from '../common/constants';
-import {diaryProps} from '../../types/DiaryTypes';
+import {diary} from '../../types/DiaryTypes';
 import ImageModal from 'react-native-image-modal';
-const dummyData: diaryProps = {
+import { StackNavigationProp } from '@react-navigation/stack';
+import { stackInterface } from '../../types/navigationParam';
+import { RouteProp } from '@react-navigation/native';
+import { getDateYMD } from '../common/service/dateService';
+const dummyData: diary = {
   note_id: 1,
   date: new Date(),
   title: '꽃이 피던 날',
@@ -26,14 +30,19 @@ const dummyData: diaryProps = {
   tag: ['첫 걸음', '현둥'],
 };
 
+interface diaryProps {
+  // navigation : StackNavigationProp<stackInterface,'Diary'>;
+  route : RouteProp<stackInterface,'Diary'>;
+}
 export function Diary(props: diaryProps) {
-
+  
   return (
     <View style={styles.container}>
+      
       {/* 제목 */}
       <View style={styles.headerView}>
         <View style={styles.headerTop}>
-          <Text style={{fontSize: 20}}>{props.title || dummyData.title}</Text>
+          <Text style={{fontSize: 20}}>{props.route.params.title}</Text>
           <TouchableOpacity style={[styles.button, {alignSelf: 'flex-end'}]}>
             <Text style={{fontSize: 15}}> 수정 </Text>
           </TouchableOpacity>
@@ -41,70 +50,68 @@ export function Diary(props: diaryProps) {
 
         <View style={styles.headerBottom}>
           <Text style={{fontSize: 15}}>
-            {props.date || dummyData.date.getFullYear().toString() + '-10-05'}
+            {getDateYMD(props.route.params.date)}
           </Text>
           <TouchableOpacity style={styles.button}>
             <Text style={{fontSize: 15}}> 공유 </Text>
           </TouchableOpacity>
         </View>
       </View>
+      {/* 제목 */}
+
 
       <Divider height={5} color="#E5E5E5" />
 
       {/* 본문 */}
       <View style={styles.mainText}>
+        
         <ScrollView>
+
+          {/* 텍스트 */}
           <Text style={{fontSize: 15, marginBottom: 20}}>
-            {props.content || dummyData.content}
+            {props.route.params.content}
           </Text>
 
-          {/* {
-          props.images?.map((imageUri) => {
-            return(
-              <ImageModal source={{ uri : imageUri }} style={{height : 100, width : 100}}></ImageModal>
-            )
-          })
-        } */}
-
+          {/* 사진 */}
           <ScrollView style={{flexDirection: 'row'}} horizontal >
-          {dummyData.images?.map((imageUri: string, id) => {
-            return (
-              <ImageModal
-                resizeMode='contain'
-                modalImageResizeMode='center'
-                key={id}
-                source={{uri: imageUri}}
-                style={styles.imageStyle}
-              />
-            );
-          })}
+          {
+            props.route.params.images?.map((imageUri, id) => {
+              return(
+                <ImageModal                 
+                  resizeMode='contain'
+                  modalImageResizeMode='center'
+                  key={id}
+                  source={{uri: imageUri}}
+                  style={styles.imageStyle}
+                  ></ImageModal>
+              )
+            })
+          }
           </ScrollView>
+
         </ScrollView>
       </View>
+      {/* 본문 */}
 
       <Divider height={3} color="#E5E5E5" />
 
       {/* 태그 */}
       <View style={styles.tagContainer}>
         <View style={{flexDirection: 'row'}}>
-          {/* {
-          props.tag?.map((tag) => {
-            return(
-              <View style={styles.tagStyle}>
-                <Text style={{color: '#C4C4C4'}}>tag</Text>
-              </View>
-            )
-          })
-        } */}
-          {dummyData.tag?.map((tag,id) => {
-            return (
-              <View key={id} style={styles.tagStyle}>
-                <Text># {tag}</Text>
-              </View>
-            );
-          })}
+          {
+            props.route.params.tag?.map((tag, id) => {
+              return(
+                <View key={id} style={styles.tagStyle}>
+                  <Text style={{color: '#C4C4C4'}}> # {tag}</Text>
+                </View>
+              )
+            })
+          }
         </View>
       </View>
+      {/* 태그 */}
+
+
     </View>
   );
 }

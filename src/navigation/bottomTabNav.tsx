@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, Dimensions, Image } from 'react-native';
 import { homeTab } from '../screen/home/homeTab';
 import { writeDiary } from '../screen/diary/writeDiary';
 import { diaryTab } from '../screen/diary/diaryTab';
+import topTabNav from './topTabNav';
 
 
 
@@ -17,8 +18,7 @@ export default function bottomTabNav() {
     return (
 		<Tab.Navigator>
 			<Tab.Screen name="home" component={homeTab}/>
-			<Tab.Screen name="diary" component={diaryTab}/>
-			<Tab.Screen name="writeDiary" component={writeDiary}/>
+			<Tab.Screen name="diary" component={topTabNav}/>
 	  	</Tab.Navigator>
     )
 }
