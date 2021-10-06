@@ -1,10 +1,11 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet, Text, View, Dimensions, Image } from 'react-native';
+
 import { homeTab } from '../screen/home/homeTab';
-import { writeDiary } from '../screen/diary/writeDiary';
-import { diaryTab } from '../screen/diary/diaryTab';
 import topTabNav from './topTabNav';
+import { aa } from '../screen/chat/aa';
+import { chatTab } from '../screen/chat/chatTab';
 
 
 
@@ -17,8 +18,10 @@ const Tab = createBottomTabNavigator();
 export default function bottomTabNav() {
     return (
 		<Tab.Navigator>
-			<Tab.Screen name="home" component={homeTab}/>
-			<Tab.Screen name="diary" component={topTabNav}/>
+			<Tab.Screen name="home" component={homeTab}	options={{headerShown : false}} />
+			<Tab.Screen name="chat" component={chatTab} options={{headerShown : false}} />
+			<Tab.Screen name="diary" component={topTabNav} options={{headerShown : false}} />
+			
 	  	</Tab.Navigator>
     )
 }
