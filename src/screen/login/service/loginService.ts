@@ -75,8 +75,7 @@ export const logInWithKakao = async () => {
     console.log(token)
     AsyncStorage.setItem('ACT', token.accessToken)
     AsyncStorage.setItem('RFT', token.refreshToken)
-    AsyncStorage.setItem('platform', 'KAKAO')
-
+    AsyncStorage.setItem('platform', 'K')
   });
 };
 
