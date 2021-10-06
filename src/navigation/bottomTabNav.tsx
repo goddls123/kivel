@@ -1,7 +1,7 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet, Text, View, Dimensions, Image } from 'react-native';
-import { home } from './home';
+import { Home } from './home';
 
 
 
@@ -16,9 +16,9 @@ const Tab = createBottomTabNavigator();
 export default function bottomTabNav() {
     return (
 		<Tab.Navigator>
-			<Tab.Screen name="Home" component={home}/>
+			<Tab.Screen name="Home" component={Home}/>
 
-	  </Tab.Navigator>
+		</Tab.Navigator>
     )
 }
 
