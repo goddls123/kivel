@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Text, Image} from 'react-native';
+import {View, SafeAreaView, StyleSheet, Text, Image} from 'react-native';
 import {SIZE_HEIGHT, SIZE_WIDTH} from '../common/constants';
 import {Button} from './components/Button';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -12,7 +12,7 @@ interface registerProps {
 
 export function Register(props: registerProps) {
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <View style={styles.innerContainer}>
 
 				<Divider height={'13%'} color='white' />
@@ -32,7 +32,7 @@ export function Register(props: registerProps) {
                 <Button text={'로그인'} textColor={'#ff8a5c'} onPress={() => props.navigation.navigate('SocialLogin')} />
 
             </View>
-        </View>
+        </SafeAreaView>
     );
 }
 const styles = StyleSheet.create({
