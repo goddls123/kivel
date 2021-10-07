@@ -8,7 +8,7 @@ import {stackInterface} from '../../types/navigationParam';
 import {logInWithKakao, unlinkKakao} from '../login/service/loginService';
 import {Divider} from '../common/divider';
 import { AgreementList } from './components/AgreementList';
-import { Button } from './components/Button';
+import { Button } from '../common/components/Button';
 
 interface AgreementProps {
     navigation: StackNavigationProp<stackInterface, 'SocialLogin'>;

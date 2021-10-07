@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, StyleSheet, ViewStyle, TouchableOpacity, Text } from 'react-native';
-import { SIZE_HEIGHT } from '../../common/constants';
+import { SIZE_HEIGHT } from '../constants';
 
 interface ButtonProps {
 	style? : ViewStyle
