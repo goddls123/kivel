@@ -7,7 +7,7 @@ import { Divider } from '../../common/divider';
 
 interface DateScrollerProps {
 	setDate(value : Date) : void
-	date : Date
+	date : Date | undefined
 	setModalVisible(value : boolean) : void
 }
 
@@ -21,7 +21,7 @@ export function DateScroller(props : DateScrollerProps) {
 				
 				<DatePicker 
 				style={styles.datePickerStyle} 
-				date={props.date} 
+				date={props.date? props.date : new Date()} 
 				onDateChange={(newDate : Date) => props.setDate(newDate)} mode={'date'} 
 				/>
 				

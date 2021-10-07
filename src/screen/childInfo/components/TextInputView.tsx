@@ -12,11 +12,19 @@ interface textInputViewProps {
 	onChangeText?(value : any) : void
 	editable? : boolean
 	iconOnPress?(value : any) : void
-	value? : Date
+	value? : string | Date
 }
 
 export function TextInputView(props: textInputViewProps) {
-
+	
+	let value
+	if(typeof(props.value) == 'string'){
+		value = props.value
+	}else if(typeof(props.value) == 'undefined'){
+		value = undefined
+	}else {
+		value = getDateYMD(props.value,'-')
+	}
     return (
         <View style={[{borderBottomWidth: 1, borderBottomColor: '#ededed'},props.style]}>
             <View style={{flexDirection : 'row', justifyContent : 'space-between', alignItems :'center'}}>
@@ -25,7 +33,7 @@ export function TextInputView(props: textInputViewProps) {
 				keyboardType={props.keyboardType ? props.keyboardType : 'default'}
 				onChangeText={(text)=> props.onChangeText? props.onChangeText(text) : null}
 				editable={props.editable}
-				value={props.value? getDateYMD(props.value,'-') : undefined}
+				value={props.value? value : undefined}
 				style={{color : 'black'}}
 				></TextInput>
 				{

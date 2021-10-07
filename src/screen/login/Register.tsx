@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, SafeAreaView, StyleSheet, Text, Image} from 'react-native';
-import {GLOABL_MARGIN_HORIZON, SIZE_HEIGHT, SIZE_WIDTH} from '../common/constants';
+import {GLOBAL_MARGIN_HORIZON, SIZE_HEIGHT, SIZE_WIDTH} from '../common/constants';
 import {Button} from '../common/components/Button';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {stackInterface} from '../../types/navigationParam';
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     },
     innerContainer: {
         flex: 1,
-        marginHorizontal: GLOABL_MARGIN_HORIZON,
+        marginHorizontal: GLOBAL_MARGIN_HORIZON,
     },
     textView: {
         alignItems: 'center',

@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, StyleSheet, Text, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { GLOABL_MARGIN_HORIZON, GLOABL_MARGIN_VERTICAL, SIZE_HEIGHT, SIZE_WIDTH } from '../common/constants';
+import { GLOBAL_MARGIN_HORIZON, SIZE_HEIGHT, SIZE_WIDTH } from '../common/constants';
 import Icon from 'react-native-vector-icons/Ionicons'
 import { StackNavigationProp } from '@react-navigation/stack';
 import { stackInterface } from '../../types/navigationParam';
@@ -10,35 +10,56 @@ import { TextInputView } from './components/TextInputView';
 import { TextView } from './components/TextView';
 import { Button } from '../common/components/Button';
 import Modal from 'react-native-modal'
-import DatePicker from 'react-native-date-picker';
 import { DateScroller } from './components/DateScroller';
+import { DiagSelector } from './components/DiagSelector';
+
+
 interface enterChildInfoProps {
 	navigation : StackNavigationProp<stackInterface,'SocialLogin'>;
 }
 
 export function EnterChildInfo(props : enterChildInfoProps) {
 		
-	const essentialOptionCheck = () : boolean => {
-		return false
-	}
+	
 
 	const [name, setName] = React.useState<string>();
-	const [birthDate, setBirthDate] = React.useState<Date>(new Date());
+	const [birthDate, setBirthDate] = React.useState<Date>();
 	const [sex, setSex] = React.useState<'M'|'W'>();
 	const [diagnosis, setDiagnosis] = React.useState<string>();
+	const [directInputDiag, setDirectInputDiag] = React.useState<string>();
 	const [weekNum,setWeekNum] = React.useState<number>();
 	const [dateNum,setdateNum] = React.useState<number>();
 	const [height, setHeight] = React.useState<number>();
 	const [weight, setWeight] = React.useState<number>();
 	
-	// 출생일 datePicker
-	const [modalVisible, setModalVisible] = React.useState<boolean>(false);
+
+	//modal visible
+	const [dateModalVisible, setdateModalVisible] = React.useState<boolean>(false);
+	const [diagModalVisible, setDiagModalVisible] = React.useState<boolean>(false);
+
+
+	// 필수항목 체크
+	const essentialOptionCheck = () : boolean => {
+		if(name && birthDate && sex && weekNum && dateNum && height && weight){
+			if(diagnosis == "직접입력"){
+				if(directInputDiag){
+					return true;
+				}
+			} else if(diagnosis != undefined){
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		return false
+	}
 
 	return (
 		<SafeAreaView style={styles.container}>
 			<View style={styles.innerContainer}>
 
-				<Divider height={GLOABL_MARGIN_HORIZON} color="white" />
+				<Divider height={GLOBAL_MARGIN_HORIZON} color="white" />
 				<TouchableOpacity onPress={() => props.navigation.reset({routes : [{name : 'Home'}]})}>
 					<Icon name="arrow-back" style={{fontSize : 30}}></Icon>
 				</TouchableOpacity>
@@ -65,7 +86,7 @@ export function EnterChildInfo(props : enterChildInfoProps) {
 					style={{marginBottom : SIZE_HEIGHT * 0.06}}
 					icon="calendar"
 					editable={false}
-					iconOnPress={setModalVisible}
+					iconOnPress={setdateModalVisible}
 					value={birthDate}
 					></TextInputView>
 
@@ -95,25 +116,37 @@ export function EnterChildInfo(props : enterChildInfoProps) {
 					placeholder={'진단명을 선택해 주세요'}
 					style={{marginBottom : SIZE_HEIGHT * 0.06}}
 					icon="chevron-down"
+					iconOnPress={setDiagModalVisible}
 					editable={false}
+					value={diagnosis}
 					></TextInputView>
-
+					{
+						diagnosis === "직접입력"
+						?
+						<TextInputView 
+						placeholder={'진단명을 입력해 주세요'}
+						style={{marginBottom : SIZE_HEIGHT * 0.06 , marginTop : - SIZE_HEIGHT * 0.05 }}
+						value={directInputDiag}
+						onChangeText={setDirectInputDiag}
+						></TextInputView>
+						: null
+					}
 					{/* 출생시 주수 */}
 					<TextView text='출생시 주수'/>
 					<View style={{flexDirection : 'row', justifyContent : 'space-between'}}>
 						<TextInputView 
-							placeholder={'ex) 23'}
-							style={{marginBottom : SIZE_HEIGHT * 0.06, width : SIZE_WIDTH * 0.40}}
-							unitText="주"
-							keyboardType='numeric'
-							onChangeText={setWeekNum}
+						placeholder={'ex) 23'}
+						style={{marginBottom : SIZE_HEIGHT * 0.06, width : SIZE_WIDTH * 0.40}}
+						unitText="주"
+						keyboardType='numeric'
+						onChangeText={setWeekNum}
 						></TextInputView>
 						<TextInputView 
-							placeholder={'ex) 10'}
-							style={{marginBottom : SIZE_HEIGHT * 0.06, width : SIZE_WIDTH * 0.40}}
-							unitText="일"
-							keyboardType='numeric'
-							onChangeText={setdateNum}
+						placeholder={'ex) 10'}
+						style={{marginBottom : SIZE_HEIGHT * 0.06, width : SIZE_WIDTH * 0.40}}
+						unitText="일"
+						keyboardType='numeric'
+						onChangeText={setdateNum}
 						></TextInputView>
 					</View>
 
@@ -145,17 +178,25 @@ export function EnterChildInfo(props : enterChildInfoProps) {
 				</ScrollView>
 
 
-
 				{/* 출생일 dateScroller */}
-                <Modal isVisible={modalVisible}>
+				<Modal isVisible={dateModalVisible}>
 					<DateScroller 
 						setDate={setBirthDate} 
 						date={birthDate}
-						setModalVisible={setModalVisible}
+						setModalVisible={setdateModalVisible}
 					></DateScroller>
 				</Modal>
 
-				
+				<Modal isVisible={diagModalVisible}
+					onBackdropPress={()=>setDiagModalVisible(false)}
+					style={{margin : 0}}
+				>
+					<DiagSelector
+						setModalVisible={setDiagModalVisible}
+						setDiagnosis={setDiagnosis}
+					></DiagSelector>
+				</Modal>
+
 			</View>
 		</SafeAreaView>
 	);
@@ -167,7 +208,7 @@ const styles = StyleSheet.create({
     },
     innerContainer: {
         flex: 1,
-        marginHorizontal: GLOABL_MARGIN_HORIZON,
+        marginHorizontal: GLOBAL_MARGIN_HORIZON,
     },
 	headerTextStyle: {
 		fontFamily: 'Pretendard',

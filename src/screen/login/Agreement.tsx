@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
-import {GLOABL_MARGIN_HORIZON, SIZE_HEIGHT, SIZE_WIDTH} from '../common/constants';
+import {GLOBAL_MARGIN_HORIZON, SIZE_HEIGHT, SIZE_WIDTH} from '../common/constants';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {SocialLoginButton} from './components/SocialLoginButton';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -53,7 +53,7 @@ export function Agreement(props: AgreementProps) {
         <View style={styles.container}>
             <View style={styles.innerContainer}>
                 
-                <Divider height={GLOABL_MARGIN_HORIZON} color="white" />
+                <Divider height={GLOBAL_MARGIN_HORIZON} color="white" />
                 <TouchableOpacity onPress={() => props.navigation.goBack()}>
                     <Icon name="close" style={{fontSize: 30}}></Icon>
                 </TouchableOpacity>
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     },
     innerContainer: {
         flex: 1,
-        marginHorizontal: GLOABL_MARGIN_HORIZON,
+        marginHorizontal: GLOBAL_MARGIN_HORIZON,
     },
     bigTextStyle: {
         fontFamily: 'Pretendard',
