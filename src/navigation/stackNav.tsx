@@ -10,6 +10,7 @@ import { Register } from '../screen/login/Register';
 import { SocialLogin } from '../screen/login/SocialLogin';
 import { Agreement } from '../screen/login/Agreement';
 import { LoginSplash } from '../screen/login/LoginSplash';
+import { EnterChildInfo } from '../screen/childInfo/EnterChildInfo';
 
 const  Stack  =  createStackNavigator<stackInterface>();
 
@@ -25,6 +26,7 @@ export  const  StackNav:  React.FC  =  ({})  =>  {
                 <Stack.Screen name="Register"  component={Register} options={{headerShown:  false}} /> 
                 <Stack.Screen name="Agreement"  component={Agreement} options={{headerShown:  false}} /> 
                 <Stack.Screen name="LoginSplash"  component={LoginSplash} options={{headerShown:  false}} /> 
+                <Stack.Screen name="EnterChildInfo"  component={EnterChildInfo} options={{headerShown:  false}} /> 
             </Stack.Navigator>
     );
 };

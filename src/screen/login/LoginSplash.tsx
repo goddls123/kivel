@@ -12,7 +12,7 @@ export function LoginSplash(props : LoginSplashProps) {
 		
 		React.useEffect(() => {
 		setTimeout(() => {
-			props.navigation.goBack()
+			props.navigation.navigate('EnterChildInfo')
 		}, 2000);
 		}, []);
 

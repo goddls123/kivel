@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
-import {SIZE_HEIGHT, SIZE_WIDTH} from '../common/constants';
+import {GLOABL_MARGIN_HORIZON, SIZE_HEIGHT, SIZE_WIDTH} from '../common/constants';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {SocialLoginButton} from './components/SocialLoginButton';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -53,11 +53,11 @@ export function Agreement(props: AgreementProps) {
         <View style={styles.container}>
             <View style={styles.innerContainer}>
                 
-                <View style={{height: '10%', justifyContent: 'center'}}>
-                    <TouchableOpacity onPress={() => props.navigation.goBack()}>
-                        <Icon name="close" style={{fontSize: 30}}></Icon>
-                    </TouchableOpacity>
-                </View>
+                <Divider height={GLOABL_MARGIN_HORIZON} color="white" />
+                <TouchableOpacity onPress={() => props.navigation.goBack()}>
+                    <Icon name="close" style={{fontSize: 30}}></Icon>
+                </TouchableOpacity>
+                <Divider height={'5%'} color="white" />
 
                 <View style={{alignItems: 'flex-start'}}>
                     <Text style={styles.bigTextStyle}>약관동의</Text>
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     },
     innerContainer: {
         flex: 1,
-        marginHorizontal: SIZE_WIDTH * 0.05,
+        marginHorizontal: GLOABL_MARGIN_HORIZON,
     },
     bigTextStyle: {
         fontFamily: 'Pretendard',

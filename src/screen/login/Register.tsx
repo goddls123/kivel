@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, SafeAreaView, StyleSheet, Text, Image} from 'react-native';
-import {SIZE_HEIGHT, SIZE_WIDTH} from '../common/constants';
+import {GLOABL_MARGIN_HORIZON, SIZE_HEIGHT, SIZE_WIDTH} from '../common/constants';
 import {Button} from './components/Button';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {stackInterface} from '../../types/navigationParam';
@@ -15,7 +15,7 @@ export function Register(props: registerProps) {
         <SafeAreaView style={styles.container}>
             <View style={styles.innerContainer}>
 
-				<Divider height={'1%'} color='white' />
+				<Divider height={'15%'} color='white' />
 
                 <Image
                     source={require('../../assets/icons/logo.png')}
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     },
     innerContainer: {
         flex: 1,
-        marginHorizontal: SIZE_WIDTH * 0.05,
+        marginHorizontal: GLOABL_MARGIN_HORIZON,
     },
     textView: {
         alignItems: 'center',

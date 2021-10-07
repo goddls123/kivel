@@ -11,4 +11,7 @@ export type stackInterface = {
     Register : undefined;
     Agreement : undefined;
     LoginSplash : undefined;
+
+    //
+    EnterChildInfo : undefined;
 }

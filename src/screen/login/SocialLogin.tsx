@@ -1,11 +1,12 @@
 import React from 'react';
 import {View, SafeAreaView ,StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
-import {SIZE_HEIGHT, SIZE_WIDTH} from '../common/constants';
+import {GLOABL_MARGIN_HORIZON, SIZE_HEIGHT, SIZE_WIDTH} from '../common/constants';
 import Icon from 'react-native-vector-icons/Ionicons'
 import { SocialLoginButton } from './components/SocialLoginButton';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { stackInterface } from '../../types/navigationParam';
 import {  logInWithKakao,  unlinkKakao } from '../login/service/loginService';
+import { Divider } from '../common/divider';
 
 interface SocialLoginProps {
 	navigation : StackNavigationProp<stackInterface,'SocialLogin'>;
@@ -16,11 +17,12 @@ export function SocialLogin(props : SocialLoginProps) {
 	return (
 	<SafeAreaView style={styles.container}>
 		<View style={styles.innerContainer}>
-			<View style={{height: '10%', justifyContent : 'center'}} >
-				<TouchableOpacity onPress={() => props.navigation.goBack()}>
-					<Icon name="close" style={{fontSize : 30}}></Icon>
-				</TouchableOpacity>
-			</View>
+
+			<Divider height={GLOABL_MARGIN_HORIZON} color="white" />
+                <TouchableOpacity onPress={() => props.navigation.goBack()}>
+                    <Icon name="close" style={{fontSize: 30}}></Icon>
+                </TouchableOpacity>
+			<Divider height={'5%'} color="white" />
 
 			<View style={{alignItems : 'flex-start'}}>
 				<Text style={styles.bigTextStyle}>간편로그인</Text>

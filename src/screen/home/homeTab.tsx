@@ -31,7 +31,7 @@ export function homeTab(props : homeTabProps) {
   React.useEffect(() => {
     setWeeklySchedule(schedule_data);
   }, []);
-
+  
   return (
     <View style={styles.container}>
 
