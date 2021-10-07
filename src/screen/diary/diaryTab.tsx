@@ -8,7 +8,7 @@ import { stackInterface } from '../../types/navigationParam';
 import { SIZE_HEIGHT, SIZE_WIDTH } from '../common/constants';
 import { Divider } from '../common/divider';
 import { dummyData } from '../test/testData';
-import { DiaryListView } from './component/DiaryListView';
+import { DiaryListView } from './components/DiaryListView';
 // import {  } from 'react-native-gesture-handler';
 
 

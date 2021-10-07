@@ -1,9 +1,9 @@
 import React from 'react'
 import { View, StyleSheet, Text, ScrollView, TextInput, TouchableOpacity, KeyboardAvoidingView, Button, BackHandler, FlatList } from 'react-native';
 import Modal from 'react-native-modal';
-import { ChatBox } from './component/chatBox';
+import { ChatBox } from './components/chatBox';
 import IonIcons from 'react-native-vector-icons/Ionicons'
-import { ChatModalMenu } from './component/chatModalMenu';
+import { ChatModalMenu } from './components/chatModalMenu';
 
 
 

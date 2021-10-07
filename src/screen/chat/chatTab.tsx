@@ -2,7 +2,7 @@ import React from 'react'
 import { View, StyleSheet, Text, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { SIZE_HEIGHT } from '../common/constants';
-import { ChatListView } from './component/ChatListView'
+import { ChatListView } from './components/ChatListView'
 
 
 
