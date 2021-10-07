@@ -7,4 +7,5 @@ export type stackInterface = {
     Diary : diary;
     SocialLogin : undefined;
     Register : undefined;
+    Agreement : undefined;
 }

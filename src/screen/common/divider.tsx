@@ -2,7 +2,7 @@ import React from 'react'
 import { View, StyleSheet, ViewStyle } from 'react-native';
 
 interface dividerProps {
-    height : number
+    height : number | string
     color? : string
     style? : ViewStyle;
 }

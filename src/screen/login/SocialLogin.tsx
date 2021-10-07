@@ -1,12 +1,11 @@
 import React from 'react';
 import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
 import {SIZE_HEIGHT, SIZE_WIDTH} from '../common/constants';
-import { RegisterButton } from './components/RegisterButton';
 import Icon from 'react-native-vector-icons/Ionicons'
 import { SocialLoginButton } from './components/SocialLoginButton';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { stackInterface } from '../../types/navigationParam';
-
+import {  logInWithKakao,  unlinkKakao } from '../login/service/loginService';
 
 interface SocialLoginProps {
 	navigation : StackNavigationProp<stackInterface,'SocialLogin'>;
@@ -31,12 +30,12 @@ export function SocialLogin(props : SocialLoginProps) {
 			</View>
 
 			<View style={{height : '25%'}} />
-			<SocialLoginButton platform='kakao' />
-			<SocialLoginButton platform='naver' />
+			<SocialLoginButton platform='kakao' onPress={logInWithKakao}/>
+			<SocialLoginButton platform='naver' onPress={() => props.navigation.navigate('Agreement')}/>
 		</View>
 	</View>
 
-		);
+	);
 }
 const styles = StyleSheet.create({
 	container: {

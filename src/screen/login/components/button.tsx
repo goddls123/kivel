@@ -1,50 +1,42 @@
-import React from 'react';
-import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
+import React from 'react'
+import { View, StyleSheet, ViewStyle, TouchableOpacity, Text } from 'react-native';
+import { SIZE_HEIGHT } from '../../common/constants';
 
-interface buttonProps {
-    textContent: string;
-    backgroundColor?: string;
-    borderColor? : string;
-    textColor?: string;
-    textSize? : number;
-    onPress?() : void;
+interface ButtonProps {
+	style? : ViewStyle
+	text : string
+	textColor : string
+	onPress?() : void
+	disable? : boolean
 }
 
-export function Button(props: buttonProps) {
-  
-  return (
-    <View style={{flex: 1}}>
-        <TouchableOpacity 
-            style={
-                [styles.buttonStyle,{ 
-                    backgroundColor: props.backgroundColor || 'white', 
-                    borderColor : props.borderColor || '#E16F55'
-                }]
-            }
-            onPress={props.onPress}
-        >
-            <Text style={
-                [styles.textStyle,{
-                    color : props.textColor || '#E16F55' ,
-                    fontSize : props.textSize || 20
-                  }
-                ]}
-            > {props.textContent} </Text>
-        </TouchableOpacity>
-    </View>
-  );
+export function Button(props : ButtonProps) {
+		return (
+			<TouchableOpacity onPress={props.onPress}
+				style={[styles.buttonStyle,props.style]}
+				disabled={props.disable === true ? true : false}
+			>
+				<Text style={[styles.textStyle,{color : props.textColor}]}>{props.text}</Text>
+			</TouchableOpacity>
+		);
 }
 const styles = StyleSheet.create({
   buttonStyle: {
-    borderWidth: 1,
-    borderRadius: 35,
-    elevation: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-
+	justifyContent : 'center',
+    width: '100%',
+	borderWidth : 1,
+	borderColor : "#ff8a5c",
+    borderRadius: 24,
+    height: SIZE_HEIGHT * 0.07,
+	marginBottom : 10
   },
-  textStyle:{
-    margin: 15,
-    fontWeight: 'bold',
-  }
+  textStyle: {
+    fontFamily: 'Pretendard',
+    fontSize: 16,
+    fontWeight: '500',
+    fontStyle: 'normal',
+    lineHeight: 32,
+    letterSpacing: 0,
+    textAlign: 'center',
+  },
 });

@@ -9,7 +9,7 @@ interface SocialLoginButtonProps {
 
 export function SocialLoginButton(props : SocialLoginButtonProps) {
 		return (
-			<TouchableOpacity onPress={() => props.onPress}
+			<TouchableOpacity onPress={props.onPress}
 				style={[styles.buttonStyle,{
 					backgroundColor : props.platform === 'kakao' ? '#fee500' : '#1ec800'
 				}]}
