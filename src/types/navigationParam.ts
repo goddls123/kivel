@@ -5,4 +5,6 @@ export type stackInterface = {
     Calendar : undefined;
     WriteDiary : diary | undefined;
     Diary : diary;
+    SocialLogin : undefined;
+    Register : undefined;
 }

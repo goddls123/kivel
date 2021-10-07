@@ -13,7 +13,11 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import { Alert } from 'react-native';
 import StackNav from './src/navigation/stackNav';
 import { Splash } from './src/screen/common/components/Splash';
+
+
 // import messaging from '@react-native-firebase/messaging';
+import { SocialLogin } from './src/screen/login/SocialLogin';
+import { Register } from './src/screen/login/Register';
 
 
 
@@ -37,25 +41,30 @@ export default function App () {
 	// 	return unsubscribe;
 	//   }, []);
 
+	
+	
+	// splash 화면
 	const [splash, setSplash] = React.useState(true);
 	React.useEffect(() => {
 	  setTimeout(() => {
 		setSplash(false);
 	  }, 1000);
 	}, []);
+	 
+	const [login, setLogin] = React.useState(false)
 
 	return (
 		splash 
 		?
 		<Splash />
 		: 
-
 		// <Provider store={store}>
-			<ApolloProvider client={client}>
-				<NavigationContainer>
-					<StackNav />
-				</NavigationContainer>
-			</ApolloProvider>
+		<ApolloProvider client={client}>
+			<NavigationContainer>
+				<StackNav />
+			</NavigationContainer>
+		</ApolloProvider>
+
 		// </Provider>
 
 
