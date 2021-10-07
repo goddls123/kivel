@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
+import {View, SafeAreaView ,StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
 import {SIZE_HEIGHT, SIZE_WIDTH} from '../common/constants';
 import Icon from 'react-native-vector-icons/Ionicons'
 import { SocialLoginButton } from './components/SocialLoginButton';
@@ -14,7 +14,7 @@ interface SocialLoginProps {
 export function SocialLogin(props : SocialLoginProps) {
 	
 	return (
-	<View style={styles.container}>
+	<SafeAreaView style={styles.container}>
 		<View style={styles.innerContainer}>
 			<View style={{height: '10%', justifyContent : 'center'}} >
 				<TouchableOpacity onPress={() => props.navigation.goBack()}>
@@ -33,7 +33,7 @@ export function SocialLogin(props : SocialLoginProps) {
 			<SocialLoginButton platform='kakao' onPress={logInWithKakao}/>
 			<SocialLoginButton platform='naver' onPress={() => props.navigation.navigate('Agreement')}/>
 		</View>
-	</View>
+	</SafeAreaView>
 
 	);
 }
