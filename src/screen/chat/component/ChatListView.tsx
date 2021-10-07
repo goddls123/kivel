@@ -11,10 +11,10 @@ export function ChatListView(props : chatListViewProps) {
 			<View style={styles.container}>
 				<View style={styles.innerContainer}>
 					<View style={{flex : 2, justifyContent : 'center', alignItems : 'center'}}>
-						<Image 
+						{/* <Image 
 						source={require('../../../assets/icons/egg.png')}
 						style={{height :SIZE_HEIGHT * 0.05, width : SIZE_HEIGHT * 0.05, borderRadius : 100}}
-						></Image>
+						></Image> */}
 					</View>
 					<View style={{flex : 8}}>
 						<Text style={{fontWeight : 'bold'}}>치료사 이름 들어갈 곳</Text>

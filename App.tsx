@@ -12,6 +12,7 @@ import client from './src/connection/client';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { Alert } from 'react-native';
 import StackNav from './src/navigation/stackNav';
+import { Splash } from './src/screen/common/components/Splash';
 // import messaging from '@react-native-firebase/messaging';
 
 
@@ -36,18 +37,18 @@ export default function App () {
 	// 	return unsubscribe;
 	//   }, []);
 
-	// const [splash, setSplash] = React.useState(true);
-	// React.useEffect(() => {
-	//   setTimeout(() => {
-	// 	setSplash(false);
-	//   }, 1000);
-	// }, []);
+	const [splash, setSplash] = React.useState(true);
+	React.useEffect(() => {
+	  setTimeout(() => {
+		setSplash(false);
+	  }, 1000);
+	}, []);
 
 	return (
-		// splash 
-		// ?
-		// <SplashScreen />
-		// : 
+		splash 
+		?
+		<Splash />
+		: 
 
 		// <Provider store={store}>
 			<ApolloProvider client={client}>
