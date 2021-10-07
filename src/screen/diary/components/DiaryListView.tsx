@@ -24,7 +24,7 @@ export function DiaryListView(props : DiaryListViewProps) {
           </View>
           <View>
             <Text style={styles.dateStyle}>
-              {getDateYMD(props.item.date)}
+              {getDateYMD(props.item.date,'.')}
             </Text>
           </View>
         </View>

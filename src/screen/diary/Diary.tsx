@@ -50,7 +50,7 @@ export function Diary(props: diaryProps) {
 
         <View style={styles.headerBottom}>
           <Text style={{fontSize: 15}}>
-            {getDateYMD(props.route.params.date)}
+            {getDateYMD(props.route.params.date,'.')}
           </Text>
           <TouchableOpacity style={styles.button}>
             <Text style={{fontSize: 15}}> 공유 </Text>

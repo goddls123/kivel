@@ -9,7 +9,9 @@ import { Divider } from '../common/divider';
 import { TextInputView } from './components/TextInputView';
 import { TextView } from './components/TextView';
 import { Button } from '../common/components/Button';
-
+import Modal from 'react-native-modal'
+import DatePicker from 'react-native-date-picker';
+import { DateScroller } from './components/DateScroller';
 interface enterChildInfoProps {
 	navigation : StackNavigationProp<stackInterface,'SocialLogin'>;
 }
@@ -19,6 +21,19 @@ export function EnterChildInfo(props : enterChildInfoProps) {
 	const essentialOptionCheck = () : boolean => {
 		return false
 	}
+
+	const [name, setName] = React.useState<string>();
+	const [birthDate, setBirthDate] = React.useState<Date>(new Date());
+	const [sex, setSex] = React.useState<'M'|'W'>();
+	const [diagnosis, setDiagnosis] = React.useState<string>();
+	const [weekNum,setWeekNum] = React.useState<number>();
+	const [dateNum,setdateNum] = React.useState<number>();
+	const [height, setHeight] = React.useState<number>();
+	const [weight, setWeight] = React.useState<number>();
+	
+	// 출생일 datePicker
+	const [modalVisible, setModalVisible] = React.useState<boolean>(false);
+
 	return (
 		<SafeAreaView style={styles.container}>
 			<View style={styles.innerContainer}>
@@ -32,12 +47,16 @@ export function EnterChildInfo(props : enterChildInfoProps) {
 						<Text style={styles.headerTextStyle}>우리아이등록</Text>
 				</View>
 
-				<ScrollView style={{flex : 1}}>
+				<ScrollView 
+					style={{flex : 1}}
+					showsVerticalScrollIndicator={false}
+				>
 					
 					<TextView text='이름'/>
 					<TextInputView 
 					placeholder={'우리 아이 이름을 한글로 입력해주세요. ex) 김키블'}
 					style={{marginBottom : SIZE_HEIGHT * 0.06}}
+					onChangeText={setName}
 					></TextInputView>
 
 					<TextView text='출생일'/>
@@ -45,6 +64,9 @@ export function EnterChildInfo(props : enterChildInfoProps) {
 					placeholder={'출생일을 선택해주세요'}
 					style={{marginBottom : SIZE_HEIGHT * 0.06}}
 					icon="calendar"
+					editable={false}
+					iconOnPress={setModalVisible}
+					value={birthDate}
 					></TextInputView>
 
 					{/* 성별 */}
@@ -54,12 +76,16 @@ export function EnterChildInfo(props : enterChildInfoProps) {
 							<Text style={{color: '#ff8a5c'}}>*</Text>
 						</View>
 						<View style={{flexDirection : 'row', justifyContent : 'space-between'}}>
-							<TouchableOpacity style={styles.buttonSex}>
-								<Text>여아</Text>
+							<TouchableOpacity style={[styles.buttonSex,{borderColor : sex == 'M' ? '#ff8a5c' : '#ededed'}]}
+							onPress={() => setSex('M')}
+							>
+								<Text style={{color : sex == 'M' ? '#ff8a5c' : '#aaaaaa'}}>남</Text>
 							</TouchableOpacity>
-						
-							<TouchableOpacity style={styles.buttonSex}>
-								<Text>남아</Text>
+
+							<TouchableOpacity style={[styles.buttonSex,{borderColor : sex == 'W' ? '#ff8a5c' : '#ededed'}]}
+							onPress={() => setSex('W')}
+							>
+								<Text style={{color : sex == 'W' ? '#ff8a5c' : '#aaaaaa'}}>여</Text>
 							</TouchableOpacity>
 						</View>
 					</View>
@@ -69,6 +95,7 @@ export function EnterChildInfo(props : enterChildInfoProps) {
 					placeholder={'진단명을 선택해 주세요'}
 					style={{marginBottom : SIZE_HEIGHT * 0.06}}
 					icon="chevron-down"
+					editable={false}
 					></TextInputView>
 
 					{/* 출생시 주수 */}
@@ -79,12 +106,14 @@ export function EnterChildInfo(props : enterChildInfoProps) {
 							style={{marginBottom : SIZE_HEIGHT * 0.06, width : SIZE_WIDTH * 0.40}}
 							unitText="주"
 							keyboardType='numeric'
+							onChangeText={setWeekNum}
 						></TextInputView>
 						<TextInputView 
 							placeholder={'ex) 10'}
 							style={{marginBottom : SIZE_HEIGHT * 0.06, width : SIZE_WIDTH * 0.40}}
 							unitText="일"
 							keyboardType='numeric'
+							onChangeText={setdateNum}
 						></TextInputView>
 					</View>
 
@@ -93,6 +122,8 @@ export function EnterChildInfo(props : enterChildInfoProps) {
 					placeholder={'키를 입력해주세요'}
 					style={{marginBottom : SIZE_HEIGHT * 0.06}}
 					unitText="cm"
+					keyboardType='numeric'
+					onChangeText={setHeight}
 					></TextInputView>
 
 					<TextView text='몸무게'/>
@@ -100,6 +131,8 @@ export function EnterChildInfo(props : enterChildInfoProps) {
 					placeholder={'몸무게를 입력해주세요'}
 					style={{marginBottom : SIZE_HEIGHT * 0.1}}
 					unitText="kg"
+					keyboardType='numeric'
+					onChangeText={setWeight}
 					></TextInputView>
 
 					<Button 
@@ -111,6 +144,18 @@ export function EnterChildInfo(props : enterChildInfoProps) {
 					/>
 				</ScrollView>
 
+
+
+				{/* 출생일 dateScroller */}
+                <Modal isVisible={modalVisible}>
+					<DateScroller 
+						setDate={setBirthDate} 
+						date={birthDate}
+						setModalVisible={setModalVisible}
+					></DateScroller>
+				</Modal>
+
+				
 			</View>
 		</SafeAreaView>
 	);
@@ -139,7 +184,7 @@ const styles = StyleSheet.create({
 		width : SIZE_WIDTH * 0.40,
 		paddingVertical : SIZE_HEIGHT * 0.017,
 		borderRadius: 20,
-		borderColor : '#ededed',
+		// borderColor : '#ededed',
 		borderWidth : 2,
 		justifyContent : 'center', 
 		alignItems : 'center'

@@ -19,6 +19,8 @@ import { Splash } from './src/screen/common/components/Splash';
 import { SocialLogin } from './src/screen/login/SocialLogin';
 import { Register } from './src/screen/login/Register';
 
+import { DateScroller } from './src/screen/childInfo/components/DateScroller';
+
 
 
 
@@ -59,12 +61,12 @@ export default function App () {
 		<Splash />
 		: 
 		// <Provider store={store}>
+
 		<ApolloProvider client={client}>
 			<NavigationContainer>
 				<StackNav />
 			</NavigationContainer>
 		</ApolloProvider>
-
 		// </Provider>
 
 
