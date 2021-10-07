@@ -40,7 +40,7 @@ export function Agreement(props: AgreementProps) {
                 <Divider height="30%" color="white" />
 
                 <View style={styles.checkContainer}>
-                    <TouchableOpacity style={styles.allCheckButton} onPress={() => setServiceUse(false)}>
+                    <TouchableOpacity style={[styles.allCheckButton, {backgroundColor : agreeAll ? "#ff8a5c" : "#d5d5d5"}]} onPress={() => setAgreeAll(!agreeAll)}>
                         <Icon name="checkmark" style={styles.allCheck} />
                     </TouchableOpacity>
                     <Text style={styles.allTextStyle}> 모두 확인, 동의합니다.</Text>
@@ -91,7 +91,6 @@ const styles = StyleSheet.create({
         height: SIZE_HEIGHT * 0.04,
         width: SIZE_HEIGHT * 0.04,
         borderRadius: 5,
-        backgroundColor: '#d5d5d5',
         alignItems: 'center',
         justifyContent: 'center',
 		marginRight : 5

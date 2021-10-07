@@ -15,7 +15,7 @@ export function AgreementList(props : agreementListProps) {
 			<View style={styles.checkWithText}>
 				
 				<TouchableOpacity style={styles.checkButton} onPress={() => props.onPress(!props.state)}>
-					<Icon name="checkmark" style={styles.checkStyle} />
+					<Icon name="checkmark" style={[styles.checkStyle,{color : props.state ? "#d5d5d5" : "#ff8a5c"}]} />
 				</TouchableOpacity>
 				<Text style={styles.textStyle}> {props.text} </Text>
 				<Text style={styles.textStyle}> {props.state} </Text>
@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
 	},
 	checkStyle :{
 		fontSize: 30,
-        color: '#d5d5d5',
         fontWeight: 'bold',
 	},
 	textStyle :{
