@@ -16,12 +16,38 @@ interface AgreementProps {
 
 export function Agreement(props: AgreementProps) {
 
+    console.log("엥")
+
     const [agreeAll, setAgreeAll] = React.useState<boolean>(false);                  //전체 동의
-    const [serviceUse, setServiceUse] = React.useState<boolean>(true);              //서비스 이용약관
+    const [serviceUse, setServiceUse] = React.useState<boolean>(false);              //서비스 이용약관
     const [pInfoCollection, setPInfoCollection] = React.useState<boolean>(false);    //개인정보 수집 이용동의
     const [pInfoProvide, setPInfoProvide] = React.useState<boolean>(false);          //개인정보 제3자 제공 동의
     const [marketingInfo, setMarketingInfo] = React.useState<boolean>(false);        //마케팅 정보 수신동의
 
+
+    // 약관동의 
+    function setEntireState(value : boolean){
+        setAgreeAll(value)
+        setServiceUse(value)
+        setPInfoCollection(value)
+        setPInfoProvide(value)
+        setMarketingInfo(value)
+    }
+    // 필수동의항목 체크 확인
+    const essentialOptionCheck = () : boolean => {
+        if(serviceUse && pInfoCollection && pInfoProvide){
+            return true
+        }
+        return false
+    }
+
+    // 전체 항목 체크 확인
+    const entireOptionCheck = () : boolean => {
+        if(serviceUse && pInfoCollection && pInfoProvide && marketingInfo){
+            return true
+        }
+        return false
+    }
 
     return (
         <View style={styles.container}>
@@ -40,7 +66,10 @@ export function Agreement(props: AgreementProps) {
                 <Divider height="30%" color="white" />
 
                 <View style={styles.checkContainer}>
-                    <TouchableOpacity style={[styles.allCheckButton, {backgroundColor : agreeAll ? "#ff8a5c" : "#d5d5d5"}]} onPress={() => setAgreeAll(!agreeAll)}>
+                    <TouchableOpacity 
+                        style={[styles.allCheckButton, {backgroundColor : entireOptionCheck() ? "#ff8a5c" : "#d5d5d5"}]} 
+                        onPress={() => setEntireState(!agreeAll)}
+                    >        
                         <Icon name="checkmark" style={styles.allCheck} />
                     </TouchableOpacity>
                     <Text style={styles.allTextStyle}> 모두 확인, 동의합니다.</Text>
@@ -57,10 +86,10 @@ export function Agreement(props: AgreementProps) {
 
 				<Button 
 					text={'확인'} 
-					textColor={'#707070'} 
-					style={{backgroundColor : '#ededed' , borderColor : '#ededed'}} 
-					onPress={() => {}}
-                    disable = {!(serviceUse && pInfoCollection && pInfoProvide)}
+					textColor={!essentialOptionCheck() ? '#707070' : '#FFFFFF'} 
+					style={{backgroundColor : essentialOptionCheck() ? "#ff8a5c" : '#ededed' }} 
+					onPress={() => props.navigation.navigate('LoginSplash')}
+                    disable = {!essentialOptionCheck()}
 				/>
             </View>
         </View>

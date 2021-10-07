@@ -15,7 +15,7 @@ export function Register(props: registerProps) {
         <SafeAreaView style={styles.container}>
             <View style={styles.innerContainer}>
 
-				<Divider height={'13%'} color='white' />
+				<Divider height={'1%'} color='white' />
 
                 <Image
                     source={require('../../assets/icons/logo.png')}
@@ -28,8 +28,17 @@ export function Register(props: registerProps) {
                 </View>
                 <Divider height={'15%'} color='white' />
                 
-				<Button text={'회원가입'} textColor={'#ffffff'} style={{backgroundColor: '#ff8a5c'}} />
-                <Button text={'로그인'} textColor={'#ff8a5c'} onPress={() => props.navigation.navigate('SocialLogin')} />
+				<Button 
+                    text={'회원가입'} 
+                    textColor={'#ffffff'} 
+                    style={{backgroundColor: '#ff8a5c'}} 
+                ></Button>
+                <Button 
+                    text={'로그인'} 
+                    textColor={'#ff8a5c'} 
+                    style={{borderWidth : 1, borderColor : '#ff8a5c'}}
+                    onPress={() => props.navigation.navigate('SocialLogin')} 
+                ></Button>
 
             </View>
         </SafeAreaView>
