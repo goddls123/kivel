@@ -5,18 +5,20 @@ import Icon from 'react-native-vector-icons/Ionicons';
 interface agreementListProps {
 	text : string
 	onPress(value : boolean) : void
+	state : boolean
 	navigation?() : void
 }
 
 export function AgreementList(props : agreementListProps) {
 	return (
 		<View style={styles.container}>
-
 			<View style={styles.checkWithText}>
-				<TouchableOpacity style={styles.checkButton} onPress={() => props.onPress(false)}>
+				
+				<TouchableOpacity style={styles.checkButton} onPress={() => props.onPress(!props.state)}>
 					<Icon name="checkmark" style={styles.checkStyle} />
 				</TouchableOpacity>
 				<Text style={styles.textStyle}> {props.text} </Text>
+				<Text style={styles.textStyle}> {props.state} </Text>
 			</View>
 
 			<TouchableOpacity style={styles.rightArrowContainer}>

@@ -7,7 +7,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {stackInterface} from '../../types/navigationParam';
 import {logInWithKakao, unlinkKakao} from '../login/service/loginService';
 import {Divider} from '../common/divider';
-import { AgreementList } from './components/agreementList';
+import { AgreementList } from './components/AgreementList';
 import { Button } from './components/Button';
 
 interface AgreementProps {
@@ -22,7 +22,6 @@ export function Agreement(props: AgreementProps) {
     const [pInfoProvide, setPInfoProvide] = React.useState<boolean>(false);          //개인정보 제3자 제공 동의
     const [marketingInfo, setMarketingInfo] = React.useState<boolean>(false);        //마케팅 정보 수신동의
 
-    console.log(serviceUse);
 
     return (
         <View style={styles.container}>
@@ -49,10 +48,10 @@ export function Agreement(props: AgreementProps) {
 
                 <Divider height={2} color="#ededed" style={{marginTop : 20, marginBottom :30}}></Divider>
 
-				<AgreementList text="서비스 이용약관 (필수)" onPress={setServiceUse}></AgreementList>
-				<AgreementList text="개인정보 수집 이용동의 (필수)" onPress={setServiceUse}></AgreementList>
-				<AgreementList text="개인정보 제3자 제공 동의 (필수)" onPress={setServiceUse}></AgreementList>
-				<AgreementList text="마케팅 정보 수신 동의 (선택)" onPress={setServiceUse}></AgreementList>
+				<AgreementList text="서비스 이용약관 (필수)" state={serviceUse} onPress={setServiceUse}></AgreementList>
+				<AgreementList text="개인정보 수집 이용동의 (필수)" state={pInfoCollection} onPress={setPInfoCollection}></AgreementList>
+				<AgreementList text="개인정보 제3자 제공 동의 (필수)" state={pInfoProvide} onPress={setPInfoProvide}></AgreementList>
+				<AgreementList text="마케팅 정보 수신 동의 (선택)" state={marketingInfo} onPress={setMarketingInfo}></AgreementList>
 				
 				<Divider height="5%" color="white" />
 
@@ -61,9 +60,8 @@ export function Agreement(props: AgreementProps) {
 					textColor={'#707070'} 
 					style={{backgroundColor : '#ededed' , borderColor : '#ededed'}} 
 					onPress={() => {}}
-                    disable = {true}
+                    disable = {!(serviceUse && pInfoCollection && pInfoProvide)}
 				/>
-                {serviceUse ? <Text>sdaklfjalsdkf</Text> : null}
             </View>
         </View>
     );
