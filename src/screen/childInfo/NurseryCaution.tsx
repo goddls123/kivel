@@ -24,7 +24,9 @@ export function NurseryCaution(props : NurseryCautionProps) {
 				<View style={{marginTop : SIZE_HEIGHT * 0.03 , marginBottom : SIZE_HEIGHT * 0.1}}>
 						<Text style={styles.headerTextStyle}>보육시 주의사항</Text>
 				</View>
-                
+                <Slider>
+                    
+                </Slider>
 		</View>
 	</SafeAreaView>
 

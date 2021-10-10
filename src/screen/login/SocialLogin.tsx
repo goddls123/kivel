@@ -48,10 +48,7 @@ export function SocialLogin(props : SocialLoginProps) {
 
 			<View style={{height : '25%'}} />
 			<SocialLoginButton platform='kakao' onPress={logInWithKakao}/>
-			<SocialLoginButton platform='naver' onPress={() => {
-				mutationTest({})
-				// props.navigation.navigate('Agreement')
-			}}/>
+			<SocialLoginButton platform='naver' onPress={() => { props.navigation.navigate('Agreement')}}/>
 		</View>
 	</SafeAreaView>
 
