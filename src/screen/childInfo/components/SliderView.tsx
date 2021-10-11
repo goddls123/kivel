@@ -30,9 +30,7 @@ export function SliderView(props: SliderViewProps) {
 					minY={-10}
 					maxY={-10}
 				>
-					<View style={{height : 40, width : 40, borderWidth : 4, borderColor : '#ff8a5c', borderRadius : 100, backgroundColor : 'white'}}>
-
-					</View>
+					<View style={{height : 40, width : 40, borderWidth : 4, borderColor : '#ff8a5c', borderRadius : 100, backgroundColor : 'white'}} />
 				</Draggable>
 			</View>
 		

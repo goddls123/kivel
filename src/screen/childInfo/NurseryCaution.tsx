@@ -28,35 +28,6 @@ export function NurseryCaution(props : NurseryCautionProps) {
                 
                 <View>
                     <Text>아이에게 간식은</Text>
-                    <Slider
-                    style={{width: 200, height: 40}}
-                    minimumValue={0}
-                    maximumValue={1}
-                    minimumTrackTintColor="#FFFFFF"
-                    maximumTrackTintColor="#000000"
-                    thumbImage={{uri : "https://img1.daumcdn.net/thumb/R720x0.q80/?scode=mtistory2&fname=http%3A%2F%2Fcfile7.uf.tistory.com%2Fimage%2F24283C3858F778CA2EFABE"}}
-                    />
-                    <Slider
-                        // value={value}
-                        minimumValue={0}
-                        maximumValue={50}
-                        // onValueChange={(value) => setValue(value)}
-                        // thumbStyle={}
-                        // customThumb={
-                        //     <View
-                        //         style={{
-                        //             width: 35,
-                        //             height: 20,
-                        //             overflow: 'hidden',
-                        //             borderTopLeftRadius: 10,
-                        //             borderTopRightRadius: 10,
-                        //             borderBottomLeftRadius: 10,
-                        //             borderBottomRightRadius: 10,
-                        //             backgroundColor: 'gold' 
-                        //         }}
-                        //     />
-                        // }
-                    />
                 </View>
                 
                     
