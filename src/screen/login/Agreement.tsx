@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
-import {GLOBAL_MARGIN_HORIZON, SIZE_HEIGHT, SIZE_WIDTH} from '../common/constants';
+import {View, StyleSheet, Text, Image, TouchableOpacity, SafeAreaView, Platform} from 'react-native';
+import {GLOBAL_MARGIN_HORIZON, MAIN_COLOR, SIZE_HEIGHT, SIZE_WIDTH} from '../common/constants';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {SocialLoginButton} from './components/SocialLoginButton';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -50,10 +50,12 @@ export function Agreement(props: AgreementProps) {
     }
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <View style={styles.innerContainer}>
                 
-                <Divider height={GLOBAL_MARGIN_HORIZON} color="white" />
+                {
+				    Platform.OS =='android' ? <Divider height={GLOBAL_MARGIN_HORIZON} color="white" /> : null
+			    }
                 <TouchableOpacity onPress={() => props.navigation.goBack()}>
                     <Icon name="close" style={{fontSize: 30}}></Icon>
                 </TouchableOpacity>
@@ -67,7 +69,7 @@ export function Agreement(props: AgreementProps) {
 
                 <View style={styles.checkContainer}>
                     <TouchableOpacity 
-                        style={[styles.allCheckButton, {backgroundColor : entireOptionCheck() ? "#ff8a5c" : "#d5d5d5"}]} 
+                        style={[styles.allCheckButton, {backgroundColor : entireOptionCheck() ? MAIN_COLOR : "#d5d5d5"}]} 
                         onPress={() => setEntireState(!agreeAll)}
                     >        
                         <Icon name="checkmark" style={styles.allCheck} />
@@ -87,12 +89,12 @@ export function Agreement(props: AgreementProps) {
 				<Button 
 					text={'확인'} 
 					textColor={!essentialOptionCheck() ? '#707070' : '#FFFFFF'} 
-					style={{backgroundColor : essentialOptionCheck() ? "#ff8a5c" : '#ededed' }} 
+					style={{backgroundColor : essentialOptionCheck() ? MAIN_COLOR : '#ededed' }} 
 					onPress={() => props.navigation.navigate('LoginSplash')}
                     disable = {!essentialOptionCheck()}
 				/>
             </View>
-        </View>
+        </SafeAreaView>
     );
 }
 const styles = StyleSheet.create({

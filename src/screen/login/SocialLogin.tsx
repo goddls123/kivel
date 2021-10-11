@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, SafeAreaView ,StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
+import {View, SafeAreaView ,StyleSheet, Text, Image, TouchableOpacity, Platform} from 'react-native';
 import {GLOBAL_MARGIN_HORIZON, SIZE_HEIGHT, SIZE_WIDTH} from '../common/constants';
 import Icon from 'react-native-vector-icons/Ionicons'
 import { SocialLoginButton } from './components/SocialLoginButton';
@@ -33,7 +33,10 @@ export function SocialLogin(props : SocialLoginProps) {
 	<SafeAreaView style={styles.container}>
 		<View style={styles.innerContainer}>
 
-			<Divider height={GLOBAL_MARGIN_HORIZON} color="white" />
+			{
+				Platform.OS =='android' ? <Divider height={GLOBAL_MARGIN_HORIZON} color="white" /> : null
+			}
+			
                 <TouchableOpacity onPress={() => props.navigation.goBack()}>
                     <Icon name="close" style={{fontSize: 30}}></Icon>
                 </TouchableOpacity>

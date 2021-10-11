@@ -1,8 +1,12 @@
 import React from 'react';
 import {View, StyleSheet, Alert, Text, useWindowDimensions} from 'react-native';
 import Draggable from 'react-native-draggable';
+<<<<<<< HEAD
 import { Button } from '../../common/components/Button';
 import { GLOBAL_MARGIN_HORIZON, SIZE_HEIGHT, SIZE_WIDTH } from '../../common/constants';
+=======
+import { MAIN_COLOR, SIZE_HEIGHT, SIZE_WIDTH } from '../../common/constants';
+>>>>>>> ce3cf4e0ba8c2c53453463786cdae33a9f18b72f
 import { Divider } from '../../common/divider';
 import {Slider} from '@miblanchard/react-native-slider';
 
@@ -33,6 +37,7 @@ export function SliderView() {
 					x={value}
 					y={SIZE_HEIGHT * 0.01 - 20}
 					minY={-10}
+<<<<<<< HEAD
 					maxY={-10}			
 					minX={GLOBAL_MARGIN_HORIZON}
 					maxX={SIZE_WIDTH - GLOBAL_MARGIN_HORIZON}
@@ -54,6 +59,11 @@ export function SliderView() {
 						}
 					}}>
 					<View style={{height : 40, width : 40, borderWidth : 4, borderColor : '#ff8a5c', borderRadius : 100, backgroundColor : 'white'}} />
+=======
+					maxY={-10}
+				>
+					<View style={{height : 40, width : 40, borderWidth : 4, borderColor : MAIN_COLOR, borderRadius : 100, backgroundColor : 'white'}} />
+>>>>>>> ce3cf4e0ba8c2c53453463786cdae33a9f18b72f
 				</Draggable>
 				
 				

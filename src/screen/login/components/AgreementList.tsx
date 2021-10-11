@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
-import { SIZE_HEIGHT } from '../../common/constants';
+import { MAIN_COLOR, SIZE_HEIGHT } from '../../common/constants';
 import Icon from 'react-native-vector-icons/Ionicons';
 interface agreementListProps {
 	text : string
@@ -15,7 +15,7 @@ export function AgreementList(props : agreementListProps) {
 			<View style={styles.checkWithText}>
 				
 				<TouchableOpacity style={styles.checkButton} onPress={() => props.onPress(!props.state)}>
-					<Icon name="checkmark" style={[styles.checkStyle,{color : props.state ? "#ff8a5c" : "#d5d5d5" }]} />
+					<Icon name="checkmark" style={[styles.checkStyle,{color : props.state ? MAIN_COLOR : "#d5d5d5" }]} />
 				</TouchableOpacity>
 				<Text style={styles.textStyle}> {props.text} </Text>
 				<Text style={styles.textStyle}> {props.state} </Text>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Text, ScrollView} from 'react-native';
+import {View, StyleSheet, Text, ScrollView, SafeAreaView, Image} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {schedule_data} from '../test/testData';
@@ -12,6 +12,7 @@ import { stackInterface } from '../../types/navigationParam';
 import { schedule } from '../../types/calendarTypes';
 import { NavigationButton } from './components/NavigationButton';
 import { Divider } from '../common/divider';
+import { GLOBAL_MARGIN_HORIZON, SIZE_HEIGHT } from '../common/constants';
 
 
 interface homeTabProps {
@@ -33,18 +34,19 @@ export function homeTab(props : homeTabProps) {
   }, []);
   
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
 
       {/* 헤더 */}
       <View style={styles.headerContainer}>
-        <View style={{flexDirection: 'row'}}>
+        {/* <View style={{flexDirection: 'row'}}> */}
           <TouchableOpacity>
-            <Icon name="person-circle-outline" style={styles.headerIcon} />
+            <Image source={require('../../assets/icons/notification.png')} resizeMode='center' style={styles.headerIcon}></Image>
+            <View style={styles.notification}></View>
           </TouchableOpacity>
           <TouchableOpacity>
-            <Icon name="notifications-outline" style={styles.headerIcon} />
+            <Image source={require('../../assets/icons/setting.png')} resizeMode='center' style={styles.headerIcon}></Image>
           </TouchableOpacity>
-        </View>
+        {/* </View> */}
       </View>
 
       {/* 프로필 */}
@@ -121,7 +123,7 @@ export function homeTab(props : homeTabProps) {
       />
 
 
-    </View>
+    </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({
@@ -129,20 +131,42 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerContainer: {
-    flex: 1,
-    alignItems: 'flex-end',
-    alignSelf: 'center',
-    width: '80%',
-    marginTop: 15,
+    flex: 0.8,
+    display: 'flex',
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    alignItems: 'center',
+    // width: '',
+    backgroundColor : 'purple',
+    marginLeft: GLOBAL_MARGIN_HORIZON,
+    marginRight: GLOBAL_MARGIN_HORIZON,
+    // marginTop: 15,
   },
   headerIcon: {
-    fontSize: 30,
-    marginLeft: 15,
+    width: 20,
+    height: 20,
+    marginLeft: 4,
+    position: 'relative'
+  },
+  notification: {
+    width:4,
+    height: 4,
+    backgroundColor:'#f41313',
+    borderRadius: 50,
+    position: 'absolute',
+    right: '20%',
+    top: '25%'
   },
   profileContainer: {
-    flex: 3.5,
-    width: '80%',
-    alignSelf: 'center',
+    flex: 2,
+    // width: '80%',
+    // alignSelf: 'center',
+    marginLeft: GLOBAL_MARGIN_HORIZON,
+    marginRight:GLOBAL_MARGIN_HORIZON,
+    justifyContent:'flex-start',
+    alignItems: 'center',
+    flexDirection: 'row',
+    backgroundColor: 'yellow'
   },
   buttonContainer: {
     flex: 2,

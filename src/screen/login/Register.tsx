@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, SafeAreaView, StyleSheet, Text, Image} from 'react-native';
-import {GLOBAL_MARGIN_HORIZON, SIZE_HEIGHT, SIZE_WIDTH} from '../common/constants';
+import {GLOBAL_MARGIN_HORIZON, MAIN_COLOR, SIZE_HEIGHT, SIZE_WIDTH} from '../common/constants';
 import {Button} from '../common/components/Button';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {stackInterface} from '../../types/navigationParam';
@@ -31,12 +31,12 @@ export function Register(props: registerProps) {
 				<Button 
                     text={'회원가입'} 
                     textColor={'#ffffff'} 
-                    style={{backgroundColor: '#ff8a5c'}} 
+                    style={{backgroundColor: MAIN_COLOR}} 
                 ></Button>
                 <Button 
                     text={'로그인'} 
-                    textColor={'#ff8a5c'} 
-                    style={{borderWidth : 1, borderColor : '#ff8a5c'}}
+                    textColor={MAIN_COLOR} 
+                    style={{borderWidth : 1, borderColor : MAIN_COLOR}}
                     onPress={() => props.navigation.navigate('SocialLogin')} 
                 ></Button>
 
