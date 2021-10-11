@@ -7,6 +7,7 @@ import { Divider } from '../common/divider';
 import Icon from 'react-native-vector-icons/Ionicons'
 import Slider from '@react-native-community/slider';
 
+
 interface NurseryCautionProps {
 	navigation : StackNavigationProp<stackInterface,'SocialLogin'>;
 }
@@ -24,9 +25,42 @@ export function NurseryCaution(props : NurseryCautionProps) {
 				<View style={{marginTop : SIZE_HEIGHT * 0.03 , marginBottom : SIZE_HEIGHT * 0.1}}>
 						<Text style={styles.headerTextStyle}>보육시 주의사항</Text>
 				</View>
-                <Slider>
+                
+                <View>
+                    <Text>아이에게 간식은</Text>
+                    <Slider
+                    style={{width: 200, height: 40}}
+                    minimumValue={0}
+                    maximumValue={1}
+                    minimumTrackTintColor="#FFFFFF"
+                    maximumTrackTintColor="#000000"
+                    thumbImage={{uri : "https://img1.daumcdn.net/thumb/R720x0.q80/?scode=mtistory2&fname=http%3A%2F%2Fcfile7.uf.tistory.com%2Fimage%2F24283C3858F778CA2EFABE"}}
+                    />
+                    <Slider
+                        // value={value}
+                        minimumValue={0}
+                        maximumValue={50}
+                        // onValueChange={(value) => setValue(value)}
+                        // thumbStyle={}
+                        // customThumb={
+                        //     <View
+                        //         style={{
+                        //             width: 35,
+                        //             height: 20,
+                        //             overflow: 'hidden',
+                        //             borderTopLeftRadius: 10,
+                        //             borderTopRightRadius: 10,
+                        //             borderBottomLeftRadius: 10,
+                        //             borderBottomRightRadius: 10,
+                        //             backgroundColor: 'gold' 
+                        //         }}
+                        //     />
+                        // }
+                    />
+                </View>
+                
                     
-                </Slider>
+                
 		</View>
 	</SafeAreaView>
 

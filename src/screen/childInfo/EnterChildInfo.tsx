@@ -172,7 +172,7 @@ export function EnterChildInfo(props : enterChildInfoProps) {
 					text={'다음으로'} 
 					textColor={!essentialOptionCheck() ? '#707070' : '#FFFFFF'} 
 					style={{backgroundColor : essentialOptionCheck() ? "#ff8a5c" : '#ededed' }} 
-					onPress={() => {}}
+					onPress={() => {props.navigation.navigate('NurseryCaution')}}
                     disable = {!essentialOptionCheck()}
 					/>
 				</ScrollView>

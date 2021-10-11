@@ -14,4 +14,6 @@ export type stackInterface = {
 
     //
     EnterChildInfo : undefined;
+    NurseryCaution : undefined;
+    test : undefined;
 }
