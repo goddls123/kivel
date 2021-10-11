@@ -29,6 +29,7 @@ export function LoginSplash(props : LoginSplashProps) {
 const styles = StyleSheet.create({
 	container : {
 		flex : 1,
+		backgroundColor : 'white',
 		alignItems : 'center',
 	},
 	boldText : {
@@ -39,6 +40,7 @@ const styles = StyleSheet.create({
 	text : {
 		fontSize : 18,
 		fontWeight : "500",
+		color : "#707070"
 	}
 
 })

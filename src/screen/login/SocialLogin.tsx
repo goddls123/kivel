@@ -7,13 +7,28 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { stackInterface } from '../../types/navigationParam';
 import {  logInWithKakao,  unlinkKakao } from '../login/service/loginService';
 import { Divider } from '../common/divider';
+import { gql } from 'apollo-boost';
+import { useMutation } from '@apollo/client';
 
 interface SocialLoginProps {
 	navigation : StackNavigationProp<stackInterface,'SocialLogin'>;
 }
 
 export function SocialLogin(props : SocialLoginProps) {
-	
+	const query = gql`
+	mutation userLogin($User : User!){
+		userLogin(User : $User) {
+			create_date
+		}
+	}`;
+	const query1 = gql`
+	mutation{
+		userLogin{
+		  create_date
+		}
+	  }`
+
+	const [ mutationTest ] = useMutation(query1)
 	return (
 	<SafeAreaView style={styles.container}>
 		<View style={styles.innerContainer}>
@@ -33,7 +48,7 @@ export function SocialLogin(props : SocialLoginProps) {
 
 			<View style={{height : '25%'}} />
 			<SocialLoginButton platform='kakao' onPress={logInWithKakao}/>
-			<SocialLoginButton platform='naver' onPress={() => props.navigation.navigate('Agreement')}/>
+			<SocialLoginButton platform='naver' onPress={() => { props.navigation.navigate('Agreement')}}/>
 		</View>
 	</SafeAreaView>
 
