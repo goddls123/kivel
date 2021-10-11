@@ -9,3 +9,5 @@ export const ANDROID_KEYS = {
     kConsumerSecret: "6RQek41Dcj",
     kServiceAppName: "키블"  
 }
+
+export const MAIN_COLOR = '#ff8a5c';

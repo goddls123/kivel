@@ -1,7 +1,7 @@
 import React from 'react'
-import { View, StyleSheet, Text, TouchableOpacity, ScrollView, TextInput } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, ScrollView, TextInput, Platform} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { GLOBAL_MARGIN_HORIZON, SIZE_HEIGHT, SIZE_WIDTH } from '../common/constants';
+import { GLOBAL_MARGIN_HORIZON, MAIN_COLOR, SIZE_HEIGHT, SIZE_WIDTH } from '../common/constants';
 import Icon from 'react-native-vector-icons/Ionicons'
 import { StackNavigationProp } from '@react-navigation/stack';
 import { stackInterface } from '../../types/navigationParam';
@@ -20,7 +20,8 @@ interface enterChildInfoProps {
 
 export function EnterChildInfo(props : enterChildInfoProps) {
 		
-	
+	// todoList check right info //
+
 
 	const [name, setName] = React.useState<string>();
 	const [birthDate, setBirthDate] = React.useState<Date>();
@@ -58,8 +59,9 @@ export function EnterChildInfo(props : enterChildInfoProps) {
 	return (
 		<SafeAreaView style={styles.container}>
 			<View style={styles.innerContainer}>
-
-				<Divider height={GLOBAL_MARGIN_HORIZON} color="white" />
+				{
+				    Platform.OS =='android' ? <Divider height={GLOBAL_MARGIN_HORIZON} color="white" /> : null
+			    }
 				<TouchableOpacity onPress={() => props.navigation.reset({routes : [{name : 'Home'}]})}>
 					<Icon name="arrow-back" style={{fontSize : 30}}></Icon>
 				</TouchableOpacity>
@@ -94,19 +96,19 @@ export function EnterChildInfo(props : enterChildInfoProps) {
 					<View style={{marginBottom : SIZE_HEIGHT * 0.06}}>
 						<View style={{flexDirection: 'row', marginBottom : SIZE_HEIGHT * 0.02}}>
 							<Text style={styles.text}>성별 </Text>
-							<Text style={{color: '#ff8a5c'}}>*</Text>
+							<Text style={{color: MAIN_COLOR}}>*</Text>
 						</View>
 						<View style={{flexDirection : 'row', justifyContent : 'space-between'}}>
-							<TouchableOpacity style={[styles.buttonSex,{borderColor : sex == 'M' ? '#ff8a5c' : '#ededed'}]}
+							<TouchableOpacity style={[styles.buttonSex,{borderColor : sex == 'M' ? MAIN_COLOR : '#ededed'}]}
 							onPress={() => setSex('M')}
 							>
-								<Text style={{color : sex == 'M' ? '#ff8a5c' : '#aaaaaa'}}>남</Text>
+								<Text style={{color : sex == 'M' ? MAIN_COLOR : '#aaaaaa'}}>남</Text>
 							</TouchableOpacity>
 
-							<TouchableOpacity style={[styles.buttonSex,{borderColor : sex == 'W' ? '#ff8a5c' : '#ededed'}]}
+							<TouchableOpacity style={[styles.buttonSex,{borderColor : sex == 'W' ? MAIN_COLOR : '#ededed'}]}
 							onPress={() => setSex('W')}
 							>
-								<Text style={{color : sex == 'W' ? '#ff8a5c' : '#aaaaaa'}}>여</Text>
+								<Text style={{color : sex == 'W' ? MAIN_COLOR : '#aaaaaa'}}>여</Text>
 							</TouchableOpacity>
 						</View>
 					</View>
@@ -171,7 +173,7 @@ export function EnterChildInfo(props : enterChildInfoProps) {
 					<Button 
 					text={'다음으로'} 
 					textColor={!essentialOptionCheck() ? '#707070' : '#FFFFFF'} 
-					style={{backgroundColor : essentialOptionCheck() ? "#ff8a5c" : '#ededed' }} 
+					style={{backgroundColor : essentialOptionCheck() ? MAIN_COLOR : '#ededed' }} 
 					onPress={() => {props.navigation.navigate('NurseryCaution')}}
                     disable = {!essentialOptionCheck()}
 					/>

@@ -2,6 +2,7 @@ import { valueFromAST } from 'graphql';
 import React from 'react';
 import {View, StyleSheet, Text, TextInput, ViewStyle, TouchableOpacity, KeyboardTypeOptions} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
+import { MAIN_COLOR } from '../../common/constants';
 import { getDateYMD } from '../../common/service/dateService';
 interface textInputViewProps {
     placeholder: string;
@@ -40,7 +41,7 @@ export function TextInputView(props: textInputViewProps) {
 					props.icon
 					? 		
 					<TouchableOpacity onPress={() => props.iconOnPress? props.iconOnPress(true) : null}>
-						<Icon name={props.icon} style={{fontSize: 25, color : '#ff8a5c'}}></Icon>
+						<Icon name={props.icon} style={{fontSize: 25, color : MAIN_COLOR}}></Icon>
 					</TouchableOpacity>
 					: null
 				}
