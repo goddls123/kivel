@@ -5,7 +5,6 @@ import { stackInterface } from '../../types/navigationParam';
 import { GLOBAL_MARGIN_HORIZON, SIZE_HEIGHT, SIZE_WIDTH } from '../common/constants';
 import { Divider } from '../common/divider';
 import Icon from 'react-native-vector-icons/Ionicons'
-import Slider from '@react-native-community/slider';
 
 
 interface NurseryCautionProps {
