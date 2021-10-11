@@ -20,33 +20,13 @@ const Tab = createBottomTabNavigator();
 export default function bottomTabNav() {
     return (
 		<Tab.Navigator>
-			<Tab.Screen name="home" component={homeTab}	options={{headerShown : false}} />
-			<Tab.Screen name="chat" component={chatTab} options={{headerShown : false}} />
-			<Tab.Screen name="diary" component={topTabNav} options={{headerShown : false}} />
-			<Tab.Screen name="chatTest1" component={chattest1} options={{headerShown : false}} />
+			<Tab.Screen name="홈" component={homeTab}	options={{headerShown : false}} />
+			<Tab.Screen name="채팅" component={chatTab} options={{headerShown : false}} />
+			<Tab.Screen name="기록" component={topTabNav} options={{headerShown : false}} />
+			<Tab.Screen name="커뮤니티" component={chattest1} options={{headerShown : false}} />
 	  	</Tab.Navigator>
     )
 }
 
-
-const styles = StyleSheet.create({
-	bottomTabStyle : {
-		position : 'absolute',
-		bottom : '2%',
-		left : '5%',
-		right : '5%',
-		borderRadius : 15,
-		height : '10%',
-		shadowColor : '#7F5DF0',
-		shadowOffset:{
-			width : 0,
-			height: 10,
-		},
-		shadowOpacity : 0.25,
-		shadowRadius : 3.5,
-		elevation : 5
-	}
-	
-})
 
 

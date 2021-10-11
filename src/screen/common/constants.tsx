@@ -11,3 +11,4 @@ export const ANDROID_KEYS = {
 }
 
 export const MAIN_COLOR = '#ff8a5c';
+export const FONT_COLOR_BLACK = '#111111';
