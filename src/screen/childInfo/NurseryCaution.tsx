@@ -2,9 +2,10 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import {View, SafeAreaView ,StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
 import { stackInterface } from '../../types/navigationParam';
-import { GLOBAL_MARGIN_HORIZON, SIZE_HEIGHT, SIZE_WIDTH } from '../common/constants';
+import { GLOBAL_MARGIN_HORIZON, GLOBAL_MARGIN_VERTICAL, SIZE_HEIGHT, SIZE_WIDTH } from '../common/constants';
 import { Divider } from '../common/divider';
 import Icon from 'react-native-vector-icons/Ionicons'
+import { SliderView } from './components/SliderView';
 
 
 interface NurseryCautionProps {
@@ -21,16 +22,35 @@ export function NurseryCaution(props : NurseryCautionProps) {
 					<Icon name="arrow-back" style={{fontSize : 30}}></Icon>
 				</TouchableOpacity>
 				
-				<View style={{marginTop : SIZE_HEIGHT * 0.03 , marginBottom : SIZE_HEIGHT * 0.1}}>
+				<View style={{marginTop : SIZE_HEIGHT * 0.03 , marginBottom : GLOBAL_MARGIN_VERTICAL}}>
 						<Text style={styles.headerTextStyle}>보육시 주의사항</Text>
 				</View>
                 
-                <View>
-                    <Text>아이에게 간식은</Text>
-                </View>
+                <SliderView 
+                style={{marginBottom : SIZE_HEIGHT * 0.08}}
+                headerText={'아이에게 간식은'}
+                contentLeft={["먹이지않아요"]}
+                contentRight={["원하면 주는 편이에요"]}
+                ></SliderView>
+
+                <SliderView
+                style={{marginBottom : SIZE_HEIGHT * 0.08}}
+                headerText={'아이가 규칙을 어기고 떼를 쓰면'}
+                contentLeft={["받아주기 보단","그 자리에서 훈육해요"]}
+                contentRight={["아이가 진정될 때까지","먼저 달래 주어요"]}
+                ></SliderView>
                 
+                <SliderView
+                style={{marginBottom : SIZE_HEIGHT * 0.08}}
+                headerText={'아이가 식사를 거부하면'}
+                contentLeft={["강요하지 않고","밥을 치워요"]}
+                contentRight={["최대한 먹이려","노력해요"]}
+                ></SliderView>
                     
-                
+                <Text style={{fontSize : 20, color : '#111111', fontWeight : '500' , marginBottom : SIZE_HEIGHT * 0.02}}>
+                    아이를 주로 누가 양육하나요?    
+                </Text>
+			
 		</View>
 	</SafeAreaView>
 

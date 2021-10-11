@@ -20,7 +20,7 @@ export  const  StackNav:  React.FC  =  ({})  =>  {
     const [login,setLogin] = React.useState(false)
     return  (
 
-            <Stack.Navigator  initialRouteName={login? "Home" : "Register"}>
+            <Stack.Navigator  initialRouteName={login? "Home" : "NurseryCaution"}>
                 <Stack.Screen name="Home" component={bottomTabNav} options={{headerShown:  false}}/>
                 <Stack.Screen name="Calendar" component={calendar} options={{headerShown:  false}} />
                 <Stack.Screen name="Diary" component={Diary} options={{headerShown:  false}} />
