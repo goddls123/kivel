@@ -20,6 +20,7 @@ export function VanishTextInput(props: VanishTextInputProps) {
 			<Text style={styles.headerText}>{props.headerText}</Text>
 			<TextInput
 				placeholder={props.placeholder}
+				placeholderTextColor="#d5d5d5"
 				style={[styles.textInputStyle,props.textInputStyle]}
 				value={props.value}
 				onChangeText={(text) => {props.setValue(text)}}

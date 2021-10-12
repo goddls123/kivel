@@ -49,6 +49,7 @@ export function ChildTendency(props: ChildTendencyProps) {
                 <TextInput
                     style={styles.textBoxStyle}
                     placeholder="ex) 낯을 많이가려요 / 친해지는데 시간이필요해요 / 정돈되지 않은 환경에 있으면 혼란스러워 해요 등등..."
+                    placeholderTextColor="#d5d5d5"
                     value={tendency}
                     onChangeText={(text) => setTendency(text)}
                     multiline
@@ -106,5 +107,6 @@ const styles = StyleSheet.create({
     underlineTextStyle : {
         textAlign : 'center',
         textDecorationLine : 'underline',
+        color : "#d5d5d5"
     }
 });

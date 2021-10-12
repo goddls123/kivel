@@ -12,10 +12,11 @@ interface ButtonProps {
 
 export function Button(props : ButtonProps) {
 		return (
+
 			<TouchableOpacity onPress={props.onPress}
 				style={[styles.buttonStyle,props.style]}
-				disabled={props.disable === true ? true : false}
-			>
+				disabled={props.disable === true ? true : false}>
+
 				<Text style={[styles.textStyle,{color : props.textColor}]}>{props.text}</Text>
 			</TouchableOpacity>
 		);
@@ -29,9 +30,8 @@ const styles = StyleSheet.create({
 	marginBottom : 10
   },
   textStyle: {
-    fontFamily: 'Pretendard',
-    fontSize: 16,
-    fontWeight: '500',
+    fontFamily: 'Pretendard-Medium',
+    fontSize: 18,
     fontStyle: 'normal',
     lineHeight: 32,
     letterSpacing: 0,

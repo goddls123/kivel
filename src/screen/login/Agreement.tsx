@@ -57,7 +57,7 @@ export function Agreement(props: AgreementProps) {
 				    Platform.OS =='android' ? <Divider height={GLOBAL_MARGIN_HORIZON} color="white" /> : null
 			    }
                 <TouchableOpacity onPress={() => props.navigation.goBack()}>
-                    <Icon name="close" style={{fontSize: 30}}></Icon>
+                    <Icon name="close" style={styles.closeIcon}></Icon>
                 </TouchableOpacity>
                 <Divider height={'5%'} color="white" />
 
@@ -106,6 +106,10 @@ const styles = StyleSheet.create({
         flex: 1,
         marginHorizontal: GLOBAL_MARGIN_HORIZON,
     },
+    closeIcon : {
+		fontSize: 30, 
+		color : "#111111"
+	},
     bigTextStyle: {
         fontFamily: 'Pretendard',
         fontSize: 30,

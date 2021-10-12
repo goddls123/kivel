@@ -42,7 +42,7 @@ export function NurseryCaution2(props: NurseryCaution2Props) {
                 <Divider height={GLOBAL_MARGIN_HORIZON} color="white" />
                 <TouchableOpacity
                     onPress={() => props.navigation.reset({routes: [{name: 'Home'}]})}>
-                    <Icon name="arrow-back" style={{fontSize: 30}}></Icon>
+                    <Icon name="arrow-back" style={styles.iconStyle}></Icon>
                 </TouchableOpacity>
 
                 <View style={styles.headerTextContainer}>
@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
         flex: 1,
         marginHorizontal: SIZE_WIDTH * 0.05,
     },
+    iconStyle : {fontSize : 30, color : "#111111"},
     headerTextContainer : {
         marginTop: SIZE_HEIGHT * 0.03,
         marginBottom: GLOBAL_MARGIN_VERTICAL,
@@ -137,5 +138,6 @@ const styles = StyleSheet.create({
     underlineTextStyle : {
         textAlign : 'center',
         textDecorationLine : 'underline',
+        color : "#aaaaaa"
     }
 });

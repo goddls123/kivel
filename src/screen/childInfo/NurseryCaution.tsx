@@ -25,10 +25,10 @@ export function NurseryCaution(props : NurseryCautionProps) {
 		<View style={styles.innerContainer}>
                 <Divider height={GLOBAL_MARGIN_HORIZON} color="white" />
 				<TouchableOpacity onPress={() => props.navigation.reset({routes : [{name : 'Home'}]})}>
-					<Icon name="arrow-back" style={{fontSize : 30}}></Icon>
+					<Icon name="arrow-back" style={styles.iconStyle}></Icon>
 				</TouchableOpacity>
 				
-				<View style={{marginTop : SIZE_HEIGHT * 0.03 , marginBottom : GLOBAL_MARGIN_VERTICAL}}>
+				<View style={styles.headerTextContainer}>
 						<Text style={styles.headerTextStyle}>보육시 주의사항</Text>
 				</View>
 
@@ -65,6 +65,7 @@ export function NurseryCaution(props : NurseryCautionProps) {
                     </Text>
                     <TextInput 
                     multiline
+                    placeholderTextColor="#d5d5d5"
                     placeholder="ex) 엄마와 외할머니 또는 보육시설(유치원)"
                     style={styles.textBoxStyle}
                     value={rearer}
@@ -76,7 +77,9 @@ export function NurseryCaution(props : NurseryCautionProps) {
                     style={{backgroundColor : rearer? MAIN_COLOR : '#ededed', marginBottom : GLOBAL_MARGIN_VERTICAL}}
                     onPress={() => props.navigation.navigate('NurseryCaution2')}
                     ></Button>
-
+                    <TouchableOpacity style={styles.underlineTextContainer} onPress={() => {props.navigation.navigate('NurseryCaution2')}}>
+                        <Text style={styles.underlineTextStyle}>건너뛰기</Text>
+                    </TouchableOpacity>
                 </ScrollView>
 
 		</View>
@@ -93,6 +96,8 @@ const styles = StyleSheet.create({
         flex: 1,
         marginHorizontal: SIZE_WIDTH * 0.05,
     },
+    iconStyle : {fontSize : 30, color : "#111111"},
+    headerTextContainer : {marginTop : SIZE_HEIGHT * 0.03 , marginBottom : GLOBAL_MARGIN_VERTICAL},
     headerTextStyle: {
         fontFamily: 'Pretendard',
         fontSize: 28,
@@ -103,6 +108,13 @@ const styles = StyleSheet.create({
     sliderViewContainer : {marginBottom : SIZE_HEIGHT * 0.08},
     rearTextStyle : {fontSize : 20, color : '#111111', fontWeight : '500' , marginBottom : SIZE_HEIGHT * 0.02},
     textBoxStyle : {borderRadius :5 , borderWidth : 1, borderColor : "#ededed", height: SIZE_HEIGHT * 0.08, textAlignVertical : 'top', marginBottom : SIZE_HEIGHT * 0.07},
-
+    underlineTextContainer : {
+        marginBottom : GLOBAL_MARGIN_VERTICAL
+    },
+    underlineTextStyle : {
+        textAlign : 'center',
+        textDecorationLine : 'underline',
+        color : "#aaaaaa"
+    }
 
 })

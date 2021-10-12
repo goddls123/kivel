@@ -32,7 +32,8 @@ export function Register(props: registerProps) {
 				<Button 
                     text={'회원가입'} 
                     textColor={'#ffffff'} 
-                    style={{backgroundColor: MAIN_COLOR}} 
+                    style={{backgroundColor: MAIN_COLOR}}
+                    onPress={() => props.navigation.navigate('Home')}
                 ></Button>
                 <Button 
                     text={'로그인'} 
@@ -59,6 +60,7 @@ const styles = StyleSheet.create({
     textView: {
         alignItems: 'center',
         justifyContent: 'center',
+        marginTop : 10,
         marginBottom: 10,
     },
     imageStyle: {
@@ -70,8 +72,8 @@ const styles = StyleSheet.create({
     textStyle: {
         fontFamily: 'Cafe24Ssurround',
         fontSize: 30,
-        fontWeight: 'bold',
         textAlign: 'center',
         color: '#111111',
+        marginBottom : 10
     },
 });
