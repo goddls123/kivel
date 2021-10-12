@@ -31,9 +31,10 @@ export function NurseryCaution(props : NurseryCautionProps) {
 				<View style={{marginTop : SIZE_HEIGHT * 0.03 , marginBottom : GLOBAL_MARGIN_VERTICAL}}>
 						<Text style={styles.headerTextStyle}>보육시 주의사항</Text>
 				</View>
-                <ScrollView style={{marginTop : SIZE_HEIGHT * 0.02}} showsVerticalScrollIndicator={false}>
+
+                <ScrollView style={styles.scrollViewContainer} showsVerticalScrollIndicator={false}>
                     <SliderView 
-                    style={{marginBottom : SIZE_HEIGHT * 0.08}}
+                    style={styles.sliderViewContainer}
                     headerText={'아이에게 간식은'}
                     contentLeft={["먹이지않아요"]}
                     contentRight={["원하면 주는 편이에요"]}
@@ -42,7 +43,7 @@ export function NurseryCaution(props : NurseryCautionProps) {
                     ></SliderView>
 
                     <SliderView
-                    style={{marginBottom : SIZE_HEIGHT * 0.08}}
+                    style={styles.sliderViewContainer}
                     headerText={'아이가 규칙을 어기고 떼를 쓰면'}
                     contentLeft={["받아주기 보단","그 자리에서 훈육해요"]}
                     contentRight={["아이가 진정될 때까지","먼저 달래 주어요"]}
@@ -51,7 +52,7 @@ export function NurseryCaution(props : NurseryCautionProps) {
                     ></SliderView>
                     
                     <SliderView
-                    style={{marginBottom : SIZE_HEIGHT * 0.08}}
+                    style={styles.sliderViewContainer}
                     headerText={'아이가 식사를 거부하면'}
                     contentLeft={["강요하지 않고","밥을 치워요"]}
                     contentRight={["최대한 먹이려","노력해요"]}
@@ -59,13 +60,13 @@ export function NurseryCaution(props : NurseryCautionProps) {
                     setValue={setMeal}
                     ></SliderView>
                         
-                    <Text style={{fontSize : 20, color : '#111111', fontWeight : '500' , marginBottom : SIZE_HEIGHT * 0.02}}>
+                    <Text style={styles.rearTextStyle}>
                         아이를 주로 누가 양육하나요?    
                     </Text>
                     <TextInput 
                     multiline
                     placeholder="ex) 엄마와 외할머니 또는 보육시설(유치원)"
-                    style={{borderRadius :5 , borderWidth : 1, borderColor : "#ededed", height: SIZE_HEIGHT * 0.08, textAlignVertical : 'top', marginBottom : SIZE_HEIGHT * 0.07}}
+                    style={styles.textBoxStyle}
                     value={rearer}
                     onChangeText={(text) => setRearer(text)}
                     ></TextInput>
@@ -75,8 +76,9 @@ export function NurseryCaution(props : NurseryCautionProps) {
                     style={{backgroundColor : rearer? MAIN_COLOR : '#ededed', marginBottom : GLOBAL_MARGIN_VERTICAL}}
                     onPress={() => props.navigation.navigate('NurseryCaution2')}
                     ></Button>
+
                 </ScrollView>
-			
+
 		</View>
 	</SafeAreaView>
 
@@ -97,6 +99,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#111111',
     },
+    scrollViewContainer : {marginTop : SIZE_HEIGHT * 0.02},
+    sliderViewContainer : {marginBottom : SIZE_HEIGHT * 0.08},
+    rearTextStyle : {fontSize : 20, color : '#111111', fontWeight : '500' , marginBottom : SIZE_HEIGHT * 0.02},
+    textBoxStyle : {borderRadius :5 , borderWidth : 1, borderColor : "#ededed", height: SIZE_HEIGHT * 0.08, textAlignVertical : 'top', marginBottom : SIZE_HEIGHT * 0.07},
 
 
 })

@@ -5,6 +5,7 @@ import {Button} from '../common/components/Button';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {stackInterface} from '../../types/navigationParam';
 import { Divider } from '../common/divider';
+import { ChildInfoAlarmModal } from '../childInfo/components/ChildInfoAlarmModal';
 
 interface registerProps {
     navigation: StackNavigationProp<stackInterface, 'Register'>;
@@ -41,6 +42,8 @@ export function Register(props: registerProps) {
                 ></Button>
 
             </View>
+
+            
         </SafeAreaView>
     );
 }
