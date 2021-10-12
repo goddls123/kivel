@@ -79,7 +79,7 @@ export function EnterChildInfo(props: enterChildInfoProps) {
                 </View>
 
                 <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
-                    <TextView text="이름" />
+                    <TextView style={{marginTop : SIZE_HEIGHT * 0.05}} text="이름" />
                     <TextInputView
                         placeholder={'우리 아이 이름을 한글로 입력해주세요. ex) 김키블'}
                         style={styles.commonMargin}
@@ -218,16 +218,16 @@ const styles = StyleSheet.create({
     },
     headerTextContainer: {
         marginTop: SIZE_HEIGHT * 0.03,
-        marginBottom: SIZE_HEIGHT * 0.1,
+        marginBottom: SIZE_HEIGHT * 0.05,
     },
     headerTextStyle: {
-        fontFamily: 'Pretendard',
+        fontFamily: 'Pretendard-Bold',
         fontSize: 28,
-        fontWeight: 'bold',
+        // fontWeight: 'bold',
         color: '#111111',
     },
     text: {
-        fontFamily: 'Pretendard',
+        fontFamily: 'Pretendard-Medium',
         fontSize: 20,
         color: '#111111',
     },

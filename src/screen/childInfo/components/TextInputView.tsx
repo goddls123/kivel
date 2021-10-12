@@ -48,7 +48,7 @@ export function TextInputView(props: textInputViewProps) {
                     alignItems: 'center',
                 }}>
                 <TextInput
-                    placeholderTextColor={"#707070"}
+                    placeholderTextColor={"#d5d5d5"}
                     placeholder={props.placeholder}
                     keyboardType={props.keyboardType ? props.keyboardType : 'default'}
                     onChangeText={text =>
