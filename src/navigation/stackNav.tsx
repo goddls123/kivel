@@ -12,6 +12,7 @@ import { Agreement } from '../screen/login/Agreement';
 import { LoginSplash } from '../screen/login/LoginSplash';
 import { EnterChildInfo } from '../screen/childInfo/EnterChildInfo';
 import { NurseryCaution } from '../screen/childInfo/NurseryCaution';
+import { NurseryCaution2 } from '../screen/childInfo/NurseryCaution2';
 import { SliderView } from '../screen/childInfo/components/SliderView';
 
 const  Stack  =  createStackNavigator<stackInterface>();
@@ -30,7 +31,7 @@ export  const  StackNav:  React.FC  =  ({})  =>  {
                 <Stack.Screen name="LoginSplash"  component={LoginSplash} options={{headerShown:  false}} /> 
                 <Stack.Screen name="EnterChildInfo"  component={EnterChildInfo} options={{headerShown:  false}} />
                 <Stack.Screen name="NurseryCaution"  component={NurseryCaution} options={{headerShown:  false}} />
-                <Stack.Screen name="test"  component={SliderView} options={{headerShown:  false}} />
+                <Stack.Screen name="NurseryCaution2"  component={NurseryCaution2} options={{headerShown:  false}} />
             </Stack.Navigator>
     );
 };

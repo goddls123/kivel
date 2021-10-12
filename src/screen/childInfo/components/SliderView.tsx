@@ -10,34 +10,37 @@ interface SliderViewProps {
 	headerText : string
 	contentLeft : string[]
 	contentRight : string[]
+	value : number | number[]
+	setValue(value : number) : void
 	style? : ViewStyle
 }
 
 export function SliderView(props : SliderViewProps) {
 
   return (
-	<View style={[props.style,{backgroundColor : 'white'}]}>
-		{/* <View style={{flex : 1}}> */}
-			<Text style={{fontSize : 20, color : '#111111', fontWeight : '500' , marginBottom : SIZE_HEIGHT * 0.02}}>{props.headerText || "아이에게 간식은"}</Text>
+	<View style={[props.style]}>
+
+			<Text style={styles.headerText}>{props.headerText}</Text>
 			
 			<Slider
-			containerStyle={{height : SIZE_HEIGHT * 0.07}}
+			containerStyle={styles.sliderContainer}
 			minimumValue={0}
 			maximumValue={4}
-			value={2}
+			value={props.value}
 			minimumTrackTintColor='#ffe3d8'
-			thumbStyle={{height : SIZE_HEIGHT * 0.05 , width : SIZE_HEIGHT * 0.05 , borderWidth : 4, borderColor : '#ff8a5c', borderRadius : 100, backgroundColor : 'white'}}
-			trackStyle={{height : 15 ,  backgroundColor: "#ffe3d8", borderRadius : 15}}
+			thumbStyle={styles.sliderThumbStyle}
+			trackStyle={styles.sliderTrackStyle}
 			step={1}
+			onSlidingComplete={(value : any) => props.setValue(value)}
 			/>
 		{/* </View> */}
 		
-		<View style={{flexDirection : 'row', justifyContent : 'space-between'}}>
+		<View style={styles.textContainer}>
 			<View style={{justifyContent : 'flex-start'}}>
 				{
-					props.contentLeft?.map((text) => {
+					props.contentLeft?.map((text, idx) => {
 						return (
-							<Text style={{fontSize : 15, color : '#707070'}}>
+							<Text key={idx} style={styles.textStyle}>
 								{text}
 							</Text>
 						)
@@ -46,9 +49,9 @@ export function SliderView(props : SliderViewProps) {
 			</View>
 			<View style={{justifyContent : 'flex-end'}}>
 				{
-					props.contentRight?.map((text) => {
+					props.contentRight?.map((text, idx) => {
 						return (
-							<Text style={{fontSize : 15, color : '#707070'}}>
+							<Text key={idx} style={styles.textStyle}>
 								{text}
 							</Text>
 						)
@@ -59,4 +62,13 @@ export function SliderView(props : SliderViewProps) {
 	</View>
   );
 }
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+	headerText : {fontSize : 20, color : '#111111', fontWeight : '500' , marginBottom : SIZE_HEIGHT * 0.02},
+	sliderContainer : {height : SIZE_HEIGHT * 0.07},
+	sliderThumbStyle : {height : SIZE_HEIGHT * 0.05 , width : SIZE_HEIGHT * 0.05 , borderWidth : 4, borderColor : '#ff8a5c', borderRadius : 100, backgroundColor : 'white'},
+	sliderTrackStyle : {height : 15 ,  backgroundColor: "#ffe3d8", borderRadius : 15},
+	textContainer : {flexDirection : 'row', justifyContent : 'space-between'},
+	textStyle : {fontSize : 15, color : '#707070'},
+
+
+});
