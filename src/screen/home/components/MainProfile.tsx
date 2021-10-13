@@ -8,7 +8,7 @@ import {
   ViewStyle,
   TouchableOpacity,
 } from 'react-native';
-import { FONT_COLOR_BLACK } from '../../common/constants';
+import { FONT_COLOR_BLACK, SIZE_WIDTH } from '../../common/constants';
 
 interface mainProfileProps {
   birth?: string;
@@ -26,11 +26,11 @@ export function MainProfile(props: mainProfileProps) {
               source={{
                 uri: 'https://image.xportsnews.com/contents/images/upload/article/2019/0531/mb_1559280740871004.jpg',
               }}
-              style={{height: 80, width: 80, borderRadius: 50}} />
+              style={{height: SIZE_WIDTH * 0.22, width: SIZE_WIDTH * 0.22, borderRadius: 50}} />
         </TouchableOpacity>
         <View >
-            <Text style={styles.babyName}>{props.name || '김키블'} </Text>
-            <Text style={styles.birthDate}>날짜</Text>
+            <Text style={styles.babyName}>{props.name || '김키블'} {props.sex || "[성별 아이콘]"} </Text>
+            <Text style={styles.birthDate}>[날짜]</Text>
         </View>
     </View>
   );

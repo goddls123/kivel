@@ -11,7 +11,6 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {schedule_data} from '../test/testData';
 import {MainProfile} from './components/MainProfile';
-import {ScheduleButton} from './components/ScheduleButton';
 import {ScheduleModalView} from './components/ScheduleModalView';
 import {RouteProp, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -19,9 +18,10 @@ import {stackInterface} from '../../types/navigationParam';
 import {schedule} from '../../types/calendarTypes';
 import {NavigationButton} from './components/NavigationButton';
 import {Divider} from '../common/divider';
-import {GLOBAL_MARGIN_HORIZON, SIZE_HEIGHT} from '../common/constants';
+import {GLOBAL_MARGIN_HORIZON, SIZE_HEIGHT, SIZE_WIDTH} from '../common/constants';
 import Modal from 'react-native-modal'
 import { ChildInfoAlarmModal } from '../childInfo/components/ChildInfoAlarmModal';
+import { ScheduleCard } from './components/ScheduleCard';
 interface homeTabProps {
     navigation: StackNavigationProp<stackInterface, 'Calendar'>;
     route: RouteProp<stackInterface, 'Calendar'>;
@@ -40,65 +40,80 @@ export function homeTab(props: homeTabProps) {
     React.useEffect(() => {
         setWeeklySchedule(schedule_data);
     }, []);
-
+    console.log(SIZE_HEIGHT * 0.025)
     return (
         <SafeAreaView style={styles.container}>
-            {/* 헤더 */}
-            <View style={styles.headerContainer}>
-                {/* <View style={{flexDirection: 'row'}}> */}
-                <TouchableOpacity>
-                    <Image
-                        source={require('../../assets/icons/notification.png')}
-                        resizeMode="center"
-                        style={styles.headerIcon}></Image>
-                    <View style={styles.notification}></View>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <Image
-                        source={require('../../assets/icons/setting.png')}
-                        resizeMode="center"
-                        style={styles.headerIcon}></Image>
-                </TouchableOpacity>
-                {/* </View> */}
+            {/* 헤더 */}    
+            <View style={{flexDirection : 'row', height : SIZE_HEIGHT * 0.08, justifyContent : 'flex-end', alignItems : 'center' }}>
+                    <TouchableOpacity>
+                        <Image
+                            source={require('../../assets/icons/notification.png')}
+                            resizeMode="center"
+                            style={styles.headerIcon}></Image>
+                        <View style={styles.notification}></View>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Image
+                            source={require('../../assets/icons/setting.png')}
+                            resizeMode="center"
+                            style={styles.headerIcon}></Image>
+                    </TouchableOpacity>    
             </View>
 
-            {/* 프로필 */}
-            <MainProfile style={styles.profileContainer}></MainProfile>
+            <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={styles.topContainer}>
+                {/* 프로필 */}
+                <MainProfile style={styles.profileContainer}></MainProfile>
 
-            {/* navigation버튼 */}
-            <View style={styles.buttonContainer}>
-                <NavigationButton height={80} width={80} buttonName={'성장 노트'} />
-                <NavigationButton height={80} width={80} buttonName={'호소문제 등록'} />
-                <NavigationButton height={80} width={80} buttonName={'과제 등록'} />
-                <NavigationButton height={80} width={80} buttonName={'ㅇㄹ미ㅏ넒나'} />
+                
+                <View style={{height : SIZE_HEIGHT * 0.1, justifyContent : 'flex-end'}}>
+                    <TouchableOpacity style={{ borderWidth : 1, borderColor : "#d5d5d5",borderRadius : 10,  height: SIZE_HEIGHT * 0.06 , width : '100%', alignItems : 'center', justifyContent : 'center'}}>
+                        <Text>우리아이 정보 보기</Text>
+                    </TouchableOpacity>
+                </View>
+
+                {/* navigation 버튼 */}
+                <View style={{flex : 1, flexDirection : 'row', height : SIZE_HEIGHT * 0.165, alignItems : 'center'}}>
+                    <NavigationButton 
+                    style={{flex : 1}} 
+                    imageStyle={styles.navigationButtonStyle}
+                    buttonName={'성장 노트'} /> 
+                    
+                    <NavigationButton 
+                    style={{flex : 1}} 
+                    imageStyle={styles.navigationButtonStyle}
+                    buttonName={'호소문제 등록'} /> 
+                    
+                    <NavigationButton 
+                    style={{flex : 1}} 
+                    imageStyle={styles.navigationButtonStyle}
+                    buttonName={'과제 등록'} />                 
+                </View>
+
             </View>
-            <Divider height={1} color="#C4C4C4" />
+            <Divider height={3} color="#ededed" />
+
+
 
             {/* 주간 일정 */}
             <View style={styles.scheduleContainer}>
-                <TouchableOpacity onPress={() => props.navigation.navigate('Calendar')}>
-                    <Text>주간 일정 +</Text>
-                </TouchableOpacity>
-
-                <ScrollView horizontal>
-                    {weeklySchedule
-                        ? weeklySchedule.map((scheduleData: schedule, id) => {
-                                return (
-                                    <TouchableOpacity
-                                        key={id}
-                                        onPress={() => {
-                                            setModalVisible(true);
-                                            setSelectedSchedule(weeklySchedule[id]);
-                                        }}>
-                                        <ScheduleButton
-                                            style={styles.scheduleButton}
-                                            data={{scheduleData}}
-                                        />
-                                    </TouchableOpacity>
-                                );
-                            })
-                        : null}
-                </ScrollView>
+                <View 
+                style={{
+                    height : SIZE_HEIGHT * 0.06 , 
+                    flexDirection : 'row' , 
+                    marginHorizontal : GLOBAL_MARGIN_HORIZON ,
+                    justifyContent : 'space-between', 
+                    alignItems : 'flex-end',
+                    paddingBottom : 5,
+                    
+                    }}>
+                    <Text style={{fontWeight : 'bold', fontSize : 17, color : "bloack"}}>주간 일정</Text>
+                    <Text style={{fontWeight : 'bold', fontSize : 15, color : "#aaaaaa"}}>전체 보기{'>'} </Text>
+                </View>
+                
+                <View style={{height : SIZE_HEIGHT * 0.3, justifyContent : 'center', marginLeft : GLOBAL_MARGIN_HORIZON}}>
+                    <ScheduleCard style={{height : SIZE_HEIGHT * 0.285, width : SIZE_WIDTH * 0.6, borderRadius : 10, overflow : 'hidden'}}></ScheduleCard>
+                </View>
             </View>
             <Divider height={1} color="#C4C4C4" />
 
@@ -118,17 +133,13 @@ export function homeTab(props: homeTabProps) {
                                             setModalVisible(false);
                                             setSelectedSchedule(weeklySchedule[id]);
                                         }}>
-                                        <ScheduleButton
-                                            style={styles.scheduleButton}
-                                            data={{scheduleData}}
-                                        />
                                     </TouchableOpacity>
                                 );
                             })
                         : null}
                 </ScrollView>
             </View>
-					
+			</ScrollView>
             <ScheduleModalView
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}
@@ -147,6 +158,11 @@ export function homeTab(props: homeTabProps) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor : 'white'
+    },
+    topContainer : {
+        height : SIZE_HEIGHT * 0.38,
+        marginHorizontal : GLOBAL_MARGIN_HORIZON,
     },
     headerContainer: {
         flex: 0.8,
@@ -161,8 +177,8 @@ const styles = StyleSheet.create({
         // marginTop: 15,
     },
     headerIcon: {
-        width: 20,
-        height: 20,
+        width: 28,
+        height: 28,
         marginLeft: 4,
         position: 'relative',
     },
@@ -176,16 +192,12 @@ const styles = StyleSheet.create({
         top: '25%',
     },
     profileContainer: {
-        flex: 2,
-        // width: '80%',
-        // alignSelf: 'center',
-        marginLeft: GLOBAL_MARGIN_HORIZON,
-        marginRight: GLOBAL_MARGIN_HORIZON,
+        height : SIZE_HEIGHT * 0.125,
         justifyContent: 'flex-start',
         alignItems: 'center',
         flexDirection: 'row',
-        backgroundColor: 'yellow',
     },
+    navigationButtonStyle : {backgroundColor : "#f6f6f6", width : SIZE_WIDTH * 0.125 , height : SIZE_WIDTH * 0.125, borderRadius : 10,  },
     buttonContainer: {
         flex: 2,
         width: '86%',
@@ -195,10 +207,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     scheduleContainer: {
-        flex: 3,
-        marginTop: 10,
-        width: '86%',
-        alignSelf: 'center',
+        height : SIZE_HEIGHT * 0.38,
     },
     homeWorkContainer: {
         flex: 3,

@@ -14,8 +14,9 @@ import { EnterChildInfo } from '../screen/childInfo/EnterChildInfo';
 import { NurseryCaution } from '../screen/childInfo/NurseryCaution';
 import { NurseryCaution2 } from '../screen/childInfo/NurseryCaution2';
 import { ChildTendency } from '../screen/childInfo/ChildTendency';
-
+import { testEnterChildInfo } from '../screen/test/testEnterChildInfo'
 const  Stack  =  createStackNavigator<stackInterface>();
+
 
 export  const  StackNav:  React.FC  =  ({})  =>  {
     const [login,setLogin] = React.useState(false)
@@ -34,6 +35,7 @@ export  const  StackNav:  React.FC  =  ({})  =>  {
                 <Stack.Screen name="NurseryCaution2"  component={NurseryCaution2} options={{headerShown:  false}} />
                 <Stack.Screen name="ChildTendency"  component={ChildTendency} options={{headerShown:  false}} />
                 
+                <Stack.Screen name="testEnterChildInfo"  component={testEnterChildInfo} options={{headerShown:  false}} />
             </Stack.Navigator>
     );
 };

@@ -1,5 +1,5 @@
 import { schedule } from "../../types/calendarTypes";
-import { diaryProps } from "../../types/DiaryTypes";
+import { diary } from "../../types/DiaryTypes";
 
 export const schedule_data : schedule[] = [
 { schedule_id: 1
@@ -124,7 +124,7 @@ export const schedule_data : schedule[] = [
 }
 ]
 
-export const dummyData: diaryProps[] = [
+export const dummyData: diary[] = [
 	{
 		note_id: 1,
 		date: new Date('2021-09-18'),
