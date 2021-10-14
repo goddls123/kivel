@@ -22,6 +22,9 @@ import {GLOBAL_MARGIN_HORIZON, SIZE_HEIGHT, SIZE_WIDTH} from '../common/constant
 import Modal from 'react-native-modal'
 import { ChildInfoAlarmModal } from '../childInfo/components/ChildInfoAlarmModal';
 import { ScheduleCard } from './components/ScheduleCard';
+import { HomeWorkCard } from './components/HomeWorkCard';
+
+
 interface homeTabProps {
     navigation: StackNavigationProp<stackInterface, 'Calendar'>;
     route: RouteProp<stackInterface, 'Calendar'>;
@@ -97,50 +100,42 @@ export function homeTab(props: homeTabProps) {
 
             {/* 주간 일정 */}
             <View style={styles.scheduleContainer}>
-                <View 
-                style={{
-                    height : SIZE_HEIGHT * 0.06 , 
-                    flexDirection : 'row' , 
-                    marginHorizontal : GLOBAL_MARGIN_HORIZON ,
-                    justifyContent : 'space-between', 
-                    alignItems : 'flex-end',
-                    paddingBottom : 5,
-                    
-                    }}>
-                    <Text style={{fontWeight : 'bold', fontSize : 17, color : "bloack"}}>주간 일정</Text>
+                <View style={styles.containerHeader}>
+                    <Text style={{fontWeight : 'bold', fontSize : 17, color : "black"}}>주간 일정</Text>
                     <Text style={{fontWeight : 'bold', fontSize : 15, color : "#aaaaaa"}}>전체 보기{'>'} </Text>
                 </View>
                 
-                <View style={{height : SIZE_HEIGHT * 0.3, justifyContent : 'center', marginLeft : GLOBAL_MARGIN_HORIZON}}>
-                    <ScheduleCard style={{height : SIZE_HEIGHT * 0.285, width : SIZE_WIDTH * 0.6, borderRadius : 10, overflow : 'hidden'}}></ScheduleCard>
-                </View>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                    <View style={{flexDirection : 'row', justifyContent : 'center', marginLeft : GLOBAL_MARGIN_HORIZON, marginTop : 10}}>
+                        <ScheduleCard height={SIZE_HEIGHT * 0.285} width={SIZE_WIDTH * 0.6} style={{marginRight : SIZE_WIDTH * 0.02}} />
+                        <ScheduleCard height={SIZE_HEIGHT * 0.285} width={SIZE_WIDTH * 0.6} style={{marginRight : SIZE_WIDTH * 0.02}} />
+                        <ScheduleCard height={SIZE_HEIGHT * 0.285} width={SIZE_WIDTH * 0.6} style={{marginRight : SIZE_WIDTH * 0.02}} />
+                        <ScheduleCard height={SIZE_HEIGHT * 0.285} width={SIZE_WIDTH * 0.6} style={{marginRight : SIZE_WIDTH * 0.02}} />
+                    </View>
+                </ScrollView>
+
             </View>
-            <Divider height={1} color="#C4C4C4" />
+            <Divider height={3} color="#ededed" />
 
             {/* 이번 주 과제 */}
-            <View style={styles.scheduleContainer}>
-                <TouchableOpacity>
-                    <Text>이번 주 과제 +</Text>
-                </TouchableOpacity>
+            <View style={styles.homeworkContainer}>
+                <View style={styles.containerHeader}>
+                    <Text style={{fontWeight : 'bold', fontSize : 17, color : "black"}}>이번 주 과제</Text>
+                </View>
 
-                <ScrollView horizontal>
-                    {weeklySchedule
-                        ? weeklySchedule.map((scheduleData: schedule, id) => {
-                                return (
-                                    <TouchableOpacity
-                                        key={id}
-                                        onPress={() => {
-                                            setModalVisible(false);
-                                            setSelectedSchedule(weeklySchedule[id]);
-                                        }}>
-                                    </TouchableOpacity>
-                                );
-                            })
-                        : null}
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                    <View style={{flexDirection : 'row', justifyContent : 'center', marginLeft : GLOBAL_MARGIN_HORIZON, marginTop : 10}}>
+                        <HomeWorkCard height={SIZE_HEIGHT * 0.2} width={SIZE_WIDTH * 0.4} />
+                        <HomeWorkCard height={SIZE_HEIGHT * 0.2} width={SIZE_WIDTH * 0.4} />
+                        <HomeWorkCard height={SIZE_HEIGHT * 0.2} width={SIZE_WIDTH * 0.4} />
+                        <HomeWorkCard height={SIZE_HEIGHT * 0.2} width={SIZE_WIDTH * 0.4} />
+                    </View>
                 </ScrollView>
             </View>
+
 			</ScrollView>
-            <ScheduleModalView
+
+            {/* <ScheduleModalView
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}
                 data={selectedSchedule}
@@ -151,7 +146,7 @@ export function homeTab(props: homeTabProps) {
 			onBackdropPress={() => setModalTest(false)}
 			>
 				<ChildInfoAlarmModal></ChildInfoAlarmModal>
-			</Modal>
+			</Modal> */}
         </SafeAreaView>
     );
 }
@@ -161,7 +156,7 @@ const styles = StyleSheet.create({
         backgroundColor : 'white'
     },
     topContainer : {
-        height : SIZE_HEIGHT * 0.38,
+        height : SIZE_HEIGHT * 0.39,
         marginHorizontal : GLOBAL_MARGIN_HORIZON,
     },
     headerContainer: {
@@ -207,10 +202,17 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     scheduleContainer: {
-        height : SIZE_HEIGHT * 0.38,
+        height : SIZE_HEIGHT * 0.39,
     },
-    homeWorkContainer: {
-        flex: 3,
+    containerHeader : {
+        height : '15.5%', 
+        flexDirection : 'row' , 
+        marginHorizontal : GLOBAL_MARGIN_HORIZON ,
+        justifyContent : 'space-between', 
+        alignItems : 'flex-end',
+    },
+    homeworkContainer : {
+        height : SIZE_HEIGHT * 0.34,
     },
     scheduleButton: {
         height: 100,
