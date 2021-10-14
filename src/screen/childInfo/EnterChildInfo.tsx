@@ -82,7 +82,7 @@ export function EnterChildInfo(props : enterChildInfoProps) {
 					onChangeText={setName}
 					></TextInputView>
 
-					<TextView text='출생일'/>
+					<TextView  text='출생일'/>
 					<TextInputView 
 					placeholder={'출생일을 선택해주세요'}
 					style={{marginBottom : SIZE_HEIGHT * 0.06}}

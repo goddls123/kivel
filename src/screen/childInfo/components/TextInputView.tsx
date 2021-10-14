@@ -36,6 +36,7 @@ export function TextInputView(props: textInputViewProps) {
 				editable={props.editable}
 				value={props.value? value : undefined}
 				style={{color : 'black'}}
+				onPressIn={()=>props.iconOnPress ? props.iconOnPress(true) : null}
 				></TextInput>
 				{
 					props.icon
