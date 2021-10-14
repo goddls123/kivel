@@ -24,15 +24,18 @@ import {SliderView} from './components/SliderView';
 import {Button} from '../common/components/Button';
 import {VanishTextInput} from './components/VanishTextInput';
 import { checkEssential } from '../common/service/check';
+import { RouteProp } from '@react-navigation/native';
+import { essentialChildInfo, nurseryCaution } from '../../types/childInfoTypes';
 
 interface NurseryCaution2Props {
-    navigation: StackNavigationProp<stackInterface, 'ChildTendency'>;
+    navigation: StackNavigationProp<stackInterface, 'NurseryCaution2'>;
+    route: RouteProp<stackInterface, 'NurseryCaution2'>;
 }
 
 export function NurseryCaution2(props: NurseryCaution2Props) {
     const [pill, setPill] = React.useState<string>()
-    const [poop, setPoop] = React.useState<string>()
-    const [alergy, setAlergy] = React.useState<string>()
+    const [diaper, setDiaper] = React.useState<string>()
+    const [allergy, setAlergy] = React.useState<string>()
     const [seizure, setSeizure] = React.useState<string>()
     const [etc, setEtc] = React.useState<string>()
 
@@ -62,14 +65,14 @@ export function NurseryCaution2(props: NurseryCaution2Props) {
                     <VanishTextInput 
                     headerText={'배변 활동 시 필요한 도움'} 
                     placeholder={'ex) 배변 활동시 계속 배를 쓰다듬어 주어야 해요'}
-                    value={poop}
-                    setValue={setPoop}
+                    value={diaper}
+                    setValue={setDiaper}
                     ></VanishTextInput>
 
                     <VanishTextInput 
                     headerText={'알레르기'} 
                     placeholder={'ex) 갑각류 알레르기가 있어요! 조심해 주세요'}
-                    value={alergy}
+                    value={allergy}
                     setValue={setAlergy}
                     ></VanishTextInput>
 
@@ -91,12 +94,23 @@ export function NurseryCaution2(props: NurseryCaution2Props) {
 
                     <Button
                         text={'다음으로'}
-                        textColor={checkEssential(pill,poop,alergy,seizure,etc) ? 'white' : '#707070'}
+                        textColor={checkEssential(pill,diaper,allergy,seizure,etc) ? 'white' : '#707070'}
                         style={{
-                            backgroundColor: checkEssential(pill,poop,alergy,seizure,etc) ? MAIN_COLOR : '#ededed',
+                            backgroundColor: checkEssential(pill,diaper,allergy,seizure,etc) ? MAIN_COLOR : '#ededed',
                             marginTop : SIZE_HEIGHT * 0.1
                         }}
-                        // onPress={() => props.navigation.navigate()}
+                        onPress={() => {
+                            if(props.route.params){
+                            const prevPageState : (essentialChildInfo & nurseryCaution) = props.route.params
+                            props.navigation.navigate('ChildTendency', {
+                                ...prevPageState,
+                                pill : pill,
+                                diaper : diaper,
+                                allergy : allergy,
+                                seizure : seizure,
+                                etc : etc,
+                            })
+                        }}}
                     ></Button>
                     <TouchableOpacity style={styles.underlineTextContainer} onPress={() => {props.navigation.navigate('ChildTendency')}}>
                         <Text style={styles.underlineTextStyle}>건너뛰기</Text>

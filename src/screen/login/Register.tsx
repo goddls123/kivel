@@ -6,12 +6,16 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {stackInterface} from '../../types/navigationParam';
 import { Divider } from '../common/divider';
 import { ChildInfoAlarmModal } from '../childInfo/components/ChildInfoAlarmModal';
+import { essentialChildInfo } from '../../types/childInfoTypes';
 
 interface registerProps {
     navigation: StackNavigationProp<stackInterface, 'Register'>;
 }
 
 export function Register(props: registerProps) {
+
+    const [childInfo,setChildInfo] = React.useState<essentialChildInfo>();
+    
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.innerContainer}>

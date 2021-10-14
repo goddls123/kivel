@@ -12,6 +12,7 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {
     GLOBAL_MARGIN_HORIZON,
+    GLOBAL_MARGIN_VERTICAL,
     MAIN_COLOR,
     SIZE_HEIGHT,
     SIZE_WIDTH,
@@ -26,6 +27,7 @@ import {Button} from '../common/components/Button';
 import Modal from 'react-native-modal';
 import {DateScroller} from './components/DateScroller';
 import {DiagSelector} from './components/DiagSelector';
+import { essentialChildInfo } from '../../types/childInfoTypes';
 
 interface enterChildInfoProps {
     navigation: StackNavigationProp<stackInterface, 'SocialLogin'>;
@@ -69,10 +71,11 @@ export function EnterChildInfo(props: enterChildInfoProps) {
                 {Platform.OS == 'android' ? (
                     <Divider height={GLOBAL_MARGIN_HORIZON} color="white" />
                 ) : null}
-                {/* <TouchableOpacity
+
+                <TouchableOpacity
                     onPress={() => props.navigation.reset({routes: [{name: 'Home'}]})}>
                     <Icon name="arrow-back" style={{fontSize: 30}}></Icon>
-                </TouchableOpacity> */}
+                </TouchableOpacity>
 
                 <View style={styles.headerTextContainer}>
                     <Text style={styles.headerTextStyle}>우리아이등록</Text>
@@ -179,11 +182,24 @@ export function EnterChildInfo(props: enterChildInfoProps) {
                         style={{
                             backgroundColor: essentialOptionCheck() ? MAIN_COLOR : '#ededed',
                         }}
-                        onPress={() => {
-                            props.navigation.navigate('NurseryCaution');
+                        onPress={() => { 
+                            props.navigation.navigate('NurseryCaution',{
+                                name : name ,
+                                birthDate : birthDate,
+                                sex : sex,
+                                diagnosis : diagnosis,
+                                directInputDiag : directInputDiag,
+                                birthWeekNum : weekNum,
+                                birthDateNum : dateNum,
+                                height : height,
+                                weight : weight, 
+                            })
                         }}
                         disable={!essentialOptionCheck()}
                     />
+                    <TouchableOpacity style={styles.underlineTextContainer} onPress={() => {props.navigation.navigate('NurseryCaution')}}>
+                        <Text style={styles.underlineTextStyle}>건너뛰기</Text>
+                    </TouchableOpacity>
                 </ScrollView>
 
                 {/* 출생일 dateScroller */}
@@ -266,4 +282,12 @@ const styles = StyleSheet.create({
     weightTextInput: {
         marginBottom: SIZE_HEIGHT * 0.1,
     },
+    underlineTextContainer : {
+        marginBottom : GLOBAL_MARGIN_VERTICAL
+    },
+    underlineTextStyle : {
+        textAlign : 'center',
+        textDecorationLine : 'underline',
+        color : "#aaaaaa"
+    }
 });

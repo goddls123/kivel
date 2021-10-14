@@ -1,3 +1,5 @@
+import { SchemaExtensionNode } from "graphql";
+import { essentialChildInfo, nurseryCaution, nurseryCaution2 } from "./childInfoTypes";
 import { diary } from "./DiaryTypes";
 
 export type stackInterface = {
@@ -14,9 +16,9 @@ export type stackInterface = {
 
     //
     EnterChildInfo : undefined;
-    NurseryCaution : undefined;
-    NurseryCaution2 : undefined;
-    ChildTendency : undefined;
+    NurseryCaution : essentialChildInfo | undefined;
+    NurseryCaution2 : (essentialChildInfo & (nurseryCaution | undefined)) | undefined
+    ChildTendency : (essentialChildInfo & (nurseryCaution | undefined) & (nurseryCaution2 | undefined)) | undefined;
 
 
     testEnterChildInfo : undefined;

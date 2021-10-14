@@ -7,14 +7,22 @@ import { Divider } from '../common/divider';
 import Icon from 'react-native-vector-icons/Ionicons'
 import { SliderView } from './components/SliderView';
 import { Button } from '../common/components/Button';
+import { RouteProp } from '@react-navigation/native';
+import { essentialChildInfo } from '../../types/childInfoTypes';
 
 
 interface NurseryCautionProps {
-	navigation : StackNavigationProp<stackInterface,'SocialLogin'>;
+	navigation : StackNavigationProp<stackInterface, 'EnterChildInfo'>;
+    route: RouteProp<stackInterface, 'NurseryCaution'>;
 }
 
 export function NurseryCaution(props : NurseryCautionProps) {
-	
+    
+
+    
+
+
+
     const [snack, setSnack] = React.useState<number | number[]>([2])
     const [rule, setRule] = React.useState<number | number[]>([2])
     const [meal, setMeal] = React.useState<number | number[]>([2])
@@ -75,9 +83,19 @@ export function NurseryCaution(props : NurseryCautionProps) {
                     text={'다음으로'} 
                     textColor={rearer? 'white' : '#707070'}
                     style={{backgroundColor : rearer? MAIN_COLOR : '#ededed', marginBottom : GLOBAL_MARGIN_VERTICAL}}
-                    onPress={() => props.navigation.navigate('NurseryCaution2')}
+                    onPress={() => {
+                        if(props.route.params){
+                            const prevPageState : essentialChildInfo = props.route.params
+                            props.navigation.navigate('NurseryCaution2', {
+                                ...prevPageState,
+                                degreeSnack : typeof(snack) == 'object' ? snack[0] : snack,
+                                degreeRule : typeof(rule) == 'object' ? rule[0] : rule,
+                                degreeMeal : typeof(meal) == 'object' ? meal[0] : meal,
+                                rearer : rearer
+                            })
+                        }}}
                     ></Button>
-                    <TouchableOpacity style={styles.underlineTextContainer} onPress={() => {props.navigation.navigate('NurseryCaution2')}}>
+                    <TouchableOpacity style={styles.underlineTextContainer} onPress={() => {props.navigation.navigate('NurseryCaution2',)}}>
                         <Text style={styles.underlineTextStyle}>건너뛰기</Text>
                     </TouchableOpacity>
                 </ScrollView>
