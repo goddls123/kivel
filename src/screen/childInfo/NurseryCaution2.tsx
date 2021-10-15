@@ -26,6 +26,7 @@ import {VanishTextInput} from './components/VanishTextInput';
 import { checkEssential } from '../common/service/check';
 import { RouteProp } from '@react-navigation/native';
 import { essentialChildInfo, nurseryCaution } from '../../types/childInfoTypes';
+import { NurseryCaution } from './NurseryCaution';
 
 interface NurseryCaution2Props {
     navigation: StackNavigationProp<stackInterface, 'NurseryCaution2'>;
@@ -38,6 +39,8 @@ export function NurseryCaution2(props: NurseryCaution2Props) {
     const [allergy, setAlergy] = React.useState<string>()
     const [seizure, setSeizure] = React.useState<string>()
     const [etc, setEtc] = React.useState<string>()
+    console.log('nurseryCaution2 : ' ,props.route.params)
+
 
     return (
         <SafeAreaView style={styles.container}>
@@ -99,20 +102,20 @@ export function NurseryCaution2(props: NurseryCaution2Props) {
                             backgroundColor: checkEssential(pill,diaper,allergy,seizure,etc) ? MAIN_COLOR : '#ededed',
                             marginTop : SIZE_HEIGHT * 0.1
                         }}
-                        onPress={() => {
-                            if(props.route.params){
-                            const prevPageState : (essentialChildInfo & nurseryCaution) = props.route.params
+                        onPress={() => 
                             props.navigation.navigate('ChildTendency', {
-                                ...prevPageState,
-                                pill : pill,
-                                diaper : diaper,
-                                allergy : allergy,
-                                seizure : seizure,
-                                etc : etc,
+                                ...props.route.params,
+                                ...{ pill , diaper , allergy , seizure , etc }
                             })
-                        }}}
+                        }
                     ></Button>
-                    <TouchableOpacity style={styles.underlineTextContainer} onPress={() => {props.navigation.navigate('ChildTendency')}}>
+                    <TouchableOpacity 
+                    style={styles.underlineTextContainer} 
+                    onPress={() =>
+                        props.navigation.navigate('ChildTendency', {
+                                ...props.route.params,
+                                ...{ pill : undefined , diaper : undefined , allergy : undefined , seizure : undefined , etc : undefined }
+                        })}>
                         <Text style={styles.underlineTextStyle}>건너뛰기</Text>
                     </TouchableOpacity>
                 </ScrollView>

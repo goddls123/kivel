@@ -40,8 +40,8 @@ export function EnterChildInfo(props: enterChildInfoProps) {
     const [sex, setSex] = React.useState<'M' | 'W'>();
     const [diagnosis, setDiagnosis] = React.useState<string>();
     const [directInputDiag, setDirectInputDiag] = React.useState<string>();
-    const [weekNum, setWeekNum] = React.useState<number>();
-    const [dateNum, setdateNum] = React.useState<number>();
+    const [birthWeekNum, setBirthWeekNum] = React.useState<number>();
+    const [birthDayNum, setBirthDayNum] = React.useState<number>();
     const [height, setHeight] = React.useState<number>();
     const [weight, setWeight] = React.useState<number>();
 
@@ -51,7 +51,7 @@ export function EnterChildInfo(props: enterChildInfoProps) {
 
     // 필수항목 체크
     const essentialOptionCheck = (): boolean => {
-        if (name && birthDate && sex && weekNum && dateNum && height && weight) {
+        if (name && birthDate && sex && birthWeekNum && birthDayNum && height && weight) {
             if (diagnosis == '직접입력') {
                 if (directInputDiag) {
                     return true;
@@ -151,13 +151,17 @@ export function EnterChildInfo(props: enterChildInfoProps) {
                             style={styles.weekTextInput}
                             unitText="주"
                             keyboardType="numeric"
-                            onChangeText={setWeekNum}></TextInputView>
+                            onChangeText={setBirthWeekNum}
+                            parseFloat
+                            ></TextInputView>
                         <TextInputView
                             placeholder={'ex) 10'}
                             style={styles.weekTextInput}
                             unitText="일"
                             keyboardType="numeric"
-                            onChangeText={setdateNum}></TextInputView>
+                            onChangeText={setBirthDayNum}
+                            parseFloat
+                            ></TextInputView>
                     </View>
 
                     <TextView text="키" />
@@ -166,7 +170,9 @@ export function EnterChildInfo(props: enterChildInfoProps) {
                         style={styles.commonMargin}
                         unitText="cm"
                         keyboardType="numeric"
-                        onChangeText={setHeight}></TextInputView>
+                        onChangeText={setHeight}
+                        parseFloat
+                        ></TextInputView>
 
                     <TextView text="몸무게" />
                     <TextInputView
@@ -174,7 +180,9 @@ export function EnterChildInfo(props: enterChildInfoProps) {
                         style={styles.weightTextInput}
                         unitText="kg"
                         keyboardType="numeric"
-                        onChangeText={setWeight}></TextInputView>
+                        onChangeText={setWeight}
+                        parseFloat
+                        ></TextInputView>
 
                     <Button
                         text={'다음으로'}
@@ -183,21 +191,21 @@ export function EnterChildInfo(props: enterChildInfoProps) {
                             backgroundColor: essentialOptionCheck() ? MAIN_COLOR : '#ededed',
                         }}
                         onPress={() => { 
-                            props.navigation.navigate('NurseryCaution',{
-                                name : name ,
-                                birthDate : birthDate,
-                                sex : sex,
-                                diagnosis : diagnosis,
-                                directInputDiag : directInputDiag,
-                                birthWeekNum : weekNum,
-                                birthDateNum : dateNum,
-                                height : height,
-                                weight : weight, 
-                            })
+                            props.navigation.navigate('NurseryCaution',{ 
+                                name, 
+                                birthDate, 
+                                sex, 
+                                diagnosis : diagnosis? diagnosis : directInputDiag, 
+                                birthWeekNum, 
+                                birthDayNum, 
+                                height, 
+                                weight })
                         }}
                         disable={!essentialOptionCheck()}
                     />
-                    <TouchableOpacity style={styles.underlineTextContainer} onPress={() => {props.navigation.navigate('NurseryCaution')}}>
+
+                    {/* 테스트용 */}
+                    <TouchableOpacity style={styles.underlineTextContainer} onPress={() => {props.navigation.navigate('NurseryCaution',{ name : 'a', birthDate : new Date(), sex : 'M', diagnosis, birthWeekNum, birthDayNum, height, weight })}}>
                         <Text style={styles.underlineTextStyle}>건너뛰기</Text>
                     </TouchableOpacity>
                 </ScrollView>

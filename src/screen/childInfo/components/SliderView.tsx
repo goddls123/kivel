@@ -10,7 +10,7 @@ interface SliderViewProps {
 	headerText : string
 	contentLeft : string[]
 	contentRight : string[]
-	value : number | number[]
+	value : number | undefined
 	setValue(value : number) : void
 	style? : ViewStyle
 }
@@ -31,7 +31,9 @@ export function SliderView(props : SliderViewProps) {
 			thumbStyle={styles.sliderThumbStyle}
 			trackStyle={styles.sliderTrackStyle}
 			step={1}
-			onSlidingComplete={(value : any) => props.setValue(value)}
+			onSlidingComplete={(value : any) => {
+				props.setValue(value[0])
+			}}
 			/>
 		{/* </View> */}
 		

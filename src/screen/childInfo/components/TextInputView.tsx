@@ -23,6 +23,7 @@ interface textInputViewProps {
     editable?: boolean;
     iconOnPress?(value: any): void;
     value?: string | Date;
+    parseFloat? : boolean
 }
 
 export function TextInputView(props: textInputViewProps) {
@@ -35,6 +36,17 @@ export function TextInputView(props: textInputViewProps) {
         value = getDateYMD(props.value, '-');
     }
 
+    function onChangeTextHandler(text : string) {
+        console.log(text, props.parseFloat);
+        if(props.parseFloat && props.onChangeText ){
+            props.onChangeText(parseFloat(text))
+        }
+        else if (!props.parseFloat && props.onChangeText ){
+            props.onChangeText(text);
+        }
+    }
+
+    
     return (
         <View
             style={[
@@ -51,12 +63,12 @@ export function TextInputView(props: textInputViewProps) {
                     placeholderTextColor={"#d5d5d5"}
                     placeholder={props.placeholder}
                     keyboardType={props.keyboardType ? props.keyboardType : 'default'}
-                    onChangeText={text =>
-                        props.onChangeText ? props.onChangeText(text) : null
-                    }
+                    onChangeText={text => onChangeTextHandler(text)}
                     editable={props.editable}
                     value={props.value ? value : undefined}
-                    style={{color: 'black', flex: 1}}></TextInput>
+                    style={{color: 'black', flex: 1}}
+                ></TextInput>
+
                 {props.icon ? (
                     <TouchableOpacity
                         onPress={() =>

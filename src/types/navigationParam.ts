@@ -16,9 +16,13 @@ export type stackInterface = {
 
     //
     EnterChildInfo : undefined;
-    NurseryCaution : essentialChildInfo | undefined;
-    NurseryCaution2 : (essentialChildInfo & (nurseryCaution | undefined)) | undefined
-    ChildTendency : (essentialChildInfo & (nurseryCaution | undefined) & (nurseryCaution2 | undefined)) | undefined;
+    NurseryCaution : essentialChildInfo
+    // 이거 왜 안됌?
+    // NurseryCaution2 : essentialChildInfo & (nurseryCaution | undefined)
+    // ChildTendency : essentialChildInfo & (nurseryCaution | undefined) & (nurseryCaution2 | undefined)
+    NurseryCaution2 : essentialChildInfo & nurseryCaution
+    ChildTendency : essentialChildInfo | (essentialChildInfo & nurseryCaution ) | (essentialChildInfo & nurseryCaution2 ) | (essentialChildInfo & nurseryCaution & nurseryCaution2)
+    
 
 
     testEnterChildInfo : undefined;

@@ -3,9 +3,8 @@ export type essentialChildInfo = {
         birthDate : Date | undefined, 
         sex : 'M' | 'W' | undefined, 
         diagnosis : string | undefined, 
-        directInputDiag : string | undefined,
         birthWeekNum : number | undefined,
-        birthDateNum : number | undefined,
+        birthDayNum : number | undefined,
         height : number | undefined,
         weight : number | undefined,
 }
