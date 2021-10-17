@@ -5,9 +5,9 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
-  TextInput,
+  //   TextInput,
   Platform,
-  BackHandler,
+  //   BackHandler,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {
@@ -27,7 +27,7 @@ import {Button} from '../common/components/Button';
 import Modal from 'react-native-modal';
 import {DateScroller} from './components/DateScroller';
 import {DiagSelector} from './components/DiagSelector';
-import {essentialChildInfo} from '../../types/childInfoTypes';
+// import {essentialChildInfo} from '../../types/childInfoTypes';
 
 interface enterChildInfoProps {
   navigation: StackNavigationProp<stackInterface, 'SocialLogin'>;
@@ -54,6 +54,7 @@ export function EnterChildInfo(props: enterChildInfoProps) {
     React.useState<boolean>(false);
 
   const rightName = new RegExp(/^[가-힣a-zA-Z]{2,10}$/);
+
   const rightHeight = (vHeight: number) => {
     return vHeight && vHeight > 30 && vHeight < 200 ? true : false;
   };
