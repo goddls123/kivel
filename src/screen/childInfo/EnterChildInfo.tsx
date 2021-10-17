@@ -1,21 +1,34 @@
-import React from 'react'
-import { View, StyleSheet, Text, TouchableOpacity, ScrollView, TextInput, Platform} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { GLOBAL_MARGIN_HORIZON, MAIN_COLOR, SIZE_HEIGHT, SIZE_WIDTH } from '../common/constants';
-import Icon from 'react-native-vector-icons/Ionicons'
-import { StackNavigationProp } from '@react-navigation/stack';
-import { stackInterface } from '../../types/navigationParam';
-import { Divider } from '../common/divider';
-import { TextInputView } from './components/TextInputView';
-import { TextView } from './components/TextView';
-import { Button } from '../common/components/Button';
-import Modal from 'react-native-modal'
-import { DateScroller } from './components/DateScroller';
-import { DiagSelector } from './components/DiagSelector';
-
+import React from 'react';
+import {
+    View,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    ScrollView,
+    TextInput,
+    Platform,
+	BackHandler,
+} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {
+    GLOBAL_MARGIN_HORIZON,
+    MAIN_COLOR,
+    SIZE_HEIGHT,
+    SIZE_WIDTH,
+} from '../common/constants';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {stackInterface} from '../../types/navigationParam';
+import {Divider} from '../common/divider';
+import {TextInputView} from './components/TextInputView';
+import {TextView} from './components/TextView';
+import {Button} from '../common/components/Button';
+import Modal from 'react-native-modal';
+import {DateScroller} from './components/DateScroller';
+import {DiagSelector} from './components/DiagSelector';
 
 interface enterChildInfoProps {
-	navigation : StackNavigationProp<stackInterface,'SocialLogin'>;
+    navigation: StackNavigationProp<stackInterface, 'SocialLogin'>;
 }
 
 export function EnterChildInfo(props : enterChildInfoProps) {
@@ -28,7 +41,7 @@ export function EnterChildInfo(props : enterChildInfoProps) {
 	const [sex, setSex] = React.useState<'M'|'W'>();
 	const [diagnosis, setDiagnosis] = React.useState<string>();
 	const [directInputDiag, setDirectInputDiag] = React.useState<string>();
-	const [weekNum,setWeekNum] = React.useState<number>();
+	const [weekNum,setWeekNum] = React.useState<number | string>();
 	const [dateNum,setdateNum] = React.useState<number>();
 	const [height, setHeight] = React.useState<number>();
 	const [weight, setWeight] = React.useState<number>();
@@ -39,9 +52,45 @@ export function EnterChildInfo(props : enterChildInfoProps) {
 	const [diagModalVisible, setDiagModalVisible] = React.useState<boolean>(false);
 
 
+	const rightHeight = (height:any) => {
+		if (height && typeof height === 'number' && height > 80 && height <200){
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	const rightWeight = (weight:any) =>{
+		if (weight && typeof weight === 'number' && weight > 10 && weight <200){
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	const rightWeekNum = (weekNum:any) => {
+		if (weekNum && typeof weekNum === 'number' && weekNum > 1) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	const rightDateNum = (dateNum:any) => {
+		if (dateNum && typeof dateNum === 'number' && dateNum >=0 && dateNum < 7) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+
 	// 필수항목 체크
 	const essentialOptionCheck = () : boolean => {
-		if(name && birthDate && sex && weekNum && dateNum && height && weight){
+		if(name && birthDate && sex && rightWeekNum(weekNum) && rightDateNum(dateNum) && rightHeight(height) && rightWeight(weight)){
 			if(diagnosis == "직접입력"){
 				if(directInputDiag){
 					return true;
@@ -144,7 +193,7 @@ export function EnterChildInfo(props : enterChildInfoProps) {
 						onChangeText={setWeekNum}
 						></TextInputView>
 						<TextInputView 
-						placeholder={'ex) 10'}
+						placeholder={'ex) 6'}
 						style={{marginBottom : SIZE_HEIGHT * 0.06, width : SIZE_WIDTH * 0.40}}
 						unitText="일"
 						keyboardType='numeric'
@@ -203,8 +252,9 @@ export function EnterChildInfo(props : enterChildInfoProps) {
 		</SafeAreaView>
 	);
 }
+
 const styles = StyleSheet.create({
-	container: {
+    container: {
         flex: 1,
         backgroundColor: '#ffffff',
     },
@@ -212,24 +262,54 @@ const styles = StyleSheet.create({
         flex: 1,
         marginHorizontal: GLOBAL_MARGIN_HORIZON,
     },
-	headerTextStyle: {
-		fontFamily: 'Pretendard',
-		fontSize: 28,
-		fontWeight: 'bold',
-		color: '#111111',
-	},
-	text : {
-		fontFamily: 'Pretendard',
-		fontSize: 20,
-		color: '#111111',
-	},
-	buttonSex : {
-		width : SIZE_WIDTH * 0.40,
-		paddingVertical : SIZE_HEIGHT * 0.017,
-		borderRadius: 20,
-		// borderColor : '#ededed',
-		borderWidth : 2,
-		justifyContent : 'center', 
-		alignItems : 'center'
-	}
-})
+    headerTextContainer: {
+        marginTop: SIZE_HEIGHT * 0.03,
+        marginBottom: SIZE_HEIGHT * 0.05,
+    },
+    headerTextStyle: {
+        fontFamily: 'Pretendard-Bold',
+        fontSize: 28,
+        // fontWeight: 'bold',
+        color: '#111111',
+    },
+    text: {
+        fontFamily: 'Pretendard-Medium',
+        fontSize: 20,
+        color: '#111111',
+    },
+    commonMargin: {
+        marginBottom: SIZE_HEIGHT * 0.06,
+    },
+    sexTextContainer: {
+        flexDirection: 'row',
+        marginBottom: SIZE_HEIGHT * 0.02,
+    },
+    buttonSexContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    buttonSex: {
+        width: SIZE_WIDTH * 0.4,
+        paddingVertical: SIZE_HEIGHT * 0.017,
+        borderRadius: 20,
+        // borderColor : '#ededed',
+        borderWidth: 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    diagnosisTextInput: {
+        marginBottom: SIZE_HEIGHT * 0.06,
+        marginTop: -SIZE_HEIGHT * 0.05,
+    },
+    weekContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    weekTextInput: {
+        marginBottom: SIZE_HEIGHT * 0.06,
+        width: SIZE_WIDTH * 0.4,
+    },
+    weightTextInput: {
+        marginBottom: SIZE_HEIGHT * 0.1,
+    },
+});

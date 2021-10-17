@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
-import { MAIN_COLOR, SIZE_HEIGHT } from '../../common/constants';
+import { MAIN_COLOR, SIZE_HEIGHT, SIZE_WIDTH } from '../../common/constants';
 import Icon from 'react-native-vector-icons/Ionicons';
 interface agreementListProps {
 	text : string
@@ -12,14 +12,18 @@ interface agreementListProps {
 export function AgreementList(props : agreementListProps) {
 	return (
 		<View style={styles.container}>
-			<View style={styles.checkWithText}>
+			
+			
+			<TouchableOpacity style={styles.checkWithText} onPress={()=>props.onPress(!props.state)}>
 				
-				<TouchableOpacity style={styles.checkButton} onPress={() => props.onPress(!props.state)}>
+				<View style={styles.checkButton} >
 					<Icon name="checkmark" style={[styles.checkStyle,{color : props.state ? MAIN_COLOR : "#d5d5d5" }]} />
-				</TouchableOpacity>
+				</View>
+
+				
 				<Text style={styles.textStyle}> {props.text} </Text>
-				<Text style={styles.textStyle}> {props.state} </Text>
-			</View>
+				
+			</TouchableOpacity>
 
 			<TouchableOpacity style={styles.rightArrowContainer}>
 				<Icon name="checkmark" style={styles.checkStyle} />
@@ -36,7 +40,8 @@ const styles = StyleSheet.create({
     },
 	checkWithText : {
 		flexDirection : 'row',
-		alignItems : 'center'
+		alignItems : 'center',
+		width : SIZE_WIDTH,
 	},
 	checkButton :{
 		height: SIZE_HEIGHT * 0.04,

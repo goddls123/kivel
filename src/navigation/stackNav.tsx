@@ -12,9 +12,11 @@ import { Agreement } from '../screen/login/Agreement';
 import { LoginSplash } from '../screen/login/LoginSplash';
 import { EnterChildInfo } from '../screen/childInfo/EnterChildInfo';
 import { NurseryCaution } from '../screen/childInfo/NurseryCaution';
-import { SliderView } from '../screen/childInfo/components/SliderView';
-
+import { NurseryCaution2 } from '../screen/childInfo/NurseryCaution2';
+import { ChildTendency } from '../screen/childInfo/ChildTendency';
+import { testEnterChildInfo } from '../screen/test/testEnterChildInfo'
 const  Stack  =  createStackNavigator<stackInterface>();
+
 
 export  const  StackNav:  React.FC  =  ({})  =>  {
     const [login,setLogin] = React.useState(false)
@@ -30,7 +32,10 @@ export  const  StackNav:  React.FC  =  ({})  =>  {
                 <Stack.Screen name="LoginSplash"  component={LoginSplash} options={{headerShown:  false}} /> 
                 <Stack.Screen name="EnterChildInfo"  component={EnterChildInfo} options={{headerShown:  false}} />
                 <Stack.Screen name="NurseryCaution"  component={NurseryCaution} options={{headerShown:  false}} />
-                <Stack.Screen name="test"  component={SliderView} options={{headerShown:  false}} />
+                <Stack.Screen name="NurseryCaution2"  component={NurseryCaution2} options={{headerShown:  false}} />
+                <Stack.Screen name="ChildTendency"  component={ChildTendency} options={{headerShown:  false}} />
+                
+                <Stack.Screen name="testEnterChildInfo"  component={testEnterChildInfo} options={{headerShown:  false}} />
             </Stack.Navigator>
     );
 };

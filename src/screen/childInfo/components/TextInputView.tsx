@@ -1,31 +1,40 @@
-import { valueFromAST } from 'graphql';
+import {valueFromAST} from 'graphql';
 import React from 'react';
-import {View, StyleSheet, Text, TextInput, ViewStyle, TouchableOpacity, KeyboardTypeOptions} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons'
-import { MAIN_COLOR } from '../../common/constants';
-import { getDateYMD } from '../../common/service/dateService';
+import {
+    View,
+    StyleSheet,
+    Text,
+    TextInput,
+    ViewStyle,
+    TouchableOpacity,
+    KeyboardTypeOptions,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {MAIN_COLOR} from '../../common/constants';
+import {getDateYMD} from '../../common/service/dateService';
+
 interface textInputViewProps {
     placeholder: string;
     style?: ViewStyle;
-	icon? : string
-	unitText? : string
-	keyboardType? : KeyboardTypeOptions
-	onChangeText?(value : any) : void
-	editable? : boolean
-	iconOnPress?(value : any) : void
-	value? : string | Date
+    icon?: string;
+    unitText?: string;
+    keyboardType?: KeyboardTypeOptions;
+    onChangeText?(value: any): void;
+    editable?: boolean;
+    iconOnPress?(value: any): void;
+    value?: string | Date;
 }
 
 export function TextInputView(props: textInputViewProps) {
-	
-	let value
-	if(typeof(props.value) == 'string'){
-		value = props.value
-	}else if(typeof(props.value) == 'undefined'){
-		value = undefined
-	}else {
-		value = getDateYMD(props.value,'-')
-	}
+    let value;
+    if (typeof props.value == 'string') {
+        value = props.value;
+    } else if (typeof props.value == 'undefined') {
+        value = undefined;
+    } else {
+        value = getDateYMD(props.value, '-');
+    }
+
     return (
         <View style={[{borderBottomWidth: 1, borderBottomColor: '#ededed'},props.style]}>
             <View style={{flexDirection : 'row', justifyContent : 'space-between', alignItems :'center'}}>
@@ -63,5 +72,14 @@ const styles = StyleSheet.create({
         fontFamily: 'Pretendard',
         fontSize: 20,
         color: '#111111',
+    },
+    icon: {
+        fontSize: 25,
+        color: MAIN_COLOR,
+    },
+    unitText: {
+        fontSize: 20,
+        color: '#aaaaaa',
+        fontWeight: 'bold',
     },
 });

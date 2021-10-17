@@ -5,6 +5,7 @@ import {Button} from '../common/components/Button';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {stackInterface} from '../../types/navigationParam';
 import { Divider } from '../common/divider';
+import { ChildInfoAlarmModal } from '../childInfo/components/ChildInfoAlarmModal';
 
 interface registerProps {
     navigation: StackNavigationProp<stackInterface, 'Register'>;
@@ -31,7 +32,8 @@ export function Register(props: registerProps) {
 				<Button 
                     text={'회원가입'} 
                     textColor={'#ffffff'} 
-                    style={{backgroundColor: MAIN_COLOR}} 
+                    style={{backgroundColor: MAIN_COLOR}}
+                    onPress={() => props.navigation.navigate('Home')}
                 ></Button>
                 <Button 
                     text={'로그인'} 
@@ -41,6 +43,8 @@ export function Register(props: registerProps) {
                 ></Button>
 
             </View>
+
+            
         </SafeAreaView>
     );
 }
@@ -56,6 +60,7 @@ const styles = StyleSheet.create({
     textView: {
         alignItems: 'center',
         justifyContent: 'center',
+        marginTop : 10,
         marginBottom: 10,
     },
     imageStyle: {
@@ -67,8 +72,8 @@ const styles = StyleSheet.create({
     textStyle: {
         fontFamily: 'Cafe24Ssurround',
         fontSize: 30,
-        fontWeight: 'bold',
         textAlign: 'center',
         color: '#111111',
+        marginBottom : 10
     },
 });

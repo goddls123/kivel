@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Text} from 'react-native'
+import {View, Text, BackHandler, ToastAndroid } from 'react-native'
 import { NavigationContainer } from "@react-navigation/native";
 import 'react-native-gesture-handler';
 
@@ -47,12 +47,34 @@ export default function App () {
 	
 	// splash 화면
 	const [splash, setSplash] = React.useState(true);
+	
 	React.useEffect(() => {
 	  setTimeout(() => {
 		setSplash(false);
 	  }, 1000);
 	}, []);
-	 
+	
+
+	//////////////////// 뒤로가기 키 두번 누를 시 종료 ////////////////////
+	const [exitApp, setExitApp] = React.useState<boolean>(false)
+	const timerRef= React.useRef<any>(null)
+
+	const handleBackButton = () => {
+        if (exitApp == undefined || !exitApp) {
+            setExitApp(true)
+			ToastAndroid.show('한번 더 누르시면 종료됩니다.', ToastAndroid.SHORT)
+            timerRef.current = setTimeout(() => { setExitApp(false) },2000);
+        } else {
+			if(timerRef.current){
+				clearTimeout(timerRef.current)
+			}
+            BackHandler.exitApp(); 
+        }
+        return true;
+    }
+	BackHandler.addEventListener("hardwareBackPress" , handleBackButton);
+	////////////////////// 뒤로가기 키 두번 누를 시 종료 ////////////////////
+	  
 	const [login, setLogin] = React.useState(false)
 
 	return (

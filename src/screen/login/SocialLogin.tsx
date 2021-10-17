@@ -37,9 +37,10 @@ export function SocialLogin(props : SocialLoginProps) {
 				Platform.OS =='android' ? <Divider height={GLOBAL_MARGIN_HORIZON} color="white" /> : null
 			}
 			
-                <TouchableOpacity onPress={() => props.navigation.goBack()}>
-                    <Icon name="close" style={{fontSize: 30}}></Icon>
-                </TouchableOpacity>
+			<TouchableOpacity onPress={() => props.navigation.goBack()}>
+				<Icon name="close" style={styles.closeIcon}></Icon>
+			</TouchableOpacity>
+			
 			<Divider height={'5%'} color="white" />
 
 			<View style={{alignItems : 'flex-start'}}>
@@ -61,32 +62,36 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: '#ffffff',
-	  },
-	  innerContainer: {
+	},
+	innerContainer: {
 		flex: 1,
 		marginHorizontal: SIZE_WIDTH * 0.05,
-	  },
-	  textView: {
+	},
+	closeIcon : {
+		fontSize: 30, 
+		color : "#111111"
+	},
+	textView: {
 		alignItems: 'center',
 		justifyContent: 'center',
 		marginBottom: 10,
-	  },
-	  imageStyle: {
+	},
+	imageStyle: {
 		height: SIZE_HEIGHT * 0.1,
 		width: SIZE_HEIGHT * 0.1,
 		marginBottom: 10,
 		alignSelf: 'center',
-	  },
-	  bigTextStyle: {
+	},
+	bigTextStyle: {
 		fontFamily: 'Pretendard',
 		fontSize: 30,
 		fontWeight: 'bold',
 		textAlign: 'center',
 		color: '#111111',
-	  },
-	  smallTextStyle : {
+	},
+	smallTextStyle : {
 		color : '#707070',
 		fontSize : 17,
-	  }
+	}
 
 })

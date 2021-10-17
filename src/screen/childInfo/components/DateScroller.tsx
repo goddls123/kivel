@@ -49,9 +49,9 @@ const styles = StyleSheet.create({
 	datePickerStyle : {backgroundColor : 'white', height : SIZE_HEIGHT * 0.24},
 	buttonContainer : {height : SIZE_HEIGHT * 0.1, width : '50%' , alignSelf : 'center' , flexDirection : 'row', justifyContent : 'space-between', alignItems : 'center'},
 	cancelButton : { width : SIZE_WIDTH * 0.30 , height : SIZE_HEIGHT * 0.06, alignItems : 'center', justifyContent : 'center'},
-	cancelText : {fontSize : 25, fontWeight: "500", color: "#aaaaaa"},
+	cancelText : {fontSize : 20, fontWeight: "500", color: "#aaaaaa"},
 	acceptButton : { width : SIZE_WIDTH * 0.30 , height : SIZE_HEIGHT * 0.06, alignItems : 'center', justifyContent : 'center', borderRadius : 24, backgroundColor : MAIN_COLOR},
-	acceptText : {fontSize : 25, fontWeight: "500", color: "white"},
+	acceptText : {fontSize : 20, fontWeight: "500", color: "white"},
 
 
 
