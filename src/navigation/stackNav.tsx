@@ -1,5 +1,5 @@
 import  React  from  'react';
-import  {createStackNavigator}  from  '@react-navigation/stack';
+import  {createStackNavigator, TransitionPresets }  from  '@react-navigation/stack';
 import  bottomTabNav  from  './bottomTabNav';
 import  calendar  from  '../screen/calendar/calendar';
 import  {stackInterface}  from  '../types/navigationParam';
@@ -20,6 +20,8 @@ const  Stack  =  createStackNavigator<stackInterface>();
 
 export  const  StackNav:  React.FC  =  ({})  =>  {
     const [login,setLogin] = React.useState(false)
+
+
     return  (
 
             <Stack.Navigator  initialRouteName={login? "Home" : "Register"}>
@@ -30,10 +32,10 @@ export  const  StackNav:  React.FC  =  ({})  =>  {
                 <Stack.Screen name="Register"  component={Register} options={{headerShown:  false}} /> 
                 <Stack.Screen name="Agreement"  component={Agreement} options={{headerShown:  false}} /> 
                 <Stack.Screen name="LoginSplash"  component={LoginSplash} options={{headerShown:  false}} /> 
-                <Stack.Screen name="EnterChildInfo"  component={EnterChildInfo} options={{headerShown:  false}} />
-                <Stack.Screen name="NurseryCaution"  component={NurseryCaution} options={{headerShown:  false}} />
-                <Stack.Screen name="NurseryCaution2"  component={NurseryCaution2} options={{headerShown:  false}} />
-                <Stack.Screen name="ChildTendency"  component={ChildTendency} options={{headerShown:  false}} />
+                <Stack.Screen name="EnterChildInfo"  component={EnterChildInfo} options={{headerShown:  false}} />  
+                <Stack.Screen name="NurseryCaution"  component={NurseryCaution} options={{headerShown:  false , ...TransitionPresets.SlideFromRightIOS }} />
+                <Stack.Screen name="NurseryCaution2"  component={NurseryCaution2} options={{headerShown:  false, ...TransitionPresets.SlideFromRightIOS }} />
+                <Stack.Screen name="ChildTendency"  component={ChildTendency} options={{headerShown:  false, ...TransitionPresets.SlideFromRightIOS }} />
                 
                 <Stack.Screen name="testEnterChildInfo"  component={testEnterChildInfo} options={{headerShown:  false}} />
             </Stack.Navigator>

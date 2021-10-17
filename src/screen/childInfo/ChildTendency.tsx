@@ -1,3 +1,5 @@
+import { gql, useMutation } from '@apollo/client';
+import { RouteProp } from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
 import {
@@ -7,6 +9,7 @@ import {
     TouchableOpacity,
     Text,
     TextInput,
+    Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {stackInterface} from '../../types/navigationParam';
@@ -21,11 +24,24 @@ import {
 import {Divider} from '../common/divider';
 
 interface ChildTendencyProps {
-    navigation: StackNavigationProp<stackInterface, 'SocialLogin'>;
+    navigation: StackNavigationProp<stackInterface, 'NurseryCaution2'>;
+    route: RouteProp<stackInterface, 'NurseryCaution2'>;
 }
 
 export function ChildTendency(props: ChildTendencyProps) {
     const [tendency, setTendency] = React.useState<string>()
+    
+    const SAVE_CHILD = gql`
+        mutation saveChild($ChildInput : ChildInput!){
+            saveChild(ChildInput : $ChildInput){
+                id,
+                name,
+            }
+        }
+    `
+    const [saveChild, { data, loading, error }] = useMutation(SAVE_CHILD)
+
+    console.log('childTendency : ' ,props.route.params)
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.innerContainer}>
@@ -62,11 +78,17 @@ export function ChildTendency(props: ChildTendencyProps) {
                         backgroundColor: tendency ? MAIN_COLOR : '#ededed',
                         marginTop : SIZE_HEIGHT * 0.1
                     }}
-                    onPress={() => props.navigation.reset({routes: [{name: 'Home'}]})}
+                    onPress={() => { 
+                        saveChild({variables : { ChildInput : {...props.route.params,tendency}}})
+                        .then((result) => {
+                            console.log(result)
+                            props.navigation.reset({routes: [{name: 'Home'}]})
+                        })
+                        .catch((e) => 
+                        Alert.alert(e.message)
+                        )
+                    }}
                 ></Button>
-                <TouchableOpacity style={styles.underlineTextContainer} onPress={() => props.navigation.reset({routes: [{name: 'Home'}]})}>
-                    <Text style={styles.underlineTextStyle}>건너뛰기</Text>
-                </TouchableOpacity>
             </View>
         </SafeAreaView>
     );

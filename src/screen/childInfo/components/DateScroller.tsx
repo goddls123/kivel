@@ -22,7 +22,8 @@ export function DateScroller(props : DateScrollerProps) {
 				<DatePicker 
 				style={styles.datePickerStyle} 
 				date={props.date? props.date : new Date()} 
-				onDateChange={(newDate : Date) => props.setDate(newDate)} mode={'date'} 
+				onDateChange={ (newDate : Date) => props.setDate(new Date(newDate.toDateString())) } 
+				mode={'date'} 
 				/>
 				
 				<View style={styles.buttonContainer}>
