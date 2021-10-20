@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { SocialLoginButton } from './components/SocialLoginButton';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { stackInterface } from '../../types/navigationParam';
-import {  logInWithKakao,  unlinkKakao } from '../login/service/loginService';
+import {  logInWithKakao,  unlinkKakao, logInWithNaver, logoutWithNaver } from '../login/service/loginService';
 import { Divider } from '../common/divider';
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/client';
@@ -52,6 +52,8 @@ export function SocialLogin(props : SocialLoginProps) {
 
 			<View style={{height : '25%'}} />
 			<SocialLoginButton platform='kakao' onPress={logInWithKakao}/>
+			<SocialLoginButton platform='naver' onPress={logInWithNaver}/>
+			<SocialLoginButton platform='naver' onPress={logoutWithNaver}/>
 			<SocialLoginButton platform='naver' onPress={() => { props.navigation.navigate('Agreement')}}/>
 		</View>
 	</SafeAreaView>

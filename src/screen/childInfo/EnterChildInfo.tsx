@@ -42,8 +42,8 @@ export function EnterChildInfo(props: enterChildInfoProps) {
   const [sex, setSex] = React.useState<'M' | 'W'>();
   const [diagnosis, setDiagnosis] = React.useState<string>();
   const [directInputDiag, setDirectInputDiag] = React.useState<string>();
-  const [weekNum, setWeekNum] = React.useState<number>(0);
-  const [dateNum, setdateNum] = React.useState<number>(0);
+  const [birthWeekNum, setBirthWeekNum] = React.useState<number>(0);
+  const [birthDayNum, setBirthDayNum] = React.useState<number>(0);
   const [height, setHeight] = React.useState<number>(0);
   const [weight, setWeight] = React.useState<number>(0);
 
@@ -63,11 +63,11 @@ export function EnterChildInfo(props: enterChildInfoProps) {
     return vWeight && vWeight > 0 && vWeight < 100 ? true : false;
   };
 
-  const rightWeekNum = (vWeekNum: Number) => {
-    return vWeekNum && vWeekNum > 1 ? true : false;
+  const rightbirthWeekNum = (vbirthWeekNum: Number) => {
+    return vbirthWeekNum && vbirthWeekNum > 1 ? true : false;
   };
-  const rightDateNum = (vDateNum: Number) => {
-    return vDateNum && vDateNum >= 0 && vDateNum < 7 ? true : false;
+  const rightbirthDayNum = (vbirthDayNum: Number) => {
+    return vbirthDayNum && vbirthDayNum >= 0 && vbirthDayNum < 7 ? true : false;
   };
 
   // 필수항목 체크
@@ -77,8 +77,8 @@ export function EnterChildInfo(props: enterChildInfoProps) {
       birthDate &&
       sex &&
       rightWeight(weight) &&
-      rightWeekNum(weekNum) &&
-      rightDateNum(dateNum) &&
+      rightbirthWeekNum(birthWeekNum) &&
+      rightbirthDayNum(birthDayNum) &&
       rightHeight(height)
     ) {
       if (diagnosis === '직접입력') {
@@ -192,7 +192,7 @@ export function EnterChildInfo(props: enterChildInfoProps) {
               }}
               unitText="주"
               keyboardType="numeric"
-              onChangeText={setWeekNum}></TextInputView>
+              onChangeText={setBirthWeekNum}></TextInputView>
             <TextInputView
               placeholder={'ex) 6'}
               style={{
@@ -201,7 +201,7 @@ export function EnterChildInfo(props: enterChildInfoProps) {
               }}
               unitText="일"
               keyboardType="numeric"
-              onChangeText={setdateNum}></TextInputView>
+              onChangeText={setBirthDayNum}></TextInputView>
           </View>
 
           <TextView text="키" />
@@ -226,7 +226,15 @@ export function EnterChildInfo(props: enterChildInfoProps) {
             style={{
               backgroundColor: essentialOptionCheck() ? MAIN_COLOR : '#ededed',
             }}
-            onPress={() => props.navigation.navigate('NurseryCaution')}
+            onPress={() =>  props.navigation.navigate('NurseryCaution',{ 
+                                name, 
+                                birthDate, 
+                                sex, 
+                                diagnosis : diagnosis? diagnosis : directInputDiag, 
+                                birthWeekNum, 
+                                birthDayNum, 
+                                height, 
+                                weight })}
             disable={!essentialOptionCheck()}
           />
         </ScrollView>

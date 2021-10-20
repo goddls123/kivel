@@ -107,10 +107,13 @@ export function homeTab(props: homeTabProps) {
                 
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                     <View style={{flexDirection : 'row', justifyContent : 'center', marginLeft : GLOBAL_MARGIN_HORIZON, marginTop : 10}}>
+                        <TouchableOpacity>
+                            <ScheduleCard height={SIZE_HEIGHT * 0.285} width={SIZE_WIDTH * 0.6} style={{marginRight : SIZE_WIDTH * 0.02}} />
+                        </TouchableOpacity>
+                        
+                        {/* <ScheduleCard height={SIZE_HEIGHT * 0.285} width={SIZE_WIDTH * 0.6} style={{marginRight : SIZE_WIDTH * 0.02}} />
                         <ScheduleCard height={SIZE_HEIGHT * 0.285} width={SIZE_WIDTH * 0.6} style={{marginRight : SIZE_WIDTH * 0.02}} />
-                        <ScheduleCard height={SIZE_HEIGHT * 0.285} width={SIZE_WIDTH * 0.6} style={{marginRight : SIZE_WIDTH * 0.02}} />
-                        <ScheduleCard height={SIZE_HEIGHT * 0.285} width={SIZE_WIDTH * 0.6} style={{marginRight : SIZE_WIDTH * 0.02}} />
-                        <ScheduleCard height={SIZE_HEIGHT * 0.285} width={SIZE_WIDTH * 0.6} style={{marginRight : SIZE_WIDTH * 0.02}} />
+                        <ScheduleCard height={SIZE_HEIGHT * 0.285} width={SIZE_WIDTH * 0.6} style={{marginRight : SIZE_WIDTH * 0.02}} /> */}
                     </View>
                 </ScrollView>
 
@@ -131,22 +134,12 @@ export function homeTab(props: homeTabProps) {
                         <HomeWorkCard height={SIZE_HEIGHT * 0.2} width={SIZE_WIDTH * 0.4} />
                     </View>
                 </ScrollView>
+
             </View>
 
 			</ScrollView>
 
-            {/* <ScheduleModalView
-                modalVisible={modalVisible}
-                setModalVisible={setModalVisible}
-                data={selectedSchedule}
-            />
-			<Modal
-			isVisible={modalTest}
-			style={{margin : 0}}
-			onBackdropPress={() => setModalTest(false)}
-			>
-				<ChildInfoAlarmModal></ChildInfoAlarmModal>
-			</Modal> */}
+            
         </SafeAreaView>
     );
 }

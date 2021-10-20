@@ -25,12 +25,12 @@ export function ScheduleCard(props : ScheduleCardProps) {
 					<View style={{ width : CARD_WIDTH * 0.02 , backgroundColor : '#ff8a5c'}} />
 					
 					<View style={{ width : CARD_WIDTH ,  marginLeft : CARD_WIDTH * 0.09}} >
-						<View style={{height : CARD_HEIGHT * 0.22}}>
+						<View style={{height : CARD_HEIGHT * 0.20}}>
 
 						</View>
 						<View style={{height : CARD_HEIGHT * 0.25, flexDirection : 'row'}}>
 							{/* 이미지 들어갈 공간 */}
-							<View style={styles.imageContainer}>
+							<View style={[{height : CARD_HEIGHT * 0.25, width : CARD_HEIGHT * 0.25},styles.imageContainer]}>
 
 							</View>
 							{/* 이름 */}
@@ -44,22 +44,22 @@ export function ScheduleCard(props : ScheduleCardProps) {
 							</View>
 						</View>
 
-						<View style={{flex : 1, justifyContent : 'center'}}>
+						<View style={{flex : 1, justifyContent : 'space-between', paddingTop : CARD_HEIGHT * 0.08, paddingBottom : CARD_HEIGHT * 0.11}}>
 							
 							<View style={{flexDirection : 'row'}}>
-								<Text style={{width : CARD_HEIGHT * 0.32, fontSize : 14, color : "#aaaaaa"}}>과목</Text>
+								<Text style={[styles.grayTextStyle,{width : CARD_HEIGHT * 0.33, }]}>과목</Text>
 								<Text style={styles.textStyle}>계절_언어치료</Text>
 							</View>
 							
 							
 							<View style={{ flexDirection : 'row'}}>
-								<Text style={{width : CARD_HEIGHT * 0.32, fontSize : 14, color : "#aaaaaa"}}>시간</Text>
+								<Text style={[styles.grayTextStyle,{width : CARD_HEIGHT * 0.33, }]}>시간</Text>
 								<Text style={styles.textStyle}>09:00 - 15:00</Text>
 							</View>
 							
 							
 							<View style={{ flexDirection : 'row'}}>
-								<Text style={{width : CARD_HEIGHT * 0.32, fontSize : 14, color : "#aaaaaa"}}>장소</Text>
+								<Text style={[styles.grayTextStyle,{width : CARD_HEIGHT * 0.33, }]}>장소</Text>
 								<Text style={styles.textStyle}>와이아동발달센터</Text>
 							</View>
 							
@@ -75,7 +75,7 @@ export function ScheduleCard(props : ScheduleCardProps) {
 		);
 }
 const styles = StyleSheet.create({
-	container : {borderWidth : 1, borderColor : "#ededed", overflow : 'hidden', borderRadius : 10},
+	container : {borderWidth : 1, borderColor : "#d5d5d5", overflow : 'hidden', borderRadius : 10},
 	innerContainer : {flex : 1, flexDirection : 'row'},
 	textContainer : {
 		flex : 1,
@@ -84,9 +84,10 @@ const styles = StyleSheet.create({
 		borderWidth : 1,
 		borderRadius : 10,
 	},
-	imageContainer : {height : '100%', width : '22%', borderRadius : 100, backgroundColor : 'yellow',overflow : 'hidden' },
+	imageContainer : {borderRadius : 100, backgroundColor : 'green',overflow : 'hidden'},
 	nameContainer : {marginLeft : '8%'},
 	badge : { alignItems : 'flex-start' , justifyContent : 'center', marginVertical : 3},
 	badgeText : {fontSize : 12, paddingHorizontal : 8, paddingVertical : 3, borderRadius :5 , textAlign : 'center'},
 	textStyle : {fontSize : 16, color : 'black'},
+	grayTextStyle : {fontSize : 14, color : "#aaaaaa"},
 })
