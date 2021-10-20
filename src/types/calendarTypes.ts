@@ -31,3 +31,11 @@ export interface scheduleFront {
     start_time : any,
     end_time : any,
 }
+
+export interface DateObject {
+    day: number;
+    dateString: string;
+    month: number;
+    timestamp: number;
+    year: number;
+}

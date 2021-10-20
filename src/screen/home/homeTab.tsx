@@ -33,17 +33,9 @@ interface homeTabProps {
 export function homeTab(props: homeTabProps) {
     //////////// Todo
     //	profile, 이번주 일정, 이번주 과제 받아오고 패치
-    const [profile, setProfile] = React.useState();
-    const [weeklySchedule, setWeeklySchedule] = React.useState<schedule[]>();
-    const [selectedSchedule, setSelectedSchedule] = React.useState<schedule>();
-    const [weeklyHomework, setWeeklyHomework] = React.useState();
-    const [modalVisible, setModalVisible] = React.useState<boolean>(false);
+    const [scheduleModal, setScheduleModal] = React.useState(true)
 
-	const [modalTest, setModalTest] = React.useState<boolean>(true)
-    React.useEffect(() => {
-        setWeeklySchedule(schedule_data);
-    }, []);
-    console.log(SIZE_HEIGHT * 0.025)
+    
     return (
         <SafeAreaView style={styles.container}>
             {/* 헤더 */}    
@@ -66,7 +58,9 @@ export function homeTab(props: homeTabProps) {
             <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.topContainer}>
                 {/* 프로필 */}
-                <MainProfile style={styles.profileContainer}></MainProfile>
+                <MainProfile 
+                style={styles.profileContainer}
+                ></MainProfile>
 
                 
                 <View style={{height : SIZE_HEIGHT * 0.1, justifyContent : 'flex-end'}}>
@@ -80,16 +74,19 @@ export function homeTab(props: homeTabProps) {
                     <NavigationButton 
                     style={{flex : 1}} 
                     imageStyle={styles.navigationButtonStyle}
+                    imageType='note'
                     buttonName={'성장 노트'} /> 
                     
                     <NavigationButton 
                     style={{flex : 1}} 
                     imageStyle={styles.navigationButtonStyle}
+                    imageType='trouble'
                     buttonName={'호소문제 등록'} /> 
                     
                     <NavigationButton 
                     style={{flex : 1}} 
                     imageStyle={styles.navigationButtonStyle}
+                    imageType='homeWork'
                     buttonName={'과제 등록'} />                 
                 </View>
 
@@ -102,12 +99,14 @@ export function homeTab(props: homeTabProps) {
             <View style={styles.scheduleContainer}>
                 <View style={styles.containerHeader}>
                     <Text style={{fontWeight : 'bold', fontSize : 17, color : "black"}}>주간 일정</Text>
-                    <Text style={{fontWeight : 'bold', fontSize : 15, color : "#aaaaaa"}}>전체 보기{'>'} </Text>
+                    <TouchableOpacity onPress={() => {props.navigation.navigate('Calendar')}}>
+                        <Text style={{fontWeight : 'bold', fontSize : 15, color : "#aaaaaa"}}>전체 보기{'>'} </Text>
+                    </TouchableOpacity>
                 </View>
                 
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                     <View style={{flexDirection : 'row', justifyContent : 'center', marginLeft : GLOBAL_MARGIN_HORIZON, marginTop : 10}}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => {}}>
                             <ScheduleCard height={SIZE_HEIGHT * 0.285} width={SIZE_WIDTH * 0.6} style={{marginRight : SIZE_WIDTH * 0.02}} />
                         </TouchableOpacity>
                         
@@ -139,6 +138,13 @@ export function homeTab(props: homeTabProps) {
 
 			</ScrollView>
 
+
+            <Modal
+            isVisible={scheduleModal}>
+                <ScheduleModalView
+                setModalView={setScheduleModal}
+                ></ScheduleModalView>
+            </Modal>
             
         </SafeAreaView>
     );
