@@ -71,17 +71,6 @@ interface calendarProps {
 
 export default function calendar({navigation, route}: calendarProps) {
     const [calendarState, setCalendarState] = useState<'month' | 'week'>('month');
-    const [selectedDaySchedule, setSelectedDaySchedule] = useState<schedule[]>();
-
-    React.useEffect(() => {
-        let scheduleArray: schedule[] = [];
-        schedule_data.map(data => {
-            if (scheduleCheck(new Date(), data)) {
-                scheduleArray.push(data);
-            }
-        });
-        setSelectedDaySchedule(scheduleArray);
-    }, []);
 
     
     const [selectedDate, setSelectedDate] = useState<string>(getDateYMD(new Date(),'-'));
@@ -229,18 +218,12 @@ export default function calendar({navigation, route}: calendarProps) {
                 )}
 
 				<View style={{margin : GLOBAL_MARGIN_HORIZON }}>
-					<Text style={{ color : 'black', fontSize: 17, fontWeight : 'bold'}}>오늘</Text>
+					<Text style={{ color : 'black', fontSize: 17, fontWeight : 'bold', marginBottom : GLOBAL_MARGIN_HORIZON}}>{selectedDate == getDateYMD(new Date(),'-') ? '오늘' : selectedDate}</Text>
 					{/* 일정 card */}
-					<View
-						style={{
-							flex: 1,
-							alignItems: 'center',
-							backgroundColor: '#f6f6f6',
-						}}>
-						{selectedDaySchedule?.map((data, key) => {
-							return <ScheduleCard key={key} data={data}></ScheduleCard>;
-						})}
-					</View>
+                    <ScheduleCard></ScheduleCard>
+                    <ScheduleCard></ScheduleCard>
+                    <ScheduleCard></ScheduleCard>
+                    <ScheduleCard></ScheduleCard>
 				</View>
 
             </ScrollView>
