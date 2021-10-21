@@ -35,5 +35,10 @@
       </activity>
       <!-- 카카오 로그인 -->
 
+      <!-- 네이버지도 -->
+      <meta-data
+        android:name="com.naver.maps.map.CLIENT_ID"
+        android:value="ftqf9pqnh1" />
+      <!-- 네이버지도 -->
     </application>
 </manifest>

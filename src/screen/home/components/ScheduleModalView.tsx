@@ -4,6 +4,7 @@ import Modal from 'react-native-modal';
 import { schedule } from '../../../types/calendarTypes';
 import { Button } from '../../common/components/Button';
 import { GLOBAL_MARGIN_HORIZON, MAIN_COLOR, SIZE_HEIGHT, SIZE_WIDTH } from '../../common/constants';
+import NaverMapView, {Circle, Marker, Path, Polyline, Polygon} from "react-native-nmap";
 
 
 interface ScheduleModalViewProps {
@@ -11,6 +12,8 @@ interface ScheduleModalViewProps {
 }
 
 export function ScheduleModalView(props : ScheduleModalViewProps) {
+	const [mapModal, setMapModal] = React.useState<boolean>(false);
+
 		return (
 				<View style={styles.modalContainer}>
 					<View style={styles.headerContainer}>
@@ -39,7 +42,14 @@ export function ScheduleModalView(props : ScheduleModalViewProps) {
 						<Text style={styles.grayText}>장소</Text>
 						<Text style={styles.blackText}>은평구 복지센터 3층 솔방울 교실</Text>
 					</View>
-					<View style={{flex : 2 , flexDirection :'row', alignItems : 'flex-end', paddingBottom : '10%'}}>
+					{/* <View style={{flex : 2.5, marginTop : 20}}>
+						<NaverMapView style={{width: '100%', height: '100%'}}
+											showsMyLocationButton={true}
+											// center={{...P0, zoom: 16}}
+											onMapClick={() => setMapModal(true)}>
+						</NaverMapView>
+					</View> */}
+					<View style={{flex : 1 , flexDirection :'row', alignItems : 'flex-end', paddingBottom : '10%', paddingTop : '5%'}}>
 						<View style={{flex : 1, marginLeft : '12%', marginRight : '3%' }}>
 							<Button text={'수정'} textColor={'#707070'} style={{backgroundColor : '#ededed', borderRadius : 50}}></Button>
 						</View>
@@ -49,6 +59,21 @@ export function ScheduleModalView(props : ScheduleModalViewProps) {
 							></Button>
 						</View>
 					</View>
+
+					<Modal
+					isVisible={mapModal}
+					onBackdropPress={() => setMapModal(false)}>
+						<View style={{backgroundColor : 'white' ,alignSelf : 'center' ,width: '100%', height: '90%', borderRadius : 15, overflow : 'hidden', paddingHorizontal : 20, paddingVertical : 30}}>
+						<NaverMapView 
+							key={1} 
+							style={{flex : 1,}}
+							showsMyLocationButton={true}
+							// center={{...P0, zoom: 16}}
+							// onCameraChange={e => console.warn('onCameraChange', JSON.stringify(e))}
+							>
+						</NaverMapView>
+						</View>
+					</Modal>
 				</View>
 
 		);
@@ -56,7 +81,7 @@ export function ScheduleModalView(props : ScheduleModalViewProps) {
 const styles = StyleSheet.create({
 	modalContainer : {
 		backgroundColor : 'white',
-		height : SIZE_HEIGHT * 0.6,
+		height : SIZE_HEIGHT * 0.8,
 		borderRadius : 16,
 	},
 	headerContainer : {height : SIZE_HEIGHT * 0.08 , flexDirection : 'row'},
