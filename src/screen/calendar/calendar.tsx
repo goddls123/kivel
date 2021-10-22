@@ -29,6 +29,7 @@ import {scheduleCheck} from './service/calendarService';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { getDateYMD } from '../common/service/dateService';
+import axios from 'axios';
 
 LocaleConfig.locales['kr'] = {
     monthNames: [
@@ -85,16 +86,20 @@ export default function calendar({navigation, route}: calendarProps) {
         <View style={styles.container}>
             <ScrollView>
                 <View style={styles.headerContainer}>
-                    <Icon name="arrow-back" style={{fontSize: 25}}></Icon>
-                    <Text style={styles.headerText}> 키블(이)의 일정관리 </Text>
+
+                    <TouchableOpacity onPress={() => { navigation.goBack() }}>
+                        <Icon name="arrow-back" style={{ fontSize: 25 }}></Icon>
+                    </TouchableOpacity>
+
+                    <Text style={styles.headerText}>  키블(이)의 일정관리 </Text>
+                    
                     <TouchableOpacity
                         style={styles.headerIconContainer}
                         onPress={() => changeView()}>
                         {calendarState == 'month' ? (
                             <Image
                                 source={require('../../assets/icons/ic_monthly.png')}
-                                style={styles.headerIconImage}
-                            />
+                                style={styles.headerIconImage}/>
                         ) : (
                             <Image
                                 source={require('../../assets/icons/ic_monthly.png')}
@@ -102,6 +107,7 @@ export default function calendar({navigation, route}: calendarProps) {
                             />
                         )}
                     </TouchableOpacity>
+
                 </View>
 
                 {/* 캘린더 */}
@@ -217,7 +223,7 @@ export default function calendar({navigation, route}: calendarProps) {
                     </View>
                 )}
 
-				<View style={{margin : GLOBAL_MARGIN_HORIZON }}>
+				<View style={{margin : GLOBAL_MARGIN_HORIZON , marginBottom : 80}}>
 					<Text style={{ color : 'black', fontSize: 17, fontWeight : 'bold', marginBottom : GLOBAL_MARGIN_HORIZON}}>{selectedDate == getDateYMD(new Date(),'-') ? '오늘' : selectedDate}</Text>
 					{/* 일정 card */}
                     <ScheduleCard></ScheduleCard>
@@ -225,8 +231,12 @@ export default function calendar({navigation, route}: calendarProps) {
                     <ScheduleCard></ScheduleCard>
                     <ScheduleCard></ScheduleCard>
 				</View>
-
+                
             </ScrollView>
+
+            <TouchableOpacity style={{position :'absolute', bottom : 0 , right : 0 }}>
+                        <Image style={{height: 100, width: 100 }} source={require('../../assets/icons/btn_floating_new.png')} ></Image>
+            </TouchableOpacity>
         </View>
     );
 }
@@ -236,7 +246,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         height: SIZE_HEIGHT * 0.08,
         alignItems: 'center',
-        marginHorizontal: GLOBAL_MARGIN_HORIZON,
+        paddingHorizontal: GLOBAL_MARGIN_HORIZON,
         flexDirection: 'row',
     },
     headerText: {fontSize: 20, color: 'black', fontFamily: 'Cafe24Ssurround'},

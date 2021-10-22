@@ -71,7 +71,8 @@ export function homeTab(props: homeTabProps) {
 
                 {/* navigation 버튼 */}
                 <View style={{flex : 1, flexDirection : 'row', height : SIZE_HEIGHT * 0.165, alignItems : 'center'}}>
-                    <NavigationButton 
+                    <NavigationButton
+                    onPress={() => { props.navigation.navigate('map')}}
                     style={{flex : 1}} 
                     imageStyle={styles.navigationButtonStyle}
                     imageType='note'
