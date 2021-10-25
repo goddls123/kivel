@@ -20,6 +20,8 @@ import { SocialLogin } from './src/screen/login/SocialLogin';
 import { Register } from './src/screen/login/Register';
 
 import { DateScroller } from './src/screen/childInfo/components/DateScroller';
+import { addCalendarPage as AddCalendarPage} from './src/screen/calendar/addCalendarPage';
+import { map as Map } from './src/screen/map/map';
 
 
 
@@ -84,11 +86,13 @@ export default function App () {
 		: 
 		// <Provider store={store}>
 
-		<ApolloProvider client={client}>
-			<NavigationContainer>
-				<StackNav />
-			</NavigationContainer>
-		</ApolloProvider>
+		// <ApolloProvider client={client}>
+		// 	<NavigationContainer>
+		// 		<StackNav />
+		// 	</NavigationContainer>
+		// </ApolloProvider>
+		<AddCalendarPage></AddCalendarPage>
+
 		// </Provider>
 
 
