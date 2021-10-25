@@ -19,6 +19,8 @@ import {SocialLogin} from './src/screen/login/SocialLogin';
 import {Register} from './src/screen/login/Register';
 
 import {DateScroller} from './src/screen/childInfo/components/DateScroller';
+import {addCalendarPage as AddCalendarPage} from './src/screen/calendar/addCalendarPage';
+import {map as Map} from './src/screen/map/map';
 
 //네비게이션 사용시 렌더 성능 향상
 // enableScreens()
@@ -81,6 +83,8 @@ export default function App() {
         <StackNav />
       </NavigationContainer>
     </ApolloProvider>
+    // <AddCalendarPage></AddCalendarPage>
   );
+
   // </Provider>
 }
