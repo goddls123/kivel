@@ -2,7 +2,9 @@
   package="com.kivel">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    
     <application
       android:name=".MainApplication"
       android:label="@string/app_name"
@@ -35,5 +37,10 @@
       </activity>
       <!-- 카카오 로그인 -->
 
+      <!-- 네이버지도 -->
+      <meta-data
+        android:name="com.naver.maps.map.CLIENT_ID"
+        android:value="ftqf9pqnh1" />
+      <!-- 네이버지도 -->
     </application>
 </manifest>

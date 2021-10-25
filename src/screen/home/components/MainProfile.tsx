@@ -15,6 +15,7 @@ interface mainProfileProps {
   name?: string;
   sex?: string;
   style: ViewStyle;
+  imageUri? : string
 }
 
 export function MainProfile(props: mainProfileProps) {
@@ -23,10 +24,8 @@ export function MainProfile(props: mainProfileProps) {
         {/* 헤더 텍스트 */}
         <TouchableOpacity style={styles.profileImage}>
           <Image
-              source={{
-                uri: 'https://image.xportsnews.com/contents/images/upload/article/2019/0531/mb_1559280740871004.jpg',
-              }}
-              style={{height: SIZE_WIDTH * 0.22, width: SIZE_WIDTH * 0.22, borderRadius: 50}} />
+              source={ props.imageUri ? { uri : props.imageUri } : require('../../../assets/icons/ic_profile.png')}
+              style={{height: SIZE_WIDTH * 0.22, width: SIZE_WIDTH * 0.22}} />
         </TouchableOpacity>
         <View >
             <Text style={styles.babyName}>{props.name || '김키블'} {props.sex || "[성별 아이콘]"} </Text>

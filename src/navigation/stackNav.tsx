@@ -15,6 +15,7 @@ import { NurseryCaution } from '../screen/childInfo/NurseryCaution';
 import { NurseryCaution2 } from '../screen/childInfo/NurseryCaution2';
 import { ChildTendency } from '../screen/childInfo/ChildTendency';
 import { testEnterChildInfo } from '../screen/test/testEnterChildInfo'
+import { map } from '../screen/map/map';
 const  Stack  =  createStackNavigator<stackInterface>();
 
 
@@ -38,6 +39,9 @@ export  const  StackNav:  React.FC  =  ({})  =>  {
                 <Stack.Screen name="ChildTendency"  component={ChildTendency} options={{headerShown:  false, ...TransitionPresets.SlideFromRightIOS }} />
                 
                 <Stack.Screen name="testEnterChildInfo"  component={testEnterChildInfo} options={{headerShown:  false}} />
+
+                <Stack.Screen name="map"  component={map} options={{headerShown:  false}} />
+                
             </Stack.Navigator>
     );
 };

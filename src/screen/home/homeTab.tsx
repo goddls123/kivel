@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
   View,
@@ -37,22 +36,12 @@ interface homeTabProps {
 export function homeTab(props: homeTabProps) {
   //////////// Todo
   //	profile, 이번주 일정, 이번주 과제 받아오고 패치
-  const [profile, setProfile] = React.useState();
-  const [weeklySchedule, setWeeklySchedule] = React.useState<schedule[]>();
-  const [selectedSchedule, setSelectedSchedule] = React.useState<schedule>();
-  const [weeklyHomework, setWeeklyHomework] = React.useState();
-  const [modalVisible, setModalVisible] = React.useState<boolean>(false);
+  const [scheduleModal, setScheduleModal] = React.useState(true);
 
-  const [modalTest, setModalTest] = React.useState<boolean>(true);
-  React.useEffect(() => {
-    setWeeklySchedule(schedule_data);
-  }, []);
-  console.log(SIZE_HEIGHT * 0.025);
   return (
     <SafeAreaView style={styles.container}>
       {/* 헤더 */}
       <View
-        // eslint-disable-next-line react-native/no-inline-styles
         style={{
           flexDirection: 'row',
           height: SIZE_HEIGHT * 0.08,
@@ -63,23 +52,21 @@ export function homeTab(props: homeTabProps) {
           <Image
             source={require('../../assets/icons/notification.png')}
             resizeMode="center"
-            style={styles.headerIcon}
-          />
-          <View style={styles.notification} />
+            style={styles.headerIcon}></Image>
+          <View style={styles.notification}></View>
         </TouchableOpacity>
         <TouchableOpacity>
           <Image
             source={require('../../assets/icons/setting.png')}
             resizeMode="center"
-            style={styles.headerIcon}
-          />
+            style={styles.headerIcon}></Image>
         </TouchableOpacity>
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.topContainer}>
           {/* 프로필 */}
-          <MainProfile style={styles.profileContainer} />
+          <MainProfile style={styles.profileContainer}></MainProfile>
 
           <View style={{height: SIZE_HEIGHT * 0.1, justifyContent: 'flex-end'}}>
             <TouchableOpacity
@@ -105,20 +92,26 @@ export function homeTab(props: homeTabProps) {
               alignItems: 'center',
             }}>
             <NavigationButton
+              onPress={() => {
+                props.navigation.navigate('map');
+              }}
               style={{flex: 1}}
               imageStyle={styles.navigationButtonStyle}
+              imageType="note"
               buttonName={'성장 노트'}
             />
 
             <NavigationButton
               style={{flex: 1}}
               imageStyle={styles.navigationButtonStyle}
+              imageType="trouble"
               buttonName={'호소문제 등록'}
             />
 
             <NavigationButton
               style={{flex: 1}}
               imageStyle={styles.navigationButtonStyle}
+              imageType="homeWork"
               buttonName={'과제 등록'}
             />
           </View>
@@ -131,9 +124,15 @@ export function homeTab(props: homeTabProps) {
             <Text style={{fontWeight: 'bold', fontSize: 17, color: 'black'}}>
               주간 일정
             </Text>
-            <Text style={{fontWeight: 'bold', fontSize: 15, color: '#aaaaaa'}}>
-              전체 보기{'>'}{' '}
-            </Text>
+            <TouchableOpacity
+              onPress={() => {
+                props.navigation.navigate('Calendar');
+              }}>
+              <Text
+                style={{fontWeight: 'bold', fontSize: 15, color: '#aaaaaa'}}>
+                전체 보기{'>'}{' '}
+              </Text>
+            </TouchableOpacity>
           </View>
 
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -144,41 +143,17 @@ export function homeTab(props: homeTabProps) {
                 marginLeft: GLOBAL_MARGIN_HORIZON,
                 marginTop: 10,
               }}>
-              <ScheduleCard
-                height={SIZE_WIDTH * 0.6 * 0.876}
-                width={SIZE_WIDTH * 0.6}
-                style={{marginRight: SIZE_WIDTH * 0.02}}
-              />
-              <ScheduleCard
-                height={SIZE_WIDTH * 0.6 * 0.876}
-                width={SIZE_WIDTH * 0.6}
-                style={{marginRight: SIZE_WIDTH * 0.02}}
-              />
-              <ScheduleCard
-                height={SIZE_WIDTH * 0.6 * 0.876}
-                width={SIZE_WIDTH * 0.6}
-                style={{marginRight: SIZE_WIDTH * 0.02}}
-              />
-              <ScheduleCard
-                height={SIZE_WIDTH * 0.6 * 0.876}
-                width={SIZE_WIDTH * 0.6}
-                style={{marginRight: SIZE_WIDTH * 0.02}}
-              />
-              {/* <ScheduleCard
-                height={SIZE_HEIGHT * 0.285}
-                width={SIZE_WIDTH * 0.6}
-                style={{marginRight: SIZE_WIDTH * 0.02}}
-              />
-              <ScheduleCard
-                height={SIZE_HEIGHT * 0.285}
-                width={SIZE_WIDTH * 0.6}
-                style={{marginRight: SIZE_WIDTH * 0.02}}
-              />
-              <ScheduleCard
-                height={SIZE_HEIGHT * 0.285}
-                width={SIZE_WIDTH * 0.6}
-                style={{marginRight: SIZE_WIDTH * 0.02}}
-              /> */}
+              <TouchableOpacity onPress={() => {}}>
+                <ScheduleCard
+                  height={SIZE_HEIGHT * 0.285}
+                  width={SIZE_WIDTH * 0.6}
+                  style={{marginRight: SIZE_WIDTH * 0.02}}
+                />
+              </TouchableOpacity>
+
+              {/* <ScheduleCard height={SIZE_HEIGHT * 0.285} width={SIZE_WIDTH * 0.6} style={{marginRight : SIZE_WIDTH * 0.02}} />
+                        <ScheduleCard height={SIZE_HEIGHT * 0.285} width={SIZE_WIDTH * 0.6} style={{marginRight : SIZE_WIDTH * 0.02}} />
+                        <ScheduleCard height={SIZE_HEIGHT * 0.285} width={SIZE_WIDTH * 0.6} style={{marginRight : SIZE_WIDTH * 0.02}} /> */}
             </View>
           </ScrollView>
         </View>
@@ -221,18 +196,9 @@ export function homeTab(props: homeTabProps) {
         </View>
       </ScrollView>
 
-      {/* <ScheduleModalView
-                modalVisible={modalVisible}
-                setModalVisible={setModalVisible}
-                data={selectedSchedule}
-            />
-			<Modal
-			isVisible={modalTest}
-			style={{margin : 0}}
-			onBackdropPress={() => setModalTest(false)}
-			>
-				<ChildInfoAlarmModal></ChildInfoAlarmModal>
-			</Modal> */}
+      <Modal isVisible={scheduleModal}>
+        <ScheduleModalView setModalView={setScheduleModal}></ScheduleModalView>
+      </Modal>
     </SafeAreaView>
   );
 }

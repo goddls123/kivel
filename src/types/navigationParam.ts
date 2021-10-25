@@ -26,4 +26,5 @@ export type stackInterface = {
 
 
     testEnterChildInfo : undefined;
+    map : undefined
 }

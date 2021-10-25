@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
   View,
@@ -27,39 +26,30 @@ export function ScheduleCard(props: ScheduleCardProps) {
   return (
     <View
       style={[
-        {
-          height: props.height,
-          width: props.width,
-        },
+        {height: props.height, width: props.width},
         props.style,
         styles.container,
       ]}>
       <View style={styles.innerContainer}>
         {/* 오늘 스케줄은 옆에 주황줄 */}
-        <View style={{width: 4, backgroundColor: '#ff8a5c'}} />
+        <View style={{width: CARD_WIDTH * 0.02, backgroundColor: '#ff8a5c'}} />
 
-        <View style={styles.contentsContainer}>
-          <Text style={{marginBottom: 15}}>오늘</Text>
-          {/* <View style={{height: CARD_HEIGHT * 0.22}} /> */}
-          <View
-            style={{
-              height: CARD_HEIGHT * 0.25,
-              flexDirection: 'row',
-              marginBottom: 15,
-            }}>
+        <View style={{width: CARD_WIDTH, marginLeft: CARD_WIDTH * 0.09}}>
+          <View style={{height: CARD_HEIGHT * 0.2}}></View>
+          <View style={{height: CARD_HEIGHT * 0.25, flexDirection: 'row'}}>
             {/* 이미지 들어갈 공간 */}
-            <View style={styles.imageContainer} />
+            <View
+              style={[
+                {height: CARD_HEIGHT * 0.25, width: CARD_HEIGHT * 0.25},
+                styles.imageContainer,
+              ]}></View>
             {/* 이름 */}
             <View style={styles.nameContainer}>
               <View style={styles.badge}>
                 <Text
                   style={[
                     styles.badgeText,
-                    {
-                      color: '#01b399',
-                      backgroundColor: '#e7f7f6',
-                      marginBottom: 3,
-                    },
+                    {color: '#01b399', backgroundColor: '#e7f7f6'},
                   ]}>
                   언어치료
                 </Text>
@@ -71,43 +61,28 @@ export function ScheduleCard(props: ScheduleCardProps) {
           </View>
 
           <View
-            style={
-              {
-                // flex: 1,
-                // justifyContent: 'center',
-              }
-            }>
-            <View style={[styles.textList, {flexDirection: 'row'}]}>
-              <Text
-                style={{
-                  width: CARD_HEIGHT * 0.32,
-                  fontSize: 14,
-                  color: '#aaaaaa',
-                }}>
+            style={{
+              flex: 1,
+              justifyContent: 'space-between',
+              paddingTop: CARD_HEIGHT * 0.08,
+              paddingBottom: CARD_HEIGHT * 0.11,
+            }}>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={[styles.grayTextStyle, {width: CARD_HEIGHT * 0.33}]}>
                 과목
               </Text>
               <Text style={styles.textStyle}>계절_언어치료</Text>
             </View>
 
-            <View style={[styles.textList, {flexDirection: 'row'}]}>
-              <Text
-                style={{
-                  width: CARD_HEIGHT * 0.32,
-                  fontSize: 14,
-                  color: '#aaaaaa',
-                }}>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={[styles.grayTextStyle, {width: CARD_HEIGHT * 0.33}]}>
                 시간
               </Text>
               <Text style={styles.textStyle}>09:00 - 15:00</Text>
             </View>
 
             <View style={{flexDirection: 'row'}}>
-              <Text
-                style={{
-                  width: CARD_HEIGHT * 0.32,
-                  fontSize: 14,
-                  color: '#aaaaaa',
-                }}>
+              <Text style={[styles.grayTextStyle, {width: CARD_HEIGHT * 0.33}]}>
                 장소
               </Text>
               <Text style={styles.textStyle}>와이아동발달센터</Text>
@@ -121,27 +96,21 @@ export function ScheduleCard(props: ScheduleCardProps) {
 const styles = StyleSheet.create({
   container: {
     borderWidth: 1,
-    borderColor: '#ededed',
+    borderColor: '#d5d5d5',
     overflow: 'hidden',
     borderRadius: 10,
   },
-  innerContainer: {
+  innerContainer: {flex: 1, flexDirection: 'row'},
+  textContainer: {
     flex: 1,
-    flexDirection: 'row',
-    // backgroundColor: 'red',
-  },
-  contentsContainer: {
-    // width: CARD_WIDTH,
-    // marginLeft: CARD_WIDTH * 0.09,
-    paddingLeft: 24,
-    paddingTop: 17,
-    paddingRight: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: 10,
   },
   imageContainer: {
-    height: 48,
-    width: 48,
     borderRadius: 100,
-    backgroundColor: 'yellow',
+    backgroundColor: 'green',
     overflow: 'hidden',
   },
   nameContainer: {marginLeft: '8%'},
@@ -157,8 +126,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     textAlign: 'center',
   },
-  textList: {
-    marginBottom: 8,
-  },
   textStyle: {fontSize: 16, color: 'black'},
+  grayTextStyle: {fontSize: 14, color: '#aaaaaa'},
 });
