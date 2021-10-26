@@ -1,7 +1,14 @@
 import {RouteProp} from '@react-navigation/core';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useState} from 'react';
-import {Alert, Image, ScrollView, StyleSheet} from 'react-native';
+import {
+  Alert,
+  Image,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Platform,
+} from 'react-native';
 import {View, TouchableOpacity, Text} from 'react-native';
 // import { Calendar } from 'react-native-toggle-calendar'
 import {
@@ -30,6 +37,7 @@ import {scheduleCheck} from './service/calendarService';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {getDateYMD} from '../common/service/dateService';
 import axios from 'axios';
+import WeekView from './components/WeekView';
 
 LocaleConfig.locales['kr'] = {
   monthNames: [
@@ -84,7 +92,7 @@ export default function calendar({navigation, route}: calendarProps) {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.headerContainer}>
           <TouchableOpacity
@@ -117,6 +125,7 @@ export default function calendar({navigation, route}: calendarProps) {
         {calendarState === 'month' ? (
           //////////////////////// 달력모드
           <View style={styles.calendarContainer}>
+            {/* todo 날짜 텍스트 중간 */}
             <Calendar
               style={styles.calendarStyle}
               onDayPress={day => setSelectedDate(day.dateString)}
@@ -161,15 +170,20 @@ export default function calendar({navigation, route}: calendarProps) {
                     width: 32,
                     height: 40,
                     alignItems: 'center',
-                    justifyContent: 'space-between',
+                    display: 'flex',
+                    justifyCotent: 'center',
+                    overflow: 'hidden',
                   },
                   text: {
                     color: 'black',
                     fontSize: 15,
                     width: 30,
                     height: 30,
+                    paddingTop: 2,
                     textAlign: 'center',
-                    textAlignVertical: 'center',
+                    borderWidth: 1,
+                    borderColor: 'white',
+                    borderRadius: 5,
                   },
                   selectedText: {
                     borderColor: 'rgb(255, 138, 92)',
@@ -180,7 +194,9 @@ export default function calendar({navigation, route}: calendarProps) {
                   todayText: {
                     backgroundColor: 'rgb(255, 138, 92)',
                     color: 'white',
+                    textAlign: 'center',
                     borderRadius: 100,
+                    width: 30,
                   },
                 },
                 'stylesheet.calendar.header': {
@@ -226,8 +242,7 @@ export default function calendar({navigation, route}: calendarProps) {
         ) : (
           ///////////////////////주간모드
           <View>
-            {/* <CalendarStrip selectedDate={setSelectedDate} />
-                        <ScheduleFrame selectedDate={selectedDate} data={schedule_data} /> */}
+            <WeekView></WeekView>
           </View>
         )}
 
@@ -256,7 +271,7 @@ export default function calendar({navigation, route}: calendarProps) {
           style={{height: 100, width: 100}}
           source={require('../../assets/icons/btn_floating_new.png')}></Image>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({

@@ -83,7 +83,6 @@ export default function App() {
         <StackNav />
       </NavigationContainer>
     </ApolloProvider>
-    // <AddCalendarPage></AddCalendarPage>
   );
 
   // </Provider>
