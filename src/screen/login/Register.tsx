@@ -5,7 +5,7 @@ import {Button} from '../common/components/Button';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {stackInterface} from '../../types/navigationParam';
 import { Divider } from '../common/divider';
-import { ChildInfoAlarmModal } from '../childInfo/components/ChildInfoAlarmModal';
+import { ChildInfoAlarmModal } from '../childEnroll/components/ChildInfoAlarmModal';
 import { essentialChildInfo } from '../../types/childInfoTypes';
 
 interface registerProps {

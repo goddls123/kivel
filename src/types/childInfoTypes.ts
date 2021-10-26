@@ -27,3 +27,25 @@ export type nurseryCaution2 = {
 export type childTendency = {
         tendency : string | undefined
 }
+
+export type childData = {
+        id : number
+        name : string
+        birthdate : Date
+        sex : string | undefined
+        diagnosis : string | undefined
+        birthWeekNum : number | undefined
+        birthDayNum : number | undefined
+        height : number | undefined
+        weight : number | undefined
+        degreeSnack : number | undefined
+        degreeRule : number | undefined
+        degreeMeal : number | undefined
+        rearer : string | undefined
+        pill : string | undefined
+        diaper : string | undefined
+        allergy : string | undefined
+        seizure : string | undefined
+        etc : string | undefined
+        tendency : string | undefined
+}

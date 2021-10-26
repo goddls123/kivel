@@ -13,15 +13,11 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import { Alert } from 'react-native';
 import StackNav from './src/navigation/stackNav';
 import { Splash } from './src/screen/common/components/Splash';
+import {childInfoMain as ChildInfoMain} from './src/screen/childInfo/childInfoMain';
 
 
 // import messaging from '@react-native-firebase/messaging';
-import { SocialLogin } from './src/screen/login/SocialLogin';
-import { Register } from './src/screen/login/Register';
 
-import { DateScroller } from './src/screen/childInfo/components/DateScroller';
-import { addCalendarPage as AddCalendarPage} from './src/screen/calendar/addCalendarPage';
-import { map as Map } from './src/screen/map/map';
 
 
 
@@ -86,12 +82,13 @@ export default function App () {
 		: 
 		// <Provider store={store}>
 
-		// <ApolloProvider client={client}>
-		// 	<NavigationContainer>
-		// 		<StackNav />
-		// 	</NavigationContainer>
-		// </ApolloProvider>
-		<AddCalendarPage></AddCalendarPage>
+		<ApolloProvider client={client}>
+			<NavigationContainer>
+				{/* <StackNav /> */}
+				<ChildInfoMain></ChildInfoMain>
+			</NavigationContainer>
+		</ApolloProvider>
+		
 
 		// </Provider>
 

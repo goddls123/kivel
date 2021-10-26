@@ -20,7 +20,7 @@ import {NavigationButton} from './components/NavigationButton';
 import {Divider} from '../common/divider';
 import {GLOBAL_MARGIN_HORIZON, SIZE_HEIGHT, SIZE_WIDTH} from '../common/constants';
 import Modal from 'react-native-modal'
-import { ChildInfoAlarmModal } from '../childInfo/components/ChildInfoAlarmModal';
+import { ChildInfoAlarmModal } from '../childEnroll/components/ChildInfoAlarmModal';
 import { ScheduleCard } from './components/ScheduleCard';
 import { HomeWorkCard } from './components/HomeWorkCard';
 

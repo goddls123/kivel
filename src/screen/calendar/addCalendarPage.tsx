@@ -89,7 +89,7 @@ export function addCalendarPage(props : addCalendarPageProps) {
 	]);
 		return (
 			<SafeAreaView style={styles.container}>
-				<ScrollView>
+				<ScrollView nestedScrollEnabled={true}>
 					
 					{/* header */}
 					<View style={styles.headerContainer}>
@@ -181,28 +181,30 @@ export function addCalendarPage(props : addCalendarPageProps) {
 
 							<View>
 								<DropDownPicker
-									style={{height: 30, width : SIZE_WIDTH * 0.3}}
-									dropDownContainerStyle={{height: 100, width : SIZE_WIDTH * 0.3}}
+									style={{height: 30, width : SIZE_WIDTH * 0.3, borderColor : '#d5d5d5'}}
+									dropDownContainerStyle={{height: 100, width : SIZE_WIDTH * 0.3, borderColor : '#d5d5d5'}}
 									open={open}
 									value={value}
 									items={items}
 									setOpen={setOpen}
 									setValue={setValue}
 									setItems={setItems}
-									onChangeValue={()=> weekSelector() }
+									onChangeValue={()=> weekSelector()}
+									listMode='SCROLLVIEW'
 								/>
 							</View>
 
 							<View>
 								<DropDownPicker
-									style={{ marginLeft: 20, height: 30, width: SIZE_WIDTH * 0.3 }}
-									dropDownContainerStyle={{ marginLeft: 20, height: 100, width: SIZE_WIDTH * 0.3 }}
+									style={{ marginLeft: 20, height: 30, width: SIZE_WIDTH * 0.3 , borderColor : '#d5d5d5'}}
+									dropDownContainerStyle={{ marginLeft: 20, height: 100, width: SIZE_WIDTH * 0.3 , borderColor : '#d5d5d5'}}
 									open={open1}
 									value={value1}
 									items={items1}
 									setOpen={setOpen1}
 									setValue={setValue1}
 									setItems={setItems1}
+									listMode='SCROLLVIEW'
 								/>
 							</View>
 						</View>
@@ -266,16 +268,19 @@ export function addCalendarPage(props : addCalendarPageProps) {
 							<Icon name="notifications-outline" style={styles.timeIcon} />
 							<Text style={styles.timeText}> 알림설정</Text>
 						</View>
+						<View>
 						<DropDownPicker
-									style={{ height: 30, width: SIZE_WIDTH * 0.3 }}
-									dropDownContainerStyle={{ height: 100, width: SIZE_WIDTH * 0.3 }}
+									style={{ height: 30, width: SIZE_WIDTH * 0.3 , borderColor : '#d5d5d5'}}
+									dropDownContainerStyle={{ height: 100, width: SIZE_WIDTH * 0.3 , borderColor : '#d5d5d5'}}
 									open={alarmOpen}
 									value={alarmValue}
 									items={alarmItems}
 									setOpen={setAlarmOpen}
 									setValue={setAlarmValue}
 									setItems={setAlarmItems}
+									listMode='SCROLLVIEW'
 						/>
+						</View>
 					</View>
 					
 					
