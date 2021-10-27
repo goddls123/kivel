@@ -39,7 +39,7 @@ export function homeTab(props: homeTabProps) {
     return (
         <SafeAreaView style={styles.container}>
             {/* 헤더 */}    
-            <View style={{flexDirection : 'row', height : SIZE_HEIGHT * 0.08, justifyContent : 'flex-end', alignItems : 'center' }}>
+            <View style={styles.headerContainer}>
                     <TouchableOpacity>
                         <Image
                             source={require('../../assets/icons/notification.png')}
@@ -63,14 +63,15 @@ export function homeTab(props: homeTabProps) {
                 ></MainProfile>
 
                 
-                <View style={{height : SIZE_HEIGHT * 0.1, justifyContent : 'flex-end'}}>
-                    <TouchableOpacity style={{ borderWidth : 1, borderColor : "#d5d5d5",borderRadius : 10,  height: SIZE_HEIGHT * 0.06 , width : '100%', alignItems : 'center', justifyContent : 'center'}}>
+                <View style={styles.childInfoButtonContainer}>
+                    <TouchableOpacity style={styles.childInfoButton}
+                    onPress={() => props.navigation.navigate('ChildInfo')}>
                         <Text>우리아이 정보 보기</Text>
                     </TouchableOpacity>
                 </View>
 
                 {/* navigation 버튼 */}
-                <View style={{flex : 1, flexDirection : 'row', height : SIZE_HEIGHT * 0.165, alignItems : 'center'}}>
+                <View style={styles.navigationButtonContainer}>
                     <NavigationButton
                     onPress={() => { props.navigation.navigate('map')}}
                     style={{flex : 1}} 
@@ -99,21 +100,19 @@ export function homeTab(props: homeTabProps) {
             {/* 주간 일정 */}
             <View style={styles.scheduleContainer}>
                 <View style={styles.containerHeader}>
-                    <Text style={{fontWeight : 'bold', fontSize : 17, color : "black"}}>주간 일정</Text>
+                    <Text style={styles.weeklyScheduleText}>주간 일정</Text>
                     <TouchableOpacity onPress={() => {props.navigation.navigate('Calendar')}}>
-                        <Text style={{fontWeight : 'bold', fontSize : 15, color : "#aaaaaa"}}>전체 보기{'>'} </Text>
+                        <Text style={styles.weeklyScheduleText2}>전체 보기{'>'} </Text>
                     </TouchableOpacity>
                 </View>
                 
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                     <View style={{flexDirection : 'row', justifyContent : 'center', marginLeft : GLOBAL_MARGIN_HORIZON, marginTop : 10}}>
+                        
                         <TouchableOpacity onPress={() => {}}>
                             <ScheduleCard height={SIZE_HEIGHT * 0.285} width={SIZE_WIDTH * 0.6} style={{marginRight : SIZE_WIDTH * 0.02}} />
                         </TouchableOpacity>
                         
-                        {/* <ScheduleCard height={SIZE_HEIGHT * 0.285} width={SIZE_WIDTH * 0.6} style={{marginRight : SIZE_WIDTH * 0.02}} />
-                        <ScheduleCard height={SIZE_HEIGHT * 0.285} width={SIZE_WIDTH * 0.6} style={{marginRight : SIZE_WIDTH * 0.02}} />
-                        <ScheduleCard height={SIZE_HEIGHT * 0.285} width={SIZE_WIDTH * 0.6} style={{marginRight : SIZE_WIDTH * 0.02}} /> */}
                     </View>
                 </ScrollView>
 
@@ -123,7 +122,7 @@ export function homeTab(props: homeTabProps) {
             {/* 이번 주 과제 */}
             <View style={styles.homeworkContainer}>
                 <View style={styles.containerHeader}>
-                    <Text style={{fontWeight : 'bold', fontSize : 17, color : "black"}}>이번 주 과제</Text>
+                    <Text style={styles.homeworkText}>이번 주 과제</Text>
                 </View>
 
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -159,18 +158,13 @@ const styles = StyleSheet.create({
         height : SIZE_HEIGHT * 0.39,
         marginHorizontal : GLOBAL_MARGIN_HORIZON,
     },
-    headerContainer: {
-        flex: 0.8,
-        display: 'flex',
-        justifyContent: 'flex-end',
-        flexDirection: 'row',
-        alignItems: 'center',
-        // width: '',
-        backgroundColor: 'purple',
-        marginLeft: GLOBAL_MARGIN_HORIZON,
-        marginRight: GLOBAL_MARGIN_HORIZON,
-        // marginTop: 15,
-    },
+    headerContainer: {flexDirection : 'row', height : SIZE_HEIGHT * 0.08, justifyContent : 'flex-end', alignItems : 'center' },
+    childInfoButtonContainer : {height : SIZE_HEIGHT * 0.1, justifyContent : 'flex-end'},
+    childInfoButton : { borderWidth : 1, borderColor : "#d5d5d5",borderRadius : 10,  height: SIZE_HEIGHT * 0.06 , width : '100%', alignItems : 'center', justifyContent : 'center'},
+    navigationButtonContainer : {flex : 1, flexDirection : 'row', height : SIZE_HEIGHT * 0.165, alignItems : 'center'},
+    weeklyScheduleText : {fontWeight : 'bold', fontSize : 17, color : "black"},
+    weeklyScheduleText2 : {fontWeight : 'bold', fontSize : 15, color : "#aaaaaa"},
+    homeworkText : {fontWeight : 'bold', fontSize : 17, color : "black"},
     headerIcon: {
         width: 28,
         height: 28,

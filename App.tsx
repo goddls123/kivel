@@ -13,7 +13,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import { Alert } from 'react-native';
 import StackNav from './src/navigation/stackNav';
 import { Splash } from './src/screen/common/components/Splash';
-import {childInfoMain as ChildInfoMain} from './src/screen/childInfo/childInfoMain';
+import {childInfo as ChildInfo} from './src/screen/childInfo/childInfo';
 
 
 // import messaging from '@react-native-firebase/messaging';
@@ -84,8 +84,7 @@ export default function App () {
 
 		<ApolloProvider client={client}>
 			<NavigationContainer>
-				{/* <StackNav /> */}
-				<ChildInfoMain></ChildInfoMain>
+				<StackNav />
 			</NavigationContainer>
 		</ApolloProvider>
 		

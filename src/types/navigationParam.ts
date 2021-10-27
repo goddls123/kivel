@@ -24,7 +24,12 @@ export type stackInterface = {
     ChildTendency : essentialChildInfo | (essentialChildInfo & nurseryCaution ) | (essentialChildInfo & nurseryCaution2 ) | (essentialChildInfo & nurseryCaution & nurseryCaution2)
     
 
+    // childInfo
+    ChildInfo : undefined
 
-    testEnterChildInfo : undefined;
+
+    // calendar
+    AddCalendarPage : undefined
+    
     map : undefined
 }

@@ -65,7 +65,7 @@ export function SliderView(props : SliderViewProps) {
   );
 }
 const styles = StyleSheet.create({
-	headerText : {fontSize : 20, color : '#111111', fontWeight : '500' , marginBottom : SIZE_HEIGHT * 0.02},
+	headerText : {fontSize : 20, color : '#111111', fontWeight : '800' , marginBottom : SIZE_HEIGHT * 0.02},
 	sliderContainer : {height : SIZE_HEIGHT * 0.07},
 	sliderThumbStyle : {height : SIZE_HEIGHT * 0.05 , width : SIZE_HEIGHT * 0.05 , borderWidth : 4, borderColor : '#ff8a5c', borderRadius : 100, backgroundColor : 'white'},
 	sliderTrackStyle : {height : 15 ,  backgroundColor: "#ffe3d8", borderRadius : 15},

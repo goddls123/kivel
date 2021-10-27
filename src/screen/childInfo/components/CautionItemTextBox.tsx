@@ -33,43 +33,48 @@ const ITEM : any = {
 
 
 
-interface CautionItemProps {
-	item : 'medicine' | 'allergy' | 'care' | 'convulsion' | 'poop' | 'check'
+interface CautionItemTextBoxProps {
+	item : 'medicine' | 'allergy' | 'care' | 'convulsion' | 'poop' | 'check' 
 	revise : boolean
 	text? : string
-	setText?(value: string) : void
+	setText(value: string) : void
 	style? : ViewStyle
 }
 
-export function CautionItem(props: CautionItemProps) {
+export function CautionItemTextBox(props: CautionItemTextBoxProps) {
 
-    return (
+	return (
 		<View style={[styles.container,props.style]}>
 
 			<View style={styles.imageContainer}>
 				<Image 
-				style={{height :SIZE_WIDTH * 0.125, width : SIZE_WIDTH * 0.125}}
+				style={styles.imageStyle}
 				source={ITEM[props.item].image} />
 			</View>
 
+			{/* 수정 시 UI 변화 */}
 			{
 				props.revise
-				? <TextInput
-				style={styles.textInputStyle}
-				placeholder={ITEM[props.item].placeHolder}
-				placeholderTextColor={"#d5d5d5"}
-				></TextInput>
-				: <Text style={{marginLeft : GLOBAL_MARGIN_HORIZON ,width : SIZE_WIDTH * 0.5, fontSize: 20, textAlignVertical :'center', color : 'black'}}>{props.text}</Text>
+				? 
+					<TextInput
+						style={styles.textInputStyle}
+						placeholder={ITEM[props.item].placeHolder}
+						placeholderTextColor={"#d5d5d5"}
+						value={props.text}
+						onChangeText={(text) => props.setText(text)}
+					></TextInput>
+				: 	
+					<Text style={styles.textStyle}>{props.text}</Text>
 			}
 
 		</View>
-    );
+	);
 }
 const styles = StyleSheet.create({
-  	container: {
-	  flexDirection: 'row', 
-	  marginTop: 20,
-	  alignItems : 'center'
+	container: {
+		flexDirection: 'row',
+		marginTop: 20,
+		alignItems: 'center',
 	},
 	imageContainer: {
 		borderRadius: 100,
@@ -79,6 +84,22 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		backgroundColor: '#ffe3d8',
 	},
-	textInputStyle: {marginLeft: 20, flex : 1, height : SIZE_WIDTH * 0.2 , borderRadius : 10, borderColor : '#d5d5d5', borderWidth: 1, padding : 10, textAlignVertical : 'top'},
-	
+	imageStyle: {height: SIZE_WIDTH * 0.125, width: SIZE_WIDTH * 0.125},
+	textInputStyle: {
+		marginLeft: 20,
+		flex: 1,
+		height: SIZE_WIDTH * 0.2,
+		borderRadius: 10,
+		borderColor: '#d5d5d5',
+		borderWidth: 1,
+		padding: 10,
+		textAlignVertical: 'top',
+	},
+	textStyle: {
+		marginLeft: GLOBAL_MARGIN_HORIZON,
+		width: SIZE_WIDTH * 0.5,
+		fontSize: 17,
+		textAlignVertical: 'center',
+		color: 'black',
+	},
 });

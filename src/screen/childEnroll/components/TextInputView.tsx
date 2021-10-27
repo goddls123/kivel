@@ -22,7 +22,7 @@ interface textInputViewProps {
   onChangeText?(value: any): void;
   editable?: boolean;
   iconOnPress?(value: any): void;
-  value?: string | Date;
+  value?: string | Date ;
   parseFloat?: boolean;
 }
 

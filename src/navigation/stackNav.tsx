@@ -15,6 +15,10 @@ import { NurseryCaution } from '../screen/childEnroll/NurseryCaution';
 import { NurseryCaution2 } from '../screen/childEnroll/NurseryCaution2';
 import { ChildTendency } from '../screen/childEnroll/ChildTendency';
 import { map } from '../screen/map/map';
+import { childInfo } from '../screen/childInfo/childInfo';
+import { addCalendarPage } from '../screen/calendar/addCalendarPage';
+
+
 const  Stack  =  createStackNavigator<stackInterface>();
 
 
@@ -36,6 +40,8 @@ export  const  StackNav:  React.FC  =  ({})  =>  {
                 <Stack.Screen name="NurseryCaution"  component={NurseryCaution} options={{headerShown:  false , ...TransitionPresets.SlideFromRightIOS }} />
                 <Stack.Screen name="NurseryCaution2"  component={NurseryCaution2} options={{headerShown:  false, ...TransitionPresets.SlideFromRightIOS }} />
                 <Stack.Screen name="ChildTendency"  component={ChildTendency} options={{headerShown:  false, ...TransitionPresets.SlideFromRightIOS }} />
+                <Stack.Screen name="ChildInfo"  component={childInfo} options={{headerShown:  false}} />
+                <Stack.Screen name="AddCalendarPage"  component={addCalendarPage} options={{headerShown:  false}} />
                 
 
                 <Stack.Screen name="map"  component={map} options={{headerShown:  false}} />

@@ -234,7 +234,7 @@ export default function calendar({navigation, route}: calendarProps) {
                 
             </ScrollView>
 
-            <TouchableOpacity style={{position :'absolute', bottom : 0 , right : 0 }}>
+            <TouchableOpacity style={{position :'absolute', bottom : 0 , right : 0 }} onPress={() => navigation.navigate('AddCalendarPage')}>
                         <Image style={{height: 100, width: 100 }} source={require('../../assets/icons/btn_floating_new.png')} ></Image>
             </TouchableOpacity>
         </View>

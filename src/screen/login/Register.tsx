@@ -28,7 +28,7 @@ export function Register(props: registerProps) {
 				></Image>
 
                 <View style={styles.textView}>
-                    <Text style={styles.textStyle}>키블과 함께</Text>
+                    <Text style={styles.textStyle}><Text style={{color : MAIN_COLOR}}>키블</Text>과 함께</Text>
                     <Text style={styles.textStyle}>우리아이를 지켜봐요!</Text>
                 </View>
                 <Divider height={'15%'} color='white' />
