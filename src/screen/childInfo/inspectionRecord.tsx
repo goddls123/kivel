@@ -7,16 +7,69 @@ import { Divider } from '../common/divider';
 import { ResultSheetCard } from './components/ResultSheetCard';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { stackInterface } from '../../types/navigationParam';
+import { screeningResult } from '../../types/screeningResultEnroll';
+import ImageModal from 'react-native-image-modal';
+import Modal from 'react-native-modal'
+import ScreeningResultCarousel from './components/ScreeningResultCarousel';
 
 interface inspectionRecordProps {
 	navigation: StackNavigationProp<stackInterface>;
 }
 
-const test = [1,2,3,4,5]
+const test : screeningResult[] = [
+	{
+		id : 1, 
+		image : ['https://t1.daumcdn.net/cfile/tistory/99A77E355A4C3F9F29'], 
+		screeningDate : new Date('2021-10-01'),
+		screeningInstitution : '동네병원',
+		screeningName : 'ㅇ렝메ㅜㄹ 검사1111',
+		memo : undefined,
+	},
+	{
+		id : 2, 
+		image : ['https://t1.daumcdn.net/cfile/tistory/99A77E355A4C3F9F29'], 
+		screeningDate : new Date('2021-10-02'),
+		screeningInstitution : '동네병원',
+		screeningName : 'ㅇ렝메ㅜㄹ 검사2222',
+		memo : undefined,
+	},
+	{
+		id : 3, 
+		image : ['https://t1.daumcdn.net/cfile/tistory/99A77E355A4C3F9F29'], 
+		screeningDate : new Date('2021-10-03'),
+		screeningInstitution : '동네병원',
+		screeningName : 'ㅇ렝메ㅜㄹ 검사3333',
+		memo : undefined,
+	},
+	{
+		id : 4, 
+		image : ['https://t1.daumcdn.net/cfile/tistory/99A77E355A4C3F9F29'], 
+		screeningDate : new Date('2021-10-04'),
+		screeningInstitution : '동네병원',
+		screeningName : 'ㅇ렝메ㅜㄹ 검사444',
+		memo : undefined,
+	},
+	{
+		id : 5, 
+		image : ['https://t1.daumcdn.net/cfile/tistory/99A77E355A4C3F9F29'], 
+		screeningDate : new Date('2021-10-05'),
+		screeningInstitution : '동네병원',
+		screeningName : 'ㅇ렝메ㅜㄹ 검사5555',
+		memo : undefined,
+	},
+
+]
 
 export function inspectionRecord(props : inspectionRecordProps) {
 
+	// 선택한 screen
+	const [selectedScreen, setSelectedScreen] = React.useState<screeningResult>()
+
+	
+	// modal 창
 	const [isSearchOpen, setIsSearchOpen] = React.useState<boolean>(false)
+	const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false) 
+
 	const searchViewHeight = React.useRef(new Animated.Value(0)).current
 	const openSearchView=() => {
 		Animated.timing(searchViewHeight, {
@@ -71,6 +124,8 @@ export function inspectionRecord(props : inspectionRecordProps) {
 				</View>
 				<Divider height={3} color={'#ededed'}></Divider>
 
+
+				{/* 결과지 listing */}
 				<View style={styles.resultSheetContainer}>
 					<View style={{flex : 1}}>
 						<TouchableOpacity style={styles.cardEnroll} onPress={() => props.navigation.navigate('ScreeningResultEnroll')}>
@@ -81,10 +136,17 @@ export function inspectionRecord(props : inspectionRecordProps) {
 							test.map((item, id) => {
 								if(id % 2 == 1){
 									return(
-										<ResultSheetCard
+										<TouchableOpacity 
 										key={id}
-										style={styles.cardDetail}
-										></ResultSheetCard>
+										onPress={() => (
+											setSelectedScreen(test[id]),
+											setIsModalOpen(true)
+										)}>
+											<ResultSheetCard
+											screeningData={item}
+											style={styles.cardDetail}
+											></ResultSheetCard>
+										</TouchableOpacity>
 									)
 								}
 								
@@ -96,17 +158,34 @@ export function inspectionRecord(props : inspectionRecordProps) {
 							test.map((item, id) => {
 								if(id % 2 == 0){
 									return(
-										<ResultSheetCard
+										<TouchableOpacity 
 										key={id}
-										style={styles.cardDetail}
-										></ResultSheetCard>
+										onPress={() => (
+											setSelectedScreen(test[id]),
+											setIsModalOpen(true)
+										)}>
+											<ResultSheetCard
+											screeningData={item}
+											style={styles.cardDetail}
+											></ResultSheetCard>
+										</TouchableOpacity>
 									)
 								}
 							})
 						}
 					</View>					
-					
 				</View>
+
+				<Modal
+				isVisible={isModalOpen}
+				onBackdropPress={() => setIsModalOpen(false)}
+				animationIn='zoomIn'
+				animationOut='zoomOut'
+				>
+					<View style={{flex : 1, justifyContent : 'center', alignItems : 'center'}}>
+						<ScreeningResultCarousel></ScreeningResultCarousel>
+					</View>
+				</Modal>
 			</ScrollView>
 
 		);

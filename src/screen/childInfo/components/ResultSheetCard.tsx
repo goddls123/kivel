@@ -1,28 +1,23 @@
 import React from 'react'
 import { View, StyleSheet, TouchableOpacity, ViewStyle, Text, ImageBackgroundBase, ImageBackground } from 'react-native';
+import ImageModal from 'react-native-image-modal';
+import { screeningResult } from '../../../types/screeningResultEnroll';
+import { getDateYMD } from '../../common/service/dateService';
 
 interface ResultSheetCardProps {
 	style? : ViewStyle
-	title? : string
-	institution? : string
-	date? : string
-	url? : string
+	screeningData : screeningResult
 }
 
 export function ResultSheetCard(props : ResultSheetCardProps) {
 		return (
 			<ImageBackground style={[props.style,styles.container]} source={{uri : 'https://t1.daumcdn.net/cfile/tistory/99A77E355A4C3F9F29'}} resizeMode='cover' >
-			<View 
-			style={styles.touchableOpacityStyle}>
-				
+			<View style={styles.touchableOpacityStyle}>
 				<View style={{width: '70%'}}>
-					<Text style={[styles.textStyle, {marginBottom : 20}]}> 한국 영유아 발달 선별 검사 </Text>
-					<Text style={styles.textStyle}> 서울대학교 병원 </Text>
-					<Text style={styles.textStyle}> 21.02.03 </Text>
-
+					<Text style={[styles.textStyle, {marginBottom : 20}]}> { props.screeningData.screeningName } </Text>
+					<Text style={styles.textStyle}> {props.screeningData.screeningInstitution} </Text>
+					<Text style={styles.textStyle}> {getDateYMD(props.screeningData.screeningDate,'-')} </Text>
 				</View>
-				
-
 			</View>
 			</ImageBackground>
 		);
