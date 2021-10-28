@@ -7,7 +7,7 @@ import { diaryTab } from '../screen/diary/diaryTab';
 
 const Tab = createMaterialTopTabNavigator();
 
-export function topTabNav() {
+export default function topTabNav() {
   return (
     <Tab.Navigator>
       <Tab.Screen name="호소문제" component={diaryTab} />

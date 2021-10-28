@@ -41,8 +41,8 @@ export function addCalendarPage(props : addCalendarPageProps) {
 	const daySelectorHeight = React.useRef(new Animated.Value(0)).current
 	const weekSelector=() => {
 		Animated.timing(daySelectorHeight, {
-			toValue : value == 'W' || value == '2W' ? 500 : 0,
-			duration : 1000,
+			toValue : value == 'W' || value == '2W' ? SIZE_WIDTH * 0.15 : 0,
+			duration : 500,
 			easing : Easing.ease,
 			useNativeDriver : false,
 		}).start()

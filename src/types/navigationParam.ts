@@ -26,7 +26,7 @@ export type stackInterface = {
 
     // childInfo
     ChildInfo : undefined
-
+    ScreeningResultEnroll : undefined
 
     // calendar
     AddCalendarPage : undefined

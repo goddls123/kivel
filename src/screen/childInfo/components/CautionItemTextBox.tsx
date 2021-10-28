@@ -78,13 +78,13 @@ const styles = StyleSheet.create({
 	},
 	imageContainer: {
 		borderRadius: 100,
-		height: SIZE_WIDTH * 0.2,
-		width: SIZE_WIDTH * 0.2,
+		height: SIZE_WIDTH * 0.15,
+		width: SIZE_WIDTH * 0.15,
 		justifyContent: 'center',
 		alignItems: 'center',
 		backgroundColor: '#ffe3d8',
 	},
-	imageStyle: {height: SIZE_WIDTH * 0.125, width: SIZE_WIDTH * 0.125},
+	imageStyle: {height: SIZE_WIDTH * 0.1, width: SIZE_WIDTH * 0.1},
 	textInputStyle: {
 		marginLeft: 20,
 		flex: 1,
