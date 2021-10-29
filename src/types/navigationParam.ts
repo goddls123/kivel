@@ -1,6 +1,7 @@
 import { SchemaExtensionNode } from "graphql";
 import { essentialChildInfo, nurseryCaution, nurseryCaution2 } from "./childInfoTypes";
 import { diary } from "./DiaryTypes";
+import { screeningResult } from "./screeningResultEnroll";
 
 export type stackInterface = {
     Home : undefined;
@@ -26,7 +27,7 @@ export type stackInterface = {
 
     // childInfo
     ChildInfo : undefined
-    ScreeningResultEnroll : undefined
+    ScreeningResultEnroll : undefined | screeningResult
 
     // calendar
     AddCalendarPage : undefined

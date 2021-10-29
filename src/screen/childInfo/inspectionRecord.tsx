@@ -10,7 +10,7 @@ import { stackInterface } from '../../types/navigationParam';
 import { screeningResult } from '../../types/screeningResultEnroll';
 import ImageModal from 'react-native-image-modal';
 import Modal from 'react-native-modal'
-import ScreeningResultCarousel from './components/ScreeningResultCarousel';
+import { ScreeningResultCarousel } from './components/ScreeningResultCarousel';
 
 interface inspectionRecordProps {
 	navigation: StackNavigationProp<stackInterface>;
@@ -19,7 +19,7 @@ interface inspectionRecordProps {
 const test : screeningResult[] = [
 	{
 		id : 1, 
-		image : ['https://t1.daumcdn.net/cfile/tistory/99A77E355A4C3F9F29'], 
+		image : ['https://t1.daumcdn.net/cfile/tistory/99A77E355A4C3F9F29','https://health.chosun.com/site/data/img_dir/2016/11/30/2016113001197_1.jpg'], 
 		screeningDate : new Date('2021-10-01'),
 		screeningInstitution : '동네병원',
 		screeningName : 'ㅇ렝메ㅜㄹ 검사1111',
@@ -178,12 +178,15 @@ export function inspectionRecord(props : inspectionRecordProps) {
 
 				<Modal
 				isVisible={isModalOpen}
-				onBackdropPress={() => setIsModalOpen(false)}
-				animationIn='zoomIn'
-				animationOut='zoomOut'
+				// onBackdropPress={() => setIsModalOpen(false)}
+				onBackButtonPress={() => setIsModalOpen(false)}
+				// animationIn='zoomIn'
+				// animationOut='zoomOut'
 				>
 					<View style={{flex : 1, justifyContent : 'center', alignItems : 'center'}}>
-						<ScreeningResultCarousel></ScreeningResultCarousel>
+						<ScreeningResultCarousel
+						data={selectedScreen || undefined}
+						></ScreeningResultCarousel>
 					</View>
 				</Modal>
 			</ScrollView>

@@ -139,11 +139,11 @@ export function childInfoDetail(props : childInfoProps) {
 				
 				<Text style={{fontSize:  17, fontWeight : '500', color : '#707070'}}>기본정보</Text>
 				
-				<TextView text="이름" style={{marginTop : SIZE_HEIGHT * 0.06}}/>
+				<TextView text="이름" style={{marginTop : SIZE_HEIGHT * 0.04}}/>
 				
 				<TextInputView
 				placeholder={'우리 아이 이름을 한글로 입력해주세요. ex) 김키블'}
-				style={{marginBottom: SIZE_HEIGHT * 0.06}}
+				style={{marginBottom: SIZE_HEIGHT * 0.04}}
 				value={test.name}
 				onChangeText={setName}></TextInputView>
 
@@ -151,14 +151,14 @@ export function childInfoDetail(props : childInfoProps) {
 
 				<TextInputView
 				placeholder={'출생일을 선택해주세요'}
-				style={{marginBottom: SIZE_HEIGHT * 0.06}}
+				style={{marginBottom: SIZE_HEIGHT * 0.04}}
 				icon="calendar"
 				editable={false}
 				iconOnPress={setdateModalVisible}
 				value={test.birthdate}></TextInputView>
 
 				{/* 성별 */}
-				<View style={{marginBottom: SIZE_HEIGHT * 0.06}}>
+				<View style={{marginBottom: SIZE_HEIGHT * 0.04}}>
 					<View style={{flexDirection: 'row', marginBottom: SIZE_HEIGHT * 0.02}}>
 						<Text style={styles.text}>성별 </Text>
 						<Text style={{color: MAIN_COLOR}}>*</Text>
@@ -186,7 +186,7 @@ export function childInfoDetail(props : childInfoProps) {
 					value={test.birthWeekNum?.toString()}
 					placeholder={'ex) 23'}
 					style={{
-						marginBottom: SIZE_HEIGHT * 0.06,
+						marginBottom: SIZE_HEIGHT * 0.04,
 						width: SIZE_WIDTH * 0.4,
 					}}
 					unitText="주"
@@ -197,7 +197,7 @@ export function childInfoDetail(props : childInfoProps) {
 					value={test.birthDayNum?.toString()}
 					placeholder={'ex) 6'}
 					style={{
-						marginBottom: SIZE_HEIGHT * 0.06,
+						marginBottom: SIZE_HEIGHT * 0.04,
 						width: SIZE_WIDTH * 0.4,
 					}}
 					unitText="일"
@@ -209,7 +209,7 @@ export function childInfoDetail(props : childInfoProps) {
 				<TextInputView
 					value={test.height?.toString()}
 					placeholder={'키를 입력해주세요'}
-					style={{marginBottom: SIZE_HEIGHT * 0.06}}
+					style={{marginBottom: SIZE_HEIGHT * 0.04}}
 					unitText="cm"
 					keyboardType="numeric"
 					onChangeText={setHeight}></TextInputView>

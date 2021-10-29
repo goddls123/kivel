@@ -9,18 +9,12 @@ import { inspectionRecord } from './inspectionRecord';
 import { theraphistManage } from './theraphistManage';
 import { Header } from './components/Header';
 import { NavigationContainer } from '@react-navigation/native';
-import { stackInterface } from '../../types/navigationParam';
-import { StackNavigationProp } from '@react-navigation/stack';
 
 
 
 const Tab = createMaterialTopTabNavigator();
 
-interface childInfoProps {
-  navigation: StackNavigationProp<stackInterface, 'Calendar'>;
-}
-
-export function childInfo(props : childInfoProps) {
+export function childInfo() {
   return (
     <>
     <Header></Header>

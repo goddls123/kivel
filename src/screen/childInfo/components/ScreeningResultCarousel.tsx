@@ -1,8 +1,12 @@
 import React, { Component } from "react";
-import { Text, View, SafeAreaView } from "react-native";
+import { Text, View, SafeAreaView, TouchableOpacity, StyleSheet, } from "react-native";
+import ImageModal from "react-native-image-modal";
 
-import Carousel from "react-native-snap-carousel";
-
+import Carousel, { Pagination } from "react-native-snap-carousel";
+import { SIZE_HEIGHT, SIZE_WIDTH } from "../../common/constants";
+import Icon from 'react-native-vector-icons/Ionicons';
+import { screeningResult } from "../../../types/screeningResultEnroll";
+import { getDateYMD } from "../../common/service/dateService";
 interface ItemProps {
   title: string;
   text: string;
@@ -12,73 +16,83 @@ interface ItemProps {
 //   carouselItems?: ItemProps;
 // }
 
-interface State {
-  activeIndex: number;
-  carouselItems: ItemProps[];
+
+interface ScreeningResultCarouselProps {
+	data : screeningResult | undefined
 }
 
-class ScreeningResultCarousel extends Component<any, State> {
-  ref = React.createRef<any>();
-  state = {
-    activeIndex: 0,
-    carouselItems: [
-      {
-        title: "Item 1",
-        text: "Text 1",
-      },
-      {
-        title: "Item 2",
-        text: "Text 2",
-      },
-      {
-        title: "Item 3",
-        text: "Text 3",
-      },
-      {
-        title: "Item 4",
-        text: "Text 4",
-      },
-      {
-        title: "Item 5",
-        text: "Text 5",
-      },
-    ],
-  };
-  renderItem = ({ item, index }: { item: ItemProps; index: number }) => {
-    return (
-      <View
-        style={{
-          backgroundColor: "floralwhite",
-          borderRadius: 5,
-          height: 250,
-          padding: 50,
-          marginLeft: 25,
-          marginRight: 25,
-        }}
-      >
-        <Text style={{ fontSize: 30 }}>{item.title}</Text>
-        <Text>{item.text}</Text>
-      </View>
-    );
-  };
+export function ScreeningResultCarousel(props : ScreeningResultCarouselProps) {
 
-  render() {
-    return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: "rebeccapurple", paddingTop: 50 }}>
-        <View style={{ flex: 1, flexDirection: "row", justifyContent: "center" }}>
-          <Carousel
-            layout={"default"}
-            ref={this.ref}
-            data={this.state.carouselItems}
-            sliderWidth={300}
-            itemWidth={300}
-            renderItem={this.renderItem}
-            onSnapToItem={(index: number) => this.setState({ activeIndex: index })}
-          />
-        </View>
-      </SafeAreaView>
-    );
-  }
+		const [index,setIndex] = React.useState<number>(0)
+		const moveLeft = () =>{
+			if(props.data?.image && index <= 0){
+				setIndex(props.data?.image.length -1)
+			}
+			else {
+				setIndex(index -1)
+			}
+		}
+		const moveRight = () => {
+			if(props.data?.image && index >= props.data?.image.length - 1 ){
+				setIndex(0)
+			}
+			else {
+				setIndex(index + 1)
+			}
+		}
+		console.log(index)
+
+		return (
+		  <SafeAreaView style={styles.container}>
+			<View style={styles.innerContainer}>
+				{
+					props.data?.image
+					?
+						<View style={styles.imageContainer}>
+							<TouchableOpacity onPress={() => moveLeft()}>
+							<Icon name="chevron-back-outline" style={styles.chevronLeft} ></Icon>
+							</TouchableOpacity>
+							<ImageModal source={{uri : props.data?.image[index]}}
+								style={{width : SIZE_WIDTH * 0.65 , height : SIZE_WIDTH }}
+								resizeMode='contain'
+							></ImageModal>
+							<TouchableOpacity onPress={() => moveRight() }>
+							<Icon name="chevron-forward-outline" style={styles.chevronRight} ></Icon>
+							</TouchableOpacity>
+						</View>
+					: null
+				}
+				<Pagination
+					dotsLength={props.data?.image?.length || 0}
+					activeDotIndex={index}
+					dotStyle={styles.dotStyle}
+				  	inactiveDotOpacity={0.4}
+					inactiveDotScale={0.6}
+				/>
+
+				{/* <View style={{backgroundColor : 'white', alignItems: 'center' , width : '100%'}}> */}
+					<Text style={{fontSize : 25, color : 'white'}}>{props.data?.screeningName}</Text>
+					<Text style={{fontSize : 25, color : 'white'}}>{props.data?.screeningDate ? getDateYMD(props.data.screeningDate,'-') : null }</Text>
+					<Text style={{fontSize : 25, color : 'white'}}>{props.data?.screeningInstitution}</Text>
+					<Text style={{fontSize : 25, color : 'white'}}>{props.data?.memo}</Text>
+				{/* </View> */}
+			</View>
+		  </SafeAreaView>
+		);
+
 }
 
-export default ScreeningResultCarousel;
+const styles = StyleSheet.create({
+	container :{ flex: 1, paddingTop: 20 },
+	innerContainer : { flex: 1, alignItems : 'center' },
+	imageContainer : {flexDirection : 'row', justifyContent : 'center', alignSelf : 'center', alignItems : 'center'},
+	chevronLeft : {marginRight : 20, fontSize: 35, color : 'white'},
+	chevronRight : {marginLeft : 20, fontSize: 35, color : 'white'},
+	dotStyle : {
+		width: 10,
+		height: 10,
+		borderRadius: 5,
+		marginHorizontal: 8,
+		backgroundColor: 'rgba(255, 255, 255, 0.92)'
+	},
+})
