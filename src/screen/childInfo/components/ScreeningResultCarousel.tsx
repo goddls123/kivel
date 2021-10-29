@@ -71,10 +71,10 @@ export function ScreeningResultCarousel(props : ScreeningResultCarouselProps) {
 				/>
 
 				{/* <View style={{backgroundColor : 'white', alignItems: 'center' , width : '100%'}}> */}
-					<Text style={{fontSize : 25, color : 'white'}}>{props.data?.screeningName}</Text>
-					<Text style={{fontSize : 25, color : 'white'}}>{props.data?.screeningDate ? getDateYMD(props.data.screeningDate,'-') : null }</Text>
-					<Text style={{fontSize : 25, color : 'white'}}>{props.data?.screeningInstitution}</Text>
-					<Text style={{fontSize : 25, color : 'white'}}>{props.data?.memo}</Text>
+					<Text style={{fontSize : 20, color : 'white'}}>{props.data?.screeningName}</Text>
+					<Text style={{fontSize : 20, color : 'white'}}>{props.data?.screeningDate ? getDateYMD(props.data.screeningDate,'-') : null }</Text>
+					<Text style={{fontSize : 20, color : 'white'}}>{props.data?.screeningInstitution}</Text>
+					<Text style={{fontSize : 20, color : 'white'}}>{props.data?.memo}</Text>
 				{/* </View> */}
 			</View>
 		  </SafeAreaView>
@@ -83,8 +83,8 @@ export function ScreeningResultCarousel(props : ScreeningResultCarouselProps) {
 }
 
 const styles = StyleSheet.create({
-	container :{ flex: 1, paddingTop: 20 },
-	innerContainer : { flex: 1, alignItems : 'center' },
+	container :{ flex: 1, paddingTop: 40, justifyContent : 'center' },
+	innerContainer : { flex: 1, alignItems : 'center' , justifyContent : 'center'},
 	imageContainer : {flexDirection : 'row', justifyContent : 'center', alignSelf : 'center', alignItems : 'center'},
 	chevronLeft : {marginRight : 20, fontSize: 35, color : 'white'},
 	chevronRight : {marginLeft : 20, fontSize: 35, color : 'white'},
