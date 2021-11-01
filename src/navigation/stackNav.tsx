@@ -19,6 +19,10 @@ import { childInfo } from '../screen/childInfo/childInfo';
 import { addCalendarPage } from '../screen/calendar/addCalendarPage';
 import { screeningResultEnroll } from '../screen/childInfo/screeningResultEnroll';
 import { inviteTheraphist } from '../screen/childInfo/inviteTheraphist';
+import { alarm } from '../screen/alarmList/alarm';
+import { notice } from '../screen/myPage/noticeList/notice';
+import { noticeDetail } from '../screen/myPage/noticeList/noticeDetail';
+import { question } from '../screen/myPage/question/question';
 
 
 const  Stack  =  createStackNavigator<stackInterface>();
@@ -46,6 +50,11 @@ export  const  StackNav:  React.FC  =  ({})  =>  {
                 <Stack.Screen name="AddCalendarPage"  component={addCalendarPage} options={{headerShown:  false}} />
                 <Stack.Screen name='ScreeningResultEnroll'  component={screeningResultEnroll} options={{headerShown:  false}} />
                 <Stack.Screen name='InviteTheraphist'  component={inviteTheraphist} options={{headerShown:  false}} />
+
+                <Stack.Screen name='AlarmList'  component={alarm} options={{headerShown:  false}} />
+                <Stack.Screen name='Notice'  component={notice} options={{headerShown:  false}} />
+                <Stack.Screen name='NoticeDetail'  component={noticeDetail} options={{headerShown:  false}} />
+                <Stack.Screen name='Question'  component={question} options={{headerShown:  false}} />
 
                 <Stack.Screen name="map"  component={map} options={{headerShown:  false}} />
                 

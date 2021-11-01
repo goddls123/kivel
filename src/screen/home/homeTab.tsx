@@ -40,7 +40,7 @@ export function homeTab(props: homeTabProps) {
         <SafeAreaView style={styles.container}>
             {/* 헤더 */}    
             <View style={styles.headerContainer}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => props.navigation.navigate('AlarmList')}>
                         <Image
                             source={require('../../assets/icons/notification.png')}
                             resizeMode="center"
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
         height : SIZE_HEIGHT * 0.39,
         marginHorizontal : GLOBAL_MARGIN_HORIZON,
     },
-    headerContainer: {flexDirection : 'row', height : SIZE_HEIGHT * 0.08, justifyContent : 'flex-end', alignItems : 'center' },
+    headerContainer: {marginRight : GLOBAL_MARGIN_HORIZON ,flexDirection : 'row', height : SIZE_HEIGHT * 0.08, justifyContent : 'flex-end', alignItems : 'center' },
     childInfoButtonContainer : {height : SIZE_HEIGHT * 0.1, justifyContent : 'flex-end'},
     childInfoButton : { borderWidth : 1, borderColor : "#d5d5d5",borderRadius : 10,  height: SIZE_HEIGHT * 0.06 , width : '100%', alignItems : 'center', justifyContent : 'center'},
     navigationButtonContainer : {flex : 1, flexDirection : 'row', height : SIZE_HEIGHT * 0.165, alignItems : 'center'},

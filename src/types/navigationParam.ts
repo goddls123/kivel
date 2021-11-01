@@ -2,6 +2,7 @@ import { SchemaExtensionNode } from "graphql";
 import { essentialChildInfo, nurseryCaution, nurseryCaution2 } from "./childInfoTypes";
 import { diary } from "./DiaryTypes";
 import { screeningResult } from "./screeningResultEnroll";
+import { noticeType } from "./types";
 
 export type stackInterface = {
     Home : undefined;
@@ -33,4 +34,11 @@ export type stackInterface = {
     AddCalendarPage : undefined
     
     map : undefined
+
+
+    // 알람,공지사항,myPage,문의하기
+    AlarmList : undefined
+    Notice : undefined
+    NoticeDetail : noticeType
+    Question : undefined
 }

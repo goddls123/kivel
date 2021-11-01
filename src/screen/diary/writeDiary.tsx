@@ -15,6 +15,7 @@ import ImagePicker, {openCamera} from 'react-native-image-crop-picker';
 import {ReactNativeFile} from 'apollo-upload-client';
 import {Divider} from '../common/divider';
 import {SIZE_HEIGHT, SIZE_WIDTH} from '../common/constants';
+import { gql, useMutation } from '@apollo/client';
 
 interface diaryProps {}
 
@@ -28,6 +29,21 @@ export function writeDiary(props: diaryProps) {
   const [tag, setTag] = React.useState<string[]>();
   const [modalVisible, setModalVisible] = React.useState<boolean>(false);
 
+
+  const UPLOAD_FILE = gql`
+      mutation uploadFile($file: [Upload!]!) {
+        uploadFile(file: $file) 
+    }
+  `;
+
+  const [fileUpload] = useMutation(UPLOAD_FILE, {
+    onCompleted: (data) => console.log(data),
+  });
+  const handleFileChange = () => {
+    const file = images
+    if (!file) return;
+    fileUpload({ variables: { file } });
+  };
 
 
   const imagePick = async () => {
@@ -60,7 +76,7 @@ export function writeDiary(props: diaryProps) {
           <Text style={{borderWidth: 1, borderColor: 'black'}}>
             {date.toString()}
           </Text>
-          <TouchableOpacity style={styles.shareButton}>
+          <TouchableOpacity style={styles.shareButton} onPress={() => handleFileChange()}>
             <Text>공유</Text>
           </TouchableOpacity>
         </View>
