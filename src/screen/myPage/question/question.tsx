@@ -32,7 +32,7 @@ export function question(props : questionProps) {
 					<View style={{flexDirection : 'row', justifyContent : 'space-between', alignItems : 'center'}}>
 					<TouchableOpacity
 						onPress={() => props.navigation.goBack()}>
-						<Icon name="arrow-back" style={{fontSize: 30, color : 'black'}}></Icon>
+						<Icon name="arrow-back" style={styles.iconStyle}></Icon>
 					</TouchableOpacity>
 
 					</View>
@@ -42,11 +42,11 @@ export function question(props : questionProps) {
 
 					<View>
 						<View style={{flexDirection : 'row', justifyContent : 'space-between'}}>
-							<Text style={{fontSize : 18, color : 'black' , marginBottom : 15}}>문의내용</Text>
-							<Text style={{fontSize : 18, color : '#d5d5d5' , marginBottom : 15}}> {textByte}/2000</Text>
+							<Text style={styles.text1}>문의내용</Text>
+							<Text style={styles.text2}> {textByte}/2000</Text>
 						</View>
 						<TextInput
-						style={{height : SIZE_HEIGHT * 0.5, borderColor : '#d5d5d5', borderWidth : 1, borderRadius : 5, textAlignVertical : 'top', padding : 20}}
+						style={styles.textInputStyle}
 						placeholder="문의사항을 입력해주세요"
 						placeholderTextColor="#aaaaaa"
 						multiline
@@ -83,5 +83,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#111111',
     },
+	iconStyle : {fontSize: 30, color : 'black'},
+	textInputStyle : {height : SIZE_HEIGHT * 0.5, borderColor : '#d5d5d5', borderWidth : 1, borderRadius : 5, textAlignVertical : 'top', padding : 20},
+	text1 : {fontSize : 18, color : 'black' , marginBottom : 15},
+	text2 : {fontSize : 18, color : '#d5d5d5' , marginBottom : 15},
 
 })

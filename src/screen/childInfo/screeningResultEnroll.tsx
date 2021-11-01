@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, SafeAreaView, Platform, TouchableOpacity, Text, ScrollView, Image } from 'react-native';
+import { View, StyleSheet, SafeAreaView, Platform, TouchableOpacity, Text, ScrollView, Image, BackHandler} from 'react-native';
 import { GLOBAL_MARGIN_HORIZON, GLOBAL_MARGIN_VERTICAL, MAIN_COLOR, SIZE_HEIGHT, SIZE_WIDTH } from '../common/constants';
 import { Divider } from '../common/divider';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -12,6 +12,8 @@ import { DateScroller } from '../childEnroll/components/DateScroller';
 import { Button } from '../common/components/Button';
 import { ReactNativeFile } from 'apollo-upload-client';
 import ImagePicker, {openCamera} from 'react-native-image-crop-picker';
+import { WarningModal } from '../common/components/WarningModal';
+
 interface screeningResultEnrollProps {
 	navigation: StackNavigationProp<stackInterface>;
 }
@@ -56,6 +58,13 @@ export function screeningResultEnroll(props : screeningResultEnrollProps) {
 			
 			return false
 		}
+
+		const [warningModal, setWarningModal] = React.useState<boolean>(false)
+		BackHandler.addEventListener("hardwareBackPress" , () => {
+			setWarningModal(true)
+			return true
+		});
+
 		return (
 			<SafeAreaView style={styles.container}>
 				<ScrollView style={styles.innerContainer} showsVerticalScrollIndicator={false}>
@@ -142,6 +151,12 @@ export function screeningResultEnroll(props : screeningResultEnrollProps) {
 					setModalVisible={setDateModalVisible}
 					></DateScroller>
 				</Modal>
+
+				<WarningModal
+				isVisible={warningModal}
+				setIsVisible={setWarningModal}
+				onPress={props.navigation.goBack}
+				></WarningModal>
 			</SafeAreaView>
 		);
 }
