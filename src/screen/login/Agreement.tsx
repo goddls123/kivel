@@ -28,8 +28,7 @@ interface AgreementProps {
     navigation: StackNavigationProp<stackInterface, 'SocialLogin'>;
 }
 
-export function Agreement(props: AgreementProps) {
-    console.log('엥');
+export function Agreement(props: AgreementProps) {    
 
     const [agreeAll, setAgreeAll] = React.useState<boolean>(false); //전체 동의
     const [serviceUse, setServiceUse] = React.useState<boolean>(false); //서비스 이용약관

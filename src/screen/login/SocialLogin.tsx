@@ -15,20 +15,16 @@ interface SocialLoginProps {
 }
 
 export function SocialLogin(props : SocialLoginProps) {
-	const query = gql`
-	mutation userLogin($User : User!){
-		userLogin(User : $User) {
-			create_date
-		}
-	}`;
-	const query1 = gql`
-	mutation{
-		userLogin{
-		  create_date
-		}
-	  }`
 
-	const [ mutationTest ] = useMutation(query1)
+	const kakaoLogin = () => {
+		logInWithKakao()
+		.then(() => props.navigation.navigate('Agreement'))
+	}
+	const naverLogin = () => {
+		logInWithNaver()
+		.then(() => props.navigation.navigate('Agreement'))
+	}
+
 	return (
 	<SafeAreaView style={styles.container}>
 		<View style={styles.innerContainer}>
@@ -51,10 +47,10 @@ export function SocialLogin(props : SocialLoginProps) {
 			</View>
 
 			<View style={{height : '25%'}} />
-			<SocialLoginButton platform='kakao' onPress={logInWithKakao}/>
-			<SocialLoginButton platform='naver' onPress={logInWithNaver}/>
-			<SocialLoginButton platform='naver' onPress={logoutWithNaver}/>
-			<SocialLoginButton platform='naver' onPress={() => { props.navigation.navigate('Agreement')}}/>
+			<SocialLoginButton platform='kakao' onPress={kakaoLogin}/>
+			<SocialLoginButton platform='naver' onPress={naverLogin}/>
+			{/* <SocialLoginButton platform='naver' onPress={logoutWithNaver}/> */}
+			{/* <SocialLoginButton platform='naver' onPress={() => { props.navigation.navigate('Agreement')}}/> */}
 		</View>
 	</SafeAreaView>
 

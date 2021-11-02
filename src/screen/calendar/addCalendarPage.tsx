@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, SafeAreaView, TouchableOpacity, Easing, Text, TextInput, Animated, ScrollView, } from 'react-native';
+import { View, StyleSheet, SafeAreaView, TouchableOpacity, Easing, Text, TextInput, Animated, ScrollView, Alert, } from 'react-native';
 import { GLOBAL_MARGIN_HORIZON, GLOBAL_MARGIN_VERTICAL, MAIN_COLOR, SIZE_HEIGHT, SIZE_WIDTH } from '../common/constants';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -9,6 +9,9 @@ import { getDateYMD, getDateYMDD, getDayKorean, getTime } from '../common/servic
 import DatePicker from 'react-native-date-picker'
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Button } from '../common/components/Button';
+import { useMutation } from '@apollo/client';
+import { INSERT_SCHEDULE } from '../../connection/queries';
+import { NavigationButton } from '../home/components/NavigationButton';
 
 
 interface addCalendarPageProps {
@@ -17,6 +20,9 @@ interface addCalendarPageProps {
 
 export function addCalendarPage(props : addCalendarPageProps) {
 
+	const [insertSchedule , { data, loading, error }] = useMutation(INSERT_SCHEDULE);
+	
+	const [title, setTitle] = React.useState<string>();
 	// date picker
 	const [startDate, setStartDate] = React.useState<Date>(new Date());
 	const [endDate, setEndDate] = React.useState<Date>(new Date());
@@ -67,15 +73,22 @@ export function addCalendarPage(props : addCalendarPageProps) {
 		{label: '1년', value: '12M'},
 	]);
 	
-	const [daySelected, setDaySelected] = React.useState<boolean[]>([false,false,false,false,false,false,false])
+	const [daySelected, setDaySelected] = React.useState<string>("0000000")
 	const selectDay= async (id : number) => {
-		let Arr = daySelected
-		Arr[id] = !Arr[id]
-		setDaySelected([...Arr])
+		let Arr : any = daySelected
+		if(Arr[id] == '0'){
+			Arr = Arr.substr(0, id) + '1' + Arr.substr(id + 1);
+		}else{
+			Arr = Arr.substr(0, id) + '0' + Arr.substr(id + 1);
+		}
+		setDaySelected(Arr)
 	}
 	React.useEffect(() => {
 		weekSelector()
 	},[])
+
+
+
 	
 	// 알림설정
 	const [alarmOpen,setAlarmOpen] = React.useState<boolean>(false)
@@ -87,6 +100,56 @@ export function addCalendarPage(props : addCalendarPageProps) {
 		{label: '30분전', value: '30'},
 		{label: '1시간전', value: '60'},
 	]);
+
+
+
+
+	// 요일 선택 View
+	function daySelectView() {
+		let elem = []
+		for(let i = 0 ; i < daySelected.length ; i++){
+			elem.push(
+				<View key={i} style={{flex : 1, alignItems : 'center', marginTop : GLOBAL_MARGIN_HORIZON}}>
+					<TouchableOpacity style={[styles.daySelectorBubble,{backgroundColor : daySelected[i] == '1' ? MAIN_COLOR : '#ededed'}]}
+					onPress={()=>selectDay(i)}>
+						<Text style={[styles.weekText,{color : daySelected[i] == '1' ? 'white' : '#aaaaaa'}]}>{getDayKorean(i)}</Text>
+					</TouchableOpacity>
+				</View>
+			)
+		}
+		return elem
+	}
+
+	// constricts
+	function submit() {
+		if (!title) { 
+			Alert.alert('일정명을 입력해주세요.')
+		}
+		else if (startDate > endDate){
+			Alert.alert('시작 시간이 종료 시간보다 빠릅니다.')
+			setEndDate(startDate)
+		}
+		else {
+			insertSchedule({
+				variables : {
+					ScheduleInput : {
+						title : title,
+						scheduleDate : new Date(),
+						startTime : startDate,
+						endTime : endDate,
+						repeatCycle : value,
+						repeatDay : daySelected,
+						period : new Date(),
+					}
+				}
+			}).then(() => {
+				props.navigation.goBack();
+			}).catch((e)=>
+				e.message
+			)
+		}
+	}
+
 		return (
 			<SafeAreaView style={styles.container}>
 				<ScrollView nestedScrollEnabled={true}>
@@ -110,6 +173,7 @@ export function addCalendarPage(props : addCalendarPageProps) {
 						style={{width : '100%'}}
 						placeholder="일정명 입력"
 						placeholderTextColor="#d5d5d5"
+						onChangeText={(text) => setTitle(text)}
 						></TextInput>
 					</View>
 					<Divider height={2} color={'#ededed'} />
@@ -142,11 +206,13 @@ export function addCalendarPage(props : addCalendarPageProps) {
 						</TouchableOpacity>
 						
 						<Animated.View style={{maxHeight : timePicker1, overflow : 'hidden', alignItems : 'center' }} >
-							<Divider height={2} color={"black"} />
-							<DatePicker 
-							style={{borderTopWidth : 1, borderTopColor : '#ededed' , borderBottomWidth : 1,  borderBottomColor : '#ededed', width : SIZE_WIDTH  , backgroundColor : 'white', justifyContent : 'space-between'}}						
-							date={startDate} onDateChange={(newDate) => setStartDate(newDate)} mode={'time'} />
-							<Divider height={2} color={"black"} />
+							<View>
+								<Divider height={2} color={"#ededed"} />
+								<DatePicker 
+								style={{borderTopWidth : 1, borderTopColor : '#ededed' , borderBottomWidth : 1,  borderBottomColor : '#ededed', width : SIZE_WIDTH  , backgroundColor : 'white', justifyContent : 'space-between'}}						
+								date={startDate} onDateChange={(newDate) => setStartDate(newDate)} mode={'time'} />
+								<Divider height={2} color={"#ededed"} />
+							</View>
 						</Animated.View>
 						
 
@@ -162,11 +228,13 @@ export function addCalendarPage(props : addCalendarPageProps) {
 						</TouchableOpacity>
 
 						<Animated.View style={{maxHeight : timePicker2, overflow : 'hidden', alignItems : 'center' }} >
-							<Divider height={2} color={"black"} />
-							<DatePicker 
-							style={{width : SIZE_WIDTH * 0.8 , backgroundColor : 'white', justifyContent : 'space-between'}}
-							date={endDate} onDateChange={(newDate) => setEndDate(newDate)} mode={'time'} />
-							<Divider height={2} color={"black"} />
+							<View>
+								<Divider height={2} color={"#ededed"} />
+								<DatePicker 
+								style={{ width : SIZE_WIDTH, backgroundColor : 'white', justifyContent : 'space-between'}}
+								date={endDate} onDateChange={(newDate) => setEndDate(newDate)} mode={'time'} />
+								<Divider height={2} color={"#ededed"} />
+							</View>
 						</Animated.View>
 					</Animated.View>
 					<Divider height={2} color={'#ededed'} />
@@ -211,16 +279,7 @@ export function addCalendarPage(props : addCalendarPageProps) {
 
 						<Animated.View style={[styles.daySelector,{maxHeight : daySelectorHeight}]}>
 							{
-								daySelected.map((item : boolean, id : number) => {
-									return(
-										<View key={id} style={{flex : 1, alignItems : 'center', marginTop : GLOBAL_MARGIN_HORIZON}}>
-											<TouchableOpacity style={[styles.daySelectorBubble,{backgroundColor : item ? MAIN_COLOR : '#ededed'}]}
-											onPress={()=>selectDay(id)}>
-												<Text style={[styles.weekText,{color : item ? 'white' : '#aaaaaa'}]}>{getDayKorean(id)}</Text>
-											</TouchableOpacity>
-										</View>
-									)
-								})
+								daySelectView()
 							}
 						</Animated.View>
 
@@ -285,7 +344,7 @@ export function addCalendarPage(props : addCalendarPageProps) {
 					
 					
 					<View style={{height : SIZE_HEIGHT * 0.2, marginHorizontal : GLOBAL_MARGIN_HORIZON, justifyContent : 'flex-end', paddingBottom : 20}}>
-						<Button text={'완료'} textColor={'white'} style={{backgroundColor : MAIN_COLOR}}></Button>
+						<Button text={'완료'} textColor={'white'} style={{backgroundColor : MAIN_COLOR}} onPress={() => submit()}></Button>
 					</View>
 					
 					
@@ -311,7 +370,7 @@ const styles = StyleSheet.create({
 	timeIcon : {fontSize: 30, color : MAIN_COLOR },
 	timeText : {fontSize: 16, color : '#707070'},
 	pickerViewOpenButton : {height: SIZE_WIDTH * 0.12, flexDirection : 'row', justifyContent : 'space-between' , alignItems : 'center', marginHorizontal : GLOBAL_MARGIN_HORIZON},
-	hourText: {fontSize :20, color : 'black'},
+	hourText: {fontSize :18, color : 'black'},
 	daySelector : {flexDirection : 'row', marginHorizontal : GLOBAL_MARGIN_HORIZON * 2, justifyContent : 'center', overflow : 'hidden'},
 	daySelectorBubble : {height : SIZE_WIDTH * 0.08 , width : SIZE_WIDTH * 0.08 , borderRadius : 100, alignItems : 'center', justifyContent : 'center'},
 	weekText:{fontSize: 14, fontWeight: 'bold'},

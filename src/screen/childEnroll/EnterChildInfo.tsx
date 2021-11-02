@@ -7,6 +7,7 @@ import {
   ScrollView,
   //   TextInput,
   Platform,
+  BackHandler,
   //   BackHandler,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -95,6 +96,10 @@ export function EnterChildInfo(props: enterChildInfoProps) {
     return false;
   };
 
+  BackHandler.addEventListener("hardwareBackPress" , () => {
+    props.navigation.reset({routes: [{name: 'Home'}]})
+    return true
+  });
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.innerContainer}>

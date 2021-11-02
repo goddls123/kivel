@@ -6,8 +6,8 @@ import {
     ScrollView,
     SafeAreaView,
     Image,
+    TouchableOpacity
 } from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {schedule_data} from '../test/testData';
 import {MainProfile} from './components/MainProfile';
@@ -23,7 +23,7 @@ import Modal from 'react-native-modal'
 import { ChildInfoAlarmModal } from '../childEnroll/components/ChildInfoAlarmModal';
 import { ScheduleCard } from './components/ScheduleCard';
 import { HomeWorkCard } from './components/HomeWorkCard';
-
+import { ProfileModal } from './components/ProfileModal';
 
 interface homeTabProps {
     navigation: StackNavigationProp<stackInterface, 'Calendar'>;
@@ -34,7 +34,7 @@ export function homeTab(props: homeTabProps) {
     //////////// Todo
     //	profile, 이번주 일정, 이번주 과제 받아오고 패치
     const [scheduleModal, setScheduleModal] = React.useState(true)
-
+    const [profileImageModal, setProfileImageModal] = React.useState(false)
     
     return (
         <SafeAreaView style={styles.container}>
@@ -60,6 +60,7 @@ export function homeTab(props: homeTabProps) {
                 {/* 프로필 */}
                 <MainProfile 
                 style={styles.profileContainer}
+                onPress={setProfileImageModal}
                 ></MainProfile>
 
                 
@@ -91,7 +92,6 @@ export function homeTab(props: homeTabProps) {
                     imageType='homeWork'
                     buttonName={'과제 등록'} />                 
                 </View>
-
             </View>
             <Divider height={3} color="#ededed" />
 
@@ -145,72 +145,107 @@ export function homeTab(props: homeTabProps) {
                 setModalView={setScheduleModal}
                 ></ScheduleModalView>
             </Modal>
+
+            <Modal
+            isVisible={profileImageModal}
+            onBackdropPress={() => setProfileImageModal(false)}
+            animationIn='zoomIn'
+            animationOut='zoomOut'
+            >
+                <ProfileModal></ProfileModal>
+            </Modal>
             
         </SafeAreaView>
     );
 }
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor : 'white'
-    },
-    topContainer : {
-        height : SIZE_HEIGHT * 0.39,
-        marginHorizontal : GLOBAL_MARGIN_HORIZON,
-    },
-    headerContainer: {marginRight : GLOBAL_MARGIN_HORIZON ,flexDirection : 'row', height : SIZE_HEIGHT * 0.08, justifyContent : 'flex-end', alignItems : 'center' },
-    childInfoButtonContainer : {height : SIZE_HEIGHT * 0.1, justifyContent : 'flex-end'},
-    childInfoButton : { borderWidth : 1, borderColor : "#d5d5d5",borderRadius : 10,  height: SIZE_HEIGHT * 0.06 , width : '100%', alignItems : 'center', justifyContent : 'center'},
-    navigationButtonContainer : {flex : 1, flexDirection : 'row', height : SIZE_HEIGHT * 0.165, alignItems : 'center'},
-    weeklyScheduleText : {fontWeight : 'bold', fontSize : 17, color : "black"},
-    weeklyScheduleText2 : {fontWeight : 'bold', fontSize : 15, color : "#aaaaaa"},
-    homeworkText : {fontWeight : 'bold', fontSize : 17, color : "black"},
-    headerIcon: {
-        width: 28,
-        height: 28,
-        marginLeft: 4,
-        position: 'relative',
-    },
-    notification: {
-        width: 4,
-        height: 4,
-        backgroundColor: '#f41313',
-        borderRadius: 50,
-        position: 'absolute',
-        right: '20%',
-        top: '25%',
-    },
-    profileContainer: {
-        height : SIZE_HEIGHT * 0.125,
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        flexDirection: 'row',
-    },
-    navigationButtonStyle : {backgroundColor : "#f6f6f6", width : SIZE_WIDTH * 0.125 , height : SIZE_WIDTH * 0.125, borderRadius : 10,  },
-    buttonContainer: {
-        flex: 2,
-        width: '86%',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        alignSelf: 'center',
-    },
-    scheduleContainer: {
-        height : SIZE_HEIGHT * 0.39,
-    },
-    containerHeader : {
-        height : '15.5%', 
-        flexDirection : 'row' , 
-        marginHorizontal : GLOBAL_MARGIN_HORIZON ,
-        justifyContent : 'space-between', 
-        alignItems : 'flex-end',
-    },
-    homeworkContainer : {
-        height : SIZE_HEIGHT * 0.34,
-    },
-    scheduleButton: {
-        height: 100,
-        width: 100,
-        margin: 10,
-    },
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  topContainer: {
+    height: SIZE_HEIGHT * 0.35,
+    marginHorizontal: GLOBAL_MARGIN_HORIZON,
+  },
+  headerContainer: {
+    marginRight: GLOBAL_MARGIN_HORIZON,
+    flexDirection: 'row',
+    height: SIZE_HEIGHT * 0.08,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  childInfoButtonContainer: {
+    height: SIZE_HEIGHT * 0.1,
+    justifyContent: 'center',
+  },
+  childInfoButton: {
+    borderWidth: 1,
+    borderColor: '#d5d5d5',
+    borderRadius: 10,
+    height: SIZE_HEIGHT * 0.05,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  navigationButtonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  weeklyScheduleText: {fontWeight: 'bold', fontSize: 17, color: 'black'},
+  weeklyScheduleText2: {fontWeight: 'bold', fontSize: 15, color: '#aaaaaa'},
+  homeworkText: {fontWeight: 'bold', fontSize: 17, color: 'black'},
+  headerIcon: {
+    width: 28,
+    height: 28,
+    marginLeft: 4,
+    position: 'relative',
+  },
+  notification: {
+    width: 4,
+    height: 4,
+    backgroundColor: '#f41313',
+    borderRadius: 50,
+    position: 'absolute',
+    right: '20%',
+    top: '25%',
+  },
+  profileContainer: {
+    height: SIZE_HEIGHT * 0.125,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  navigationButtonStyle: {
+    backgroundColor: '#f6f6f6',
+    width: SIZE_WIDTH * 0.125,
+    height: SIZE_WIDTH * 0.125,
+    borderRadius: 10,
+  },
+  buttonContainer: {
+    flex: 2,
+    width: '86%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    alignSelf: 'center',
+  },
+  scheduleContainer: {
+    height: SIZE_HEIGHT * 0.39,
+  },
+  containerHeader: {
+    height: '15.5%',
+    flexDirection: 'row',
+    marginHorizontal: GLOBAL_MARGIN_HORIZON,
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+  },
+  homeworkContainer: {
+    height: SIZE_HEIGHT * 0.34,
+  },
+  scheduleButton: {
+    height: 100,
+    width: 100,
+    margin: 10,
+  },
 });

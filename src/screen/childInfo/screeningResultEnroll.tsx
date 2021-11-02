@@ -156,7 +156,8 @@ export function screeningResultEnroll(props : screeningResultEnrollProps) {
 				isVisible={warningModal}
 				setIsVisible={setWarningModal}
 				onPress={props.navigation.goBack}
-				></WarningModal>
+				></WarningModal> 
+
 			</SafeAreaView>
 		);
 }
