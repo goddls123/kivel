@@ -2,7 +2,7 @@ import {RouteProp} from '@react-navigation/core';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useState} from 'react';
 import {Alert, Image, ScrollView, StyleSheet} from 'react-native';
-import {View, TouchableOpacity, Text} from 'react-native';
+import {View, TouchableOpacity, Text, SafeAreaView} from 'react-native';
 // import { Calendar } from 'react-native-toggle-calendar'
 import {
   Calendar,
@@ -31,7 +31,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {getDateYMD} from '../common/service/dateService';
 import axios from 'axios';
 import WeekView from './components/WeekView';
-import {SafeAreaView} from 'react-native-safe-area-context';
 
 LocaleConfig.locales['kr'] = {
   monthNames: [
@@ -84,6 +83,7 @@ export default function calendar({navigation, route}: calendarProps) {
     if (calendarState == 'month') setCalendarState('week');
     else if (calendarState == 'week') setCalendarState('month');
   }
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -232,6 +232,7 @@ export default function calendar({navigation, route}: calendarProps) {
           </View>
         )}
 
+
         <View style={{margin: GLOBAL_MARGIN_HORIZON, marginBottom: 80}}>
           <Text
             style={{
@@ -261,6 +262,7 @@ export default function calendar({navigation, route}: calendarProps) {
       </TouchableOpacity>
     </SafeAreaView>
   );
+
 }
 const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: '#f6f6f6'},
