@@ -20,6 +20,8 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>NMFClientId</key>
+    <string>ftqf9pqnh1</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
