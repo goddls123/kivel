@@ -13,7 +13,7 @@ export function LoginSplash(props : LoginSplashProps) {
 		
 		React.useEffect(() => {
 		setTimeout(() => {
-			props.navigation.navigate('EnterChildInfo')
+			props.navigation.reset({routes: [{name: 'EnterChildInfo'}]})
 		}, 2000);
 		}, []);
 

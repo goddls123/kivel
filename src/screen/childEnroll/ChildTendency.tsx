@@ -81,7 +81,6 @@ export function ChildTendency(props: ChildTendencyProps) {
                     onPress={() => { 
                         saveChild({variables : { ChildInput : {...props.route.params,tendency}}})
                         .then((result) => {
-                            console.log(result)
                             props.navigation.reset({routes: [{name: 'Home'}]})
                         })
                         .catch((e) => 

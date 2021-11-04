@@ -6,7 +6,9 @@ import {
     ScrollView,
     SafeAreaView,
     Image,
-    TouchableOpacity
+    TouchableOpacity,
+    BackHandler,
+    ToastAndroid
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {schedule_data} from '../test/testData';
@@ -33,6 +35,7 @@ interface homeTabProps {
 export function homeTab(props: homeTabProps) {
     //////////// Todo
     //	profile, 이번주 일정, 이번주 과제 받아오고 패치
+
     const [scheduleModal, setScheduleModal] = React.useState(true)
     const [profileImageModal, setProfileImageModal] = React.useState(false)
     
@@ -139,12 +142,12 @@ export function homeTab(props: homeTabProps) {
 			</ScrollView>
 
 
-            <Modal
+            {/* <Modal
             isVisible={scheduleModal}>
                 <ScheduleModalView
                 setModalView={setScheduleModal}
                 ></ScheduleModalView>
-            </Modal>
+            </Modal> */}
 
             <Modal
             isVisible={profileImageModal}

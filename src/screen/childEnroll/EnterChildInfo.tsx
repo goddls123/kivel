@@ -96,10 +96,6 @@ export function EnterChildInfo(props: enterChildInfoProps) {
     return false;
   };
 
-  BackHandler.addEventListener("hardwareBackPress" , () => {
-    props.navigation.reset({routes: [{name: 'Home'}]})
-    return true
-  });
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.innerContainer}>
