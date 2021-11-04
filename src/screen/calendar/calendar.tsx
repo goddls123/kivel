@@ -30,6 +30,7 @@ import {scheduleCheck} from './service/calendarService';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { getDateYMD } from '../common/service/dateService';
 import axios from 'axios';
+import WeekView from './components/WeekView';
 
 LocaleConfig.locales['kr'] = {
     monthNames: [
@@ -217,9 +218,7 @@ export default function calendar({navigation, route}: calendarProps) {
                 	) : (
                     ///////////////////////주간모드
                     <View>
-                        {/* <CalendarStrip selectedDate={setSelectedDate} />
-
-                        <ScheduleFrame selectedDate={selectedDate} data={schedule_data} /> */}
+                        <WeekView></WeekView>
                     </View>
                 )}
 

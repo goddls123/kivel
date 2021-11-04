@@ -303,9 +303,13 @@ export function addCalendarPage(props : addCalendarPageProps) {
 							<Icon name="location-outline" style={styles.timeIcon} />
 							<Text style={styles.timeText}> 장소</Text>
 						</View>
-						<TextInput 
-						style={{flex : 1, borderWidth :1 , borderColor : '#ededed', borderRadius :5}}
+						<View style={{flex : 1, borderWidth :1 , borderColor : '#ededed', borderRadius :5, flexDirection : 'row', alignItems : 'center', justifyContent : 'space-between'}}>
+						<TextInput 						
 						placeholder="장소입력"></TextInput>
+						<TouchableOpacity onPress={() => props.navigation.navigate('map')}>
+							<Icon style={{ fontSize : 25, color : MAIN_COLOR , marginRight : 15}} name="map-outline"></Icon>
+						</TouchableOpacity>
+						</View>
 					</View>
 
 					{/* 메모 */}

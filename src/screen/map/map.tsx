@@ -15,9 +15,10 @@ export function map() {
 		const [localList, setLocalList] = React.useState<any>()
 		const [searchText, setSearchText] = React.useState<string>()
 
+		const [bottomView, setBottomView] = React.useState<boolean>(false)
 
 		// 마커 설정
-		const [markerCoord, setMarkerCoord] = React.useState<Coord>()
+		const [selectedItem, setSelectedItem] = React.useState<any>()
 		
 		// 현재 위치 설정
 		const [myLoc, setMyLoc] = React.useState<Coord>()
@@ -37,8 +38,8 @@ export function map() {
 					{	
 						params : {
 							query : searchText,
-							x : myLoc?.latitude,
-							y : myLoc?.longitude,
+							x : myLoc?.longitude,
+							y : myLoc?.latitude,
 							sort : 'distance',
 							radius : 10000
 						},
@@ -55,26 +56,47 @@ export function map() {
 		};
 		
 
+		function itemTouchHandler(items : any) {
+			setListShow(false),
+			setSearchText(items.place_name)
+			setSelectedItem(items)
+			setBottomView(true)
+		}
+		function textInputTouchHandler(text : string){
+			setSearchText(text)
+			searchAPI(text)
+		}
+
+		function textInputTouchStartHandler() {
+			setListShow(true)
+			setBottomView(false)
+		}
+
+		function mapTouchHandler() {
+			setListShow(false)
+			setBottomView(false)
+		}
+
 		return (
 			<View style={{flex : 1}}>
 				
 				<NaverMapView style={{width: '100%', height: '100%'}}
 									showsMyLocationButton={true}
-									center={markerCoord ? markerCoord : myLoc }
-									onTouch={() => setListShow(false)}>
+									center={selectedItem ? {latitude : parseFloat(selectedItem.y), longitude : parseFloat(selectedItem.x)} : myLoc }
+									onTouch={() => mapTouchHandler()}>
 					{
-						markerCoord ? <Marker coordinate={markerCoord} onClick={() => console.warn('onClick! p0')}/> : null
+						selectedItem ? <Marker coordinate={{latitude : parseFloat(selectedItem.y), longitude : parseFloat(selectedItem.x)}} onClick={() => setBottomView(true)}/> : null
 					}
 				</NaverMapView>
 
-
+{console.log(localList)}
 				{/* 상단 TEXT INPUT */}
 				<View style={styles.searchView}>
 					<TextInput 
 					placeholder="검색어를 입력해 주세요"
-					onChangeText={(text) => {setSearchText(text), searchAPI(text)}}
+					onChangeText={(text) => textInputTouchHandler(text)}
 					value={searchText}
-					onTouchStart={() => setListShow(true)}
+					onTouchStart={() => textInputTouchStartHandler()}
 					style={styles.textInputStyle}></TextInput>
 
 					<ScrollView style={{maxHeight : SIZE_HEIGHT * 0.4}}>
@@ -84,11 +106,7 @@ export function map() {
 									<TouchableOpacity 
 									key={id} 
 									style={{height : 60, justifyContent : 'center' }}
-									onPress={() => {
-										setListShow(false),
-										setSearchText(items.place_name)
-										setMarkerCoord({latitude : parseFloat(items.y) , longitude : parseFloat(items.x)})
-									}}>
+									onPress={() => itemTouchHandler(items)}>
 										<Text>{items.place_name}</Text>
 										<Text>{items.address_name}</Text>
 									</TouchableOpacity>
@@ -99,6 +117,20 @@ export function map() {
 				</View>
 
 				{/* 하단 버튼 */}
+				{
+					bottomView 
+					? 
+					<View style={styles.storeView}>
+						<Text>{selectedItem.place_name}</Text>
+						<Text>{selectedItem.road_address_name}</Text>
+						<Text>전화번호 : {selectedItem.phone}</Text>
+						<TouchableOpacity>
+							<Text style={{paddingHorizontal : 10, paddingVertical : 5, borderWidth :1, borderColor : 'black'}}>장소 설정</Text>
+						</TouchableOpacity>
+					</View> 
+					: null
+				}
+				
 			</View>
 		);
 }
@@ -118,4 +150,16 @@ const styles = StyleSheet.create({
 		borderBottomWidth : 1,
 		borderColor : "#ededed",
 	},
+	storeView : {
+		position : 'absolute', 
+		bottom : 30, 
+		width : SIZE_WIDTH * 0.9,
+		height : SIZE_WIDTH * 0.3,
+		alignSelf : 'center',
+		paddingHorizontal : GLOBAL_MARGIN_HORIZON,
+		backgroundColor : 'white',
+		justifyContent : 'center',
+		elevation : 5,
+		borderRadius : 10,
+	}
 })
