@@ -31,6 +31,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { getDateYMD } from '../common/service/dateService';
 import axios from 'axios';
 import WeekView from './components/WeekView';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 LocaleConfig.locales['kr'] = {
     monthNames: [
@@ -84,7 +85,7 @@ export default function calendar({navigation, route}: calendarProps) {
     }
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <ScrollView>
                 <View style={styles.headerContainer}>
 
@@ -236,7 +237,7 @@ export default function calendar({navigation, route}: calendarProps) {
             <TouchableOpacity style={{position :'absolute', bottom : 0 , right : 0 }} onPress={() => navigation.navigate('AddCalendarPage')}>
                         <Image style={{height: 100, width: 100 }} source={require('../../assets/icons/btn_floating_new.png')} ></Image>
             </TouchableOpacity>
-        </View>
+        </SafeAreaView>
     );
 }
 const styles = StyleSheet.create({
