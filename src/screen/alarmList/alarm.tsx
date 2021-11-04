@@ -75,10 +75,10 @@ export function alarm(props : alarmProps) {
                         {
                             alarms?.map((item,id) => {
                                 return(
-                                    <View>
+                                    <View
+                                    key={id}>
                                     <Divider height={1} color={'#ededed'} />
                                     <AlarmList
-                                    key={id}
                                     title={item.title}
                                     date={item.date}
                                     ></AlarmList>
@@ -92,7 +92,7 @@ export function alarm(props : alarmProps) {
                 : 
                     <View style={{ flex :1 , alignItems : 'center' , marginTop : SIZE_WIDTH * 0.2}}>
                         <Image style={{ height : SIZE_WIDTH * 0.17, width : SIZE_WIDTH * 0.17 }}
-                        source={require('../../assets/icons/ic_empty_56.png')}></Image>
+                        source={require('../../assets/icons/ic_alarm_56.png')}></Image>
                         <Text style={{fontSize: 16, marginTop : 10, color : '#aaaaaa'}}>알림이 없습니다.</Text>
                     </View>
                 

@@ -40,29 +40,9 @@ export const logoutWithNaver = async () => {
 
 export const logInWithNaver = async () => {
   signInWithNaver().then((token: any) => {
-    console.log(token);
-
-    axios
-      .post(
-        //'http://carnorm:3000/',
-        'https://55ec6208-0341-4f5c-9661-b169939fb5eb.mock.pstmn.io/token/login',
-        {
-          headers: {
-            Authorization: `Basic ${token.accessToken}`,
-          },
-        },
-      )
-      .then(response => {
-		  if(response.status == 200){
-				AsyncStorage.setItem('ACT', token.accessToken)
-				AsyncStorage.setItem('RFT', token.refreshToken)
-        AsyncStorage.setItem('platform', 'NAVER')
-		  }
-      })
-      .catch((err: AxiosError | Error) => {
-        console.log(err.message);
-        logoutWithNaver();
-      });
+    AsyncStorage.setItem('ACT', token.accessToken)
+    AsyncStorage.setItem('RFT', token.refreshToken)
+    AsyncStorage.setItem('platform', 'N')
   });
 };
 
