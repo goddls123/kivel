@@ -21,7 +21,8 @@ import {
 } from '../common/constants';
 import {Divider} from '../common/divider';
 import {schedule_data} from '../test/testData';
-import {CalendarStrip} from './components/CalendarStrip';
+
+
 import {DayComponent} from './components/DayComponent';
 import {ScheduleCard} from './components/ScheduleCard';
 import {ScheduleFrame} from './components/ScheduleFrame';
@@ -32,6 +33,9 @@ import { getDateYMD } from '../common/service/dateService';
 import axios from 'axios';
 import WeekView from './components/WeekView';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
+import {CalendarStrip} from './components/CalendarStrip';
+import CalendarStrip1 from 'react-native-calendar-strip';
 
 LocaleConfig.locales['kr'] = {
     monthNames: [
@@ -75,8 +79,11 @@ interface calendarProps {
 export default function calendar({navigation, route}: calendarProps) {
     const [calendarState, setCalendarState] = useState<'month' | 'week'>('month');
 
-    
+        
     const [selectedDate, setSelectedDate] = useState<string>(getDateYMD(new Date(),'-'));
+    let startingDate = new Date(selectedDate)
+    startingDate.setDate(startingDate.getDate() - startingDate.getDay() + 1 )
+    
     // const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
     function changeView() {
@@ -117,7 +124,6 @@ export default function calendar({navigation, route}: calendarProps) {
 					calendarState === 'month' ? (
                     //////////////////////// 달력모드
                     <View style={styles.calendarContainer}>
-
                         <Calendar
                             style={styles.calendarStyle}
                             onDayPress={(day) => setSelectedDate(day.dateString)}
@@ -138,9 +144,10 @@ export default function calendar({navigation, route}: calendarProps) {
                                     selected : selectedDate != getDateYMD(new Date(), '-') ? true : false , 
                                     selectedColor : MAIN_COLOR, 
                                 },
-                                '2021-10-25': { selected : '2021-10-25' == selectedDate ? true : false , selectedColor: MAIN_COLOR, dots: [{key: 'vacation', color: 'red'}, {key: 'massage', color: 'blue'}, {key: 'workout', color: 'green'}]},
+                                '2021-10-05': { selected : '2021-10-05' == selectedDate ? true : false , selectedColor: MAIN_COLOR, dots: [{key: 'vacation', color: 'red'}, {key: 'massage', color: 'blue'}, {key: 'workout', color: 'green'}]},
                             }}
                             theme={{
+                                monthTextColor : 'black',
                                 textMonthFontSize: 22,
                                 textMonthFontFamily: 'Cafe24Ssurround',
                                 textMonthFontWeight: '500',
@@ -186,23 +193,23 @@ export default function calendar({navigation, route}: calendarProps) {
                                         fontFamily : 'Cafe24Ssurround',
                                     },
                                     dayTextAtIndex1: {
-                                        color: '#707070',
+                                        color: 'black',
                                         fontFamily : 'Cafe24Ssurround'
                                     },
                                     dayTextAtIndex2: {
-                                        color: '#707070',
+                                        color: 'black',
                                         fontFamily : 'Cafe24Ssurround'
                                     },
                                     dayTextAtIndex3: {
-                                        color: '#707070',
+                                        color: 'black',
                                         fontFamily : 'Cafe24Ssurround'
                                     },
                                     dayTextAtIndex4: {
-                                        color: '#707070',
+                                        color: 'black',
                                         fontFamily : 'Cafe24Ssurround'
                                     },
                                     dayTextAtIndex5: {
-                                        color: '#707070',
+                                        color: 'black',
                                         fontFamily : 'Cafe24Ssurround'
                                     },
                                     dayTextAtIndex6: {
@@ -213,13 +220,16 @@ export default function calendar({navigation, route}: calendarProps) {
                             }}
                         />
                         <Divider height={1} color={'#ededed'} />
-
-
                     </View>
                 	) : (
                     ///////////////////////주간모드
                     <View>
+                        <CalendarStrip
+                        selectedDate={selectedDate}
+                        setSelectedDate={setSelectedDate}
+                        ></CalendarStrip>
                         <WeekView></WeekView>
+
                     </View>
                 )}
 

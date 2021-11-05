@@ -7,7 +7,7 @@ import {setContext} from '@apollo/client/link/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // graphql api 주소
 const wsLink = new WebSocketLink({
-	uri: `ws://192.168.35.171:3000/graphql`,
+	uri: `ws://192.168.35.62:3000/graphql`,
 	// uri: `ws://192.168.0.39:3000/graphql`,
 	// uri: `ws://carnorm.com:3000/graphql`,
 	options: {
@@ -33,7 +33,7 @@ const authLink = setContext(async (_, {headers}) => {
 });
 
 const httpLink = createUploadLink({
-	uri: 'http://192.168.35.171:3000/graphql',
+	uri: 'http://192.168.35.62:3000/graphql',
 	// uri: 'http://192.168.0.39:3000/graphql',
 	// uri: 'http://carnorm.com:3000/graphql',
 });

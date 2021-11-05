@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, SafeAreaView, TouchableOpacity, Text, Image, ScrollView } from 'react-native';
+import { View, StyleSheet, SafeAreaView, TouchableOpacity, Text, Image, ScrollView, Platform } from 'react-native';
 import { GLOBAL_MARGIN_HORIZON, GLOBAL_MARGIN_VERTICAL, SIZE_HEIGHT, SIZE_WIDTH } from '../common/constants';
 import { Divider } from '../common/divider';
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -9,7 +9,7 @@ import { stackInterface } from '../../types/navigationParam';
 import { RouteProp } from '@react-navigation/native';
 import { Button } from '../common/components/Button';
 import { AlarmList } from './components/AlarmList';
-
+import { MenuView } from '@react-native-menu/menu'
 interface alarmProps {
 	navigation: StackNavigationProp<stackInterface>;
     route: RouteProp<stackInterface>;
@@ -58,6 +58,43 @@ export function alarm(props : alarmProps) {
 
                 <TouchableOpacity onPress={() => props.navigation.navigate('AlarmList')}>
                         <IconFA name='bell' style={{fontSize : 20, color : 'black'}}></IconFA>
+                        <MenuView
+        title="Menu Title"
+        onPressAction={({ nativeEvent }) => {
+          console.warn(JSON.stringify(nativeEvent));
+        }}
+        actions={[
+          {
+            id: 'share',
+            title: 'Share Action',
+            titleColor: '#46F289',
+            subtitle: 'Share action on SNS',
+            image: Platform.select({
+              ios: 'square.and.arrow.up',
+              android: 'ic_menu_share',
+            }),
+            imageColor: '#46F289',
+            state: 'on',
+          },
+          {
+            id: 'destructive',
+            title: 'Destructive Action',
+            attributes: {
+              destructive: true,
+            },
+            image: Platform.select({
+              ios: 'trash',
+              android: 'ic_menu_delete',
+            }),
+          },
+        ]}
+        shouldOpenOnLongPress={true}
+      >
+        <View>
+            <Text>Test</Text>
+        </View>
+      
+      </MenuView>
                 </TouchableOpacity>
 
                 </View>

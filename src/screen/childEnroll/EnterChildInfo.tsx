@@ -57,7 +57,7 @@ export function EnterChildInfo(props: enterChildInfoProps) {
   const rightName = new RegExp(/^[가-힣a-zA-Z]{2,10}$/);
 
   const rightHeight = (vHeight: number) => {
-    return vHeight && vHeight > 30 && vHeight < 200 ? true : false;
+    return vHeight && vHeight > 30 && vHeight < 200 
   };
 
   const rightWeight = (vWeight: Number) => {
@@ -95,6 +95,7 @@ export function EnterChildInfo(props: enterChildInfoProps) {
 
     return false;
   };
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -232,10 +233,11 @@ export function EnterChildInfo(props: enterChildInfoProps) {
                                 birthDate, 
                                 sex, 
                                 diagnosis : diagnosis? diagnosis : directInputDiag, 
-                                birthWeekNum, 
-                                birthDayNum, 
-                                height, 
-                                weight })}
+                                birthWeekNum : parseInt(birthWeekNum), 
+                                birthDayNum : parseInt(birthDayNum), 
+                                height : parseInt(height), 
+                                weight : parseInt(weight)
+                              })}
             disable={!essentialOptionCheck()}
           />
         </ScrollView>

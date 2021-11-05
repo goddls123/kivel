@@ -1,5 +1,11 @@
 export function getDateYMD(date : Date, seperator : string) : string {
-	return date.getFullYear().toString() + seperator + (date.getMonth()+1).toString() + seperator + date.getDate()
+	let Y = date.getFullYear().toString()
+	let M = (date.getMonth()+1).toString()
+	let D = date.getDate().toString()
+	if(date.getDate().toString().length == 1){
+		D = '0' + D
+	}
+	return Y + seperator + M + seperator + D
 }
 
 export function getDateYMDD(date : Date, seperator : string) : string {

@@ -28,8 +28,9 @@ export function SocialLogin(props : SocialLoginProps) {
 	const [login, {data, error, loading}] = useMutation(USER_LOGIN)
 	const kakaoLogin = () => {
 		logInWithKakao()
-		.then(() => login())
+		.then(() => login().then(response => console.log(response)))
 		.then(() => props.navigation.navigate('Agreement'))
+		// .catch(e => console.log(e.message))
 	}
 	const naverLogin = () => {
 		logInWithNaver()

@@ -25,12 +25,13 @@ export function MainProfile(props: mainProfileProps) {
             {/* 헤더 텍스트 */}
             <TouchableOpacity style={styles.profileImage} onPress={() => props.onPress(true) }>
                 <Image
+                    style={{height: SIZE_WIDTH * 0.22, width: SIZE_WIDTH * 0.22}}
                     source={
                         props.imageUri
                             ? {uri: props.imageUri}
                             : require('../../../assets/icons/ic_profile.png')
                     }
-                    style={{height: SIZE_WIDTH * 0.22, width: SIZE_WIDTH * 0.22}}
+                    
                 />
             </TouchableOpacity>
             <View>

@@ -64,6 +64,7 @@ export function homeTab(props: homeTabProps) {
                 <MainProfile 
                 style={styles.profileContainer}
                 onPress={setProfileImageModal}
+                imageUri={'http://192.168.35.62:3000/20210912220429397edac1-40cf-4b82-9483-3a0e11954e15.png'}
                 ></MainProfile>
 
                 

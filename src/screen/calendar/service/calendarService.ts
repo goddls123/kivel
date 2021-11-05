@@ -65,6 +65,7 @@ export function getThisWeek(selectedDay : Date = new Date()) : weekInfo[] {
             month : mm,
             date : dd,
             day : i ,
+            fullDateString : yyyy + '-' + mm + '-' + dd,
             kDay : getKoreanDay(i)
         })
     }
@@ -73,6 +74,16 @@ export function getThisWeek(selectedDay : Date = new Date()) : weekInfo[] {
     
 }
 
+export function getLastWeek(selectedDay : Date = new Date()) : weekInfo[] {
+    let currentDay = new Date(selectedDay);
+    currentDay.setDate(currentDay.getDate() - 7);
+    return getThisWeek(currentDay)
+}
+export function getNextWeek(selectedDay : Date = new Date()) : weekInfo[] {
+    let currentDay = new Date(selectedDay);
+    currentDay.setDate(currentDay.getDate() + 7);
+    return getThisWeek(currentDay)
+}
 export function getKoreanDay(day : number){
     if(day == 0) 
         return "일"

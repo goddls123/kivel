@@ -14,11 +14,12 @@ export interface schedule {
 }
 
 export interface weekInfo{
-    year : String,
-    month : String,
-    date : String,
+    year : string,
+    month : string,
+    date : string,
     day : Number,
-    kDay : String
+    fullDateString : string,
+    kDay : string
 }
 
 export interface scheduleFront {
