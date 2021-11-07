@@ -1,7 +1,7 @@
 export type noticeType = {
 	title : string
 	nickName : string,
-	date : Date,
+	createDate : Date,
 	content : string,
 }
 
@@ -19,4 +19,13 @@ export type scheduleType = {
 	longitude : number
 	memo : string
 	notificationTime : Date	 //DateTime
+}
+
+export type question = {
+	content : string
+}
+
+export type alarm = {
+	content : string
+	createDate : Date
 }
