@@ -9,7 +9,8 @@ import { stackInterface } from '../../types/navigationParam';
 import { RouteProp } from '@react-navigation/native';
 import { Button } from '../common/components/Button';
 import { AlarmList } from './components/AlarmList';
-import { MenuView } from '@react-native-menu/menu'
+import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
+
 interface alarmProps {
 	navigation: StackNavigationProp<stackInterface>;
     route: RouteProp<stackInterface>;
@@ -17,6 +18,7 @@ interface alarmProps {
 
 export function alarm(props : alarmProps) {
 
+    const [menuVisible, setMenuVisible] = React.useState<boolean>(false)
     const [alarms, setAlarms] = React.useState<{title : string, date : Date}[]>(
         [
             {
@@ -56,46 +58,23 @@ export function alarm(props : alarmProps) {
                     <Icon name="arrow-back" style={{fontSize: 30, color : 'black'}}></Icon>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => props.navigation.navigate('AlarmList')}>
+                {/* <TouchableOpacity onPress={() => setMenuVisible(true)}>
                         <IconFA name='bell' style={{fontSize : 20, color : 'black'}}></IconFA>
-                        <MenuView
-        title="Menu Title"
-        onPressAction={({ nativeEvent }) => {
-          console.warn(JSON.stringify(nativeEvent));
-        }}
-        actions={[
-          {
-            id: 'share',
-            title: 'Share Action',
-            titleColor: '#46F289',
-            subtitle: 'Share action on SNS',
-            image: Platform.select({
-              ios: 'square.and.arrow.up',
-              android: 'ic_menu_share',
-            }),
-            imageColor: '#46F289',
-            state: 'on',
-          },
-          {
-            id: 'destructive',
-            title: 'Destructive Action',
-            attributes: {
-              destructive: true,
-            },
-            image: Platform.select({
-              ios: 'trash',
-              android: 'ic_menu_delete',
-            }),
-          },
-        ]}
-        shouldOpenOnLongPress={true}
-      >
-        <View>
-            <Text>Test</Text>
-        </View>
-      
-      </MenuView>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
+
+                
+                <Menu
+                    visible={menuVisible}
+                    anchor={
+                        <TouchableOpacity onPress={() => setMenuVisible(true)}>
+                            <IconFA name='bell' style={{fontSize : 20, color : 'black'}}></IconFA>
+                        </TouchableOpacity>
+                    }
+                    onRequestClose={() => setMenuVisible(false)}>
+                    <MenuItem onPress={() => setMenuVisible(false)}>전체 알림 끄기</MenuItem>
+                    <MenuDivider />
+                    <MenuItem onPress={() => setMenuVisible(false)}>푸쉬 알림 끄기</MenuItem>
+                </Menu>
 
                 </View>
                 <View style={styles.headerTextContainer}>
@@ -115,10 +94,10 @@ export function alarm(props : alarmProps) {
                                     <View
                                     key={id}>
                                     <Divider height={1} color={'#ededed'} />
-                                    <AlarmList
-                                    title={item.title}
-                                    date={item.date}
-                                    ></AlarmList>
+                                        <AlarmList
+                                        title={item.title}
+                                        date={item.date}
+                                        ></AlarmList>
                                     </View>
                                     
                                 )

@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, StyleSheet, TouchableOpacity, ViewStyle, Text, ImageBackgroundBase, ImageBackground } from 'react-native';
 import ImageModal from 'react-native-image-modal';
-import { screeningResult } from '../../../types/screeningResultEnroll';
+import { screeningResult } from '../../../types/types';
 import { getDateYMD } from '../../common/service/dateService';
 
 interface ResultSheetCardProps {

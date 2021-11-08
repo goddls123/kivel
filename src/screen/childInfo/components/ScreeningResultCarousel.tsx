@@ -5,7 +5,7 @@ import ImageModal from "react-native-image-modal";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 import { SIZE_HEIGHT, SIZE_WIDTH } from "../../common/constants";
 import Icon from 'react-native-vector-icons/Ionicons';
-import { screeningResult } from "../../../types/screeningResultEnroll";
+import { screeningResult } from "../../../types/types";
 import { getDateYMD } from "../../common/service/dateService";
 interface ItemProps {
   title: string;
@@ -25,15 +25,15 @@ export function ScreeningResultCarousel(props : ScreeningResultCarouselProps) {
 
 		const [index,setIndex] = React.useState<number>(0)
 		const moveLeft = () =>{
-			if(props.data?.image && index <= 0){
-				setIndex(props.data?.image.length -1)
+			if(props.data?.images && index <= 0){
+				setIndex(props.data?.images.length -1)
 			}
 			else {
 				setIndex(index -1)
 			}
 		}
 		const moveRight = () => {
-			if(props.data?.image && index >= props.data?.image.length - 1 ){
+			if(props.data?.images && index >= props.data?.images.length - 1 ){
 				setIndex(0)
 			}
 			else {
@@ -46,13 +46,13 @@ export function ScreeningResultCarousel(props : ScreeningResultCarouselProps) {
 		  <SafeAreaView style={styles.container}>
 			<View style={styles.innerContainer}>
 				{
-					props.data?.image
+					props.data?.images
 					?
 						<View style={styles.imageContainer}>
 							<TouchableOpacity onPress={() => moveLeft()}>
 							<Icon name="chevron-back-outline" style={styles.chevronLeft} ></Icon>
 							</TouchableOpacity>
-							<ImageModal source={{uri : props.data?.image[index]}}
+							<ImageModal source={{uri : props.data?.images[index].uri}}
 								style={{width : SIZE_WIDTH * 0.65 , height : SIZE_WIDTH }}
 								resizeMode='contain'
 							></ImageModal>
@@ -63,7 +63,7 @@ export function ScreeningResultCarousel(props : ScreeningResultCarouselProps) {
 					: null
 				}
 				<Pagination
-					dotsLength={props.data?.image?.length || 0}
+					dotsLength={props.data?.images?.length || 0}
 					activeDotIndex={index}
 					dotStyle={styles.dotStyle}
 				  	inactiveDotOpacity={0.4}

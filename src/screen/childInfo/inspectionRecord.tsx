@@ -7,10 +7,11 @@ import { Divider } from '../common/divider';
 import { ResultSheetCard } from './components/ResultSheetCard';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { stackInterface } from '../../types/navigationParam';
-import { screeningResult } from '../../types/screeningResultEnroll';
+import { screeningResult } from '../../types/types';
 import ImageModal from 'react-native-image-modal';
 import Modal from 'react-native-modal'
 import { ScreeningResultCarousel } from './components/ScreeningResultCarousel';
+import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
 
 interface inspectionRecordProps {
 	navigation: StackNavigationProp<stackInterface>;
@@ -18,40 +19,35 @@ interface inspectionRecordProps {
 
 const test : screeningResult[] = [
 	{
-		id : 1, 
-		image : ['https://t1.daumcdn.net/cfile/tistory/99A77E355A4C3F9F29','https://health.chosun.com/site/data/img_dir/2016/11/30/2016113001197_1.jpg'], 
+		images : [{uri : 'https://t1.daumcdn.net/cfile/tistory/99A77E355A4C3F9F29'},{uri : 'https://health.chosun.com/site/data/img_dir/2016/11/30/2016113001197_1.jpg'}], 
 		screeningDate : new Date('2021-10-01'),
 		screeningInstitution : '동네병원',
 		screeningName : 'ㅇ렝메ㅜㄹ 검사1111',
 		memo : undefined,
 	},
 	{
-		id : 2, 
-		image : ['https://t1.daumcdn.net/cfile/tistory/99A77E355A4C3F9F29'], 
+		images : [{uri : 'https://t1.daumcdn.net/cfile/tistory/99A77E355A4C3F9F29'}], 
 		screeningDate : new Date('2021-10-02'),
 		screeningInstitution : '동네병원',
 		screeningName : 'ㅇ렝메ㅜㄹ 검사2222',
 		memo : undefined,
 	},
 	{
-		id : 3, 
-		image : ['https://t1.daumcdn.net/cfile/tistory/99A77E355A4C3F9F29'], 
+		images : [{uri : 'https://t1.daumcdn.net/cfile/tistory/99A77E355A4C3F9F29'}], 
 		screeningDate : new Date('2021-10-03'),
 		screeningInstitution : '동네병원',
 		screeningName : 'ㅇ렝메ㅜㄹ 검사3333',
 		memo : undefined,
 	},
 	{
-		id : 4, 
-		image : ['https://t1.daumcdn.net/cfile/tistory/99A77E355A4C3F9F29'], 
+		images : [{uri : 'https://t1.daumcdn.net/cfile/tistory/99A77E355A4C3F9F29'}], 
 		screeningDate : new Date('2021-10-04'),
 		screeningInstitution : '동네병원',
 		screeningName : 'ㅇ렝메ㅜㄹ 검사444',
 		memo : undefined,
 	},
 	{
-		id : 5, 
-		image : ['https://t1.daumcdn.net/cfile/tistory/99A77E355A4C3F9F29'], 
+		images : [{uri : 'https://t1.daumcdn.net/cfile/tistory/99A77E355A4C3F9F29'}], 
 		screeningDate : new Date('2021-10-05'),
 		screeningInstitution : '동네병원',
 		screeningName : 'ㅇ렝메ㅜㄹ 검사5555',
@@ -82,6 +78,10 @@ export function inspectionRecord(props : inspectionRecordProps) {
 	React.useEffect(() => {
 		openSearchView()
 	},[isSearchOpen])
+
+	//메뉴
+	const [menuVisible, setMenuVisible] = React.useState<boolean>(false)
+
 		return (
 			<ScrollView style={{flex : 1, backgroundColor : 'white'}}>
 				
@@ -93,17 +93,34 @@ export function inspectionRecord(props : inspectionRecordProps) {
 					</View>
 					<View style={{flexDirection : 'row',  alignItems : 'center', marginTop : 10, marginBottom : 20}}>
 						<Text style={{fontSize : 18, color: 'black', fontWeight : '600', marginRight : 20}}>{'자폐,학습장애'}</Text>
-						<TouchableOpacity onPress={() => {}}>
-							<Image style={{height : 22, width : 22 }} source={require('../../assets/icons/ic_edit_16.png')}></Image>
+					</View>
+
+					<View style={{flexDirection : 'row', justifyContent : 'space-between'}}>
+						<Menu
+						visible={menuVisible}
+						anchor={
+							<TouchableOpacity onPress={() => setMenuVisible(true)}>
+								<Text>{'최근 3개월'}</Text>
+							</TouchableOpacity>
+						}
+						onRequestClose={() => setMenuVisible(false)}>
+							<MenuItem onPress={() => setMenuVisible(false)}>1개월</MenuItem>
+							<MenuDivider />
+							<MenuItem onPress={() => setMenuVisible(false)}>3개월</MenuItem>
+							<MenuDivider />
+							<MenuItem onPress={() => setMenuVisible(false)}>6개월</MenuItem>
+							<MenuDivider />
+							<MenuItem onPress={() => setMenuVisible(false)}>1년</MenuItem>
+							<MenuDivider />
+							<MenuItem onPress={() => setMenuVisible(false)}>2년</MenuItem>
+						</Menu>
+						
+						<TouchableOpacity style={{flexDirection : 'row', justifyContent : 'space-between' , paddingHorizontal : 10 ,alignSelf : 'flex-end', width : SIZE_WIDTH * 0.4, backgroundColor : '#d5d5d5', borderRadius : 15 }} 
+						onPress={() => setIsSearchOpen(!isSearchOpen)}>
+							<Text>검사기록지 검색하기</Text>
+							<Icon style={{ textAlignVertical : 'bottom' ,fontSize : 22}} name="search-outline"></Icon>
 						</TouchableOpacity>
 						
-						<View style={{flex : 1}}>
-							<TouchableOpacity style={{flexDirection : 'row', justifyContent : 'space-between' , paddingHorizontal : 10 ,alignSelf : 'flex-end', width : SIZE_WIDTH * 0.4, backgroundColor : '#d5d5d5', borderRadius : 15 }} 
-							onPress={() => setIsSearchOpen(!isSearchOpen)}>
-								<Text>검사기록지 검색하기</Text>
-								<Icon style={{ textAlignVertical : 'bottom' ,fontSize : 22}} name="search-outline"></Icon>
-							</TouchableOpacity>
-						</View>
 					</View>
 					
 					<Animated.View style={{maxHeight : searchViewHeight }}>

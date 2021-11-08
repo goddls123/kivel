@@ -3,76 +3,76 @@ import {StyleSheet, Text, Touchable, TouchableOpacity, View} from 'react-native'
 import {GLOBAL_MARGIN_HORIZON, GLOBAL_MARGIN_VERTICAL, GREY_BACKGOUND_COLOR, GREY_BORDER_COLOR, MAIN_COLOR, SIZE_WIDTH} from '../../common/constants';
 // import { CalendarStrip } from './CalendarStrip';
 import CalendarStrip from 'react-native-calendar-strip'
+import { TimeTable } from './TimeTable';
 
 // import {Agenda} from 'react-native-calendars';
 
 export default function WeekView() {
     // const schedules = [{startTime:}]
+	const HOUR_WIDTH = (SIZE_WIDTH - 10)/7
     const [selectedDate, setSelectedDate] = React.useState(new Date())
     return (
 		<View>
+			<TimeTable
+			hourHeight={SIZE_WIDTH * 0.12}
+			></TimeTable>
+			
+			<View style={{
+				left : 5 + HOUR_WIDTH * 0.05,
+				position : 'absolute', 
+				height : SIZE_WIDTH * 0.12 * 2.5 , 
+				width : HOUR_WIDTH * 0.9,
+				backgroundColor : '#e63464',
+			}}/>
+			<View style={{
+				left : 5 + HOUR_WIDTH,
+				position : 'absolute', 
+				height : SIZE_WIDTH * 0.12 * 2.5 , 
+				width : HOUR_WIDTH,
+				backgroundColor : 'blue',
+			}}/>
+			<View style={{
+				left : 5 + HOUR_WIDTH* 2,
+				position : 'absolute', 
+				height : SIZE_WIDTH * 0.12 * 2.5 , 
+				width : HOUR_WIDTH,
+				backgroundColor : 'purple',
+			}}/>
+			<View style={{
+				left : 5 + HOUR_WIDTH * 3,
+				position : 'absolute', 
+				height : SIZE_WIDTH * 0.12 * 2.5 , 
+				width : HOUR_WIDTH,
+				backgroundColor : 'yellow',
+			}}/>
+			<View style={{
+				left : 5 + HOUR_WIDTH * 4,
+				position : 'absolute', 
+				height : SIZE_WIDTH * 0.12 * 2.5 , 
+				width : HOUR_WIDTH,
+				backgroundColor : 'black',
+			}}/>
+			<View style={{
+				left : 5 + HOUR_WIDTH * 5,
+				position : 'absolute', 
+				height : SIZE_WIDTH * 0.12 * 2.5 , 
+				width : HOUR_WIDTH,
+				backgroundColor : 'red',
+			}}/>
 
-			<View style={styles.timeTable}>
-
-				<View style={{height : SIZE_WIDTH * 0.12, borderBottomWidth :1 , borderColor : '#d5d5d5', justifyContent : 'center'}}>
-					<Text style={{color : '#d5d5d5', fontSize: 12, marginHorizontal : GLOBAL_MARGIN_HORIZON}}>오전 9시</Text>
-				</View>
-				<View style={{height : SIZE_WIDTH * 0.12, borderBottomWidth :1 , borderColor : '#d5d5d5', justifyContent : 'center'}}>
-					<Text style={{color : '#d5d5d5', fontSize: 12, marginHorizontal : GLOBAL_MARGIN_HORIZON}}>오전</Text>
-					<Text style={{color : '#d5d5d5', fontSize: 12, marginHorizontal : GLOBAL_MARGIN_HORIZON}}>10:00</Text>
-				</View>
-				<View style={{height : SIZE_WIDTH * 0.12, borderBottomWidth :1 , borderColor : '#d5d5d5', justifyContent : 'center'}}>
-					<Text style={{color : '#d5d5d5', fontSize: 12, marginHorizontal : GLOBAL_MARGIN_HORIZON}}>오전</Text>
-					<Text style={{color : '#d5d5d5', fontSize: 12, marginHorizontal : GLOBAL_MARGIN_HORIZON}}>11:00</Text>
-				</View>
-				<View style={{height : SIZE_WIDTH * 0.12, borderBottomWidth :1 , borderColor : '#d5d5d5', justifyContent : 'center'}}>
-					<Text style={{color : '#d5d5d5', fontSize: 12, marginHorizontal : GLOBAL_MARGIN_HORIZON}}>오전</Text>
-					<Text style={{color : '#d5d5d5', fontSize: 12, marginHorizontal : GLOBAL_MARGIN_HORIZON}}>12:00</Text>
-				</View>
-				<View style={{height : SIZE_WIDTH * 0.12, borderBottomWidth :1 , borderColor : '#d5d5d5', justifyContent : 'center'}}>
-					<Text style={{color : '#d5d5d5', fontSize: 12, marginHorizontal : GLOBAL_MARGIN_HORIZON}}>오후</Text>
-					<Text style={{color : '#d5d5d5', fontSize: 12, marginHorizontal : GLOBAL_MARGIN_HORIZON}}>1:00</Text>
-				</View>
-				<View style={{height : SIZE_WIDTH * 0.12, borderBottomWidth :1 , borderColor : '#d5d5d5', justifyContent : 'center'}}>
-					<Text style={{color : '#d5d5d5', fontSize: 12, marginHorizontal : GLOBAL_MARGIN_HORIZON}}>오후</Text>
-					<Text style={{color : '#d5d5d5', fontSize: 12, marginHorizontal : GLOBAL_MARGIN_HORIZON}}>2:00</Text>
-				</View>
-				<View style={{height : SIZE_WIDTH * 0.12, borderBottomWidth :1 , borderColor : '#d5d5d5', justifyContent : 'center'}}>
-					<Text style={{color : '#d5d5d5', fontSize: 12, marginHorizontal : GLOBAL_MARGIN_HORIZON}}>오후</Text>
-					<Text style={{color : '#d5d5d5', fontSize: 12, marginHorizontal : GLOBAL_MARGIN_HORIZON}}>3:00</Text>
-				</View>
-				<View style={{height : SIZE_WIDTH * 0.12, borderBottomWidth :1 , borderColor : '#d5d5d5', justifyContent : 'center'}}>
-					<Text style={{color : '#d5d5d5', fontSize: 12, marginHorizontal : GLOBAL_MARGIN_HORIZON}}>오후</Text>
-					<Text style={{color : '#d5d5d5', fontSize: 12, marginHorizontal : GLOBAL_MARGIN_HORIZON}}>4:00</Text>
-				</View>
-				<View style={{height : SIZE_WIDTH * 0.12, borderBottomWidth :1 , borderColor : '#d5d5d5', justifyContent : 'center'}}>
-					<Text style={{color : '#d5d5d5', fontSize: 12, marginHorizontal : GLOBAL_MARGIN_HORIZON}}>오후</Text>
-					<Text style={{color : '#d5d5d5', fontSize: 12, marginHorizontal : GLOBAL_MARGIN_HORIZON}}>5:00</Text>
-				</View>
-				<View style={{height : SIZE_WIDTH * 0.12, borderBottomWidth :1 , borderColor : '#d5d5d5', justifyContent : 'center'}}>
-					<Text style={{color : '#d5d5d5', fontSize: 12, marginHorizontal : GLOBAL_MARGIN_HORIZON}}>오후</Text>
-					<Text style={{color : '#d5d5d5', fontSize: 12, marginHorizontal : GLOBAL_MARGIN_HORIZON}}>6:00</Text>
-				</View>
-				<View style={{height : SIZE_WIDTH * 0.12, borderBottomWidth :1 , borderColor : '#d5d5d5', justifyContent : 'center'}}>
-					<Text style={{color : '#d5d5d5', fontSize: 12, marginHorizontal : GLOBAL_MARGIN_HORIZON}}>오후</Text>
-					<Text style={{color : '#d5d5d5', fontSize: 12, marginHorizontal : GLOBAL_MARGIN_HORIZON}}>7:00</Text>
-				</View>
-				<View style={{height : SIZE_WIDTH * 0.12, borderBottomWidth :1 , borderColor : '#d5d5d5', justifyContent : 'center'}}>
-					<Text style={{color : '#d5d5d5', fontSize: 12, marginHorizontal : GLOBAL_MARGIN_HORIZON}}>오후</Text>
-					<Text style={{color : '#d5d5d5', fontSize: 12, marginHorizontal : GLOBAL_MARGIN_HORIZON}}>8:00</Text>
-				</View>
-			</View>
-        
-        
-
+			<View style={{
+				left : 5 + HOUR_WIDTH * 6,
+				position : 'absolute', 
+				height : SIZE_WIDTH * 0.12 * 2.5 , 
+				width : HOUR_WIDTH,
+				backgroundColor : 'green',
+			}}/>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     timeTable: {
-        display: 'flex',
-        position: 'relative',
         borderTopColor: GREY_BORDER_COLOR,
         borderTopWidth: 1,
     },

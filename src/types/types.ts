@@ -1,3 +1,5 @@
+import { ReactNativeFile } from "apollo-upload-client"
+
 export type noticeType = {
 	title : string
 	nickName : string,
@@ -28,4 +30,13 @@ export type question = {
 export type alarm = {
 	content : string
 	createDate : Date
+}
+
+export type screeningResult = {
+	// id : number
+	images? : ReactNativeFile[]
+	screeningName : string
+	screeningDate : Date
+	screeningInstitution : string
+	memo : string | undefined
 }

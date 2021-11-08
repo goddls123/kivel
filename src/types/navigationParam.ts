@@ -1,7 +1,7 @@
 import { SchemaExtensionNode } from "graphql";
 import { essentialChildInfo, nurseryCaution, nurseryCaution2 } from "./childInfoTypes";
 import { diary } from "./DiaryTypes";
-import { screeningResult } from "./screeningResultEnroll";
+import { screeningResult } from "./types";
 import { noticeType } from "./types";
 
 export type stackInterface = {

@@ -30,7 +30,11 @@ export function SocialLogin(props : SocialLoginProps) {
 		logInWithKakao()
 		.then(() => login().then(response => console.log(response)))
 		.then(() => props.navigation.navigate('Agreement'))
-		// .catch(e => console.log(e.message))
+		.catch(e => {
+			if(e.message == 'Network request failed'){
+				return '네트워크 에러'
+			}}
+		)
 	}
 	const naverLogin = () => {
 		logInWithNaver()

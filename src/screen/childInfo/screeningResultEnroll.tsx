@@ -13,6 +13,7 @@ import { Button } from '../common/components/Button';
 import { ReactNativeFile } from 'apollo-upload-client';
 import ImagePicker, {openCamera} from 'react-native-image-crop-picker';
 import { WarningModal } from '../common/components/WarningModal';
+import { screeningResult } from '../../types/types';
 
 interface screeningResultEnrollProps {
 	navigation: StackNavigationProp<stackInterface>;
@@ -20,14 +21,28 @@ interface screeningResultEnrollProps {
 
 export function screeningResultEnroll(props : screeningResultEnrollProps) {
 
+		const [screeningResult,setScreeningResult] = React.useState<screeningResult>({
+			screeningName : '',
+			screeningInstitution : '',
+			screeningDate : new Date(),
+			memo : '',
+		})
+		function setScreeningName(value : string) {
+			setScreeningResult({ ...screeningResult, screeningName : value })
+		}
+		function setScreeningInstitution(value : string) {
+			setScreeningResult({ ...screeningResult, screeningInstitution : value })
+		}
+		function setScreeningDate(value : Date) {
+			setScreeningResult({ ...screeningResult, screeningDate : value })
+		}
+		function setMemo(value : string) {
+			setScreeningResult({ ...screeningResult, memo : value })
+		}
+		function setImages(value : ReactNativeFile[]) {
+			setScreeningResult({ ...screeningResult, images : value })
+		}
 
-		const [resultSheetName, setResultSheetName] 		= React.useState<string>()
-		const [resultSheetInstName, setResultSheetInstName] = React.useState<string>()
-		const [resultSheetMemo, setResultSheetMemo] 		= React.useState<string>()
-		const [resultDate, setResultDate] 					= React.useState<Date>()
-		const [images, setImages] 							= React.useState<ReactNativeFile[]>();
-		
-		console.log(images)
 		const [dateModalVisible, setDateModalVisible] 		= React.useState<boolean>(false)
 		
 		
@@ -52,7 +67,7 @@ export function screeningResultEnroll(props : screeningResultEnrollProps) {
 		};
 
 		function checkEssential() {
-			if(resultSheetName && resultSheetInstName && resultDate){
+			if(screeningResult){
 				return true
 			}
 			
@@ -72,7 +87,7 @@ export function screeningResultEnroll(props : screeningResultEnrollProps) {
 						Platform.OS === 'android' ? <Divider height={GLOBAL_MARGIN_HORIZON} color="white" /> : null 
 					}
 					<TouchableOpacity
-						onPress={() => props.navigation.goBack()}>
+						onPress={() => setWarningModal(true)}>
 						<Icon name="arrow-back" style={{fontSize: 30}}></Icon>
 					</TouchableOpacity>
 					<Text style={styles.headerTextStyle}>검사결과지 등록하기</Text>
@@ -88,7 +103,7 @@ export function screeningResultEnroll(props : screeningResultEnrollProps) {
 									<Text style={{fontSize : 20}}>결과지 등록</Text>
 								</TouchableOpacity>
 								{
-									images?.map((image: ReactNativeFile, idx) => {
+									screeningResult.images?.map((image: ReactNativeFile, idx) => {
 										return (
 											<View key={idx} style={styles.cardEnroll}>
 												<Image
@@ -97,7 +112,7 @@ export function screeningResultEnroll(props : screeningResultEnrollProps) {
 												// resizeMode="contain"
 												/>
 												<TouchableOpacity style={styles.imageCancel} 
-												onPress={() => setImages(images.filter((data, id) => id !== idx))}>
+												onPress={() => setImages(screeningResult.images.filter((data, id) => id !== idx))}>
 													<Icon name="close-outline" style={styles.imageCancelIcon}></Icon>
 												</TouchableOpacity>
 											</View>
@@ -113,7 +128,7 @@ export function screeningResultEnroll(props : screeningResultEnrollProps) {
 					<TextInputView
 					placeholder={'검사명을 입력해주세요'}
 					style={{marginBottom: SIZE_HEIGHT * 0.05}}
-					onChangeText={setResultSheetName}></TextInputView>
+					onChangeText={setScreeningName}></TextInputView>
 
 					<TextView text="검사일시" />
 					<TextInputView
@@ -122,19 +137,19 @@ export function screeningResultEnroll(props : screeningResultEnrollProps) {
 					icon="calendar"
 					editable={false}
 					iconOnPress={setDateModalVisible}
-					value={resultDate}></TextInputView>
+					value={screeningResult.screeningDate}></TextInputView>
 
 					<TextView text="검사기관명" />
 					<TextInputView
 					placeholder={'검사기관명 입력해주세요'}
 					style={{marginBottom: SIZE_HEIGHT * 0.05}}
-					onChangeText={setResultSheetInstName}></TextInputView>
+					onChangeText={setScreeningInstitution}></TextInputView>
 
 					<TextView text="메모" />
 					<TextInputView
 					placeholder={'특이사항이나 기록해 두고 싶은 사항을 입력해주세요'}
 					style={{marginBottom: SIZE_HEIGHT * 0.06}}
-					onChangeText={setResultSheetMemo}></TextInputView>
+					onChangeText={setMemo}></TextInputView>
 
 					<Button 
 					text={'등록'} 
@@ -146,8 +161,8 @@ export function screeningResultEnroll(props : screeningResultEnrollProps) {
 
 				<Modal isVisible={dateModalVisible}>
 					<DateScroller
-					setDate={setResultDate}
-					date={resultDate}
+					setDate={setScreeningDate}
+					date={screeningResult.screeningDate}
 					setModalVisible={setDateModalVisible}
 					></DateScroller>
 				</Modal>

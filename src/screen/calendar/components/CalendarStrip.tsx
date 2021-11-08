@@ -14,8 +14,6 @@ interface schedulerTestProps {
 }
 
 export function CalendarStrip(props : schedulerTestProps) {
-        // const [date , setDate] = React.useState<Date>(new Date())
-        // const [modalVisible , setModalVisible,] = React.useState<boolean>(false)
         
         
         const [currentFocusDate, setCurrentFocusDate] = React.useState<Date>(new Date(props.selectedDate))
@@ -78,25 +76,7 @@ export function CalendarStrip(props : schedulerTestProps) {
                         )
                     })}
                 </View>
-                        
-                {/* <Modal
-                    isVisible={modalVisible} 
-                    hasBackdrop={true}
-                >
-                    <View style={{flex : 1,alignItems : 'center', justifyContent :'center'}}>
-                        <View style={{marginLeft : '10%', marginRight : '10%'}}>
-                            <DatePicker style={{backgroundColor : 'white'}} date={props.selectedDate} onDateChange={(newDate) => props.setDate(newDate)} mode={'date'} />
-                            <TouchableOpacity 
-                                style={{backgroundColor : 'red', alignSelf: 'flex-end'}} 
-                                onPress={() => {
-                                    setModalVisible(false)
-                                    props.setSelectedDate(date)
-                                }}>
-                                <Text>확인버튼</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </Modal> */}
+
             
                 
             </View>
@@ -108,7 +88,7 @@ const styles = StyleSheet.create({
         alignItems : 'center',
         justifyContent : 'center',
         paddingTop : GLOBAL_MARGIN_HORIZON - 3 ,
-        marginHorizontal : 6,
+        marginHorizontal : 5,
         paddingBottom : 20
         // borderWidth : 0,
     },
