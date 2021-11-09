@@ -20,13 +20,10 @@ import {
     SIZE_WIDTH,
 } from '../common/constants';
 import {Divider} from '../common/divider';
-import {schedule_data} from '../test/testData';
-
-
-import {DayComponent} from './components/DayComponent';
+import {schedule_data, } from '../test/testData';
 import {ScheduleCard} from './components/ScheduleCard';
 import {ScheduleFrame} from './components/ScheduleFrame';
-import {scheduleCheck} from './service/calendarService';
+import { scheduleCheck, scheduleDataParser} from './service/calendarService';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { getDateYMD } from '../common/service/dateService';
@@ -36,36 +33,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import {CalendarStrip} from './components/CalendarStrip';
 import CalendarStrip1 from 'react-native-calendar-strip';
+import { doTypesOverlap } from 'graphql';
+import { parsedScheduleType } from '../../types/types';
 
 LocaleConfig.locales['kr'] = {
-    monthNames: [
-        '1월',
-        '2월',
-        '3월',
-        '4월',
-        '5월',
-        '6월',
-        '7월',
-        '8월',
-        '9월',
-        '10월',
-        '11월',
-        '12월',
-    ],
-    monthNamesShort: [
-        '1월',
-        '2월',
-        '3월',
-        '4월',
-        '5월',
-        '6월',
-        '7월',
-        '8월',
-        '9월',
-        '10월',
-        '11월',
-        '12월',
-    ],
+    monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월',],
+    monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월',],
     dayNames: ['일', '월', '화', '수', '목', '금', '토'],
     dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
 };
@@ -77,14 +50,47 @@ interface calendarProps {
 }
 
 export default function calendar({navigation, route}: calendarProps) {
+    // data patch
+	//일정 데이터 패치
+	const [parsedData , setParsedData] = React.useState<parsedScheduleType[]>(scheduleDataParser(schedule_data).sort(function(a : any, b : any){
+		if(a.date > b.date) return 1
+		else if(a.date < b.date) return -1
+		else return 0
+	}))
+	////////////////////////////////
+
     const [calendarState, setCalendarState] = useState<'month' | 'week'>('month');
 
+	const [selectedDate, setSelectedDate] = useState<string>(getDateYMD(new Date(),'-'));
+
+	const [markedDates, setMarkedDates] = React.useState(getDots())
+	
+
+	function getDots () {
+		let marked : any = {}
+		let dots : any = []
+	
+		for(let i = 0 ; i < parsedData.length; i++){
+			// if(parsedData[i].date.getFullYear() == currentDate.getFullYear() && parsedData[i].date.getMonth() == currentDate.getMonth()){
+				dots.push({key : parsedData[i].id, color : parsedData[i].color})
+				
+				if(i == parsedData.length - 1){
+					marked[getDateYMD(parsedData[i].date,'-')] = { dots : [...dots] }
+				}
+				else if(getDateYMD(parsedData[i].date,'-') != getDateYMD(parsedData[i+1].date,'-')){	
+					marked[getDateYMD(parsedData[i].date,'-')] = { dots : [...dots] }
+					dots = []
+				}
+				
+			// }
+		}
+		return marked
+	}
+
         
-    const [selectedDate, setSelectedDate] = useState<string>(getDateYMD(new Date(),'-'));
-    let startingDate = new Date(selectedDate)
-    startingDate.setDate(startingDate.getDate() - startingDate.getDay() + 1 )
     
-    // const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+
+
 
     function changeView() {
         if (calendarState == 'month') setCalendarState('week');
@@ -140,11 +146,14 @@ export default function calendar({navigation, route}: calendarProps) {
                             monthFormat={'MM' + '월'}
                             markingType={'multi-dot'}
                             markedDates={{
-                                [selectedDate]: { 
-                                    selected : selectedDate != getDateYMD(new Date(), '-') ? true : false , 
-                                    selectedColor : MAIN_COLOR, 
-                                },
-                                '2021-10-05': { selected : '2021-10-05' == selectedDate ? true : false , selectedColor: MAIN_COLOR, dots: [{key: 'vacation', color: 'red'}, {key: 'massage', color: 'blue'}, {key: 'workout', color: 'green'}]},
+								...markedDates,
+								[selectedDate]	: { 
+									selected : selectedDate != getDateYMD(new Date(), '-'), 
+									selectedColor : MAIN_COLOR,
+									dots : markedDates[selectedDate] == undefined ? [] : markedDates[selectedDate].dots
+								
+								},
+                                
                             }}
                             theme={{
                                 monthTextColor : 'black',
@@ -236,10 +245,21 @@ export default function calendar({navigation, route}: calendarProps) {
 				<View style={{margin : GLOBAL_MARGIN_HORIZON , marginBottom : 80}}>
 					<Text style={{ color : 'black', fontSize: 17, fontWeight : 'bold', marginBottom : GLOBAL_MARGIN_HORIZON}}>{selectedDate == getDateYMD(new Date(),'-') ? '오늘' : selectedDate}</Text>
 					{/* 일정 card */}
-                    <ScheduleCard></ScheduleCard>
-                    <ScheduleCard></ScheduleCard>
-                    <ScheduleCard></ScheduleCard>
-                    <ScheduleCard></ScheduleCard>
+					{
+						parsedData?.map((data,id) => {
+							console.log(getDateYMD(data.date,'-') == selectedDate)
+							if(getDateYMD(data.date,'-') == selectedDate){
+								return(
+									<ScheduleCard
+									key={id}
+									data={data}
+									></ScheduleCard>
+								)
+							}
+							
+						})
+					}
+
 				</View>
                 
             </ScrollView>
@@ -270,17 +290,17 @@ const styles = StyleSheet.create({
         width: SIZE_HEIGHT * 0.035,
         justifyContent: 'center',
     },
-    calendarContainer: {flex: 1 },
+    calendarContainer: {flex: 1, paddingHorizontal : 10 , backgroundColor : 'white' },
     calendarStyle: {paddingBottom: SIZE_HEIGHT * 0.02},
 	arrowLeftIconStyle: {
-		width: SIZE_WIDTH * 0.3,
+		width: SIZE_WIDTH * 0.25,
 		fontSize: 25,
 		textAlign: 'right',
 		fontWeight: '100',
 		color: MAIN_COLOR,
 	},
     arrowRightIconStyle: {
-		width: SIZE_WIDTH * 0.3,
+		width: SIZE_WIDTH * 0.25,
 		fontSize: 25,
 		textAlign: 'left',
 		fontWeight: '100',

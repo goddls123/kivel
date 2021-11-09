@@ -13,7 +13,6 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import { Alert } from 'react-native';
 import StackNav from './src/navigation/stackNav';
 import { Splash } from './src/screen/common/components/Splash';
-import {childInfo as ChildInfo} from './src/screen/childInfo/childInfo';
 
 
 // import messaging from '@react-native-firebase/messaging';

@@ -15,7 +15,7 @@ export function Button(props : ButtonProps) {
 
 			<TouchableOpacity onPress={props.onPress}
 				style={[styles.buttonStyle,props.style]}
-				disabled={props.disable === true ? true : false}>
+				disabled={props.disable}>
 
 				<Text style={[styles.textStyle,{color : props.textColor}]}>{props.text}</Text>
 			</TouchableOpacity>

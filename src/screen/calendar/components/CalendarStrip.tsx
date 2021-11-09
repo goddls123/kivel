@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import DatePicker from 'react-native-date-picker'
 import Modal from 'react-native-modal';
 import { weekInfo } from '../../../types/calendarTypes';
-import { GLOBAL_MARGIN_HORIZON, MAIN_COLOR, SIZE_WIDTH } from '../../common/constants';
+import { GLOBAL_MARGIN_HORIZON, GLOBAL_MARGIN_VERTICAL, MAIN_COLOR, SIZE_WIDTH } from '../../common/constants';
 import { getLastWeek, getNextWeek, getThisWeek } from '../service/calendarService';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -88,26 +88,26 @@ const styles = StyleSheet.create({
         alignItems : 'center',
         justifyContent : 'center',
         paddingTop : GLOBAL_MARGIN_HORIZON - 3 ,
-        marginHorizontal : 5,
+        paddingHorizontal : GLOBAL_MARGIN_VERTICAL,
         paddingBottom : 20
         // borderWidth : 0,
     },
     monthText : {          
-        width : SIZE_WIDTH * 0.28,
+        width : SIZE_WIDTH * 0.2,
         fontSize : 22,
         color: 'black',
         textAlign: 'center',
         fontFamily : 'Cafe24Ssurround'
     },
     arrowLeftIconStyle: {
-		width: SIZE_WIDTH * 0.3,
+		width: SIZE_WIDTH * 0.25,
 		fontSize: 25,
 		textAlign: 'right',
 		fontWeight: '100',
 		color: MAIN_COLOR,
 	},
     arrowRightIconStyle: {
-		width: SIZE_WIDTH * 0.3,
+		width: SIZE_WIDTH * 0.25,
 		fontSize: 25,
 		textAlign: 'left',
 		fontWeight: '100',

@@ -8,6 +8,7 @@ export type noticeType = {
 }
 
 export type scheduleType = {
+	id : number
 	title : string
 	scheduleDate : Date 	//DateTime	
 	startTime : Date 		//DateTime
@@ -21,6 +22,10 @@ export type scheduleType = {
 	longitude : number
 	memo : string
 	notificationTime : Date	 //DateTime
+	color : string
+}
+export type parsedScheduleType = scheduleType & {
+	date : Date, 
 }
 
 export type question = {

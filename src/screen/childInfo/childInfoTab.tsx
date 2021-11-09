@@ -14,7 +14,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 const Tab = createMaterialTopTabNavigator();
 
-export function childInfo() {
+export function childInfoTab() {
   return (
     <>
     <Header></Header>

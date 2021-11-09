@@ -9,7 +9,9 @@ import { TimeTable } from './TimeTable';
 
 export default function WeekView() {
     // const schedules = [{startTime:}]
-	const HOUR_WIDTH = (SIZE_WIDTH - 10)/7
+	const HOUR_WIDTH = (SIZE_WIDTH - GLOBAL_MARGIN_VERTICAL * 2) / 7
+	const HOUR_LEFT_MARGIN = HOUR_WIDTH * 0.05 + GLOBAL_MARGIN_VERTICAL
+	const HOUR_HEIGHT = SIZE_WIDTH * 0.12
     const [selectedDate, setSelectedDate] = React.useState(new Date())
     return (
 		<View>
@@ -18,55 +20,17 @@ export default function WeekView() {
 			></TimeTable>
 			
 			<View style={{
-				left : 5 + HOUR_WIDTH * 0.05,
+				left : HOUR_LEFT_MARGIN + HOUR_WIDTH * 2,
+				top : HOUR_HEIGHT * 4,
 				position : 'absolute', 
-				height : SIZE_WIDTH * 0.12 * 2.5 , 
+				height : HOUR_HEIGHT * 2, 
 				width : HOUR_WIDTH * 0.9,
+				borderRadius : 6,
 				backgroundColor : '#e63464',
-			}}/>
-			<View style={{
-				left : 5 + HOUR_WIDTH,
-				position : 'absolute', 
-				height : SIZE_WIDTH * 0.12 * 2.5 , 
-				width : HOUR_WIDTH,
-				backgroundColor : 'blue',
-			}}/>
-			<View style={{
-				left : 5 + HOUR_WIDTH* 2,
-				position : 'absolute', 
-				height : SIZE_WIDTH * 0.12 * 2.5 , 
-				width : HOUR_WIDTH,
-				backgroundColor : 'purple',
-			}}/>
-			<View style={{
-				left : 5 + HOUR_WIDTH * 3,
-				position : 'absolute', 
-				height : SIZE_WIDTH * 0.12 * 2.5 , 
-				width : HOUR_WIDTH,
-				backgroundColor : 'yellow',
-			}}/>
-			<View style={{
-				left : 5 + HOUR_WIDTH * 4,
-				position : 'absolute', 
-				height : SIZE_WIDTH * 0.12 * 2.5 , 
-				width : HOUR_WIDTH,
-				backgroundColor : 'black',
-			}}/>
-			<View style={{
-				left : 5 + HOUR_WIDTH * 5,
-				position : 'absolute', 
-				height : SIZE_WIDTH * 0.12 * 2.5 , 
-				width : HOUR_WIDTH,
-				backgroundColor : 'red',
-			}}/>
-
-			<View style={{
-				left : 5 + HOUR_WIDTH * 6,
-				position : 'absolute', 
-				height : SIZE_WIDTH * 0.12 * 2.5 , 
-				width : HOUR_WIDTH,
-				backgroundColor : 'green',
-			}}/>
+			}}>
+				<Text style={{marginHorizontal : 5, fontSize : 12, color : 'white'}}>에베베ㅔ베</Text>
+			</View>
+			
         </View>
     );
 }

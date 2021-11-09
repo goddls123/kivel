@@ -61,14 +61,14 @@ export function EnterChildInfo(props: enterChildInfoProps) {
   };
 
   const rightWeight = (vWeight: Number) => {
-    return vWeight && vWeight > 0 && vWeight < 100 ? true : false;
+    return vWeight && vWeight > 0 && vWeight < 100
   };
 
   const rightbirthWeekNum = (vbirthWeekNum: Number) => {
-    return vbirthWeekNum && vbirthWeekNum > 1 ? true : false;
+    return vbirthWeekNum && vbirthWeekNum > 1
   };
   const rightbirthDayNum = (vbirthDayNum: Number) => {
-    return vbirthDayNum && vbirthDayNum >= 0 && vbirthDayNum < 7 ? true : false;
+    return vbirthDayNum && vbirthDayNum >= 0 && vbirthDayNum < 7
   };
 
   // 필수항목 체크

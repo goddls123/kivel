@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React from 'react'
-import { View, StyleSheet, TextInput, Text, ScrollView, Touchable } from 'react-native';
+import { View, StyleSheet, TextInput, Text, ScrollView, Touchable, BackHandler } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import NaverMapView, { Coord, Marker } from 'react-native-nmap';
 import { Button } from '../common/components/Button';
@@ -8,9 +8,8 @@ import { GLOBAL_MARGIN_HORIZON, SIZE_HEIGHT, SIZE_WIDTH } from '../common/consta
 import Geolocation from '@react-native-community/geolocation';
 
 
-export function map() {
+export function Map() {
 
-		
 		const [listShow , setListShow] = React.useState<boolean>(false)
 		const [localList, setLocalList] = React.useState<any>()
 		const [searchText, setSearchText] = React.useState<string>()
@@ -89,7 +88,6 @@ export function map() {
 					}
 				</NaverMapView>
 
-{console.log(localList)}
 				{/* 상단 TEXT INPUT */}
 				<View style={styles.searchView}>
 					<TextInput 
@@ -138,7 +136,7 @@ const styles = StyleSheet.create({
 	searchView : {
 		position : 'absolute', 
 		top : 30, 
-		width : SIZE_WIDTH * 0.9,
+		width : '90%',
 		alignSelf : 'center',
 		paddingHorizontal : GLOBAL_MARGIN_HORIZON,
 		backgroundColor : 'white',

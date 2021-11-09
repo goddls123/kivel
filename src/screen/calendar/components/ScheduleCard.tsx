@@ -5,9 +5,12 @@ import { schedule } from '../../../types/calendarTypes'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { GLOBAL_MARGIN_HORIZON, MAIN_COLOR, SIZE_HEIGHT, SIZE_WIDTH } from '../../common/constants';
 import { Divider } from '../../common/divider';
+import { parsedScheduleType } from '../../../types/types';
+import { getKoreanDay } from '../service/calendarService';
+
 
 interface ScheduleCardProps {
-    data? : schedule | undefined
+    data? : parsedScheduleType | undefined
 }
 
 const CARD_WIDTH = SIZE_WIDTH - GLOBAL_MARGIN_HORIZON * 2;
@@ -15,6 +18,28 @@ const CARD_HEIGHT = (SIZE_WIDTH - GLOBAL_MARGIN_HORIZON * 2) * 0.55;
 
 export function ScheduleCard(props : ScheduleCardProps) {
     
+        // 매주 언제언제 반복
+        function repeatCycleString(){
+            let data = props.data
+            let result = ''
+            if(data?.repeatCycle == 'W') {
+                result = '매주'
+            }
+            else if(data?.repeatCycle == '2W'){
+                result = '격주'
+            }
+
+            for(let i = 0; i < 7; i++){
+                if(data?.repeatDay[i] == '1'){
+                    result = result +' '+ getKoreanDay(i)
+                }    
+            }
+            
+            result = result + '요일 반복'
+            
+            return result
+        }
+
         return (
             <View style={styles.cardContainer}>
                 <View style={styles.headerContainer}>
@@ -23,7 +48,7 @@ export function ScheduleCard(props : ScheduleCardProps) {
                     </View>
 
                     <View style={{justifyContent : 'center', marginLeft : 10}}>
-                        <Text style={{color : '#01b399', fontSize : 17}}>계절_언어치료</Text>
+                        <Text style={{color : '#01b399', fontSize : 17}}>{props.data?.title}</Text>
                     </View>
 
                     <TouchableOpacity style={{justifyContent : 'center', marginLeft : 10}}>
@@ -41,9 +66,9 @@ export function ScheduleCard(props : ScheduleCardProps) {
                 </View>
 
                 <View style={{marginLeft : 35, marginBottom :10}}>
-                    <Text style={{color : '#555555', fontSize : 15, marginBottom : 4}}>매주 화요일 / 09:00 - 15:00</Text>
-                    <Text style={{color : '#555555', fontSize : 15, marginBottom : 4}}>김초롱 치료사</Text>
-                    <Text style={{color : '#555555', fontSize : 15, marginBottom : 4}}>와이아동발달센터</Text>
+                    <Text style={{color : '#555555', fontSize : 15, marginBottom : 4}}>매주 화요일 / {props.data?.startTime + ' - ' + props.data?.endTime}</Text>
+                    <Text style={{color : '#555555', fontSize : 15, marginBottom : 4}}>치료사 : {props.data?.theraphistId}</Text>
+                    <Text style={{color : '#555555', fontSize : 15, marginBottom : 4}}>장소 : {props.data?.location}</Text>
                 </View>
 				<Divider height={1} color={'#ededed'}></Divider>
 				

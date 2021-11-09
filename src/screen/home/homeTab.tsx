@@ -11,13 +11,13 @@ import {
     ToastAndroid
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {schedule_data} from '../test/testData';
+
 import {MainProfile} from './components/MainProfile';
 import {ScheduleModalView} from './components/ScheduleModalView';
 import {RouteProp, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {stackInterface} from '../../types/navigationParam';
-import {schedule} from '../../types/calendarTypes';
+import {scheduleType} from '../../types/types';
 import {NavigationButton} from './components/NavigationButton';
 import {Divider} from '../common/divider';
 import {GLOBAL_MARGIN_HORIZON, SIZE_HEIGHT, SIZE_WIDTH} from '../common/constants';
@@ -26,6 +26,12 @@ import { ChildInfoAlarmModal } from '../childEnroll/components/ChildInfoAlarmMod
 import { ScheduleCard } from './components/ScheduleCard';
 import { HomeWorkCard } from './components/HomeWorkCard';
 import { ProfileModal } from './components/ProfileModal';
+
+
+// Test
+import {scheduleTypeTest, schedule_data} from '../test/testData';
+// 
+
 
 interface homeTabProps {
     navigation: StackNavigationProp<stackInterface, 'Calendar'>;
@@ -36,9 +42,78 @@ export function homeTab(props: homeTabProps) {
     //////////// Todo
     //	profile, 이번주 일정, 이번주 과제 받아오고 패치
 
+	///////////////////////// Test /////////////////////////////// 
+    const [schedule, setSchedule] = React.useState<scheduleTypeTest[]>()
+    function scheduleDataParser(data : scheduleTypeTest[]){
+    	let schedule : any = []
+      	data?.map((item) => {
+        	let dateIndex = new Date(item.scheduleDate)
+        	
+          		while(dateIndex < item.period){
+            		// 매주
+					if(item.repeatCycle == 'W'){
+						if(item.repeatDay[dateIndex.getDay()] == '1'){
+							schedule.push({
+							id : item.id,
+							title : item.title,
+							date : new Date(dateIndex.getTime()),
+							startTime : item.startTime,
+							endTime : item.endTime,
+							})
+						}
+						dateIndex.setDate(dateIndex.getDate() + 1)
+            		}
+					else if(item.repeatCycle == '2W'){
+						if(item.repeatDay[dateIndex.getDay()] == '1'){
+							schedule.push({
+							id : item.id,
+							title : item.title,
+							date : new Date(dateIndex.getTime()),
+							startTime : item.startTime,
+							endTime : item.endTime,
+							})
+						}
+
+						if(dateIndex.getDay() == 6){
+							dateIndex.setDate(dateIndex.getDate() + 7)
+						}
+						dateIndex.setDate(dateIndex.getDate() + 1)
+            		}
+					else if(item.repeatCycle == 'D'){
+						schedule.push({
+							id : item.id,
+							title : item.title,
+							date : new Date(dateIndex.getTime()),
+							startTime : item.startTime,
+							endTime : item.endTime,
+						})
+						break;
+					}
+					else if(item.repeatCycle =='M'){
+						schedule.push({
+							id : item.id,
+							title : item.title,
+							date : new Date(dateIndex.getTime()),
+							startTime : item.startTime,
+							endTime : item.endTime,
+						})
+						dateIndex.setMonth(dateIndex.getMonth() + 1)
+					}			
+          		}
+        	
+    	})
+
+      return schedule
+    }
+
+    
+    
+    
+    ///////////////////////// Test /////////////////////////////// 
     const [scheduleModal, setScheduleModal] = React.useState(true)
     const [profileImageModal, setProfileImageModal] = React.useState(false)
-    
+    const [weekSchedule, setWeekSchedule] = React.useState<scheduleType>()	//이번 주 일정
+	const [homework ,setHomeWork ] = React.useState<any>() 					//이번 주 과제
     return (
         <SafeAreaView style={styles.container}>
             {/* 헤더 */}    
@@ -110,7 +185,10 @@ export function homeTab(props: homeTabProps) {
                     </TouchableOpacity>
                 </View>
                 
-                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                {
+					weekSchedule 
+					?
+					<ScrollView horizontal showsHorizontalScrollIndicator={false}>
                     <View style={{flexDirection : 'row', justifyContent : 'center', marginLeft : GLOBAL_MARGIN_HORIZON, marginTop : 10}}>
                         
                         <TouchableOpacity onPress={() => {}}>
@@ -118,8 +196,12 @@ export function homeTab(props: homeTabProps) {
                         </TouchableOpacity>
                         
                     </View>
-                </ScrollView>
-
+                	</ScrollView>
+					: 
+					<View style={{flex :1, justifyContent : 'center',alignItems : 'center'}}>
+						<Text style={{fontSize: 20, fontFamily : 'Cafe24Ssurround', color : '#d5d5d5'}}>주간 일정을 추가해주세요!</Text>
+					</View>
+				}
             </View>
             <Divider height={3} color="#ededed" />
 
@@ -129,15 +211,22 @@ export function homeTab(props: homeTabProps) {
                     <Text style={styles.homeworkText}>이번 주 과제</Text>
                 </View>
 
-                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    <View style={{flexDirection : 'row', justifyContent : 'center', marginLeft : GLOBAL_MARGIN_HORIZON, marginTop : 10}}>
-                        <HomeWorkCard height={SIZE_HEIGHT * 0.2} width={SIZE_WIDTH * 0.4} />
-                        <HomeWorkCard height={SIZE_HEIGHT * 0.2} width={SIZE_WIDTH * 0.4} />
-                        <HomeWorkCard height={SIZE_HEIGHT * 0.2} width={SIZE_WIDTH * 0.4} />
-                        <HomeWorkCard height={SIZE_HEIGHT * 0.2} width={SIZE_WIDTH * 0.4} />
-                    </View>
-                </ScrollView>
-
+				{
+					homework
+					?
+					<ScrollView horizontal showsHorizontalScrollIndicator={false}>
+						<View style={{flexDirection : 'row', justifyContent : 'center', marginLeft : GLOBAL_MARGIN_HORIZON, marginTop : 10}}>
+							<HomeWorkCard height={SIZE_HEIGHT * 0.2} width={SIZE_WIDTH * 0.4} />
+							<HomeWorkCard height={SIZE_HEIGHT * 0.2} width={SIZE_WIDTH * 0.4} />
+							<HomeWorkCard height={SIZE_HEIGHT * 0.2} width={SIZE_WIDTH * 0.4} />
+							<HomeWorkCard height={SIZE_HEIGHT * 0.2} width={SIZE_WIDTH * 0.4} />
+						</View>
+					</ScrollView>
+					:
+					<View style={{flex :1, justifyContent : 'center',alignItems : 'center'}}>
+						<Text style={{fontSize: 20, fontFamily : 'Cafe24Ssurround', color : '#d5d5d5'}}>과제를 추가해주세요!</Text>
+					</View>
+				}
             </View>
 
 			</ScrollView>

@@ -12,62 +12,62 @@ export function TimeTable(props : TimeTableProps) {
 			<View style={styles.timeTable}>
 
 			<View style={[styles.hourView,{height : props.hourHeight}]}>
-				<Text style={[styles.hourText, { bottom : -props.hourHeight * 0.5 }]}>9 am</Text>
+				<Text style={[styles.hourText, { bottom : -props.hourHeight * 0.5 }]}>9</Text>
 				<View style={[styles.hourDivider,{height : props.hourHeight}]}/>
 			</View>
 
 			<View style={[styles.hourView,{height : props.hourHeight}]}>
-				<Text style={[styles.hourText, { bottom : -props.hourHeight * 0.5 }]}>10 am</Text>
+				<Text style={[styles.hourText, { bottom : -props.hourHeight * 0.5 }]}>10</Text>
 				<View style={[styles.hourDivider,{height : props.hourHeight}]}/>
 			</View>
 
 			<View style={[styles.hourView,{height : props.hourHeight}]}>
-				<Text style={[styles.hourText, { bottom : -props.hourHeight * 0.5 }]}>11 am</Text>
+				<Text style={[styles.hourText, { bottom : -props.hourHeight * 0.5 }]}>11</Text>
 				<View style={[styles.hourDivider,{height : props.hourHeight}]}/>
 			</View>
 
 			<View style={[styles.hourView,{height : props.hourHeight}]}>
-				<Text style={[styles.hourText, { bottom : -props.hourHeight * 0.5 }]}>12 pm</Text>
+				<Text style={[styles.hourText, { bottom : -props.hourHeight * 0.5 }]}>12</Text>
 				<View style={[styles.hourDivider,{height : props.hourHeight}]}/>
 			</View>
 
 			<View style={[styles.hourView,{height : props.hourHeight}]}>
-				<Text style={[styles.hourText, { bottom : -props.hourHeight * 0.5 }]}>1 pm</Text>
+				<Text style={[styles.hourText, { bottom : -props.hourHeight * 0.5 }]}>1</Text>
 				<View style={[styles.hourDivider,{height : props.hourHeight}]}/>
 			</View>
 
 			<View style={[styles.hourView,{height : props.hourHeight}]}>
-				<Text style={[styles.hourText, { bottom : -props.hourHeight * 0.5 }]}>2 pm</Text>
+				<Text style={[styles.hourText, { bottom : -props.hourHeight * 0.5 }]}>2</Text>
 				<View style={[styles.hourDivider,{height : props.hourHeight}]}/>
 			</View>
 
 			<View style={[styles.hourView,{height : props.hourHeight}]}>
-				<Text style={[styles.hourText, { bottom : -props.hourHeight * 0.5 }]}>3 pm</Text>
+				<Text style={[styles.hourText, { bottom : -props.hourHeight * 0.5 }]}>3</Text>
 				<View style={[styles.hourDivider,{height : props.hourHeight}]}/>
 			</View>
 
 			<View style={[styles.hourView,{height : props.hourHeight}]}>
-				<Text style={[styles.hourText, { bottom : -props.hourHeight * 0.5 }]}>4 pm</Text>
+				<Text style={[styles.hourText, { bottom : -props.hourHeight * 0.5 }]}>4</Text>
 				<View style={[styles.hourDivider,{height : props.hourHeight}]}/>
 			</View>
 
 			<View style={[styles.hourView,{height : props.hourHeight}]}>
-				<Text style={[styles.hourText, { bottom : -props.hourHeight * 0.5 }]}>5 pm</Text>
+				<Text style={[styles.hourText, { bottom : -props.hourHeight * 0.5 }]}>5</Text>
 				<View style={[styles.hourDivider,{height : props.hourHeight}]}/>
 			</View>
 
 			<View style={[styles.hourView,{height : props.hourHeight}]}>
-				<Text style={[styles.hourText, { bottom : -props.hourHeight * 0.5 }]}>6 pm</Text>
+				<Text style={[styles.hourText, { bottom : -props.hourHeight * 0.5 }]}>6</Text>
 				<View style={[styles.hourDivider,{height : props.hourHeight}]}/>
 			</View>
 
 			<View style={[styles.hourView,{height : props.hourHeight}]}>
-				<Text style={[styles.hourText, { bottom : -props.hourHeight * 0.5 }]}>7 pm</Text>
+				<Text style={[styles.hourText, { bottom : -props.hourHeight * 0.5 }]}>7</Text>
 				<View style={[styles.hourDivider,{height : props.hourHeight}]}/>
 			</View>
 
 			<View style={[styles.hourView,{height : props.hourHeight}]}>
-				<Text style={[styles.hourText, { bottom : -props.hourHeight * 0.5 }]}>8 pm</Text>
+				<Text style={[styles.hourText, { bottom : -props.hourHeight * 0.5 }]}>8</Text>
 				<View style={[styles.hourDivider,{height : props.hourHeight}]}/>
 			</View>
 		</View>
@@ -79,6 +79,6 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
     },
 	hourView : {alignItems : 'center', flexDirection : 'row'},
-	hourText : {color : '#d5d5d5', fontSize: 12, marginLeft : GLOBAL_MARGIN_HORIZON, width : '10%'},
-	hourDivider : {width : '80%', borderBottomWidth :1 , borderColor : '#d5d5d5'},
+	hourText : {color : '#d5d5d5', fontSize: 12, marginLeft : GLOBAL_MARGIN_HORIZON, width : '5%'},
+	hourDivider : {width : '90%', borderBottomWidth :1 , borderColor : '#d5d5d5'},
 })

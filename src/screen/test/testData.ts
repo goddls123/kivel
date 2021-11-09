@@ -1,79 +1,48 @@
-import { schedule } from "../../types/calendarTypes";
+import { scheduleType } from "../../types/types";
 import { diary } from "../../types/DiaryTypes";
 
-export const schedule_data : schedule[] = [
-{ schedule_id: 5
-, user_id: 1
-, schedule_date: "20"
-, start_time: "10:00:00"
-, end_time: "11:30:00"
-, notify_time: "02:00:00"
-, repeat_cycle: "M"
-, title: "미술치료"
-, location: "에이아동발달연구소"
-, memo: "끝나고 장!"
-, color: "black"
-},
-{ schedule_id: 6
-, user_id: 1
-, schedule_date: "02-17"
-, start_time: "13:30:00"
-, end_time: "15:00:00"
-, notify_time: "04:00:10"
-, repeat_cycle: "Y"
-, title: "검사받기"
-, location: "서울아산병원"
-, memo: "매년 2월 받는 검사!"
-, color: "yellow"
-},
-{ schedule_id: 7
-, user_id: 1
-, schedule_date: "0111000"
-, start_time: "05:30:00"
-, end_time: "06:00:00"
-, notify_time: "01:00:00"
-, repeat_cycle: "W"
-, title: "소운동치료"
-, location: "삐아동발달연구소"
-, memo: "ㅎㅇ"
-, color: "green"
-},
-{ schedule_id: 8
-, user_id: 1
-, schedule_date: "0000010"
-, start_time: "17:30:00"
-, end_time: "18:30:00"
-, notify_time: "09:00:00"
-, repeat_cycle: "W"
-, title: "금요 모임"
-, location: "은평보건소"
-, memo: "ㅎㅇㅎㅇ"
-, color: "purple"
-},
-{ schedule_id: 9
-, user_id: 1
-, schedule_date: "1"
-, start_time: "16:30:00"
-, end_time: "17:00:00"
-, notify_time: "01:00:00"
-, repeat_cycle: "M"
-, title: "월초 모임"
-, location: "은평보건소"
-, memo: "히히"
-, color: "purple"
-},
-{ schedule_id: 10
-, user_id: 1
-, schedule_date: "0000001"
-, start_time: "15:30:00"
-, end_time: "16:00:00"
-, notify_time: "06:00:00"
-, repeat_cycle: "W"
-, title: "토요세미나"
-, location: "피식대학"
-, memo: "히히"
-, color: "gray"
+
+export type scheduleTypeTest = {
+	id : number
+	title : string
+	scheduleDate : Date 	//DateTime	
+	startTime : string 		//DateTime
+	endTime : string 			//DateTime
+	repeatCycle : string
+	repeatDay : string
+	period : Date			//DateTime
+	theraphistId? : number
+	location? : string
+	latitude? : number
+	longitude? : number
+	memo? : string
+	notificationTime? : Date	 //DateTime
+	color : string
 }
+
+export const schedule_data : scheduleTypeTest[] = [
+	{
+		id : 10,
+		scheduleDate : new Date('2021-11-09'),
+		startTime : '11:00:00',
+		endTime : '13:00:00',
+		repeatCycle : 'W',
+		repeatDay : '0101010',
+		period : new Date('2022-02-09'),
+		title : '일정1',
+		color : '#' + Math.round(Math.random() * 0xffffff).toString(16)
+	},
+	{
+		id : 11,
+		scheduleDate : new Date('2021-11-09'),
+		startTime : '13:30:00',
+		endTime : '15:00:00',
+		repeatCycle : '2W',
+		repeatDay : '0101010',
+		period : new Date('2022-02-09'),
+		title : '일정2',
+		color : '#' + Math.round(Math.random() * 0xffffff).toString(16)
+	},
 ]
 
 export const dummyData: diary[] = [

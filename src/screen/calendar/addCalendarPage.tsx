@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, SafeAreaView, TouchableOpacity, Easing, Text, TextInput, Animated, ScrollView, Alert, } from 'react-native';
+import { View, StyleSheet, SafeAreaView, TouchableOpacity, Easing, Text, TextInput, Animated, ScrollView, Alert, BackHandler, } from 'react-native';
 import { GLOBAL_MARGIN_HORIZON, GLOBAL_MARGIN_VERTICAL, MAIN_COLOR, SIZE_HEIGHT, SIZE_WIDTH } from '../common/constants';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -12,7 +12,11 @@ import { Button } from '../common/components/Button';
 import { useMutation } from '@apollo/client';
 import { INSERT_SCHEDULE } from '../../connection/queries';
 import { NavigationButton } from '../home/components/NavigationButton';
+import Modal from 'react-native-modal'
+import { Map } from '../map/map';
 
+// test
+import { scheduleTypeTest, schedule_data } from '../test/testData';
 
 interface addCalendarPageProps {
 	navigation: StackNavigationProp<stackInterface, 'SocialLogin'>;
@@ -23,9 +27,14 @@ export function addCalendarPage(props : addCalendarPageProps) {
 	const [insertSchedule , { data, loading, error }] = useMutation(INSERT_SCHEDULE);
 	
 	const [title, setTitle] = React.useState<string>();
+
+	
 	// date picker
-	const [startDate, setStartDate] = React.useState<Date>(new Date());
-	const [endDate, setEndDate] = React.useState<Date>(new Date());
+	let date = new Date(new Date().getDate())
+	const [startDate, setStartDate] = React.useState<Date>(new Date(date));
+	const [endDate, setEndDate] = React.useState<Date>(new Date(date.setHours(date.getHours() + 1)));
+
+
 
 	const timePicker1 = React.useRef(new Animated.Value(0)).current
 	const [isPicker1Exp, setIsPicker1Exp] = React.useState<boolean>(false);
@@ -210,7 +219,10 @@ export function addCalendarPage(props : addCalendarPageProps) {
 								<Divider height={2} color={"#ededed"} />
 								<DatePicker 
 								style={{borderTopWidth : 1, borderTopColor : '#ededed' , borderBottomWidth : 1,  borderBottomColor : '#ededed', width : SIZE_WIDTH  , backgroundColor : 'white', justifyContent : 'space-between'}}						
-								date={startDate} onDateChange={(newDate) => setStartDate(newDate)} mode={'time'} />
+								date={startDate} onDateChange={(newDate) => setStartDate(newDate)} 
+								minuteInterval={5}
+								mode={'time'} 
+								/>
 								<Divider height={2} color={"#ededed"} />
 							</View>
 						</Animated.View>
@@ -232,7 +244,9 @@ export function addCalendarPage(props : addCalendarPageProps) {
 								<Divider height={2} color={"#ededed"} />
 								<DatePicker 
 								style={{ width : SIZE_WIDTH, backgroundColor : 'white', justifyContent : 'space-between'}}
-								date={endDate} onDateChange={(newDate) => setEndDate(newDate)} mode={'time'} />
+								date={endDate} onDateChange={(newDate) => setEndDate(newDate)} 
+								minuteInterval={5}
+								mode={'time'} />
 								<Divider height={2} color={"#ededed"} />
 							</View>
 						</Animated.View>
@@ -350,8 +364,7 @@ export function addCalendarPage(props : addCalendarPageProps) {
 					<View style={{height : SIZE_HEIGHT * 0.2, marginHorizontal : GLOBAL_MARGIN_HORIZON, justifyContent : 'flex-end', paddingBottom : 20}}>
 						<Button text={'완료'} textColor={'white'} style={{backgroundColor : MAIN_COLOR}} onPress={() => submit()}></Button>
 					</View>
-					
-					
+				
 				</ScrollView>
 			</SafeAreaView>
 		);

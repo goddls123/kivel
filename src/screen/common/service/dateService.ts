@@ -2,7 +2,10 @@ export function getDateYMD(date : Date, seperator : string) : string {
 	let Y = date.getFullYear().toString()
 	let M = (date.getMonth()+1).toString()
 	let D = date.getDate().toString()
-	if(date.getDate().toString().length == 1){
+	if(M.length == 1){
+		M = '0' + M
+	}
+	if(D.length == 1){
 		D = '0' + D
 	}
 	return Y + seperator + M + seperator + D

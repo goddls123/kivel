@@ -1,4 +1,6 @@
 import { schedule, weekInfo } from "../../../types/calendarTypes"
+import { getDateYMD } from "../../common/service/dateService"
+import { scheduleTypeTest } from "../../test/testData"
 
 
 
@@ -106,3 +108,57 @@ export function getKoreanDay(day : number){
 export function getHour(date : string){
     return date.split(":")[0]
 }
+
+export function scheduleDataParser(data : scheduleTypeTest[]){
+    let schedule : any = []
+      data?.map((item) => {
+        let dateIndex = new Date(item.scheduleDate)
+        
+              while(dateIndex < item.period){
+                // 매주
+                
+                if(item.repeatCycle == 'W'){
+                    if(item.repeatDay[dateIndex.getDay()] == '1'){
+                        schedule.push({
+                        ...item,
+                        date : new Date(dateIndex.getTime()),
+                        })
+                    }
+                    dateIndex.setDate(dateIndex.getDate() + 1)
+                }
+                else if(item.repeatCycle == '2W'){
+                    if(item.repeatDay[dateIndex.getDay()] == '1'){
+                        schedule.push({
+                            ...item,
+                            date : new Date(dateIndex.getTime()),
+                        })
+                    }
+
+                    if(dateIndex.getDay() == 6){
+                        dateIndex.setDate(dateIndex.getDate() + 7)
+                    }
+                    dateIndex.setDate(dateIndex.getDate() + 1)
+                }
+                else if(item.repeatCycle == 'D'){
+                    schedule.push({
+                        ...item,
+                        date : new Date(dateIndex.getTime()),
+                    })
+                    break;
+                }
+                else if(item.repeatCycle =='M'){
+                    schedule.push({
+                        ...item,
+                        date : new Date(dateIndex.getTime()),
+                    })
+                    dateIndex.setMonth(dateIndex.getMonth() + 1)
+                }			
+              }
+        
+    })
+
+  return schedule
+}
+
+
+
