@@ -23,6 +23,7 @@ import {alarm} from '../screen/alarmList/alarm';
 import {notice} from '../screen/myPage/noticeList/notice';
 import {noticeDetail} from '../screen/myPage/noticeList/noticeDetail';
 import {question} from '../screen/myPage/question/question';
+import chatRoom from '../screen/chat/chatRoom';
 
 const Stack = createStackNavigator<stackInterface>();
 
@@ -125,6 +126,11 @@ export const StackNav: React.FC = ({}) => {
       <Stack.Screen
         name="Question"
         component={question}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ChatRoom"
+        component={chatRoom}
         options={{headerShown: false}}
       />
 
