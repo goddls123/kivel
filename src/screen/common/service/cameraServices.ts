@@ -1,3 +1,4 @@
+import { ReactNativeFile } from 'apollo-upload-client';
 import { Alert, PermissionsAndroid, Platform } from 'react-native'
 import ImagePicker, { openCamera } from 'react-native-image-crop-picker';
 
@@ -31,8 +32,21 @@ export async function imagePickOne() {
 				multiple: false,
 				includeBase64: true,
 				forceJpg: true,
-			})
-			return image		
+			}).then((image: any) => {
+				let files: ReactNativeFile[] = [];
+				image.map((e: any) => {
+					const file = new ReactNativeFile({
+					uri: e.path,
+					type: e.mime,
+					name: 'test.jpg',
+				});
+				files.push(file);
+			  });
+			  return files
+			});
+
+			return null
+
 		}
 		else {
 			Alert.alert('카메라 권한이 없습니다.')
@@ -40,7 +54,8 @@ export async function imagePickOne() {
 	})
 };
 
-export async function imagePickMultiple() {
+export function imagePickMultiple() : ReactNativeFile[] {
+	let files: ReactNativeFile[] = [];
 	requestPermissions().then(result => {
 		if(result){
 			const image = ImagePicker.openPicker({
@@ -48,11 +63,24 @@ export async function imagePickMultiple() {
 				multiple: true,
 				includeBase64: true,
 				forceJpg: true,
-			})
-			return image		
+			}).then((image: any) => {
+				// let files: ReactNativeFile[] = [];
+				image.map((e: any) => {
+					const file = new ReactNativeFile({
+					uri: e.path,
+					type: e.mime,
+					name: 'test.jpg',
+				});
+				files.push(file);
+			  });
+			  return files
+			});
+			return null
 		}
 		else {
 			Alert.alert('카메라 권한이 없습니다.')
 		}
+		return null
 	})
+	return files
 };

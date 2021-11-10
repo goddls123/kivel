@@ -37,7 +37,8 @@ export function WarningModal(props : WarningModalProps) {
 						</View>
 						<View style={{flex : 1, marginRight : '12%', marginLeft : '3%'}}>
 							<Button text={'확인'} textColor={'white'} style={{backgroundColor : MAIN_COLOR, borderRadius : 50}}
-							onPress={ async () => onPressHandler().then(() => props.onPress())}
+							// onPress={ async () => onPressHandler().then(() => props.onPress())}
+							onPress={ async () => props.onPress()}
 							></Button>
 						</View>
 					</View>

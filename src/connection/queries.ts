@@ -15,3 +15,24 @@ export const USER_LOGIN = gql`
 			userEmail
 		}
 	}`
+
+export const GET_SCHEDULE = gql`
+	query {
+		schedules{
+			id
+			title
+			scheduleDate
+			startTime
+			endTime
+			repeatCycle
+			repeatDay
+			period
+			therapistId
+			location
+			latitude
+			longitude
+			memo
+			notificationTime
+		}
+	}
+`

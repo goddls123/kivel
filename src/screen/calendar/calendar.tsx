@@ -290,7 +290,7 @@ const styles = StyleSheet.create({
         width: SIZE_HEIGHT * 0.035,
         justifyContent: 'center',
     },
-    calendarContainer: {flex: 1, paddingHorizontal : 10 , backgroundColor : 'white' },
+    calendarContainer: {flex: 1, paddingHorizontal : 10, backgroundColor : 'white' },
     calendarStyle: {paddingBottom: SIZE_HEIGHT * 0.02},
 	arrowLeftIconStyle: {
 		width: SIZE_WIDTH * 0.25,

@@ -75,6 +75,21 @@ export function screeningResultEnroll(props : screeningResultEnrollProps) {
 		}
 
 		const [warningModal, setWarningModal] = React.useState<boolean>(false)
+		
+		// React.useEffect(() => {
+		// 	if(!warningModal){
+		// 		BackHandler.addEventListener("hardwareBackPress" , () => {
+		// 			setWarningModal(true)
+		// 			return true
+		// 		});
+		// 	} else{
+		// 		BackHandler.addEventListener("hardwareBackPress" , () => {
+		// 			props.navigation.goBack()
+		// 			return true
+		// 		});
+		// 	}
+		// },[warningModal])
+
 		BackHandler.addEventListener("hardwareBackPress" , () => {
 			setWarningModal(true)
 			return true

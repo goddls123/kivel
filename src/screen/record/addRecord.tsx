@@ -1,16 +1,89 @@
+import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react'
-import { View, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { View, StyleSheet, SafeAreaView, TouchableOpacity, Text, Image, Switch, TextInput, ScrollView } from 'react-native';
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+import { stackInterface } from '../../types/navigationParam';
+import { GLOBAL_MARGIN_HORIZON, MAIN_COLOR, SIZE_WIDTH } from '../common/constants';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { Divider } from '../common/divider';
+import Modal from 'react-native-modal'
+import { DateTimeScroller } from './components/DateTimeScroller';
+import { getDateYMD, getDayKorean, getTime } from '../common/service/dateService';
+import { Development } from './components/Development';
+
 
 interface addRecordProps {
-
+	navigation: StackNavigationProp<stackInterface>;
 }
 
 export function addRecord(props : addRecordProps) {
+	
+		const [radioState, setRadioState] = React.useState([false, false, false])
+		const [modalVisible, setModalVisible] = React.useState(false)
+		const [isEmergency, setIsEmergency] = React.useState(false)
+		const [occurenceDate, setOccurenceDate] = React.useState(new Date())
+		const [problemArea, setProblemArea] = React.useState<string>()
+		function renderRadioButton() {
+			let viewArr : any = []
+			radioState.map((e, id) => {
+				let textArr = ['발달기록', '문제행동', '메모']
+				let newState = [false, false, false]
+				newState[id] = true
+				viewArr.push(
+					<View key={id} style={{flexDirection : 'row'}}>
+						{
+							e 
+							? <Image style={{height: 20, width : 20}} source={require('../../assets/icons/btn_radio_on.png')} />
+							: <TouchableOpacity onPress={() => {setRadioState(newState)}}>
+								<View    style={{height : 20, width : 20, borderRadius : 100, borderWidth : 1 }} />
+							</TouchableOpacity>		
+						}
+						<Text style={{marginLeft : 10, marginRight : 20}}>{textArr[id]}</Text>
+					</View>
+				)
+			})
+			return viewArr
+		}
+
+
+		
 		return (
-			<SafeAreaView>
+			<SafeAreaView style={styles.container}>
+				
+				{/* header */}
+				<View style={styles.headerContainer}>
+					<TouchableOpacity style={styles.closeContainer}
+						onPress={() => props.navigation.goBack()}>
+						<Icon name="close-outline" style={styles.closeIcon}></Icon>
+					</TouchableOpacity>
+					<Text style={styles.headerTextStyle}>기록하기</Text>
+					<View style={styles.closeContainer} />
+				</View>
+
+
+				<ScrollView>
+					{/* RadioButtonContainer */}
+					<View style={styles.radioButtonContainer}>
+						<Text style={styles.boldText}> 기록 유형을 선택해주세요 </Text>
+						<View style={{flexDirection : 'row', }}>
+							{ renderRadioButton() }
+						</View>
+					</View>
+					<Divider height={4} color={'#ededed'}></Divider>
+
+					<Development></Development>
+				</ScrollView>
 				
 			</SafeAreaView>
 		);
 }
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+	container : {flex : 1 , color : 'white'},
+	headerContainer: {height: SIZE_WIDTH * 0.16, marginHorizontal : GLOBAL_MARGIN_HORIZON, flexDirection : 'row', alignItems : 'center'},
+	headerTextStyle : {flex : 1, textAlign : 'center', textAlignVertical : 'center', fontSize : 18, fontWeight : 'bold'},
+	closeContainer : {width : SIZE_WIDTH * 0.1},
+	closeIcon : {fontSize: 30, fontWeight : 'bold', color : 'black'},
+	radioButtonContainer : { height : SIZE_WIDTH * 0.24, padding : GLOBAL_MARGIN_HORIZON , justifyContent : 'space-between'},
+	boldText : {fontSize : 18, color : 'black'},
+	
+})

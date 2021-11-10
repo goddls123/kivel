@@ -21,33 +21,33 @@ export function RecordCard(props : recordCardProps) {
 		);
 }
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    width: SIZE_WIDTH - GLOBAL_MARGIN_HORIZON * 2,
-    height: SIZE_WIDTH * 0.22,
-    borderWidth: 1,
-    borderColor: '#d5d5d5',
-    borderRadius: 8,
-    overflow: 'hidden',
-  },
-  textBoxContainer: {
-    justifyContent: 'center',
-    marginLeft: GLOBAL_MARGIN_HORIZON,
-	width: SIZE_WIDTH - GLOBAL_MARGIN_HORIZON * 4,
-  },
-  titleBadge: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  badgeText: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 5,
-    textAlign: 'center',
-    marginRight: 10,
-    color: '#e63464',
-	backgroundColor : '#ffebee'
-  },
+    container: {
+        flexDirection: 'row',
+        width: SIZE_WIDTH - GLOBAL_MARGIN_HORIZON * 2,
+        height: SIZE_WIDTH * 0.22,
+        borderWidth: 1,
+        borderColor: '#d5d5d5',
+        borderRadius: 8,
+        overflow: 'hidden',
+    },
+    textBoxContainer: {
+        justifyContent: 'center',
+        marginLeft: GLOBAL_MARGIN_HORIZON,
+        width: SIZE_WIDTH - GLOBAL_MARGIN_HORIZON * 4,
+    },
+    titleBadge: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    badgeText: {
+        fontSize: 12,
+        fontWeight: 'bold',
+        paddingHorizontal: 8,
+        paddingVertical: 3,
+        borderRadius: 5,
+        textAlign: 'center',
+        marginRight: 10,
+        color: '#e63464',
+        backgroundColor: '#ffebee',
+    },
 });

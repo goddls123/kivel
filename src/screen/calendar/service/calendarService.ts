@@ -114,9 +114,8 @@ export function scheduleDataParser(data : scheduleTypeTest[]){
       data?.map((item) => {
         let dateIndex = new Date(item.scheduleDate)
         
-              while(dateIndex < item.period){
-                // 매주
-                
+            while(dateIndex < item.period){
+                // 매주    
                 if(item.repeatCycle == 'W'){
                     if(item.repeatDay[dateIndex.getDay()] == '1'){
                         schedule.push({
@@ -126,6 +125,7 @@ export function scheduleDataParser(data : scheduleTypeTest[]){
                     }
                     dateIndex.setDate(dateIndex.getDate() + 1)
                 }
+
                 else if(item.repeatCycle == '2W'){
                     if(item.repeatDay[dateIndex.getDay()] == '1'){
                         schedule.push({
@@ -139,6 +139,7 @@ export function scheduleDataParser(data : scheduleTypeTest[]){
                     }
                     dateIndex.setDate(dateIndex.getDate() + 1)
                 }
+
                 else if(item.repeatCycle == 'D'){
                     schedule.push({
                         ...item,
@@ -146,14 +147,15 @@ export function scheduleDataParser(data : scheduleTypeTest[]){
                     })
                     break;
                 }
+
                 else if(item.repeatCycle =='M'){
                     schedule.push({
                         ...item,
                         date : new Date(dateIndex.getTime()),
                     })
                     dateIndex.setMonth(dateIndex.getMonth() + 1)
-                }			
-              }
+                }		
+            }
         
     })
 

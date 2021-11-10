@@ -30,6 +30,8 @@ import { ProfileModal } from './components/ProfileModal';
 
 // Test
 import {scheduleTypeTest, schedule_data} from '../test/testData';
+import { gql, useQuery } from '@apollo/client';
+import { GET_SCHEDULE } from '../../connection/queries';
 // 
 
 
@@ -41,7 +43,15 @@ interface homeTabProps {
 export function homeTab(props: homeTabProps) {
     //////////// Todo
     //	profile, 이번주 일정, 이번주 과제 받아오고 패치
+    const { loading, error, data } = useQuery(GET_SCHEDULE);
+    
+    console.log(
+      loading, 
+      error, 
+      data
+    )
 
+    
 	///////////////////////// Test /////////////////////////////// 
     const [schedule, setSchedule] = React.useState<scheduleTypeTest[]>()
     function scheduleDataParser(data : scheduleTypeTest[]){
