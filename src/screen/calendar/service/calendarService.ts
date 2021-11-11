@@ -120,7 +120,7 @@ export function scheduleDataParser(data : scheduleTypeTest[]){
                     if(item.repeatDay[dateIndex.getDay()] == '1'){
                         schedule.push({
                         ...item,
-                        date : new Date(dateIndex.getTime()),
+                        date : getDateYMD(new Date(dateIndex.getTime()),'-'),
                         })
                     }
                     dateIndex.setDate(dateIndex.getDate() + 1)
@@ -130,7 +130,7 @@ export function scheduleDataParser(data : scheduleTypeTest[]){
                     if(item.repeatDay[dateIndex.getDay()] == '1'){
                         schedule.push({
                             ...item,
-                            date : new Date(dateIndex.getTime()),
+                            date : getDateYMD(new Date(dateIndex.getTime()),'-'),
                         })
                     }
 
@@ -143,7 +143,7 @@ export function scheduleDataParser(data : scheduleTypeTest[]){
                 else if(item.repeatCycle == 'D'){
                     schedule.push({
                         ...item,
-                        date : new Date(dateIndex.getTime()),
+                        date : getDateYMD(new Date(dateIndex.getTime()),'-'),
                     })
                     break;
                 }
@@ -151,7 +151,7 @@ export function scheduleDataParser(data : scheduleTypeTest[]){
                 else if(item.repeatCycle =='M'){
                     schedule.push({
                         ...item,
-                        date : new Date(dateIndex.getTime()),
+                        date : getDateYMD(new Date(dateIndex.getTime()),'-'),
                     })
                     dateIndex.setMonth(dateIndex.getMonth() + 1)
                 }		

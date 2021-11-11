@@ -10,6 +10,7 @@ import Modal from 'react-native-modal'
 import { DateTimeScroller } from './components/DateTimeScroller';
 import { getDateYMD, getDayKorean, getTime } from '../common/service/dateService';
 import { Development } from './components/Development';
+import { Memo } from './components/Memo';
 
 
 interface addRecordProps {
@@ -18,11 +19,8 @@ interface addRecordProps {
 
 export function addRecord(props : addRecordProps) {
 	
-		const [radioState, setRadioState] = React.useState([false, false, false])
-		const [modalVisible, setModalVisible] = React.useState(false)
-		const [isEmergency, setIsEmergency] = React.useState(false)
-		const [occurenceDate, setOccurenceDate] = React.useState(new Date())
-		const [problemArea, setProblemArea] = React.useState<string>()
+		const [radioState, setRadioState] = React.useState([true, false, false])
+
 		function renderRadioButton() {
 			let viewArr : any = []
 			radioState.map((e, id) => {
@@ -31,21 +29,34 @@ export function addRecord(props : addRecordProps) {
 				newState[id] = true
 				viewArr.push(
 					<View key={id} style={{flexDirection : 'row'}}>
+						<TouchableOpacity style={{flexDirection : 'row'}} onPress={() => {setRadioState(newState)}}>
 						{
 							e 
 							? <Image style={{height: 20, width : 20}} source={require('../../assets/icons/btn_radio_on.png')} />
-							: <TouchableOpacity onPress={() => {setRadioState(newState)}}>
-								<View    style={{height : 20, width : 20, borderRadius : 100, borderWidth : 1 }} />
-							</TouchableOpacity>		
+							: <View    style={{height : 20, width : 20, borderRadius : 100, borderWidth : 1 }} />
 						}
 						<Text style={{marginLeft : 10, marginRight : 20}}>{textArr[id]}</Text>
+						</TouchableOpacity>		
+						
 					</View>
 				)
 			})
 			return viewArr
 		}
 
+		function renderComponent() {
+			if(radioState[0]){
+				return(
+					<Development />
+				)
+			} 
+			else if(radioState[2]) {
+				return(
+					<Memo />
+				)
+			}
 
+		}
 		
 		return (
 			<SafeAreaView style={styles.container}>
@@ -71,7 +82,8 @@ export function addRecord(props : addRecordProps) {
 					</View>
 					<Divider height={4} color={'#ededed'}></Divider>
 
-					<Development></Development>
+					{ renderComponent() }
+					
 				</ScrollView>
 				
 			</SafeAreaView>

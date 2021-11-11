@@ -13,6 +13,7 @@ import {
 import {DateObject, schedule} from '../../types/calendarTypes';
 import {stackInterface} from '../../types/navigationParam';
 import {
+    CALENDAR_THEME,
     GLOBAL_MARGIN_HORIZON,
     GLOBAL_MARGIN_VERTICAL,
     MAIN_COLOR,
@@ -26,14 +27,14 @@ import {ScheduleFrame} from './components/ScheduleFrame';
 import { scheduleCheck, scheduleDataParser} from './service/calendarService';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { getDateYMD } from '../common/service/dateService';
+import { getDateYMD, getDayKorean } from '../common/service/dateService';
 import axios from 'axios';
 import WeekView from './components/WeekView';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import {CalendarStrip} from './components/CalendarStrip';
 import CalendarStrip1 from 'react-native-calendar-strip';
-import { doTypesOverlap } from 'graphql';
+import { assertLeafType, doTypesOverlap } from 'graphql';
 import { parsedScheduleType } from '../../types/types';
 
 LocaleConfig.locales['kr'] = {
@@ -58,197 +59,198 @@ export default function calendar({navigation, route}: calendarProps) {
 		else return 0
 	}))
 	////////////////////////////////
-
+    
     const [calendarState, setCalendarState] = useState<'month' | 'week'>('month');
-
 	const [selectedDate, setSelectedDate] = useState<string>(getDateYMD(new Date(),'-'));
-
 	const [markedDates, setMarkedDates] = React.useState(getDots())
+	const [focusedDate, setFocusedDate] = useState<string>(getDateYMD(new Date(),'-'))
 	
+	React.useEffect(() => {
+		setFocusedDate(selectedDate)
+	},[selectedDate])
+	console.log('몇번랜더링되냐대체')
 
 	function getDots () {
 		let marked : any = {}
 		let dots : any = []
 	
 		for(let i = 0 ; i < parsedData.length; i++){
-			// if(parsedData[i].date.getFullYear() == currentDate.getFullYear() && parsedData[i].date.getMonth() == currentDate.getMonth()){
-				dots.push({key : parsedData[i].id, color : parsedData[i].color})
-				
-				if(i == parsedData.length - 1){
-					marked[getDateYMD(parsedData[i].date,'-')] = { dots : [...dots] }
-				}
-				else if(getDateYMD(parsedData[i].date,'-') != getDateYMD(parsedData[i+1].date,'-')){	
-					marked[getDateYMD(parsedData[i].date,'-')] = { dots : [...dots] }
-					dots = []
-				}
-				
-			// }
+            
+            dots.push({key : parsedData[i].id, color : parsedData[i].color})
+            
+            if(i == parsedData.length - 1){
+                marked[parsedData[i].date] = { dots : [...dots] }
+            }
+            else if(parsedData[i].date != parsedData[i+1].date){	
+                marked[parsedData[i].date] = { dots : [...dots] }
+                dots = []
+            }
 		}
 		return marked
 	}
-
-        
-    
-
-
 
     function changeView() {
         if (calendarState == 'month') setCalendarState('week');
         else if (calendarState == 'week') setCalendarState('month');
     }
 
+	function renderCalendar() {
+		if(calendarState == 'month') {
+			return(
+				<View style={styles.calendarContainer}>
+					<Calendar
+						current={focusedDate}
+						style={styles.calendarStyle}
+						onDayPress={(day) => setSelectedDate(day.dateString)}
+						renderArrow={direction => {
+							return (
+								direction == 'left' 
+								? <Icon
+									name="chevron-back-outline"
+									style={styles.arrowLeftIconStyle}/>
+								: <Icon
+									name="chevron-forward-outline"
+									style={styles.arrowRightIconStyle}/>
+							)}}
+						monthFormat={'MM' + '월'}
+						onMonthChange={(month : any) => setFocusedDate(month.dateString)}
+						markingType={'multi-dot'}
+						markedDates={{
+							...markedDates,
+							[selectedDate] : { 
+								selected : selectedDate != getDateYMD(new Date(), '-'),
+								selectedColor : MAIN_COLOR,
+								dots : markedDates[selectedDate] == undefined ? [] : markedDates[selectedDate].dots
+							},
+						}}
+						theme={{
+							monthTextColor : 'black',
+							textMonthFontSize: 22,
+							textMonthFontFamily: 'Cafe24Ssurround',
+							textMonthFontWeight: '500',
+							textDayFontWeight : '500',
+							'stylesheet.day.basic': {
+								'base': {
+								width: 32,
+								height: 40,
+								alignItems : 'center',
+								justifyContent : 'space-between',
+								},
+								'text' : {
+									color : 'black',
+									fontSize : 15,
+									width : 30,
+									height: 30,
+									textAlign: 'center',
+									textAlignVertical : 'center'
+								},
+								'selectedText' : {
+									borderColor : 'rgb(255, 138, 92)',
+									borderWidth : 1,
+									borderRadius : 5,
+									color : 'black'
+								},
+								'todayText': {
+									backgroundColor: 'rgb(255, 138, 92)',
+									color : 'white',
+									borderRadius: 100,
+								},
+						
+								
+							},
+							'stylesheet.calendar.header': {
+								dayHeader: {
+									marginTop: 20,
+									marginBottom: 10,
+									width: 32,
+									textAlign: 'center',
+								},
+								dayTextAtIndex0: {
+									color: 'red',
+									fontFamily : 'Cafe24Ssurround',
+								},
+								dayTextAtIndex1: {
+									color: 'black',
+									fontFamily : 'Cafe24Ssurround'
+								},
+								dayTextAtIndex2: {
+									color: 'black',
+									fontFamily : 'Cafe24Ssurround'
+								},
+								dayTextAtIndex3: {
+									color: 'black',
+									fontFamily : 'Cafe24Ssurround'
+								},
+								dayTextAtIndex4: {
+									color: 'black',
+									fontFamily : 'Cafe24Ssurround'
+								},
+								dayTextAtIndex5: {
+									color: 'black',
+									fontFamily : 'Cafe24Ssurround'
+								},
+								dayTextAtIndex6: {
+									color: 'blue',
+									fontFamily : 'Cafe24Ssurround'
+								},
+							},
+						}} />
+
+				</View>
+			)
+		} else {
+			return(
+				<View>
+					<CalendarStrip
+					selectedDate={selectedDate}
+					setSelectedDate={setSelectedDate}
+					focusedDate={focusedDate}
+					setFocusedDate={setFocusedDate}
+					scheduleData={parsedData}
+					></CalendarStrip>
+				</View>
+			)
+		}
+	}
+
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView>
-                <View style={styles.headerContainer}>
 
+            <ScrollView>
+				
+                <View style={styles.headerContainer}>
                     <TouchableOpacity onPress={() => { navigation.goBack() }}>
                         <Icon name="arrow-back" style={{ fontSize: 25 }}></Icon>
                     </TouchableOpacity>
 
-                    <Text style={styles.headerText}>  키블(이)의 일정관리 </Text>
+                    <Text style={styles.headerText}> 키블(이)의 일정관리 </Text>
                     
                     <TouchableOpacity
                         style={styles.headerIconContainer}
                         onPress={() => changeView()}>
-                        {calendarState == 'month' ? (
-                            <Image
-                                source={require('../../assets/icons/ic_monthly.png')}
-                                style={styles.headerIconImage}/>
-                        ) : (
-                            <Image
-                                source={require('../../assets/icons/ic_monthly.png')}
-                                style={styles.headerIconImage}
-                            />
-                        )}
+                        {
+							calendarState == 'month' 
+							? <Image
+								source={require('../../assets/icons/ic_monthly.png')}
+								style={styles.headerIconImage}/>
+							: <Image
+								source={require('../../assets/icons/ic_weeks.png')}
+								style={styles.headerIconImage}/>
+                        }
                     </TouchableOpacity>
-
                 </View>
 
                 {/* 캘린더 */}
-                {
-					calendarState === 'month' ? (
-                    //////////////////////// 달력모드
-                    <View style={styles.calendarContainer}>
-                        <Calendar
-                            style={styles.calendarStyle}
-                            onDayPress={(day) => setSelectedDate(day.dateString)}
-                            renderArrow={direction => {
-                                return (
-                                    direction == 'left' 
-                                    ? <Icon
-                                        name="chevron-back-outline"
-                                        style={styles.arrowLeftIconStyle}/>
-                                    : <Icon
-                                        name="chevron-forward-outline"
-                                        style={styles.arrowRightIconStyle}/>
-                                )}}
-                            monthFormat={'MM' + '월'}
-                            markingType={'multi-dot'}
-                            markedDates={{
-								...markedDates,
-								[selectedDate]	: { 
-									selected : selectedDate != getDateYMD(new Date(), '-'), 
-									selectedColor : MAIN_COLOR,
-									dots : markedDates[selectedDate] == undefined ? [] : markedDates[selectedDate].dots
-								
-								},
-                                
-                            }}
-                            theme={{
-                                monthTextColor : 'black',
-                                textMonthFontSize: 22,
-                                textMonthFontFamily: 'Cafe24Ssurround',
-                                textMonthFontWeight: '500',
-                                textDayFontWeight : '500',
-                                'stylesheet.day.basic': {
-                                    'base': {
-                                    width: 32,
-                                    height: 40,
-                                    alignItems : 'center',
-                                    justifyContent : 'space-between',
-                                    },
-                                    'text' : {
-                                        color : 'black',
-                                        fontSize : 15,
-                                        width : 30,
-                                        height: 30,
-                                        textAlign: 'center',
-                                        textAlignVertical : 'center'
-                                    },
-                                    'selectedText' : {
-                                        borderColor : 'rgb(255, 138, 92)',
-                                        borderWidth : 1,
-                                        borderRadius : 5,
-                                        color : 'black'
-                                    },
-                                    'todayText': {
-                                        backgroundColor: 'rgb(255, 138, 92)',
-                                        color : 'white',
-                                        borderRadius: 100,
-                                    },
-
-                                    
-                                },
-                                'stylesheet.calendar.header': {
-                                    dayHeader: {
-                                        marginTop: 20,
-                                        marginBottom: 10,
-                                        width: 32,
-                                        textAlign: 'center',
-                                    },
-                                    dayTextAtIndex0: {
-                                        color: 'red',
-                                        fontFamily : 'Cafe24Ssurround',
-                                    },
-                                    dayTextAtIndex1: {
-                                        color: 'black',
-                                        fontFamily : 'Cafe24Ssurround'
-                                    },
-                                    dayTextAtIndex2: {
-                                        color: 'black',
-                                        fontFamily : 'Cafe24Ssurround'
-                                    },
-                                    dayTextAtIndex3: {
-                                        color: 'black',
-                                        fontFamily : 'Cafe24Ssurround'
-                                    },
-                                    dayTextAtIndex4: {
-                                        color: 'black',
-                                        fontFamily : 'Cafe24Ssurround'
-                                    },
-                                    dayTextAtIndex5: {
-                                        color: 'black',
-                                        fontFamily : 'Cafe24Ssurround'
-                                    },
-                                    dayTextAtIndex6: {
-                                        color: 'blue',
-                                        fontFamily : 'Cafe24Ssurround'
-                                    },
-                                },
-                            }}
-                        />
-                        <Divider height={1} color={'#ededed'} />
-                    </View>
-                	) : (
-                    ///////////////////////주간모드
-                    <View>
-                        <CalendarStrip
-                        selectedDate={selectedDate}
-                        setSelectedDate={setSelectedDate}
-                        ></CalendarStrip>
-                        <WeekView></WeekView>
-
-                    </View>
-                )}
+                { renderCalendar() }
 
 				<View style={{margin : GLOBAL_MARGIN_HORIZON , marginBottom : 80}}>
-					<Text style={{ color : 'black', fontSize: 17, fontWeight : 'bold', marginBottom : GLOBAL_MARGIN_HORIZON}}>{selectedDate == getDateYMD(new Date(),'-') ? '오늘' : selectedDate}</Text>
+					<Text style={{ color : 'black', fontSize: 17, fontWeight : 'bold', marginBottom : GLOBAL_MARGIN_HORIZON}}>
+						{selectedDate == getDateYMD(new Date(),'-') ? '오늘' : selectedDate + ' ('+ getDayKorean(new Date(selectedDate).getDay()) + ')'}
+					</Text>
 					{/* 일정 card */}
 					{
 						parsedData?.map((data,id) => {
-							console.log(getDateYMD(data.date,'-') == selectedDate)
-							if(getDateYMD(data.date,'-') == selectedDate){
+							if(data.date == selectedDate){
 								return(
 									<ScheduleCard
 									key={id}
@@ -256,7 +258,6 @@ export default function calendar({navigation, route}: calendarProps) {
 									></ScheduleCard>
 								)
 							}
-							
 						})
 					}
 

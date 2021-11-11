@@ -15,21 +15,8 @@ export default function WeekView() {
     const [selectedDate, setSelectedDate] = React.useState(new Date())
     return (
 		<View>
-			<TimeTable
-			hourHeight={SIZE_WIDTH * 0.12}
-			></TimeTable>
 			
-			<View style={{
-				left : HOUR_LEFT_MARGIN + HOUR_WIDTH * 2,
-				top : HOUR_HEIGHT * 4,
-				position : 'absolute', 
-				height : HOUR_HEIGHT * 2, 
-				width : HOUR_WIDTH * 0.9,
-				borderRadius : 6,
-				backgroundColor : '#e63464',
-			}}>
-				<Text style={{marginHorizontal : 5, fontSize : 12, color : 'white'}}>에베베ㅔ베</Text>
-			</View>
+
 			
         </View>
     );

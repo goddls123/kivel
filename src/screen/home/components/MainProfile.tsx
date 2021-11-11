@@ -9,7 +9,8 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import {FONT_COLOR_BLACK, SIZE_WIDTH} from '../../common/constants';
-import Modal from 'react-native-modal';
+import Icon from 'react-native-vector-icons/Ionicons'
+
 interface mainProfileProps {
     birth?: string;
     name?: string;
@@ -24,19 +25,17 @@ export function MainProfile(props: mainProfileProps) {
         <View style={props.style}>
             {/* 헤더 텍스트 */}
             <TouchableOpacity style={styles.profileImage} onPress={() => props.onPress(true) }>
-                <Image
-                    style={{height: SIZE_WIDTH * 0.22, width: SIZE_WIDTH * 0.22}}
+                <Image style={{height: SIZE_WIDTH * 0.22, width: SIZE_WIDTH * 0.22, borderRadius: props.imageUri? 100 : 0 }}
                     source={
                         props.imageUri
                             ? {uri: props.imageUri}
                             : require('../../../assets/icons/ic_profile.png')
                     }
-                    
                 />
             </TouchableOpacity>
             <View>
                 <Text style={styles.babyName}>
-                    {props.name || '김키블'} {props.sex || '[성별 아이콘]'}{' '}
+                    {props.name} {props.sex == 'W' ? <Icon style={styles.sexIcon} name='female-outline'></Icon> : <Icon style={styles.sexIcon} name='male-outline'></Icon>}{' '}
                 </Text>
                 <Text style={styles.birthDate}>[날짜]</Text>
             </View>
@@ -59,4 +58,9 @@ const styles = StyleSheet.create({
         color: '#707070',
         fontSize: 12,
     },
+    sexIcon : {
+        fontSize :20,
+        fontWeight : 'bold',
+        color : 'black'
+    }
 });

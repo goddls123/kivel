@@ -1,3 +1,4 @@
+import { getOperationAST } from 'graphql';
 import React from 'react'
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import DatePicker from 'react-native-date-picker';
@@ -12,7 +13,12 @@ interface DateScrollerProps {
 }
 
 export function DateScroller(props : DateScrollerProps) {
-		
+	
+	const [date, setDate] = React.useState<Date>(new Date())
+	function confirmButtonHandler() {
+		props.setDate(date)
+		props.setModalVisible(false)
+	}
 	return (
 		<View style={styles.container}>
 			<View style={styles.innerContainer}>
@@ -22,7 +28,7 @@ export function DateScroller(props : DateScrollerProps) {
 				<DatePicker 
 				style={styles.datePickerStyle} 
 				date={props.date? props.date : new Date()} 
-				onDateChange={ (newDate : Date) => props.setDate(new Date(newDate.toDateString())) } 
+				onDateChange={ (newDate : Date) => setDate(newDate) } 
 				mode={'date'} 
 				/>
 				
@@ -34,7 +40,7 @@ export function DateScroller(props : DateScrollerProps) {
 					</TouchableOpacity>
 					<TouchableOpacity 
 						style={styles.acceptButton} 
-						onPress={() => props.setModalVisible(false)}>
+						onPress={() => confirmButtonHandler()}>
 						<Text style={styles.acceptText}>적용</Text>
 					</TouchableOpacity>
 				</View>

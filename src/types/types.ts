@@ -25,7 +25,7 @@ export type scheduleType = {
 	color : string
 }
 export type parsedScheduleType = scheduleType & {
-	date : Date, 
+	date : string, 
 }
 
 export type question = {
@@ -44,4 +44,8 @@ export type screeningResult = {
 	screeningDate : Date
 	screeningInstitution : string
 	memo : string | undefined
+}
+
+export type developmentRecordType = {
+	
 }

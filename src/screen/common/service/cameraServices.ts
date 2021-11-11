@@ -3,7 +3,7 @@ import { Alert, PermissionsAndroid, Platform } from 'react-native'
 import ImagePicker, { openCamera } from 'react-native-image-crop-picker';
 
 
-const requestPermissions = async () => {
+export const requestCameraPermission = async () => {
 	if(Platform.OS === 'android') { 
 		const result : any = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA)
 		return result === PermissionsAndroid.RESULTS.GRANTED || result === true
@@ -12,7 +12,7 @@ const requestPermissions = async () => {
 }
 
 export async function cameraOpen() {
-	requestPermissions().then((result) => {
+	requestCameraPermission().then((result) => {
 		if(result == true){
 			const image = ImagePicker.openCamera({})
 			return image
@@ -25,7 +25,7 @@ export async function cameraOpen() {
 }
 
 export async function imagePickOne() {
-	requestPermissions().then(result => {
+	requestCameraPermission().then(result => {
 		if(result){
 			const image = ImagePicker.openPicker({
 				mediaType: 'photo',
@@ -54,9 +54,9 @@ export async function imagePickOne() {
 	})
 };
 
-export function imagePickMultiple() : ReactNativeFile[] {
+export async function imagePickMultiple() {
 	let files: ReactNativeFile[] = [];
-	requestPermissions().then(result => {
+	requestCameraPermission().then(result => {
 		if(result){
 			const image = ImagePicker.openPicker({
 				mediaType: 'photo',

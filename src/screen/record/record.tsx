@@ -38,14 +38,6 @@ export function record(props: recordProps) {
 				<RecordCard></RecordCard>
 				<RecordCard></RecordCard>
 				<RecordCard></RecordCard>
-				<RecordCard></RecordCard>
-				<RecordCard></RecordCard>
-				<RecordCard></RecordCard>
-				<RecordCard></RecordCard>
-				<RecordCard></RecordCard>
-				<RecordCard></RecordCard>
-				<RecordCard></RecordCard>
-				<RecordCard></RecordCard>
 				<View style={{height : SIZE_HEIGHT * 0.35}} />
 				</ScrollView>
 				

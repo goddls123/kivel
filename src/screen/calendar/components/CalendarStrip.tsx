@@ -6,28 +6,31 @@ import { weekInfo } from '../../../types/calendarTypes';
 import { GLOBAL_MARGIN_HORIZON, GLOBAL_MARGIN_VERTICAL, MAIN_COLOR, SIZE_WIDTH } from '../../common/constants';
 import { getLastWeek, getNextWeek, getThisWeek } from '../service/calendarService';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { parsedScheduleType } from '../../../types/types';
+import { TimeTable } from './TimeTable';
+import { JSXElement } from '@babel/types';
 
 
 interface schedulerTestProps {
     selectedDate : string
     setSelectedDate(date: string) : any
+    
+    focusedDate : string
+    setFocusedDate(date : string) : any
+
+	scheduleData : parsedScheduleType[]
 }
 
 export function CalendarStrip(props : schedulerTestProps) {
         
-        
-        const [currentFocusDate, setCurrentFocusDate] = React.useState<Date>(new Date(props.selectedDate))
-        const [ThisWeek,setThisWeek] = React.useState<weekInfo[]>(getThisWeek(new Date(props.selectedDate)));
+		const HOUR_WIDTH = (SIZE_WIDTH - GLOBAL_MARGIN_VERTICAL * 2) / 7
+		const HOUR_LEFT_MARGIN = HOUR_WIDTH * 0.05 + GLOBAL_MARGIN_VERTICAL
+		const HOUR_HEIGHT = SIZE_WIDTH * 0.12
 
-        function daySelectHandler(item : weekInfo) {
-            let Y = item.year
-            let M = item.month
-            let D = item.date
-            let stringDate = Y + '-' + M + '-' + D
 
-            props.setSelectedDate(stringDate)
-            setCurrentFocusDate(new Date(stringDate))
-        }
+        const [thisWeek,setThisWeek] = React.useState<weekInfo[]>(getThisWeek(new Date(props.focusedDate)));
+        const [focusedMonth, setFocusedMonth] = React.useState<string>(props.focusedDate)
+
         function isWeekendText(num : number) {
             if(num == 0) return 'red'
             else if(num == 6) return 'blue'
@@ -35,51 +38,108 @@ export function CalendarStrip(props : schedulerTestProps) {
         }
 
         function isSelectedDate(selectedDay : weekInfo){
-            console.log(parseInt(selectedDay.date),parseInt(currentFocusDate.getDate().toString()))
-            
-            if(parseInt(selectedDay.date) == parseInt(currentFocusDate.getDate().toString())
-            && selectedDay.month == (currentFocusDate.getMonth()+1).toString()
-            && selectedDay.year == currentFocusDate.getFullYear().toString()) {
+            if(selectedDay.fullDateString == props.selectedDate){
                 return { color : 'white', backgroundColor : MAIN_COLOR, borderRadius : 100}
             }
         }
+        
+        function getMonthText() {
+            if(thisWeek[0].month == thisWeek[6].month){
+                return thisWeek[0].month + '월'
+            }
+            return thisWeek[0].month + '월 / ' + thisWeek[6].month + '월'
+        }
+
+		function renderWeekView() {
+			let viewArr : Element[] = []
+			thisWeek.map((item,id)=>{
+				viewArr.push(
+					<View key={id} style={{flex : 1, alignItems : 'center' }} >
+							{/* month */}
+							<Text style={[styles.dayHeaderText,{ color : isWeekendText(id)}]}>{item.kDay}</Text>
+							{/* day */}
+							<TouchableOpacity onPress={() => props.setSelectedDate(item.fullDateString)}>
+								<Text style={[styles.dayText, isSelectedDate(item)]}>{parseInt(item.date)}</Text>
+							</TouchableOpacity>
+							{/* date , scheduleView */}
+							<View style={{flexDirection : 'row'}}>
+							{ renderScheduleView(item) }
+							</View>
+
+					</View>
+				)
+			})
+			return viewArr
+		}
+
+		function renderScheduleView(item : weekInfo) {
+			let viewArr : Element[] = []
+			props.scheduleData.map((data, id) => {
+				if(data.date == item.fullDateString){
+					viewArr.push(
+						<View key={id} style={{ width: 6, height: 6, marginTop: 1, borderRadius: 2, backgroundColor : data.color, marginHorizontal : 1}} />
+					)
+				}
+			})
+			return viewArr
+		}
+
+
+
+        React.useEffect(() => {
+            if(thisWeek[0].month != focusedMonth.substr(5,2)){	
+				console.log(thisWeek[0].fullDateString)
+                props.setFocusedDate(thisWeek[0].fullDateString)
+				setFocusedMonth(thisWeek[0].fullDateString)
+            }
+        },[thisWeek, props.selectedDate])
+
         return (
+			<View>
             <View style={styles.container}>
-                <TouchableOpacity style={{marginBottom : GLOBAL_MARGIN_HORIZON -3 , flexDirection : 'row', alignItems : 'center'}} 
-                // onPress={()=>setModalVisible(true)}
-                >
-                    <TouchableOpacity onPress={() => {setThisWeek(getLastWeek(new Date(ThisWeek[0].fullDateString)))}}>
+
+				{/* 월 , monthArrow */}
+                <View style={{marginBottom : GLOBAL_MARGIN_HORIZON -3 , flexDirection : 'row', alignItems : 'center'}} >
+                    <TouchableOpacity onPress={() => setThisWeek(getLastWeek(new Date(thisWeek[0].fullDateString)))}>
                         <Icon
                             name="chevron-back-outline"
                             style={styles.arrowLeftIconStyle}/>
                     </TouchableOpacity>
-                    <Text style={styles.monthText}>{ ThisWeek[3].month + '월'}</Text>
+
+                    <Text style={styles.monthText}>{ getMonthText() }</Text>
                     
-                    <TouchableOpacity onPress={() => {setThisWeek(getNextWeek(new Date(ThisWeek[0].fullDateString)))}}>
+                    <TouchableOpacity onPress={() => setThisWeek(getNextWeek(new Date(thisWeek[0].fullDateString)))}>
                         <Icon
                             name="chevron-forward-outline"
                             style={styles.arrowRightIconStyle}/>
                     </TouchableOpacity>
-                </TouchableOpacity>
-                
-                <View style={{ flex :1,flexDirection : 'row', justifyContent : 'space-between'}}>
-                    {/* <View style={{width : '10%'}} /> */}
-                    {ThisWeek.map((item,id)=>{
-                        return(
-                            <View key={id} style={{flex : 1, alignItems : 'center' }} >
-                                
-                                    <Text style={[styles.dayHeaderText,{ color : isWeekendText(id)}]}>{item.kDay}</Text>
-                                    <TouchableOpacity onPress={() => daySelectHandler(item)}>
-                                        <Text style={[styles.dayText, isSelectedDate(item)]}>{parseInt(item.date)}</Text>
-                                    </TouchableOpacity>
-                            </View>
-                        )
-                    })}
                 </View>
 
-            
+				{/* calendarStrip  */}
+                <View style={{ flex :1,flexDirection : 'row', justifyContent : 'space-between'}}>
+                    { renderWeekView() }
+                </View>
                 
             </View>
+			
+			<View>
+				<TimeTable
+				hourHeight={SIZE_WIDTH * 0.12}
+				></TimeTable>
+
+				<View style={{
+					left : HOUR_LEFT_MARGIN + HOUR_WIDTH * 2,
+					top : HOUR_HEIGHT * 4,
+					position : 'absolute', 
+					height : HOUR_HEIGHT * 2, 
+					width : HOUR_WIDTH * 0.9,
+					borderRadius : 6,
+					backgroundColor : '#e63464',
+				}}>
+					<Text style={{marginHorizontal : 5, fontSize : 12, color : 'white'}}>에베베ㅔ베</Text>
+				</View>
+			</View>
+			</View>
         );
 }
 const styles = StyleSheet.create({
@@ -93,7 +153,8 @@ const styles = StyleSheet.create({
         // borderWidth : 0,
     },
     monthText : {          
-        width : SIZE_WIDTH * 0.2,
+        // width : SIZE_WIDTH * 0.3,
+        marginHorizontal : GLOBAL_MARGIN_VERTICAL,
         fontSize : 22,
         color: 'black',
         textAlign: 'center',
