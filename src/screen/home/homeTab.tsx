@@ -38,8 +38,8 @@ import {GET_SCHEDULE} from '../../connection/queries';
 //
 
 interface homeTabProps {
-    navigation: StackNavigationProp<stackInterface, 'Calendar'>;
-    route: RouteProp<stackInterface, 'Calendar'>;
+    navigation: StackNavigationProp<stackInterface>;
+    route: RouteProp<stackInterface>;
 }
 
 export function homeTab(props: homeTabProps) {
@@ -107,6 +107,29 @@ export function homeTab(props: homeTabProps) {
 		}
 	}
 
+
+    // backPressHandler
+    const [exitApp, setExitApp] = React.useState<boolean>(false)
+	const timerRef= React.useRef<any>(null)
+    const handleBackButtonClick = () => {
+        if(!props.navigation.isFocused()){
+            return false
+        } else {
+            if (exitApp == undefined || !exitApp) {
+                setExitApp(true)
+                ToastAndroid.show('한번 더 누르시면 종료됩니다.', ToastAndroid.SHORT)
+                timerRef.current = setTimeout(() => { setExitApp(false) },2000);
+            } else {
+                if(timerRef.current){
+                    clearTimeout(timerRef.current)
+                }
+                BackHandler.exitApp(); 
+            }
+            return true;
+        }
+    }
+    BackHandler.addEventListener("hardwareBackPress" , () => handleBackButtonClick());
+
     return (
         <SafeAreaView style={styles.container}>
             {/* 헤더 */}
@@ -147,7 +170,7 @@ export function homeTab(props: homeTabProps) {
                     <View style={styles.navigationButtonContainer}>
                         <NavigationButton
                             onPress={() => {
-                                props.navigation.navigate('map');
+                                props.navigation.navigate('AddRecord',{radioState : [false, false, true]});
                             }}
                             style={{flex: 1}}
                             imageStyle={styles.navigationButtonStyle}

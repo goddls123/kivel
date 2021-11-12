@@ -28,6 +28,7 @@ import {Button} from '../common/components/Button';
 import Modal from 'react-native-modal';
 import {DateScroller} from './components/DateScroller';
 import {DiagSelector} from './components/DiagSelector';
+import { WarningModal } from '../common/components/WarningModal';
 // import {essentialChildInfo} from '../../types/childInfoTypes';
 
 interface enterChildInfoProps {
@@ -37,6 +38,18 @@ interface enterChildInfoProps {
 export function EnterChildInfo(props: enterChildInfoProps) {
   // todoList check right info //
   //sv
+
+
+  // 뒤로가기
+  const [warningModal, setWarningModal] = React.useState<boolean>(false)
+  const handleBackButtonClick = () => {
+    if(!props.navigation.isFocused()){
+      return false
+    }
+    setWarningModal(true)
+    return true
+  }
+  BackHandler.addEventListener("hardwareBackPress" , () => handleBackButtonClick());
 
   const [name, setName] = React.useState<string>('');
   const [birthDate, setBirthDate] = React.useState<Date>();
@@ -104,19 +117,19 @@ export function EnterChildInfo(props: enterChildInfoProps) {
           <Divider height={GLOBAL_MARGIN_HORIZON} color="white" />
         ) : null}
         <TouchableOpacity
-          onPress={() => props.navigation.reset({routes: [{name: 'Home'}]})}>
+          onPress={() => setWarningModal(true)}>
           <Icon name="arrow-back" style={{fontSize: 30}}></Icon>
         </TouchableOpacity>
 
         <View
           style={{
             marginTop: SIZE_HEIGHT * 0.03,
-            marginBottom: SIZE_HEIGHT * 0.1,
+            marginBottom: SIZE_HEIGHT * 0.03,
           }}>
           <Text style={styles.headerTextStyle}>우리아이등록</Text>
         </View>
 
-        <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
+        <ScrollView style={{flex: 1, paddingTop : SIZE_HEIGHT * 0.03}} showsVerticalScrollIndicator={false}>
           <TextView text="이름" />
           <TextInputView
             placeholder={'우리 아이 이름을 한글로 입력해주세요. ex) 김키블'}
@@ -258,6 +271,13 @@ export function EnterChildInfo(props: enterChildInfoProps) {
             setModalVisible={setDiagModalVisible}
             setDiagnosis={setDiagnosis}></DiagSelector>
         </Modal>
+
+        <WarningModal
+				isVisible={warningModal}
+				setIsVisible={setWarningModal}
+				onPress={() => props.navigation.reset({routes: [{name: 'Home'}]})}
+				></WarningModal> 
+        
       </View>
     </SafeAreaView>
   );

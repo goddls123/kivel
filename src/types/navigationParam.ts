@@ -41,5 +41,5 @@ export type stackInterface = {
     Notice : undefined
     NoticeDetail : noticeType
     Question : undefined
-    AddRecord : undefined
+    AddRecord : any
 }

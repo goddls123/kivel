@@ -5,41 +5,43 @@ import { diary } from "../../types/DiaryTypes";
 export type scheduleTypeTest = {
 	id : number
 	title : string
-	scheduleDate : Date 	//DateTime	
+	scheduleDate : string 	//DateTime	
 	startTime : string 		//DateTime
 	endTime : string 			//DateTime
 	repeatCycle : string
 	repeatDay : string
-	period : Date			//DateTime
+	period : string			//DateTime
 	theraphistId? : number
 	location? : string
 	latitude? : number
 	longitude? : number
 	memo? : string
-	notificationTime? : Date	 //DateTime
+	notificationTime? : string	 //DateTime
 	color : string
 }
 
 export const schedule_data : scheduleTypeTest[] = [
 	{
 		id : 10,
-		scheduleDate : new Date('2021-11-09'),
+		scheduleDate : '2021-11-09',
 		startTime : '11:00:00',
 		endTime : '13:00:00',
 		repeatCycle : 'W',
 		repeatDay : '0101010',
-		period : new Date('2022-02-09'),
+		period : '2022-02-09',
 		title : '일정1',
+		location : '에베ㅔ베베',
+		memo : 'ㅈ같다^^ㅣㅂ',
 		color : '#' + Math.round(Math.random() * 0xffffff).toString(16)
 	},
 	{
 		id : 11,
-		scheduleDate : new Date('2021-11-09'),
+		scheduleDate : '2021-11-09',
 		startTime : '13:30:00',
 		endTime : '15:00:00',
 		repeatCycle : '2W',
 		repeatDay : '0101010',
-		period : new Date('2022-02-09'),
+		period : '2022-02-09',
 		title : '일정2',
 		color : '#' + Math.round(Math.random() * 0xffffff).toString(16)
 	},

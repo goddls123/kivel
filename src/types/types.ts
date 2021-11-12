@@ -10,18 +10,18 @@ export type noticeType = {
 export type scheduleType = {
 	id : number
 	title : string
-	scheduleDate : Date 	//DateTime	
+	scheduleDate : string 	//DateTime	
 	startTime : string 		//DateTime
 	endTime : string 			//DateTime
 	repeatCycle : string
 	repeatDay : string
-	period : Date			//DateTime
+	period : string			//DateTime
 	theraphistId : number
 	location : string
 	latitude : number
 	longitude : number
 	memo : string
-	notificationTime : Date	 //DateTime
+	notificationTime : string	 //DateTime
 	color : string
 }
 export type parsedScheduleType = scheduleType & {

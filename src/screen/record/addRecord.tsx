@@ -11,19 +11,20 @@ import { DateTimeScroller } from './components/DateTimeScroller';
 import { getDateYMD, getDayKorean, getTime } from '../common/service/dateService';
 import { Development } from './components/Development';
 import { Memo } from './components/Memo';
+import { RouteProp } from '@react-navigation/native';
 
 
 interface addRecordProps {
 	navigation: StackNavigationProp<stackInterface>;
+	route: RouteProp<stackInterface>;
 }
 
 export function addRecord(props : addRecordProps) {
 	
-		const [radioState, setRadioState] = React.useState([true, false, false])
-
+		const [radioState, setRadioState] = React.useState(props.route.params? props.route.params.radioState : [true, false, false])
 		function renderRadioButton() {
 			let viewArr : any = []
-			radioState.map((e, id) => {
+			radioState.map((e : boolean, id : number) => {
 				let textArr = ['발달기록', '문제행동', '메모']
 				let newState = [false, false, false]
 				newState[id] = true

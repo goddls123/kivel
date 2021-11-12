@@ -113,8 +113,8 @@ export function scheduleDataParser(data : scheduleTypeTest[]){
     let schedule : any = []
       data?.map((item) => {
         let dateIndex = new Date(item.scheduleDate)
-        
-            while(dateIndex < item.period){
+        let period = new Date(item.period)
+            while(dateIndex < period){
                 // 매주    
                 if(item.repeatCycle == 'W'){
                     if(item.repeatDay[dateIndex.getDay()] == '1'){

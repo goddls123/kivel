@@ -53,6 +53,7 @@ interface calendarProps {
 export default function calendar({navigation, route}: calendarProps) {
     // data patch
 	//일정 데이터 패치
+	
 	const [parsedData , setParsedData] = React.useState<parsedScheduleType[]>(scheduleDataParser(schedule_data).sort(function(a : any, b : any){
 		if(a.date > b.date) return 1
 		else if(a.date < b.date) return -1
@@ -68,7 +69,7 @@ export default function calendar({navigation, route}: calendarProps) {
 	React.useEffect(() => {
 		setFocusedDate(selectedDate)
 	},[selectedDate])
-	console.log('몇번랜더링되냐대체')
+	
 
 	function getDots () {
 		let marked : any = {}

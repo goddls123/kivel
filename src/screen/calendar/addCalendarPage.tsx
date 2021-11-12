@@ -14,25 +14,31 @@ import { INSERT_SCHEDULE } from '../../connection/queries';
 import { NavigationButton } from '../home/components/NavigationButton';
 import Modal from 'react-native-modal'
 import { Map } from '../map/map';
-
+import { RouteProp } from '@react-navigation/native';
 // test
 import { scheduleTypeTest, schedule_data } from '../test/testData';
+import { parsedScheduleType } from '../../types/types';
+
 
 interface addCalendarPageProps {
-	navigation: StackNavigationProp<stackInterface, 'SocialLogin'>;
+	navigation: StackNavigationProp<stackInterface>;
+	route: RouteProp<stackInterface,'AddRecord'>;
 }
 
 export function addCalendarPage(props : addCalendarPageProps) {
 
+	
+	const editData : any = props.route.params
 	const [insertSchedule , { data, loading, error }] = useMutation(INSERT_SCHEDULE);
 	
-	const [title, setTitle] = React.useState<string>();
-
+	const [title, setTitle] = React.useState<string>(editData?.title || '');
+	const [memo, setMemo] = React.useState<string>(editData?.memo || '');
+	const [location, setLocation] = React.useState<string>(editData?.location || '');
 	
 	// date picker
 	let date = new Date(new Date().getDate())
-	const [startDate, setStartDate] = React.useState<Date>(new Date(date));
-	const [endDate, setEndDate] = React.useState<Date>(new Date(date.setHours(date.getHours() + 1)));
+	const [startDate, setStartDate] = React.useState<Date>(editData ? new Date(editData.scheduleDate + 'T' + editData.startTime + '+09:00') : new Date(date));
+	const [endDate, setEndDate] = React.useState<Date>(editData ? new Date(editData.scheduleDate + 'T' + editData.endTime +'+09:00') : new Date(date.setHours(date.getHours() + 1)));
 
 
 
@@ -57,13 +63,13 @@ export function addCalendarPage(props : addCalendarPageProps) {
 	const weekSelector=() => {
 		Animated.timing(daySelectorHeight, {
 			toValue : value == 'W' || value == '2W' ? SIZE_WIDTH * 0.15 : 0,
-			duration : 500,
+			duration : 300,
 			easing : Easing.ease,
 			useNativeDriver : false,
 		}).start()
 	}
 	const [open, setOpen] = React.useState<boolean>(false)
-	const [value, setValue] = React.useState('W')
+	const [value, setValue] = React.useState(editData?.repeatCycle || 'W')
 	const [items, setItems] = React.useState([
 		{label: '한번', value: 'D'},
 		{label: '매주마다', value: 'W'},
@@ -72,7 +78,7 @@ export function addCalendarPage(props : addCalendarPageProps) {
 	]);
 
 	const [open1, setOpen1] = React.useState<boolean>(false)
-	const [value1, setValue1] = React.useState('M')
+	const [value1, setValue1] = React.useState('3M')
 	const [items1, setItems1] = React.useState([
 		{label: '2주', value: '2W'},
 		{label: '1개월', value: 'M'},
@@ -82,7 +88,7 @@ export function addCalendarPage(props : addCalendarPageProps) {
 		{label: '1년', value: '12M'},
 	]);
 	
-	const [daySelected, setDaySelected] = React.useState<string>("0000000")
+	const [daySelected, setDaySelected] = React.useState<string>(editData?.repeatDay || "0000000")
 	const selectDay= async (id : number) => {
 		let Arr : any = daySelected
 		if(Arr[id] == '0'){
@@ -310,7 +316,6 @@ export function addCalendarPage(props : addCalendarPageProps) {
 					</View>
 
 					{/* 장소 */}
-					{/* 장소 list 받아오기 */}
 					<View style={{height: SIZE_WIDTH * 0.12, marginHorizontal : GLOBAL_MARGIN_HORIZON , marginTop : GLOBAL_MARGIN_HORIZON, flexDirection : 'row', alignItems : 'center'}}>
 						{/* <View style={{width : SIZE_WIDTH}}> */}
 						<View style={{width : SIZE_WIDTH * 0.25, flexDirection : 'row', alignItems : 'center'}}>
@@ -319,23 +324,29 @@ export function addCalendarPage(props : addCalendarPageProps) {
 						</View>
 						<View style={{flex : 1, borderWidth :1 , borderColor : '#ededed', borderRadius :5, flexDirection : 'row', alignItems : 'center', justifyContent : 'space-between'}}>
 						<TextInput 						
-						placeholder="장소입력"></TextInput>
-						<TouchableOpacity onPress={() => props.navigation.navigate('map')}>
+						placeholder="장소입력"
+						value={location}
+						onChangeText={(text) => setLocation(text)}
+						></TextInput>
+						{/* <TouchableOpacity onPress={() => props.navigation.navigate('map')}>
 							<Icon style={{ fontSize : 25, color : MAIN_COLOR , marginRight : 15}} name="map-outline"></Icon>
-						</TouchableOpacity>
+						</TouchableOpacity> */}
 						</View>
 					</View>
 
 					{/* 메모 */}
 					<View style={{height: SIZE_WIDTH * 0.12, marginHorizontal : GLOBAL_MARGIN_HORIZON , marginTop : GLOBAL_MARGIN_HORIZON, flexDirection : 'row', alignItems : 'center'}}>
-						{/* <View style={{width : SIZE_WIDTH}}> */}
+						
 						<View style={{width : SIZE_WIDTH * 0.25, flexDirection : 'row', alignItems : 'center'}}>
 							<Icon name="reader-outline" style={styles.timeIcon} />
 							<Text style={styles.timeText}> 메모</Text>
 						</View>
 						<TextInput 
 						style={{flex : 1, borderWidth :1 , borderColor : '#ededed', borderRadius :5}}
-						placeholder="메모입력"></TextInput>
+						placeholder="메모입력"
+						value={memo}
+						onChangeText={(text) => setMemo(text)}
+						></TextInput>
 					</View>
 
 					{/* 알림설정 */}

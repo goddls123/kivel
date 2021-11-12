@@ -7,6 +7,7 @@ import { GLOBAL_MARGIN_HORIZON, MAIN_COLOR, SIZE_HEIGHT, SIZE_WIDTH } from '../.
 import { Divider } from '../../common/divider';
 import { parsedScheduleType } from '../../../types/types';
 import { getKoreanDay } from '../service/calendarService';
+import { useNavigation } from '@react-navigation/core';
 
 
 interface ScheduleCardProps {
@@ -17,25 +18,26 @@ const CARD_WIDTH = SIZE_WIDTH - GLOBAL_MARGIN_HORIZON * 2;
 const CARD_HEIGHT = (SIZE_WIDTH - GLOBAL_MARGIN_HORIZON * 2) * 0.55;
 
 export function ScheduleCard(props : ScheduleCardProps) {
-    
+        const navigation = useNavigation()
+
         // 매주 언제언제 반복
         function repeatCycleString(){
             let data = props.data
             let result = ''
             if(data?.repeatCycle == 'W') {
-                result = '매주'
+                result = '매주 '
             }
             else if(data?.repeatCycle == '2W'){
-                result = '격주'
+                result = '격주 '
             }
 
             for(let i = 0; i < 7; i++){
                 if(data?.repeatDay[i] == '1'){
-                    result = result +' '+ getKoreanDay(i)
+                    result = result + getKoreanDay(i) +','
                 }    
             }
             
-            result = result + '요일 반복'
+            result = result.substr(0,result.length-1)
             
             return result
         }
@@ -56,17 +58,20 @@ export function ScheduleCard(props : ScheduleCardProps) {
                     </TouchableOpacity>
 
                     <View style={{flex : 1, flexDirection : 'row', justifyContent : 'flex-end'}}>
+
                         <TouchableOpacity style={{justifyContent : 'center', marginLeft : 10}}>
                             <Image style={styles.imageStyle} source={require('../../../assets/icons/ic_delete_16.png')} />
                         </TouchableOpacity>
-                        <TouchableOpacity style={{justifyContent : 'center', marginLeft : 12}}>
+
+                        <TouchableOpacity style={{justifyContent : 'center', marginLeft : 12}}
+                        onPress={() => navigation.navigate('AddCalendarPage',props.data)}>
                             <Image style={styles.imageStyle} source={require('../../../assets/icons/ic_edit_16.png')} />
                         </TouchableOpacity>
                     </View>
                 </View>
 
                 <View style={{marginLeft : 35, marginBottom :10}}>
-                    <Text style={{color : '#555555', fontSize : 15, marginBottom : 4}}>매주 화요일 / {props.data?.startTime + ' - ' + props.data?.endTime}</Text>
+                    <Text style={{color : '#555555', fontSize : 15, marginBottom : 4}}>{repeatCycleString()} / {props.data?.startTime.substr(0,5) + ' - ' + props.data?.endTime.substr(0,5)}</Text>
                     <Text style={{color : '#555555', fontSize : 15, marginBottom : 4}}>치료사 : {props.data?.theraphistId}</Text>
                     <Text style={{color : '#555555', fontSize : 15, marginBottom : 4}}>장소 : {props.data?.location}</Text>
                 </View>

@@ -67,7 +67,7 @@ export function screeningResultEnroll(props : screeningResultEnrollProps) {
 		};
 
 		function checkEssential() {
-			if(screeningResult){
+			if(screeningResult.screeningName){
 				return true
 			}
 			
@@ -76,24 +76,15 @@ export function screeningResultEnroll(props : screeningResultEnrollProps) {
 
 		const [warningModal, setWarningModal] = React.useState<boolean>(false)
 		
-		// React.useEffect(() => {
-		// 	if(!warningModal){
-		// 		BackHandler.addEventListener("hardwareBackPress" , () => {
-		// 			setWarningModal(true)
-		// 			return true
-		// 		});
-		// 	} else{
-		// 		BackHandler.addEventListener("hardwareBackPress" , () => {
-		// 			props.navigation.goBack()
-		// 			return true
-		// 		});
-		// 	}
-		// },[warningModal])
 
-		BackHandler.addEventListener("hardwareBackPress" , () => {
+		const handleBackButtonClick = () => {
+			if(!props.navigation.isFocused()){
+				return false
+			}
 			setWarningModal(true)
 			return true
-		});
+		}
+		BackHandler.addEventListener("hardwareBackPress" , () => handleBackButtonClick());
 
 		return (
 			<SafeAreaView style={styles.container}>
@@ -143,7 +134,8 @@ export function screeningResultEnroll(props : screeningResultEnrollProps) {
 					<TextInputView
 					placeholder={'검사명을 입력해주세요'}
 					style={{marginBottom: SIZE_HEIGHT * 0.05}}
-					onChangeText={setScreeningName}></TextInputView>
+					onChangeText={setScreeningName}
+					></TextInputView>
 
 					<TextView text="검사일시" />
 					<TextInputView
@@ -158,13 +150,15 @@ export function screeningResultEnroll(props : screeningResultEnrollProps) {
 					<TextInputView
 					placeholder={'검사기관명 입력해주세요'}
 					style={{marginBottom: SIZE_HEIGHT * 0.05}}
-					onChangeText={setScreeningInstitution}></TextInputView>
+					onChangeText={setScreeningInstitution}
+					></TextInputView>
 
 					<TextView text="메모" />
 					<TextInputView
 					placeholder={'특이사항이나 기록해 두고 싶은 사항을 입력해주세요'}
 					style={{marginBottom: SIZE_HEIGHT * 0.06}}
-					onChangeText={setMemo}></TextInputView>
+					onChangeText={setMemo}
+					></TextInputView>
 
 					<Button 
 					text={'등록'} 

@@ -8,8 +8,6 @@ import { Divider } from '../../common/divider';
 import Modal from 'react-native-modal'
 import { DateTimeScroller } from '../components/DateTimeScroller';
 import { getDateYMD, getDayKorean, getTime } from '../../common/service/dateService';
-import { stackInterface } from '../../../types/navigationParam';
-import { useNavigation } from '@react-navigation/core';
 import { Button } from '../../common/components/Button';
 import { ReactNativeFile } from 'extract-files';
 import ImagePicker from 'react-native-image-crop-picker'
@@ -19,7 +17,6 @@ interface DevelopmentProps {
 }
 
 export function Development(props: DevelopmentProps) {
-	const navigation = useNavigation()
 	
 	const [modalVisible, setModalVisible] = React.useState(false)
 	const [isEmergency, setIsEmergency] = React.useState(false)
