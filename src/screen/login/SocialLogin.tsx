@@ -9,6 +9,7 @@ import {  logInWithKakao,  unlinkKakao, logInWithNaver, logoutWithNaver } from '
 import { Divider } from '../common/divider';
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/client';
+import { USER_LOGIN } from '../../connection/queries';
 // import { USER_LOGIN } from '../../connection/queries';
 
 interface SocialLoginProps {
@@ -18,12 +19,7 @@ interface SocialLoginProps {
 export function SocialLogin(props : SocialLoginProps) {
 
 
-	const USER_LOGIN = gql`
-	mutation userLogin {
-		userLogin {
-			userEmail
-		}
-	}`
+
 
 	const [login, {data, error, loading}] = useMutation(USER_LOGIN)
 	const kakaoLogin = () => {
@@ -67,7 +63,7 @@ export function SocialLogin(props : SocialLoginProps) {
 			<View style={{height : '25%'}} />
 			<SocialLoginButton platform='kakao' onPress={kakaoLogin}/>
 			<SocialLoginButton platform='naver' onPress={naverLogin}/>
-			{/* <SocialLoginButton platform='naver' onPress={logoutWithNaver}/> */}
+			<SocialLoginButton platform='kakao' onPress={unlinkKakao}/>
 			{/* <SocialLoginButton platform='naver' onPress={() => { props.navigation.navigate('Agreement')}}/> */}
 		</View>
 	</SafeAreaView>

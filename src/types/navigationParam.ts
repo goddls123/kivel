@@ -5,6 +5,8 @@ import { screeningResult } from "./types";
 import { noticeType } from "./types";
 
 export type stackInterface = {
+    AuthCheck : undefined;
+
     Home : undefined;
     Calendar : undefined;
     WriteDiary : diary | undefined;

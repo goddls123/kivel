@@ -24,6 +24,8 @@ import { notice } from '../screen/myPage/noticeList/notice';
 import { noticeDetail } from '../screen/myPage/noticeList/noticeDetail';
 import { question } from '../screen/myPage/question/question';
 import { addRecord } from '../screen/record/addRecord';
+import { Splash } from '../screen/common/components/Splash';
+import { authCheck } from '../screen/common/authCheck';
 
 
 const  Stack  =  createStackNavigator<stackInterface>();
@@ -35,7 +37,9 @@ export  const  StackNav:  React.FC  =  ({})  =>  {
 
     return  (
 
-            <Stack.Navigator  initialRouteName={login? "Home" : "Register"}>
+            <Stack.Navigator  initialRouteName={"AuthCheck"}>
+
+                <Stack.Screen name="AuthCheck" component={authCheck} options={{headerShown:  false}}/>
                 <Stack.Screen name="Home" component={bottomTabNav} options={{headerShown:  false}}/>
                 <Stack.Screen name="Calendar" component={calendar} options={{headerShown:  false}} />
                 <Stack.Screen name="Diary" component={Diary} options={{headerShown:  false}} />

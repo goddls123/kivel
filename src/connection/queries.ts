@@ -41,3 +41,4 @@ mutation uploadFile($file: [Upload!]!) {
   uploadFile(file: $file) 
 }
 `;
+

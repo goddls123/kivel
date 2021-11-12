@@ -19,7 +19,6 @@ const authLink = setContext(async (_, {headers}) => {
 	const token = await AsyncStorage.getItem('ACT');
 	const platform = await AsyncStorage.getItem('platform');
 
-	console.log(token, platform);
 	if (token && platform) {
 		return {
 			headers: {

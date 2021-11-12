@@ -13,6 +13,8 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import { Alert } from 'react-native';
 import StackNav from './src/navigation/stackNav';
 import { Splash } from './src/screen/common/components/Splash';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { logInWithKakao } from './src/screen/login/service/loginService';
 
 
 // import messaging from '@react-native-firebase/messaging';
@@ -44,13 +46,13 @@ export default function App () {
 	
 	// splash 화면
 	const [splash, setSplash] = React.useState(true);
-	
 	React.useEffect(() => {
 	  setTimeout(() => {
 		setSplash(false);
 	  }, 1000);
 	}, []);
-	
+	//
+
 
 	//////////////////// 뒤로가기 키 두번 누를 시 종료 ////////////////////
 	const [exitApp, setExitApp] = React.useState<boolean>(false)
@@ -71,9 +73,12 @@ export default function App () {
     }
 	BackHandler.addEventListener("hardwareBackPress" , handleBackButton);
 	////////////////////// 뒤로가기 키 두번 누를 시 종료 ////////////////////
-	  
-	const [login, setLogin] = React.useState(false)
+	
+	////////////////////// 자동로그인??? //////////////////////
+	
 
+	
+	
 	return (
 		splash 
 		?

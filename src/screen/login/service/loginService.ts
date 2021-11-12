@@ -52,7 +52,6 @@ export const logInWithNaver = async () => {
 
 export const logInWithKakao = async () => {
   await kakaoLogin().then((token: KakaoOAuthToken) => {
-    console.log(token)
     AsyncStorage.setItem('ACT', token.accessToken)
     AsyncStorage.setItem('RFT', token.refreshToken)
     AsyncStorage.setItem('platform', 'K')
