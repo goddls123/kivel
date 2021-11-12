@@ -162,5 +162,9 @@ export function scheduleDataParser(data : scheduleTypeTest[]){
   return schedule
 }
 
-
+export function timeTableParser(data : scheduleTypeTest[]){
+    for(let i = 0 ; i < data.length ; i ++){
+        
+    }
+}
 

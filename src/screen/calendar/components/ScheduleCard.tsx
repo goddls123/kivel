@@ -73,10 +73,12 @@ export function ScheduleCard(props : ScheduleCardProps) {
 				<Divider height={1} color={'#ededed'}></Divider>
 				
 				<View style={{flex : 1, justifyContent : 'center', alignItems : 'center'}}>
-				<TouchableOpacity>
-					<View style={{flexDirection : 'row', width : CARD_WIDTH * 0.66 , height : CARD_WIDTH * 0.1 ,borderRadius : 8, justifyContent : 'center', alignItems : 'center', backgroundColor : MAIN_COLOR}}>
+				<TouchableOpacity
+                disabled={props.data?.theraphistId ? false : true}
+                >
+					<View style={[styles.button,{backgroundColor : props.data?.theraphistId ? MAIN_COLOR : '#ededed'}]}>
 							<Image style={styles.imageStyle} source={require('../../../assets/icons/ic_chat_16.png')}></Image>
-							<Text style={{color : 'white'}}> 치료사에게 연락하기</Text>
+							<Text style={{color : props.data?.theraphistId ? 'white' : '#d5d5d5' }}> 치료사에게 연락하기</Text>
 					</View>
 				</TouchableOpacity>
 				</View>
@@ -103,4 +105,5 @@ const styles = StyleSheet.create({
         justifyContent : 'center'
     },
     imageStyle : {height : 20, width : 20},
+    button : {flexDirection : 'row', width : CARD_WIDTH * 0.66 , height : CARD_WIDTH * 0.1 ,borderRadius : 8, justifyContent : 'center', alignItems : 'center'},
 })

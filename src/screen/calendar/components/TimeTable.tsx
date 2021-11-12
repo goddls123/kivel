@@ -76,7 +76,6 @@ export function TimeTable(props : TimeTableProps) {
 const styles = StyleSheet.create({
 	timeTable: {
         borderTopColor: GREY_BORDER_COLOR,
-        borderTopWidth: 1,
     },
 	hourView : {alignItems : 'center', flexDirection : 'row'},
 	hourText : {color : '#d5d5d5', fontSize: 12, marginLeft : GLOBAL_MARGIN_HORIZON, width : '5%'},

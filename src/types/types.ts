@@ -11,8 +11,8 @@ export type scheduleType = {
 	id : number
 	title : string
 	scheduleDate : Date 	//DateTime	
-	startTime : Date 		//DateTime
-	endTime : Date 			//DateTime
+	startTime : string 		//DateTime
+	endTime : string 			//DateTime
 	repeatCycle : string
 	repeatDay : string
 	period : Date			//DateTime
