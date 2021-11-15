@@ -1,6 +1,8 @@
 import React from 'react';
 import {View, StyleSheet, Text, Image} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {StackNavigationProp} from '@react-navigation/stack';
+
 import {
   FONT_COLOR_BLACK,
   FONT_GREY,
@@ -87,7 +89,6 @@ export function ChatListView(props: chatListViewProps) {
             </Text>
             <View
               style={{
-                // flex: 1,
                 width: 18,
                 height: 18,
                 borderRadius: 50,

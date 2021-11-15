@@ -15,6 +15,7 @@ export const FONT_COLOR_BLACK = '#111111';
 export const PLACE_HOLDER_COLOR = '#d5d5d5';
 export const GREY_BACKGOUND_COLOR = '#f6f6f6';
 export const GREY_BORDER_COLOR = '#ededed';
+export const CHAT_BACKGOUND_COLOR = '#ededed';
 export const FONT_GREY = '#aaaaaa';
 export const FONT_LIGHT_GREY = '#dadada';
 export const FONT_DARK_GREY = '#707070';

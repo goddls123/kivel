@@ -48,7 +48,6 @@ export function chatTab(props: chatTabProps) {
         <FlatList
           data={data}
           renderItem={({item, index}) => {
-            console.log(item);
             if (!index) {
               return <View style={styles.adsContainer}></View>;
             } else {
