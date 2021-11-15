@@ -7,6 +7,7 @@ import { SIZE_HEIGHT, SIZE_WIDTH } from "../../common/constants";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { screeningResult } from "../../../types/types";
 import { getDateYMD } from "../../common/service/dateService";
+import { ReactNativeFile } from "extract-files";
 interface ItemProps {
   title: string;
   text: string;
@@ -24,51 +25,45 @@ interface ScreeningResultCarouselProps {
 export function ScreeningResultCarousel(props : ScreeningResultCarouselProps) {
 
 		const [index,setIndex] = React.useState<number>(0)
-		const moveLeft = () =>{
-			if(props.data?.images && index <= 0){
-				setIndex(props.data?.images.length -1)
-			}
-			else {
-				setIndex(index -1)
-			}
+		
+		const renderItem = ({item ,index} : {item : ReactNativeFile, index: number}) => {
+			return(
+				<View style={styles.imageContainer}>
+					<ImageModal source={{uri : item.uri}}
+						style={{width : SIZE_WIDTH * 0.65 , height : SIZE_WIDTH }}
+						resizeMode='contain'
+					></ImageModal>
+				</View>
+			)
 		}
-		const moveRight = () => {
-			if(props.data?.images && index >= props.data?.images.length - 1 ){
-				setIndex(0)
-			}
-			else {
-				setIndex(index + 1)
-			}
-		}
-		console.log(index)
+
 
 		return (
 		  <SafeAreaView style={styles.container}>
 			<View style={styles.innerContainer}>
-				{
-					props.data?.images
-					?
-						<View style={styles.imageContainer}>
-							<TouchableOpacity onPress={() => moveLeft()}>
-							<Icon name="chevron-back-outline" style={styles.chevronLeft} ></Icon>
-							</TouchableOpacity>
-							<ImageModal source={{uri : props.data?.images[index].uri}}
-								style={{width : SIZE_WIDTH * 0.65 , height : SIZE_WIDTH }}
-								resizeMode='contain'
-							></ImageModal>
-							<TouchableOpacity onPress={() => moveRight() }>
-							<Icon name="chevron-forward-outline" style={styles.chevronRight} ></Icon>
-							</TouchableOpacity>
-						</View>
-					: null
-				}
-				<Pagination
+
+			{
+				props.data?.images
+				?  
+					<Carousel
+					data={props.data?.images}
+					renderItem={renderItem}
+					sliderWidth={SIZE_WIDTH * 0.8}
+              		itemWidth={SIZE_WIDTH * 0.8}
+					onSnapToItem={(index) => setIndex(index)}
+					useScrollView={false}
+			   		></Carousel>
+
+			   :	null
+			  }				
+					<Pagination
 					dotsLength={props.data?.images?.length || 0}
 					activeDotIndex={index}
 					dotStyle={styles.dotStyle}
 				  	inactiveDotOpacity={0.4}
 					inactiveDotScale={0.6}
-				/>
+					/>
+
 
 				{/* <View style={{backgroundColor : 'white', alignItems: 'center' , width : '100%'}}> */}
 					<Text style={{fontSize : 20, color : 'white'}}>{props.data?.screeningName}</Text>

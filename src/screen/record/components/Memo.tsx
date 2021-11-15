@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
 		fontSize: 14,
 		paddingHorizontal: 5,
 		paddingVertical: 3,
-		backgroundColor: '#d5d5d5',
+		backgroundColor: '#ededed',
 		borderRadius: 4,
 		marginRight : 10
 	},

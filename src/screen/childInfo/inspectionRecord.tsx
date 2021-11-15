@@ -19,7 +19,7 @@ interface inspectionRecordProps {
 
 const test : screeningResult[] = [
 	{
-		images : [{uri : 'https://t1.daumcdn.net/cfile/tistory/99A77E355A4C3F9F29'},{uri : 'https://health.chosun.com/site/data/img_dir/2016/11/30/2016113001197_1.jpg'}], 
+		images : [{uri : 'https://t1.daumcdn.net/cfile/tistory/99A77E355A4C3F9F29'},{uri : 'https://health.chosun.com/site/data/img_dir/2016/11/30/2016113001197_1.jpg'},{uri : 'https://health.chosun.com/site/data/img_dir/2016/11/30/2016113001197_1.jpg'}], 
 		screeningDate : new Date('2021-10-01'),
 		screeningInstitution : '동네병원',
 		screeningName : 'ㅇ렝메ㅜㄹ 검사1111',

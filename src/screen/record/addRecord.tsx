@@ -1,6 +1,6 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react'
-import { View, StyleSheet, SafeAreaView, TouchableOpacity, Text, Image, Switch, TextInput, ScrollView } from 'react-native';
+import { View, StyleSheet, SafeAreaView, TouchableOpacity, Text, Image, Switch, TextInput, ScrollView, BackHandler } from 'react-native';
 import { stackInterface } from '../../types/navigationParam';
 import { GLOBAL_MARGIN_HORIZON, MAIN_COLOR, SIZE_WIDTH } from '../common/constants';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -8,7 +8,7 @@ import { Divider } from '../common/divider';
 import { Development } from './components/Development';
 import { Memo } from './components/Memo';
 import { RouteProp } from '@react-navigation/native';
-
+import { WarningModal } from '../common/components/WarningModal';
 
 interface addRecordProps {
 	navigation: StackNavigationProp<stackInterface>;
@@ -16,6 +16,16 @@ interface addRecordProps {
 }
 
 export function addRecord(props : addRecordProps) {
+	
+		const [warningModal, setWarningModal] = React.useState<boolean>(false)
+		const handleBackButtonClick = () => {
+			if(!props.navigation.isFocused()){
+				return false
+			}
+			setWarningModal(true)
+			return true
+		}
+		BackHandler.addEventListener("hardwareBackPress" , () => handleBackButtonClick());
 	
 		const [radioState, setRadioState] = React.useState(props.route.params? props.route.params.radioState : [true, false, false])
 		function renderRadioButton() {
@@ -61,7 +71,7 @@ export function addRecord(props : addRecordProps) {
 				{/* header */}
 				<View style={styles.headerContainer}>
 					<TouchableOpacity style={styles.closeContainer}
-						onPress={() => props.navigation.goBack()}>
+						onPress={() => handleBackButtonClick()}>
 						<Icon name="close-outline" style={styles.closeIcon}></Icon>
 					</TouchableOpacity>
 					<Text style={styles.headerTextStyle}>기록하기</Text>
@@ -83,11 +93,17 @@ export function addRecord(props : addRecordProps) {
 					
 				</ScrollView>
 				
+				<WarningModal
+				isVisible={warningModal}
+				setIsVisible={setWarningModal}
+				onPress={() => props.navigation.reset({routes: [{name: 'Home'}]})}
+				></WarningModal> 
+
 			</SafeAreaView>
 		);
 }
 const styles = StyleSheet.create({
-	container : {flex : 1 , color : 'white'},
+	container : {flex : 1 , backgroundColor : 'white'},
 	headerContainer: {height: SIZE_WIDTH * 0.16, marginHorizontal : GLOBAL_MARGIN_HORIZON, flexDirection : 'row', alignItems : 'center'},
 	headerTextStyle : {flex : 1, textAlign : 'center', textAlignVertical : 'center', fontSize : 18, fontWeight : 'bold'},
 	closeContainer : {width : SIZE_WIDTH * 0.1},

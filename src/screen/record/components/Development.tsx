@@ -60,7 +60,7 @@ export function Development(props: DevelopmentProps) {
 			viewArr.push(
 				<View key={id} style={{alignItems : 'center'}}>
 					<TouchableOpacity onPress={() => setProblemArea(item.title)}>
-						<View style={[styles.problemButtonBox,{backgroundColor : problemArea == item.title ? MAIN_COLOR : '#d5d5d5',}]}>
+						<View style={[styles.problemButtonBox,{backgroundColor : problemArea == item.title ? MAIN_COLOR : '#ededed',}]}>
 							<Image style={styles.problemButtonImage} source={item.img}></Image>
 						</View>
 					</TouchableOpacity>
@@ -133,7 +133,7 @@ export function Development(props: DevelopmentProps) {
 
 	
     return (
-        <View>
+        <View style={styles.container}>
 
             {/* dateButtonContainer */}
             <View style={styles.dateButtonContainer}>
@@ -150,7 +150,6 @@ export function Development(props: DevelopmentProps) {
                         style={{alignSelf: 'flex-end'}}
                         trackColor={{false: '#767577', true: '#ffebee'}}
                         thumbColor={isEmergency ? MAIN_COLOR : '#f4f3f4'}
-                        ios_backgroundColor="#3e3e3e"
                         onValueChange={() => setIsEmergency(!isEmergency)}
                         value={isEmergency}/>
                 </View>
@@ -216,6 +215,7 @@ export function Development(props: DevelopmentProps) {
     );
 }
 const styles = StyleSheet.create({
+	container : {},
 	boldText : {fontSize : 18, color : 'black'},
 	dateButtonContainer : { height : SIZE_WIDTH * 0.4, padding : GLOBAL_MARGIN_HORIZON , justifyContent : 'space-between'},
 	dateButtonInnerContainer : {flexDirection: 'row', justifyContent : 'space-between'},
@@ -265,5 +265,5 @@ const styles = StyleSheet.create({
 		  fontSize: 15,
 		},
 	detailTextInputStyle : { maxHeight : SIZE_WIDTH * 0.5 ,borderRadius : 10, borderWidth : 1, borderColor : '#d5d5d5', padding : 15, marginTop : 10, marginBottom : 20 },
-	addCameraButton : { borderRadius : 8, borderColor : '#d5d5d5', borderWidth : 1, padding : 10, marginTop : 10, backgroundColor : '#d5d5d5'},
+	addCameraButton : { borderRadius : 8, borderColor : '#ededed', borderWidth : 1, padding : 10, marginTop : 10, backgroundColor : '#ededed'},
 });
