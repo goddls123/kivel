@@ -30,8 +30,7 @@ export function recordTab() {
   }
   return (
     
-    <Tab.Navigator 
-    screenOptions={screenOptionStyle()}>
+    <Tab.Navigator screenOptions={screenOptionStyle()}>
       	<Tab.Screen name="기록" component={record} />
       	<Tab.Screen name="과제" component={homeWork} />
     </Tab.Navigator>

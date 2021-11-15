@@ -16,43 +16,6 @@ interface authCheckProps {
 export function authCheck(props : authCheckProps) {
 	    // splash
 		const [login, {data, error, loading}] = useMutation(USER_LOGIN)
-		
-	
-		// async function loginCheck() {
-		// 	const token = await AsyncStorage.getItem('ACT');
-		// 	const platform = await AsyncStorage.getItem('platform');
-			
-
-		// 	if(token && platform == 'K'){
-		// 		logInWithKakao()
-		// 		.then(() => login()
-		// 					.then(response => {
-								
-		// 					}).catch(() => {
-		// 						console.log('오ㅑㅐ?')
-		// 						result = false
-		// 					})
-		// 		)
-		// 		.catch(() => {
-		// 			console.log('대체애??')
-		// 			result = false
-		// 		})
-		// 	}
-		// 	else {
-		// 		console.log('설마 여기??')
-		// 		result = false
-		// 	}
-		// 	console.log('그니깐 이게더 빠른거네 ㅋㅋ')
-		// 	return result
-		// }
-		
-		React.useEffect(() => {
-			// loginCheck().then(console.log)
-				// loginCheck().then(result => {
-				// 	props.navigation.navigate(result? 'Home' : 'Register')
-				// })
-		},[])
-
 
 		return (
 			<SafeAreaView style={{flex : 1 ,justifyContent : 'center'}}>

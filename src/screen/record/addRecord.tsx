@@ -1,14 +1,10 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react'
 import { View, StyleSheet, SafeAreaView, TouchableOpacity, Text, Image, Switch, TextInput, ScrollView } from 'react-native';
-import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import { stackInterface } from '../../types/navigationParam';
 import { GLOBAL_MARGIN_HORIZON, MAIN_COLOR, SIZE_WIDTH } from '../common/constants';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Divider } from '../common/divider';
-import Modal from 'react-native-modal'
-import { DateTimeScroller } from './components/DateTimeScroller';
-import { getDateYMD, getDayKorean, getTime } from '../common/service/dateService';
 import { Development } from './components/Development';
 import { Memo } from './components/Memo';
 import { RouteProp } from '@react-navigation/native';

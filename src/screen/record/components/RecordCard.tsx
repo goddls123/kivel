@@ -3,32 +3,30 @@ import { View, StyleSheet, Text } from 'react-native';
 import { GLOBAL_MARGIN_HORIZON, SIZE_WIDTH } from '../../common/constants';
 
 interface recordCardProps {
-	
+	data : any
 }
 
 export function RecordCard(props : recordCardProps) {
     
-    function getBadgeStyle() {
-        let data = '문제행동'
+    function getBadgeStyle(value : string) {
         let style : any = [styles.badgeText]
-        if(data=='문제행동')
-            style.push({ color: '#e63464', backgroundColor: '#ffebee' })
-        else if(data == '발달지연')
+        if(value=='발달기록')
             style.push({ color: '#0fafe9', backgroundColor: '#d1f3ff' })
-        else if(data == '자유메모')
+        else if(value == '문제행동')
+            style.push({ color: '#e63464', backgroundColor: '#ffebee' })
+        else if(value == '메모')
             style.push({ color: '#707070', backgroundColor: '#ededed' })
         
         return style
     }
 
-    function getLabelStyle(){
-        let data = '문제행동'
+    function getLabelStyle(value : string){
         let style : any = [{width : '1%'}]
-        if(data=='문제행동')
-            style.push({ backgroundColor: '#e63464' })
-        else if(data == '발달지연')
+        if(value=='발달기록')
             style.push({ backgroundColor: '#0fafe9' })
-        else if(data == '자유메모')
+        else if(value == '문제행동')
+            style.push({ backgroundColor: '#e63464' })
+        else if(value == '메모')
             style.push({ backgroundColor: '#707070' })
         
         return style
@@ -36,11 +34,11 @@ export function RecordCard(props : recordCardProps) {
 
 		return (
 			<View style={styles.container}>
-				<View style={getLabelStyle()}></View>
+				<View style={getLabelStyle(props.data.kind)}></View>
 				<View style={styles.textBoxContainer}>
 					<View style={styles.titleBadge}>
-						<Text>소리지르며 떼쓰기</Text>
-						<Text style={getBadgeStyle()}>문제행동</Text>
+						<Text style={styles.titleText}>{props.data.title.length > 15 ? props.data.title.substr(0,15) + '...' : props.data.title }</Text>
+						<Text style={getBadgeStyle(props.data.kind)}>{props.data.kind}</Text>
 					</View>
 					<Text>약 주2회 발생</Text>
 				</View>
@@ -49,6 +47,7 @@ export function RecordCard(props : recordCardProps) {
 }
 const styles = StyleSheet.create({
     container: {
+        marginTop : 10,
         flexDirection: 'row',
         width: SIZE_WIDTH - GLOBAL_MARGIN_HORIZON * 2,
         height: SIZE_WIDTH * 0.22,
@@ -75,4 +74,5 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginRight: 10,
     },
+    titleText : {fontSize : 16,color : '#707070'}
 });

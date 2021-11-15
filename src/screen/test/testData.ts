@@ -102,3 +102,35 @@ export const dummyData: diary[] = [
 
 
 ];
+
+export const record_data : {id : number, kind : string, date : string , time? : string, title : string, treatmentArea? : string, theraphistId? : number, content? :string, image? : string[] }[] = [
+	{
+		id : 1,
+		kind : '발달기록',
+		date : '2021-10-18',
+		time : '20:30:00',
+		title : '소떼',
+		treatmentArea : '소근육',
+		content : '키블이가 걷다가 자꾸 넘어져요 키블이가 걷다가 자꾸 넘어져요',
+		image : ['https://www.walkerhillstory.com/wp-content/uploads/2020/09/2-1.jpg','https://www.walkerhillstory.com/wp-content/uploads/2020/09/2-1.jpg','https://www.walkerhillstory.com/wp-content/uploads/2020/09/2-1.jpg']
+	},
+	{
+		id : 2,
+		kind : '문제행동',
+		date : '2021-10-18',
+		time : '20:30:00',
+		title : '소떼2',
+		treatmentArea : '소근육',
+		content : '키블이가 걷다가 자꾸 넘어져요 키블이가 걷다가 자꾸 넘어져요',
+		image : ['https://www.walkerhillstory.com/wp-content/uploads/2020/09/2-1.jpg','https://www.walkerhillstory.com/wp-content/uploads/2020/09/2-1.jpg','https://www.walkerhillstory.com/wp-content/uploads/2020/09/2-1.jpg']
+	},
+	{
+		id : 3,
+		kind : '메모',
+		date : '2021-10-16',
+		title : '메몸모메ㅗㅔ모ㅔㅗㅔㅔ모ㅔ메모모메ㅗ메ㅗ메ㅗ메ㅗ',
+		treatmentArea : '소근육',
+		content : '상세내용 상세내용 상세내용 상세내용 상세내용 상세내용 상세내용 상세내용 상세내용 상세내용 상세내용 상세내용 상세내용 상세내용 상세내용 상세내용 상세내용 상세내용 상세내용 상세내용 상세내용',
+		image : ['https://www.walkerhillstory.com/wp-content/uploads/2020/09/2-1.jpg','https://www.walkerhillstory.com/wp-content/uploads/2020/09/2-1.jpg','https://www.walkerhillstory.com/wp-content/uploads/2020/09/2-1.jpg']
+	},
+]
