@@ -3,7 +3,7 @@ import React from 'react';
 import {View, StyleSheet, Text, FlatList, SafeAreaView} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {stackInterface} from '../../types/navigationParam';
-import {SIZE_HEIGHT} from '../common/constants';
+import {FONT_COLOR_BLACK, SIZE_HEIGHT} from '../common/constants';
 import {ChatListView} from './components/ChatListView';
 
 interface chatTabProps {
@@ -18,11 +18,29 @@ export function chatTab(props: chatTabProps) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
-        <View style={styles.headerFront}></View>
-        <View style={styles.headerCenter}></View>
+        <View style={styles.headerFront}>
+          <Icon style={styles.iconStyle} name="arrow-back"></Icon>
+        </View>
+        <View style={styles.headerCenter}>
+          <Text
+            style={{
+              fontSize: 20,
+              color: FONT_COLOR_BLACK,
+              fontStyle: 'normal',
+              fontWeight: '500',
+            }}>
+            치료사와 채팅
+          </Text>
+        </View>
         <View style={styles.headerBack}>
-          <Icon style={styles.iconStyle} name="search-outline" />
-          <Icon style={styles.iconStyle} name="person-add-outline" />
+          <Icon
+            style={[styles.iconStyle, {marginLeft: 8}]}
+            name="search-outline"
+          />
+          <Icon
+            style={[styles.iconStyle, {marginLeft: 8}]}
+            name="person-add-outline"
+          />
         </View>
       </View>
 
@@ -48,20 +66,27 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     height: SIZE_HEIGHT * 0.1,
+    display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     flexDirection: 'row',
+    paddingHorizontal: 16,
   },
   headerFront: {},
-  headerCenter: {},
-  headerBack: {},
+  headerCenter: {
+    display: 'flex',
+  },
+  headerBack: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
   iconStyle: {
-    fontSize: 30,
+    fontSize: 24,
     fontWeight: 'bold',
-    marginRight: 15,
   },
   adsContainer: {
-    height: SIZE_HEIGHT * 0.13,
+    height: SIZE_HEIGHT * 0.11,
+
     backgroundColor: '#C4C4C4',
   },
 });

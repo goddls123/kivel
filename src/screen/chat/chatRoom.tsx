@@ -1,11 +1,15 @@
 import React from 'react';
-import {View} from 'react-native';
+import {SafeAreaView, StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-paper';
 
 export default function chatRoom() {
   return (
-    <View>
+    <SafeAreaView style={styles.container}>
       <Text>chatRoom</Text>
-    </View>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {},
+});
