@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, StyleSheet, TouchableOpacity, Image, Text, ScrollView } from 'react-native';
+import ImageModal from 'react-native-image-modal';
 // import { View } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { getKoreanDay } from '../../calendar/service/calendarService';
@@ -34,10 +35,14 @@ export function RecordDetailModal(props : RecordDetailModalProps) {
 
 	function renderImage() {
 		let viewArr : Element[] = []
-
+		
 		props.data.image?.map((item : string, id : number) => {
 			viewArr.push( 
-				<Image key={id} style={{borderRadius : 10, height : SIZE_WIDTH * 0.2 , width : SIZE_WIDTH * 0.2, marginRight : 10 }} source={{uri : item}}></Image>
+				<ImageModal 
+				key={id} 
+				resizeMode='contain'
+				style={{backgroundColor : '#ededed', borderRadius : 10, height : SIZE_WIDTH * 0.2 , width : SIZE_WIDTH * 0.2, marginRight : 10 }} 
+				source={{uri : item}}></ImageModal>
 			)
 		})
 		

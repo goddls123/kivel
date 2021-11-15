@@ -26,6 +26,7 @@ import { question } from '../screen/myPage/question/question';
 import { addRecord } from '../screen/record/addRecord';
 import { Splash } from '../screen/common/components/Splash';
 import { authCheck } from '../screen/common/authCheck';
+import { addHomeWork } from '../screen/record/addHomework';
 
 
 const  Stack  =  createStackNavigator<stackInterface>();
@@ -61,6 +62,7 @@ export  const  StackNav:  React.FC  =  ({})  =>  {
                 <Stack.Screen name='NoticeDetail'  component={noticeDetail} options={{headerShown:  false}} />
                 <Stack.Screen name='Question'  component={question} options={{headerShown:  false}} />
                 <Stack.Screen name='AddRecord'  component={addRecord} options={{headerShown:  false}} />
+                <Stack.Screen name='AddHomeWork'  component={addHomeWork} options={{headerShown:  false}} />
 
                 <Stack.Screen name="map"  component={Map} options={{headerShown:  false}} />
                 

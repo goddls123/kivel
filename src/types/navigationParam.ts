@@ -44,4 +44,5 @@ export type stackInterface = {
     NoticeDetail : noticeType
     Question : undefined
     AddRecord : any
+    AddHomeWork : any
 }
