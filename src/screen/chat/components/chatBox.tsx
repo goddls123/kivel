@@ -19,20 +19,24 @@ import {
 } from '../../common/constants';
 
 interface chatSendedProps {
-  mine: boolean;
+  id: string;
   image?: any;
   text: string;
-  setModalData(value: string): any;
+  // setModalData(value: string): any;
 }
+const userId = '12345';
 
 export function ChatBox(props: chatSendedProps) {
+  const isMyMessage = () => {
+    return props.id === userId;
+  };
   return (
     <View
       style={[
         styles.message,
-        props.mine ? styles.messageSended : styles.messageReceived,
+        isMyMessage() ? styles.messageSended : styles.messageReceived,
       ]}>
-      {!props.mine ? (
+      {!isMyMessage() ? (
         <Image
           style={{
             alignSelf: 'flex-start',
@@ -54,9 +58,9 @@ export function ChatBox(props: chatSendedProps) {
         style={[
           styles.cloud,
           {
-            backgroundColor: props.mine ? MAIN_COLOR : CHAT_BACKGOUND_COLOR,
-            borderTopStartRadius: props.mine ? 20 : 10,
-            borderTopEndRadius: props.mine ? 10 : 20,
+            backgroundColor: isMyMessage() ? MAIN_COLOR : CHAT_BACKGOUND_COLOR,
+            borderTopStartRadius: isMyMessage() ? 20 : 10,
+            borderTopEndRadius: isMyMessage() ? 10 : 20,
           },
         ]}
         delayLongPress={5000}
@@ -67,7 +71,7 @@ export function ChatBox(props: chatSendedProps) {
           <Text
             style={[
               styles.text,
-              {color: props.mine ? WHITE : FONT_COLOR_BLACK},
+              {color: isMyMessage() ? WHITE : FONT_COLOR_BLACK},
             ]}>
             {props.text}
           </Text>
@@ -84,12 +88,10 @@ const styles = StyleSheet.create({
     width: SIZE_WIDTH,
   },
   messageReceived: {
-    // marginLeft: 20,
     justifyContent: 'flex-start',
   },
   messageSended: {
     justifyContent: 'flex-end',
-    // marginRight: 29,
   },
   cloud: {
     maxWidth: moderateScale(250),

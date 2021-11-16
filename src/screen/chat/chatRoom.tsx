@@ -1,5 +1,12 @@
 import React from 'react';
-import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
+import {
+  FlatList,
+  SafeAreaView,
+  StyleSheet,
+  TextInput,
+  View,
+  Image,
+} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Text} from 'react-native-paper';
@@ -9,15 +16,18 @@ import {
   FONT_COLOR_BLACK,
   FONT_GREY,
   FONT_LIGHT_GREY,
+  GREY_BACKGOUND_COLOR,
   GREY_BORDER_COLOR,
+  SIZE_WIDTH,
 } from '../common/constants';
 import {ChatBox} from './components/chatBox';
+import {ChatInput} from './components/chatInput';
+import {Item} from 'react-native-paper/lib/typescript/components/List/List';
 
 interface chatRoomProps {
   navigation: StackNavigationProp<stackInterface>;
 }
 
-const userId = '12345';
 const data = [
   {id: '12345', text: '1안녕하세요'},
   {id: '12345', text: '2안녕하세요'},
@@ -47,6 +57,7 @@ export default function chatRoom(props: chatRoomProps) {
   const goBack = () => {
     props.navigation.pop();
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -64,34 +75,26 @@ export default function chatRoom(props: chatRoomProps) {
             style={[styles.iconStyle, {marginLeft: 8}]}
             name="search-outline"
           />
-          <Icon
-            style={[styles.iconStyle, {marginLeft: 8}]}
-            name="person-add-outline"
-          />
+          <Icon style={[styles.iconStyle, {marginLeft: 8}]} name="menu" />
         </View>
       </View>
-      <Text>
-        <FlatList
-          style={{display: 'flex'}}
-          data={data}
-          renderItem={({item}) => {
-            if (item.id === userId) {
-              return (
-                <ChatBox mine={true} text={item.text} image={item?.image} />
-              );
-            } else {
-              return (
-                <ChatBox mine={false} text={item.text} image={item?.image} />
-              );
-            }
-          }}></FlatList>
-      </Text>
+      <FlatList
+        data={data}
+        inverted
+        keyExtractor={item => item.id}
+        renderItem={({item}) => {
+          return <ChatBox id={item.id} text={item.text} image={item?.image} />;
+        }}
+      />
+      <ChatInput />
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+  },
   header: {
     display: 'flex',
     alignItems: 'center',

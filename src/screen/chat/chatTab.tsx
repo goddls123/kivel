@@ -53,7 +53,8 @@ export function chatTab(props: chatTabProps) {
             } else {
               return <ChatListView goToChatRoom={gotoChatRoom} />;
             }
-          }}></FlatList>
+          }}
+        />
       </View>
     </SafeAreaView>
   );

@@ -1,15 +1,59 @@
-import React from 'react'
-import { View, StyleSheet } from 'react-native';
+import React from 'react';
+import {View, StyleSheet, Image, TextInput} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {
+  GREY_BACKGOUND_COLOR,
+  GREY_BORDER_COLOR,
+  SIZE_WIDTH,
+} from '../../common/constants';
 
-interface chatInputProps {
+interface chatInputProps {}
 
+export function ChatInput() {
+  const [text, onChangeText] = React.useState('');
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity>
+        <Image source={require('../../../assets/icons/ic_more_share_24.png')} />
+      </TouchableOpacity>
+      <View style={styles.inputBox}>
+        <TextInput
+          value={text}
+          style={styles.input}
+          onChangeText={onChangeText}
+          placeholder="메시지 입력"
+        />
+      </View>
+      <TouchableOpacity>
+        {text ? (
+          <Image source={require('../../../assets/icons/ic_send_on.png')} />
+        ) : (
+          <Image source={require('../../../assets/icons/ic_send_off.png')} />
+        )}
+      </TouchableOpacity>
+    </View>
+  );
 }
-
-export function chatInput(props : chatInputProps) {
-        return (
-            <View>
-
-            </View>
-        );
-}
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    alignSelf: 'flex-end',
+    width: SIZE_WIDTH,
+    flexDirection: 'row',
+    paddingHorizontal: 16,
+    alignItems: 'center',
+    paddingVertical: 4,
+    backgroundColor: GREY_BACKGOUND_COLOR,
+  },
+  inputBox: {
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: GREY_BORDER_COLOR,
+    paddingVertical: 11,
+    paddingHorizontal: 16,
+    flex: 1,
+    marginHorizontal: 5,
+  },
+  input: {
+    fontSize: 14,
+  },
+});
