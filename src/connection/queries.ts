@@ -1,5 +1,13 @@
 import { gql } from "@apollo/client";
 
+export const SAVE_CHILD = gql`
+mutation saveChild($ChildInput : ChildInput!){
+	saveChild(ChildInput : $ChildInput){
+		id,
+		name,
+	}
+}
+`
 
 export const INSERT_SCHEDULE = gql`
 	mutation saveSchedule( $ScheduleInput : ScheduleInput!){
@@ -34,6 +42,25 @@ query {
 			longitude
 			memo
 			notificationTime
+		}
+	}
+}
+`
+
+export const WEEKLY_SCHEDULE = gql`
+query {
+	userSchedules{
+			schedules{
+			id
+			title
+			scheduleDate
+			startTime
+			repeatCycle
+			repeatDay
+			endTime
+			therapistId
+			location
+			period
 		}
 	}
 }

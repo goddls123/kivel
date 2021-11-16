@@ -17,7 +17,7 @@ import {ScheduleModalView} from './components/ScheduleModalView';
 import {RouteProp, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {stackInterface} from '../../types/navigationParam';
-import {scheduleType} from '../../types/types';
+import {parsedScheduleType, scheduleType} from '../../types/types';
 import {NavigationButton} from './components/NavigationButton';
 import {Divider} from '../common/divider';
 import {
@@ -34,7 +34,10 @@ import {ProfileModal} from './components/ProfileModal';
 // Test
 import {scheduleTypeTest, schedule_data} from '../test/testData';
 import {gql, useQuery} from '@apollo/client';
-import {GET_SCHEDULE} from '../../connection/queries';
+import {GET_SCHEDULE, WEEKLY_SCHEDULE} from '../../connection/queries';
+import { getThisWeek, scheduleDataParser } from '../calendar/service/calendarService';
+import { getDateYMD } from '../common/service/dateService';
+import { ActivityIndicator } from 'react-native-paper';
 //
 
 interface homeTabProps {
@@ -45,38 +48,64 @@ interface homeTabProps {
 export function homeTab(props: homeTabProps) {
     //////////// Todo
     //	profile, 이번주 일정, 이번주 과제 받아오고 패치
+    const {data : weeklyScheduleData , loading : weeklyScheduleLoading, error : weeklyScheduleError} = useQuery(WEEKLY_SCHEDULE)
+    const [weekSchedule, setWeekSchedule] = React.useState<parsedScheduleType[]>(); //이번 주 일정
+    
+    React.useEffect(() => {
+        if(weeklyScheduleData && weeklyScheduleData.userSchedules){            
+            let data = scheduleDataParser(weeklyScheduleData.userSchedules[0].schedules).sort(function(a : any, b : any){
+                            if(a.date > b.date) return 1
+                            else if(a.date < b.date) return -1
+                            else return 0
+                        })
+            console.log(data)
+            let result : parsedScheduleType[] = []
+            data.map((item : parsedScheduleType) => {
+                if(item.date >= getDateYMD(new Date(),'-') && item.date <= getThisWeek()[6].fullDateString){
+                    result.push(item)
+                }
+            })
+            setWeekSchedule(result)
+        }
+    },[weeklyScheduleData])
+    ////////////////////////////////////////////////////////
 
     const [scheduleModal, setScheduleModal] = React.useState(true);
     const [profileImageModal, setProfileImageModal] = React.useState(false);
-    const [weekSchedule, setWeekSchedule] = React.useState<scheduleType>(); //이번 주 일정
+    
     const [homework, setHomeWork] = React.useState<any>(); //이번 주 과제
 
 	function renderWeeklySchedule() {
-		if(weekSchedule){
-			return(
-				<ScrollView horizontal showsHorizontalScrollIndicator={false}>
-					<View style={styles.scheduleCardContainer}>
-						<TouchableOpacity onPress={() => {}}>
-							<ScheduleCard
-							height={SIZE_HEIGHT * 0.285}
-							width={SIZE_WIDTH * 0.6}
-							style={{marginRight: SIZE_WIDTH * 0.02}}/>
-						</TouchableOpacity>
-					</View>
-				</ScrollView>
-			)
+        let viewArr : Element[] = []
+        
+		if(weekSchedule?.length){
+            weekSchedule.map((item, id) => {
+                viewArr.push(
+                    <View key={id} style={styles.scheduleCardContainer}>
+                        <TouchableOpacity onPress={() => {}}>
+                            <ScheduleCard
+                            height={SIZE_HEIGHT * 0.285}
+                            width={SIZE_WIDTH * 0.6}
+                            style={{marginRight: SIZE_WIDTH * 0.02}}
+                            data={item}/>
+                        </TouchableOpacity>
+                    </View>
+                )
+            },[])
+            return (
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                    {viewArr}
+                </ScrollView>
+            )
 		} else {
 			return(
-				<View
-				style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+				<View key={111} style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
 					<Text style={styles.noItemText}>
 						주간 일정을 추가해주세요!
 					</Text>
 				</View>
 			)
 		}
-			
-
 	}
 
 	function renderWeeklyHomeWork() {
@@ -129,6 +158,8 @@ export function homeTab(props: homeTabProps) {
         }
     }
     BackHandler.addEventListener("hardwareBackPress" , () => handleBackButtonClick());
+    // backPressHandler
+
 
     return (
         <SafeAreaView style={styles.container}>
@@ -197,17 +228,21 @@ export function homeTab(props: homeTabProps) {
 
                 {/* 주간 일정 */}
                 <View style={styles.scheduleContainer}>
-                    <View style={styles.containerHeader}>
-                        <Text style={styles.weeklyScheduleText}>주간 일정</Text>
-                        <TouchableOpacity
-                            onPress={() => {
-                                props.navigation.navigate('Calendar');
-                            }}>
-                            <Text style={styles.weeklyScheduleText2}>전체 보기{'>'} </Text>
-                        </TouchableOpacity>
-                    </View>
-					
-					{ renderWeeklySchedule() }
+                    { 
+                        weeklyScheduleLoading 
+                        ? <ActivityIndicator size='large'></ActivityIndicator>
+                        : <View style={styles.containerHeader}>
+                            <Text style={styles.weeklyScheduleText}>주간 일정</Text>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    props.navigation.navigate('Calendar');
+                                }}>
+                                <Text style={styles.weeklyScheduleText2}>전체 보기{'>'} </Text>
+                            </TouchableOpacity>
+                        </View>
+                    }
+					{ !weeklyScheduleLoading ? renderWeeklySchedule() : null }
+                    
 
                 </View>
                 <Divider height={3} color="#ededed" />
@@ -313,6 +348,7 @@ const styles = StyleSheet.create({
     },
     scheduleContainer: {
         height: SIZE_HEIGHT * 0.39,
+        justifyContent : 'center'
     },
     containerHeader: {
         height: '15.5%',

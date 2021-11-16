@@ -49,3 +49,24 @@ export type screeningResult = {
 export type developmentRecordType = {
 	
 }
+
+export type childInfo = {
+	name : string
+	birthDate : string
+	sex : 'M' | 'W'
+	diagnosis? : string 
+	birthWeekNum? : number 
+	birthDayNum? : number 
+	height? : number
+	weight? : number
+	degreeSnack? : number 
+	degreeRule? : number 
+	degreeMeal? : number 
+	rearer? : string 
+	pill? : string 
+	diaper? : string 
+	allergy? : string 
+	seizure? : string 
+	etc? : string 
+	tendency? : string 
+}

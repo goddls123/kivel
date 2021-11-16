@@ -22,7 +22,7 @@ import {logInWithKakao, unlinkKakao} from '../login/service/loginService';
 import {Divider} from '../common/divider';
 import {AgreementList} from './components/AgreementList';
 import {Button} from '../common/components/Button';
-import { checkEssential } from '../common/service/check';
+
 
 interface AgreementProps {
     navigation: StackNavigationProp<stackInterface, 'SocialLogin'>;
@@ -36,6 +36,8 @@ export function Agreement(props: AgreementProps) {
     const [pInfoProvide, setPInfoProvide] = React.useState<boolean>(false); //개인정보 제3자 제공 동의
     const [marketingInfo, setMarketingInfo] = React.useState<boolean>(false); //마케팅 정보 수신동의
 
+
+    
     // 약관동의
     function setEntireState(value: boolean) {
         setAgreeAll(value);
@@ -46,12 +48,12 @@ export function Agreement(props: AgreementProps) {
     }
     // 필수동의항목 체크 확인
     const essentialOptionCheck = (): boolean => {
-        return checkEssential(serviceUse && pInfoCollection && pInfoProvide)
+        return (serviceUse && pInfoCollection && pInfoProvide)
     };
 
     // 전체 항목 체크 확인
     const entireOptionCheck = (): boolean => {
-        return checkEssential(serviceUse && pInfoCollection && pInfoProvide && marketingInfo)
+        return (serviceUse && pInfoCollection && pInfoProvide && marketingInfo)
     };
     
     React.useEffect(()=>{

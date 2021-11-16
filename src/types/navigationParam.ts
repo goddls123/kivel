@@ -1,7 +1,7 @@
 import { SchemaExtensionNode } from "graphql";
 import { essentialChildInfo, nurseryCaution, nurseryCaution2 } from "./childInfoTypes";
 import { diary } from "./DiaryTypes";
-import { screeningResult } from "./types";
+import { childInfo, screeningResult } from "./types";
 import { noticeType } from "./types";
 
 export type stackInterface = {
@@ -20,12 +20,12 @@ export type stackInterface = {
 
     //
     EnterChildInfo : undefined;
-    NurseryCaution : essentialChildInfo
+    NurseryCaution : childInfo
     // 이거 왜 안됌?
     // NurseryCaution2 : essentialChildInfo & (nurseryCaution | undefined)
     // ChildTendency : essentialChildInfo & (nurseryCaution | undefined) & (nurseryCaution2 | undefined)
-    NurseryCaution2 : essentialChildInfo & nurseryCaution
-    ChildTendency : essentialChildInfo | (essentialChildInfo & nurseryCaution ) | (essentialChildInfo & nurseryCaution2 ) | (essentialChildInfo & nurseryCaution & nurseryCaution2)
+    NurseryCaution2 : childInfo
+    ChildTendency : childInfo
     
 
     // childInfo

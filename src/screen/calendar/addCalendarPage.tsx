@@ -10,7 +10,7 @@ import DatePicker from 'react-native-date-picker'
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Button } from '../common/components/Button';
 import { useMutation } from '@apollo/client';
-import { INSERT_SCHEDULE } from '../../connection/queries';
+import { GET_SCHEDULE, INSERT_SCHEDULE } from '../../connection/queries';
 import { NavigationButton } from '../home/components/NavigationButton';
 import Modal from 'react-native-modal'
 import { Map } from '../map/map';
@@ -29,7 +29,9 @@ export function addCalendarPage(props : addCalendarPageProps) {
 
 	
 	const editData : any = props.route.params
-	const [insertSchedule , { data, loading, error }] = useMutation(INSERT_SCHEDULE);
+	const [insertSchedule , { data, loading, error }] = useMutation(INSERT_SCHEDULE,{
+		refetchQueries : [GET_SCHEDULE]
+	});
 	
 	const [title, setTitle] = React.useState<string>(editData?.title || '');
 	const [memo, setMemo] = React.useState<string>(editData?.memo || '');

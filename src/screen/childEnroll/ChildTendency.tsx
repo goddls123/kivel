@@ -12,7 +12,9 @@ import {
     Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { SAVE_CHILD } from '../../connection/queries';
 import {stackInterface} from '../../types/navigationParam';
+import { childInfo } from '../../types/types';
 import { Button } from '../common/components/Button';
 import {
     GLOBAL_MARGIN_HORIZON,
@@ -29,19 +31,14 @@ interface ChildTendencyProps {
 }
 
 export function ChildTendency(props: ChildTendencyProps) {
-    const [tendency, setTendency] = React.useState<string>()
+    const [childInfo, setChildInfo] = React.useState<childInfo>({...props.route.params})
+    const setTendency = (value : string) => {
+        setChildInfo({...childInfo,tendency : value})
+    }
     
-    const SAVE_CHILD = gql`
-        mutation saveChild($ChildInput : ChildInput!){
-            saveChild(ChildInput : $ChildInput){
-                id,
-                name,
-            }
-        }
-    `
-    const [saveChild, { data, loading, error }] = useMutation(SAVE_CHILD)
+    console.log(childInfo)
 
-    console.log('childTendency : ' ,props.route.params)
+    const [saveChild, { data, loading, error }] = useMutation(SAVE_CHILD)
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.innerContainer}>
@@ -66,20 +63,20 @@ export function ChildTendency(props: ChildTendencyProps) {
                     style={styles.textBoxStyle}
                     placeholder="ex) 낯을 많이가려요 / 친해지는데 시간이필요해요 / 정돈되지 않은 환경에 있으면 혼란스러워 해요 등등..."
                     placeholderTextColor="#d5d5d5"
-                    value={tendency}
+                    value={childInfo.tendency}
                     onChangeText={(text) => setTendency(text)}
                     multiline
                 ></TextInput>
 
                 <Button
                     text={'입력완료'}
-                    textColor={tendency ? 'white' : '#707070'}
+                    textColor={childInfo.tendency ? 'white' : '#707070'}
                     style={{
-                        backgroundColor: tendency ? MAIN_COLOR : '#ededed',
+                        backgroundColor: childInfo.tendency ? MAIN_COLOR : '#ededed',
                         marginTop : SIZE_HEIGHT * 0.1
                     }}
                     onPress={() => { 
-                        saveChild({variables : { ChildInput : {...props.route.params,tendency}}})
+                        saveChild({variables : { ChildInput : {...childInfo}}})
                         .then((result) => {
                             props.navigation.reset({routes: [{name: 'Home'}]})
                         })

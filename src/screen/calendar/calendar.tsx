@@ -59,19 +59,27 @@ export default function calendar({navigation, route}: calendarProps) {
 	const {data, loading, error} = useQuery(GET_SCHEDULE)
 	
 	React.useEffect(() => {
-		data && data.userSchedules
-		? setData().then(() => setMarkedDates(getDots()))
-		: null
-		
-	},[data])
-	
-	async function setData() {
+		data && data.userSchedules?
 		setParsedData(scheduleDataParser(data.userSchedules[0].schedules).sort(function(a : any, b : any){
 			if(a.date > b.date) return 1
 			else if(a.date < b.date) return -1
 			else return 0
 		}))
-	}
+		: null
+	},[data])
+
+	React.useEffect(() => {
+		setMarkedDates(getDots())
+	},[parsedData])
+
+
+	// async function setData() {
+	// 	setParsedData(scheduleDataParser(data.userSchedules[0].schedules).sort(function(a : any, b : any){
+	// 		if(a.date > b.date) return 1
+	// 		else if(a.date < b.date) return -1
+	// 		else return 0
+	// 	}))
+	// }
 	// const [parsedData , setParsedData] = React.useState<parsedScheduleType[]>(scheduleDataParser(schedule_data).sort(function(a : any, b : any){
 	// 	if(a.date > b.date) return 1
 	// 	else if(a.date < b.date) return -1
@@ -84,7 +92,6 @@ export default function calendar({navigation, route}: calendarProps) {
 	const [markedDates, setMarkedDates] = React.useState(getDots())
 	const [focusedDate, setFocusedDate] = useState<string>(getDateYMD(new Date(),'-'))
 	
-	console.log(markedDates)
 	
 	React.useEffect(() => {
 		setFocusedDate(selectedDate)
@@ -97,7 +104,7 @@ export default function calendar({navigation, route}: calendarProps) {
 	
 		for(let i = 0 ; i < parsedData.length; i++){
             
-            dots.push({key : parsedData[i].id, color : 'red'})
+            dots.push({key : parsedData[i].id, color : '#' + Math.round(Math.random() * 0xffffff).toString(16) })
             
             if(i == parsedData.length - 1){
                 marked[parsedData[i].date] = { dots : [...dots] }
@@ -271,7 +278,7 @@ export default function calendar({navigation, route}: calendarProps) {
 					</Text>
 					{/* 일정 card */}
 					{
-						parsedData?.map((data,id) => {
+						parsedData?.map((data ,id) => {
 							if(data.date == selectedDate){
 								return(
 									<ScheduleCard

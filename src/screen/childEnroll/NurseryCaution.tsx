@@ -24,6 +24,7 @@ import {SliderView} from './components/SliderView';
 import {Button} from '../common/components/Button';
 import {RouteProp} from '@react-navigation/native';
 import {essentialChildInfo, nurseryCaution} from '../../types/childInfoTypes';
+import { childInfo } from '../../types/types';
 
 interface NurseryCautionProps {
   navigation: StackNavigationProp<stackInterface, 'EnterChildInfo'>;
@@ -31,12 +32,28 @@ interface NurseryCautionProps {
 }
 
 export function NurseryCaution(props: NurseryCautionProps) {
-  const [degreeSnack, setDegreeSnack] = React.useState<number>(2);
-  const [degreeRule, setDegreeRule] = React.useState<number>(2);
-  const [degreeMeal, setDegreeMeal] = React.useState<number>(2);
-  const [rearer, setRearer] = React.useState<string>('');
+  
+	const [childInfo, setChildInfo] = React.useState<childInfo>({...props.route.params})
+	
+	const setDegreeSnack = (value : number) => {
+		setChildInfo({...childInfo, degreeSnack : value})
+	}
+	const setDegreeRule = (value : number) => {
+		setChildInfo({...childInfo, degreeRule : value})
+	}
+	const setDegreeMeal = (value : number) => {
+		setChildInfo({...childInfo, degreeMeal : value})
+	}
+	const setRearer = (value : string) => {
+		setChildInfo({...childInfo, rearer : value})
+	}
 
-  console.log('nurseryCaution : ', props.route.params);
+	//   const [degreeSnack, setDegreeSnack] = React.useState<number>(2);
+	//   const [degreeRule, setDegreeRule] = React.useState<number>(2);
+	//   const [degreeMeal, setDegreeMeal] = React.useState<number>(2);
+  	// const [rearer, setRearer] = React.useState<string>('');
+
+  	console.log('nurseryCaution : ', childInfo);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.innerContainer}>
@@ -58,7 +75,7 @@ export function NurseryCaution(props: NurseryCautionProps) {
             headerText={'아이에게 간식은'}
             contentLeft={['먹이지않아요']}
             contentRight={['원하면 주는 편이에요']}
-            value={degreeSnack}
+            value={childInfo.degreeSnack}
             setValue={setDegreeSnack}></SliderView>
 
           <SliderView
@@ -66,7 +83,7 @@ export function NurseryCaution(props: NurseryCautionProps) {
             headerText={'아이가 규칙을 어기고 떼를 쓰면'}
             contentLeft={['받아주기 보단', '그 자리에서 훈육해요']}
             contentRight={['아이가 진정될 때까지', '먼저 달래 주어요']}
-            value={degreeRule}
+            value={childInfo.degreeRule}
             setValue={setDegreeRule}></SliderView>
 
           <SliderView
@@ -74,7 +91,7 @@ export function NurseryCaution(props: NurseryCautionProps) {
             headerText={'아이가 식사를 거부하면'}
             contentLeft={['강요하지 않고', '밥을 치워요']}
             contentRight={['최대한 먹이려', '노력해요']}
-            value={degreeMeal}
+            value={childInfo.degreeMeal}
             setValue={setDegreeMeal}></SliderView>
 
           <Text style={styles.rearTextStyle}>아이를 주로 누가 양육하나요?</Text>
@@ -84,29 +101,25 @@ export function NurseryCaution(props: NurseryCautionProps) {
             placeholderTextColor="#d5d5d5"
             placeholder="ex) 엄마와 외할머니 또는 보육시설(유치원)"
             style={styles.textBoxStyle}
-            value={rearer}
+            value={childInfo.rearer}
             onChangeText={text => setRearer(text)}></TextInput>
 
           <Button
             text={'다음으로'}
-            disable={rearer ? false : true}
-            textColor={rearer ? 'white' : '#707070'}
+            disable={!childInfo.rearer}
+            textColor={childInfo.rearer ? 'white' : '#707070'}
             style={{
-              backgroundColor: rearer ? MAIN_COLOR : '#ededed',
+              backgroundColor: childInfo.rearer ? MAIN_COLOR : '#ededed',
               marginBottom: GLOBAL_MARGIN_VERTICAL,
             }}
-            onPress={() =>
-              props.navigation.navigate('NurseryCaution2', {
-                ...props.route.params,
-                ...{degreeMeal, degreeRule, degreeSnack, rearer},
-              })
-            }></Button>
+            onPress={() => props.navigation.navigate('NurseryCaution2', { ...childInfo }) }
+			></Button>
 
           <TouchableOpacity
             style={styles.underlineTextContainer}
             onPress={() =>
               props.navigation.navigate('NurseryCaution2', {
-                ...props.route.params,
+                ...childInfo,
                 ...{
                   degreeMeal: undefined,
                   degreeRule: undefined,
