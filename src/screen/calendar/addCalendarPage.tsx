@@ -149,18 +149,21 @@ export function addCalendarPage(props : addCalendarPageProps) {
 				variables : {
 					ScheduleInput : {
 						title : title,
-						scheduleDate : new Date(),
-						startTime : startDate,
-						endTime : endDate,
+						// scheduleDate : new Date(),
+						scheduleDate : '2021-11-15',
+						// startTime : startDate,
+						// endTime : endDate,
+						startTime : '12:00:00',
+						endTime : '13:00:00',
 						repeatCycle : value,
 						repeatDay : daySelected,
-						period : new Date(),
+						period : '2022-02-22',
 					}
 				}
 			}).then(() => {
 				props.navigation.goBack();
 			}).catch((e)=>
-				e.message
+				console.log(e)
 			)
 		}
 	}

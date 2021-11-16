@@ -111,6 +111,7 @@ export function getHour(date : string){
 
 export function scheduleDataParser(data : scheduleTypeTest[]){
     let schedule : any = []
+
       data?.map((item) => {
         let dateIndex = new Date(item.scheduleDate)
         let period = new Date(item.period)
@@ -158,7 +159,7 @@ export function scheduleDataParser(data : scheduleTypeTest[]){
             }
         
     })
-
+    
   return schedule
 }
 

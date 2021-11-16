@@ -9,6 +9,7 @@ import { Development } from './components/Development';
 import { Memo } from './components/Memo';
 import { RouteProp } from '@react-navigation/native';
 import { WarningModal } from '../common/components/WarningModal';
+import { ChallengingBehavior } from './components/ChallengingBehavior';
 
 interface addRecordProps {
 	navigation: StackNavigationProp<stackInterface>;
@@ -53,16 +54,14 @@ export function addRecord(props : addRecordProps) {
 
 		function renderComponent() {
 			if(radioState[0]){
-				return(
-					<Development />
-				)
-			} 
-			else if(radioState[2]) {
-				return(
-					<Memo />
-				)
+				return <Development /> 
 			}
-
+			else if(radioState[1]) {
+				return <ChallengingBehavior />
+			}
+			else if(radioState[2]) {
+				return <Memo />
+			}
 		}
 		
 		return (

@@ -17,8 +17,9 @@ export const USER_LOGIN = gql`
 	}`
 
 export const GET_SCHEDULE = gql`
-	query {
-		schedules{
+query {
+	userSchedules{
+			schedules{
 			id
 			title
 			scheduleDate
@@ -35,6 +36,7 @@ export const GET_SCHEDULE = gql`
 			notificationTime
 		}
 	}
+}
 `
 export const UPLOAD_FILE = gql`
 mutation uploadFile($file: [Upload!]!) {

@@ -36,6 +36,8 @@ import {CalendarStrip} from './components/CalendarStrip';
 import CalendarStrip1 from 'react-native-calendar-strip';
 import { assertLeafType, doTypesOverlap } from 'graphql';
 import { parsedScheduleType } from '../../types/types';
+import { useQuery } from '@apollo/client';
+import { GET_SCHEDULE } from '../../connection/queries';
 
 LocaleConfig.locales['kr'] = {
     monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월',],
@@ -53,18 +55,36 @@ interface calendarProps {
 export default function calendar({navigation, route}: calendarProps) {
     // data patch
 	//일정 데이터 패치
+	const [parsedData, setParsedData] = React.useState<any>([])
+	const {data, loading, error} = useQuery(GET_SCHEDULE)
 	
-	const [parsedData , setParsedData] = React.useState<parsedScheduleType[]>(scheduleDataParser(schedule_data).sort(function(a : any, b : any){
-		if(a.date > b.date) return 1
-		else if(a.date < b.date) return -1
-		else return 0
-	}))
+	React.useEffect(() => {
+		data && data.userSchedules
+		? setData().then(() => setMarkedDates(getDots()))
+		: null
+		
+	},[data])
+	
+	async function setData() {
+		setParsedData(scheduleDataParser(data.userSchedules[0].schedules).sort(function(a : any, b : any){
+			if(a.date > b.date) return 1
+			else if(a.date < b.date) return -1
+			else return 0
+		}))
+	}
+	// const [parsedData , setParsedData] = React.useState<parsedScheduleType[]>(scheduleDataParser(schedule_data).sort(function(a : any, b : any){
+	// 	if(a.date > b.date) return 1
+	// 	else if(a.date < b.date) return -1
+	// 	else return 0
+	// }))
 	////////////////////////////////
     
     const [calendarState, setCalendarState] = useState<'month' | 'week'>('month');
 	const [selectedDate, setSelectedDate] = useState<string>(getDateYMD(new Date(),'-'));
 	const [markedDates, setMarkedDates] = React.useState(getDots())
 	const [focusedDate, setFocusedDate] = useState<string>(getDateYMD(new Date(),'-'))
+	
+	console.log(markedDates)
 	
 	React.useEffect(() => {
 		setFocusedDate(selectedDate)
@@ -77,7 +97,7 @@ export default function calendar({navigation, route}: calendarProps) {
 	
 		for(let i = 0 ; i < parsedData.length; i++){
             
-            dots.push({key : parsedData[i].id, color : parsedData[i].color})
+            dots.push({key : parsedData[i].id, color : 'red'})
             
             if(i == parsedData.length - 1){
                 marked[parsedData[i].date] = { dots : [...dots] }
@@ -89,6 +109,7 @@ export default function calendar({navigation, route}: calendarProps) {
 		}
 		return marked
 	}
+	
 
     function changeView() {
         if (calendarState == 'month') setCalendarState('week');

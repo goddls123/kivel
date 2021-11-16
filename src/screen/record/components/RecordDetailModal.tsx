@@ -51,7 +51,7 @@ export function RecordDetailModal(props : RecordDetailModalProps) {
 
 	function renderContent() {
 
-		let dateFormat = getDateYMD(currentDate,'.') + ' (' + getKoreanDay(currentDate.getDay()) +')' + ' | ' + props.data.time.substr(0,5) 
+		let dateFormat = getDateYMD(currentDate,'.') + ' (' + getKoreanDay(currentDate.getDay()) +')' + ' | ' + props.data.time?.substr(0,5) 
 		if(props.data.kind == '발달기록'){
 			return(
 				<View>

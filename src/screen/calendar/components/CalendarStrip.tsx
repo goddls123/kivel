@@ -78,8 +78,18 @@ export function CalendarStrip(props : schedulerTestProps) {
 			props.scheduleData.map((data, id) => {
 				if(data.date == item.fullDateString){
 					viewArr.push(
-						<View key={id} style={{ width: 6, height: 6, marginTop: 1, borderRadius: 2, backgroundColor : data.color, marginHorizontal : 1}} />
-					)
+                        <View
+                        key={id}
+                        style={{
+                            width: 6,
+                            height: 6,
+                            marginTop: 1,
+                            borderRadius: 2,
+                            // backgroundColor: data.color,
+                            backgroundColor : '#' + Math.round(Math.random() * 0xffffff).toString(16),
+                            marginHorizontal: 1,
+                        }}/>
+                    );
 				}
 			})
 			return viewArr
@@ -93,36 +103,35 @@ export function CalendarStrip(props : schedulerTestProps) {
             let length = data.length
 
             thisWeek.map((item,id) => {
-                if(dataIndex < length){
-                    while(item.fullDateString >= data[dataIndex].date){                        
-                        if(item.fullDateString == data[dataIndex].date){
-                            let startHour = parseInt(data[dataIndex].startTime.substr(0,2)) + parseFloat(data[dataIndex].startTime.substr(3,2))/60 - 8
-                            let endHour = parseInt(data[dataIndex].endTime.substr(0,2)) + parseFloat(data[dataIndex].endTime.substr(3,2))/60- 8
-                            if(startHour < 0) {
-                                startHour = 0
-                            }
-                            if(endHour < 0) {
-                                endHour = 0
-                            }
-
-                            viewArr.push(
-                                <View 
-                                    key={Math.random()}
-                                    style={{
-                                    left : HOUR_LEFT_MARGIN + HOUR_WIDTH * id,
-                                    top : HOUR_HEIGHT * startHour,
-                                    position : 'absolute', 
-                                    height : HOUR_HEIGHT * (endHour - startHour), 
-                                    width : HOUR_WIDTH * 0.9,
-                                    borderRadius : 6,
-                                    backgroundColor : data[dataIndex].color,
-                                }}>
-                                    <Text>에베베베</Text>
-                                </View>
-                            )
+                while(dataIndex < length && item.fullDateString >= data[dataIndex].date){                        
+                    if(item.fullDateString == data[dataIndex].date){
+                        let startHour = parseInt(data[dataIndex].startTime.substr(0,2)) + parseFloat(data[dataIndex].startTime.substr(3,2))/60 - 8
+                        let endHour = parseInt(data[dataIndex].endTime.substr(0,2)) + parseFloat(data[dataIndex].endTime.substr(3,2))/60- 8
+                        if(startHour < 0) {
+                            startHour = 0
                         }
-                        dataIndex ++
+                        if(endHour < 0) {
+                            endHour = 0
+                        }
+
+                        viewArr.push(
+                            <View 
+                                key={dataIndex}
+                                style={{
+                                left : HOUR_LEFT_MARGIN + HOUR_WIDTH * id,
+                                top : HOUR_HEIGHT * startHour,
+                                position : 'absolute', 
+                                height : HOUR_HEIGHT * (endHour - startHour), 
+                                width : HOUR_WIDTH * 0.9,
+                                borderRadius : 6,
+                                // backgroundColor : data[dataIndex].color,
+                                backgroundColor : '#' + Math.round(Math.random() * 0xffffff).toString(16)
+                            }}>
+                                <Text>에베베베</Text>
+                            </View>
+                        )
                     }
+                    dataIndex ++
                 }
             })
             return viewArr
