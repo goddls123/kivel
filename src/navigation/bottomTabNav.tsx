@@ -12,7 +12,6 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { MAIN_COLOR } from '../screen/common/constants';
 
 
-
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 

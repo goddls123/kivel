@@ -7,9 +7,9 @@ import {setContext} from '@apollo/client/link/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // graphql api 주소
 const wsLink = new WebSocketLink({
-	// uri: `ws://192.168.35.90:3000/graphql`,
+	uri: `ws://192.168.35.13:3000/graphql`,
 	// uri: `ws://192.168.0.39:3000/graphql`,
-	uri: `ws://carnorm.com:3000/graphql`,
+	// uri: `ws://carnorm.com:3000/graphql`,
 	options: {
 		reconnect: true,
 	},
@@ -18,7 +18,7 @@ const wsLink = new WebSocketLink({
 const authLink = setContext(async (_, {headers}) => {
 	const token = await AsyncStorage.getItem('ACT');
 	const platform = await AsyncStorage.getItem('platform');
-
+	
 	if (token && platform) {
 		return {
 			headers: {
@@ -28,13 +28,13 @@ const authLink = setContext(async (_, {headers}) => {
 		};
 	}
 
-	throw new Error('토큰없음 병신아');
+	throw new Error('토큰없음');
 });
 
 const httpLink = createUploadLink({
-	// uri: 'http://192.168.35.90:3000/graphql',
+	uri: 'http://192.168.35.13:3000/graphql',
 	// uri: 'http://192.168.0.39:3000/graphql',
-	uri: 'http://carnorm.com:3000/graphql',
+	// uri: 'http://carnorm.com:3000/graphql',
 });
 
 // subscription socket 통신 주소

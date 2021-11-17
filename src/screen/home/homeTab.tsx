@@ -17,7 +17,7 @@ import {ScheduleModalView} from './components/ScheduleModalView';
 import {RouteProp, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {stackInterface} from '../../types/navigationParam';
-import {parsedScheduleType, scheduleType} from '../../types/types';
+import {childInfoHome, parsedScheduleType, scheduleType} from '../../types/types';
 import {NavigationButton} from './components/NavigationButton';
 import {Divider} from '../common/divider';
 import {
@@ -34,10 +34,11 @@ import {ProfileModal} from './components/ProfileModal';
 // Test
 import {scheduleTypeTest, schedule_data} from '../test/testData';
 import {gql, useQuery} from '@apollo/client';
-import {GET_SCHEDULE, WEEKLY_SCHEDULE} from '../../connection/queries';
+import {GET_CHILD_INFO_HOME, GET_SCHEDULE, WEEKLY_SCHEDULE} from '../../connection/queries';
 import { getThisWeek, scheduleDataParser } from '../calendar/service/calendarService';
 import { getDateYMD } from '../common/service/dateService';
 import { ActivityIndicator } from 'react-native-paper';
+import { ScreenStackHeaderBackButtonImage } from 'react-native-screens';
 //
 
 interface homeTabProps {
@@ -46,8 +47,18 @@ interface homeTabProps {
 }
 
 export function homeTab(props: homeTabProps) {
-    //////////// Todo
-    //	profile, 이번주 일정, 이번주 과제 받아오고 패치
+    //////////// patch
+    // profile
+    const {data : childInfoData, loading : childInfoLoading, error : childInfoError} = useQuery(GET_CHILD_INFO_HOME)
+    const [childInfo, setChildInfo] = React.useState<childInfoHome>()
+    React.useEffect(() => {
+        if(childInfoData && childInfoData.userChild){
+            setChildInfo(childInfoData.userChild[0].child)
+        }
+    },[childInfoData,childInfoLoading])
+    
+    // 
+    //이번주 일정
     const {data : weeklyScheduleData , loading : weeklyScheduleLoading, error : weeklyScheduleError} = useQuery(WEEKLY_SCHEDULE)
     const [weekSchedule, setWeekSchedule] = React.useState<parsedScheduleType[]>(); //이번 주 일정
     
@@ -187,7 +198,7 @@ export function homeTab(props: homeTabProps) {
                     <MainProfile
                     style={styles.profileContainer}
                     onPress={setProfileImageModal}
-                    imageUri='https://www.ftimes.kr/news/photo/202106/11498_12064_419.png'></MainProfile>
+                    data={childInfo}></MainProfile>
 
                     <View style={styles.childInfoButtonContainer}>
                         <TouchableOpacity
@@ -232,7 +243,7 @@ export function homeTab(props: homeTabProps) {
                         weeklyScheduleLoading 
                         ? <ActivityIndicator size='large'></ActivityIndicator>
                         : <View style={styles.containerHeader}>
-                            <Text style={styles.weeklyScheduleText}>주간 일정</Text>
+                            <Text style={styles.weeklyScheduleText}>주간 일정 {weekSchedule?.length}</Text>
                             <TouchableOpacity
                                 onPress={() => {
                                     props.navigation.navigate('Calendar');

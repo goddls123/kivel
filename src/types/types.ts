@@ -46,9 +46,6 @@ export type screeningResult = {
 	memo : string | undefined
 }
 
-export type developmentRecordType = {
-	
-}
 
 export type childInfo = {
 	name : string
@@ -69,4 +66,19 @@ export type childInfo = {
 	seizure? : string 
 	etc? : string 
 	tendency? : string 
+}
+
+export type childInfoHome = {
+	name : string,
+	birthDate : string,
+	sex : string,
+	imageURL? : string,
+}
+
+export type developmentRecordType = {
+	occurenceDate : Date
+	emergency : boolean
+	title : string
+	problem : string
+	detail : string
 }

@@ -36,7 +36,6 @@ export function ChildTendency(props: ChildTendencyProps) {
         setChildInfo({...childInfo,tendency : value})
     }
     
-    console.log(childInfo)
 
     const [saveChild, { data, loading, error }] = useMutation(SAVE_CHILD)
     return (

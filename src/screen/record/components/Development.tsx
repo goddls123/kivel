@@ -12,16 +12,43 @@ import { Button } from '../../common/components/Button';
 import { ReactNativeFile } from 'extract-files';
 import ImagePicker from 'react-native-image-crop-picker'
 import { requestCameraPermission } from '../../common/service/cameraServices';
+import { developmentRecordType } from '../../../types/types';
+import { useMutation } from '@apollo/client';
+import { UPLOAD_DEVELOPMENT_RECORD } from '../../../connection/queries';
+import { useNavigation } from '@react-navigation/core';
 
 interface DevelopmentProps {
 }
 
 export function Development(props: DevelopmentProps) {
+	const navigation = useNavigation()
+
+	const [record, setRecord] = React.useState<developmentRecordType>({
+		title : '',
+		detail : '',
+		emergency : false,
+		occurenceDate : new Date(),
+		problem : ''
+	})
+	const setTitle = (value : string) => {
+		setRecord({...record, title : value})
+	}
+	const setIsEmergency = (value : boolean) => {
+		setRecord({...record, emergency : value})
+	}
+	const setOccurenceDate = (value : Date) => {
+		setRecord({...record, occurenceDate : new Date()})
+	}
+	const setProblemArea = (value : string) => {
+		setRecord({...record, problem : value})
+	}
+	const setDetail = (value : string) => {
+		setRecord({...record, detail : value})
+	}
 	
+	const [uploadRecord, {loading, data, error}] = useMutation(UPLOAD_DEVELOPMENT_RECORD)
+
 	const [modalVisible, setModalVisible] = React.useState(false)
-	const [isEmergency, setIsEmergency] = React.useState(false)
-	const [occurenceDate, setOccurenceDate] = React.useState(new Date())
-	const [problemArea, setProblemArea] = React.useState<string>()
 	const [images, setImages] = React.useState<ReactNativeFile[]>()
 
 	function renderDateButton() {
@@ -29,14 +56,14 @@ export function Development(props: DevelopmentProps) {
 			<View style={styles.dateButtonInnerContainer}>
 				<TouchableOpacity onPress = {() => setModalVisible(true)}>
 					<View style={styles.dateTextBox}>
-						<Text style={styles.dateText}>{getDateYMD(occurenceDate,'. ') + '(' + getDayKorean(occurenceDate.getDay()) + ')'}</Text>
+						<Text style={styles.dateText}>{getDateYMD(record.occurenceDate,'. ') + '(' + getDayKorean(record.occurenceDate.getDay()) + ')'}</Text>
 						<Icon style={styles.chevronDownIcon} name="chevron-down"></Icon>
 					</View>
 				</TouchableOpacity>
 
 				<TouchableOpacity onPress = {() => setModalVisible(true)}>
 					<View style={styles.dateTextBox}>
-						<Text style={styles.dateText}>{getTime(occurenceDate, ' : ')}</Text>
+						<Text style={styles.dateText}>{getTime(record.occurenceDate, ' : ')}</Text>
 						<Icon style={styles.chevronDownIcon} name="chevron-down"></Icon>
 					</View>
 				</TouchableOpacity>
@@ -60,7 +87,7 @@ export function Development(props: DevelopmentProps) {
 			viewArr.push(
 				<View key={id} style={{alignItems : 'center'}}>
 					<TouchableOpacity onPress={() => setProblemArea(item.title)}>
-						<View style={[styles.problemButtonBox,{backgroundColor : problemArea == item.title ? MAIN_COLOR : '#ededed',}]}>
+						<View style={[styles.problemButtonBox,{backgroundColor : record.problem == item.title ? MAIN_COLOR : '#ededed',}]}>
 							<Image style={styles.problemButtonImage} source={item.img}></Image>
 						</View>
 					</TouchableOpacity>
@@ -149,9 +176,9 @@ export function Development(props: DevelopmentProps) {
                     <Switch
                         style={{alignSelf: 'flex-end'}}
                         trackColor={{false: '#767577', true: '#ffebee'}}
-                        thumbColor={isEmergency ? MAIN_COLOR : '#f4f3f4'}
-                        onValueChange={() => setIsEmergency(!isEmergency)}
-                        value={isEmergency}/>
+                        thumbColor={record.emergency ? MAIN_COLOR : '#f4f3f4'}
+                        onValueChange={() => setIsEmergency(!record.emergency)}
+                        value={record.emergency}/>
                 </View>
             </View>
             <Divider height={4} color={'#ededed'}></Divider>
@@ -162,7 +189,9 @@ export function Development(props: DevelopmentProps) {
                 <TextInput
                     style={styles.textInputStyle}
                     placeholder="문제를 입력해주세요"
-                    placeholderTextColor="#d5d5d5"></TextInput>
+                    placeholderTextColor="#d5d5d5"
+					onChangeText={(text) => setTitle(text)}
+					value={record.title}></TextInput>
                 <Text style={{color: 'black', fontSize: 16}}>+ 이전 문제에서 추가</Text>
             </View>
             <Divider height={4} color={'#ededed'}></Divider>
@@ -183,6 +212,8 @@ export function Development(props: DevelopmentProps) {
 				placeholderTextColor='#d5d5d5'
 				textAlignVertical='top'
 				multiline
+				value = {record.detail}
+				onChangeText={(text) => setDetail(text)}
 				></TextInput>
 
 				<Text style={styles.boldText}>사진을 첨부해주세요</Text>
@@ -199,7 +230,21 @@ export function Development(props: DevelopmentProps) {
             </View>            
 
 			<View style={{marginHorizontal : GLOBAL_MARGIN_HORIZON, marginVertical : GLOBAL_MARGIN_VERTICAL}}>
-				<Button text={'작성완료'} textColor={'white'} style={{backgroundColor : MAIN_COLOR, elevation :3}}></Button>
+				<Button onPress={() => 
+				uploadRecord({
+					variables : {
+						DevelopmentRecordInput : record
+					}
+				})
+				.then(() => navigation.goBack())
+				.catch(e => 
+					{
+						console.log(e)
+					}
+					
+				)
+			}
+				text={'작성완료'} textColor={'white'} style={{backgroundColor : MAIN_COLOR, elevation :3}}></Button>
 			</View>
 
 
@@ -207,7 +252,7 @@ export function Development(props: DevelopmentProps) {
             <Modal isVisible={modalVisible}>
                 <DateTimeScroller
 				setDate={setOccurenceDate}
-				date={occurenceDate}
+				date={record.occurenceDate}
 				setModalVisible={setModalVisible} />
             </Modal>
 

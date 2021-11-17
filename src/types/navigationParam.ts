@@ -18,12 +18,10 @@ export type stackInterface = {
     Agreement : undefined;
     LoginSplash : undefined;
 
-    //
+    
+    //아이 정보 입력
     EnterChildInfo : undefined;
     NurseryCaution : childInfo
-    // 이거 왜 안됌?
-    // NurseryCaution2 : essentialChildInfo & (nurseryCaution | undefined)
-    // ChildTendency : essentialChildInfo & (nurseryCaution | undefined) & (nurseryCaution2 | undefined)
     NurseryCaution2 : childInfo
     ChildTendency : childInfo
     
