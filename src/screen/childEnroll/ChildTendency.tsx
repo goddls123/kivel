@@ -12,7 +12,7 @@ import {
     Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { SAVE_CHILD } from '../../connection/queries';
+import { GET_CHILD_INFO, GET_CHILD_INFO_HOME, SAVE_CHILD } from '../../connection/queries';
 import {stackInterface} from '../../types/navigationParam';
 import { childInfo } from '../../types/types';
 import { Button } from '../common/components/Button';
@@ -36,8 +36,10 @@ export function ChildTendency(props: ChildTendencyProps) {
         setChildInfo({...childInfo,tendency : value})
     }
     
-
-    const [saveChild, { data, loading, error }] = useMutation(SAVE_CHILD)
+    
+    const [saveChild, { data, loading, error }] = useMutation(SAVE_CHILD,{
+        refetchQueries : [GET_CHILD_INFO,GET_CHILD_INFO_HOME]
+    })
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.innerContainer}>

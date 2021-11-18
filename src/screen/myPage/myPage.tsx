@@ -7,6 +7,7 @@ import { stackInterface } from '../../types/navigationParam';
 import { Header } from '../childInfo/components/Header';
 import { GLOBAL_MARGIN_HORIZON, SIZE_HEIGHT, SIZE_WIDTH } from '../common/constants';
 import { Divider } from '../common/divider';
+import { MainProfile } from '../home/components/MainProfile';
 
 interface myPageProps {
 	navigation: StackNavigationProp<stackInterface>;
@@ -16,9 +17,16 @@ interface myPageProps {
 export function myPage(props : myPageProps) {
 		return (
 			<SafeAreaView style={{backgroundColor : 'white', flex : 1}}>
-				<Header></Header>
-				<View style={{marginHorizontal : GLOBAL_MARGIN_HORIZON}}>
+				{/* <Header></Header> */}
 
+				<View style={{marginHorizontal : GLOBAL_MARGIN_HORIZON}}>
+				<MainProfile
+				style={styles.profileContainer}
+				onPress={() => console.log('a)')}
+				// data={childInfo}
+				></MainProfile>
+
+				
 					<View style={styles.itemContainer}>
 						<TouchableOpacity style={styles.touchItemContainer} onPress={() => props.navigation.navigate('Question')}>
 						<Image style={styles.imageStyle} source={require('../../assets/icons/ic_contact_24.png')} />
@@ -74,4 +82,11 @@ const styles = StyleSheet.create({
 	touchItemContainer : {flexDirection : 'row', alignItems : 'center'},
 	textStyle : {fontSize :18, color : 'black'},
 	imageStyle : {height : SIZE_WIDTH * 0.06 , width : SIZE_WIDTH * 0.06 },
+	profileContainer: {
+		marginTop : GLOBAL_MARGIN_HORIZON,
+        height: SIZE_HEIGHT * 0.125,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        flexDirection: 'row',
+    },
 })

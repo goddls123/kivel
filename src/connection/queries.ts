@@ -8,6 +8,46 @@ mutation saveChild($ChildInput : ChildInput!){
 	}
 }`
 
+export const GET_CHILD_INFO = gql`
+query{
+	userChild{
+	  	child{
+		  	id
+			name
+			birthDate
+			sex
+			height
+			weight
+			birthWeekNum
+			birthDayNum
+			pill
+			diaper
+			allergy
+			seizure
+			etc
+			tendency
+			diagnosis
+			degreeSnack
+			degreeRule
+			degreeMeal
+			rearer
+	  	}
+	}
+}`
+
+export const GET_CHILD_INFO_HOME = gql`
+query{
+	userChild{
+	  	child{
+		  	id
+			name
+			birthDate
+			sex
+	  	}
+	}
+}`
+
+
 export const INSERT_SCHEDULE = gql`
 	mutation saveSchedule( $ScheduleInput : ScheduleInput!){
 		saveSchedule( ScheduleInput : $ScheduleInput){
@@ -67,17 +107,6 @@ mutation uploadFile($file: [Upload!]!) {
   uploadFile(file: $file) 
 }`;
 
-export const GET_CHILD_INFO_HOME = gql`
-query{
-	userChild{
-	  	child{
-		  	id
-			name
-			birthDate
-			sex
-	  	}
-	}
-}`
 
 export const UPLOAD_DEVELOPMENT_RECORD =gql`
 mutation saveDevelopmentRecord($DevelopmentRecordInput : DevelopmentRecordInput!){

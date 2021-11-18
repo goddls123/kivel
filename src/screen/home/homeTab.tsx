@@ -52,10 +52,14 @@ export function homeTab(props: homeTabProps) {
     const {data : childInfoData, loading : childInfoLoading, error : childInfoError} = useQuery(GET_CHILD_INFO_HOME)
     const [childInfo, setChildInfo] = React.useState<childInfoHome>()
     React.useEffect(() => {
-        if(childInfoData && childInfoData.userChild){
+        if(childInfoError){
+            console.log(childInfoError)
+            props.navigation.navigate('ServerProblem')
+        }
+        else if(childInfoData && childInfoData.userChild){
             setChildInfo(childInfoData.userChild[0].child)
         }
-    },[childInfoData,childInfoLoading])
+    },[childInfoData,childInfoLoading,childInfoError])
     
     // 
     //이번주 일정
@@ -69,7 +73,6 @@ export function homeTab(props: homeTabProps) {
                             else if(a.date < b.date) return -1
                             else return 0
                         })
-            console.log(data)
             let result : parsedScheduleType[] = []
             data.map((item : parsedScheduleType) => {
                 if(item.date >= getDateYMD(new Date(),'-') && item.date <= getThisWeek()[6].fullDateString){
@@ -78,7 +81,7 @@ export function homeTab(props: homeTabProps) {
             })
             setWeekSchedule(result)
         }
-    },[weeklyScheduleData])
+    },[weeklyScheduleData,weeklyScheduleLoading,weeklyScheduleError])
     ////////////////////////////////////////////////////////
 
     const [scheduleModal, setScheduleModal] = React.useState(true);
@@ -211,23 +214,23 @@ export function homeTab(props: homeTabProps) {
                     {/* navigation 버튼 */}
                     <View style={styles.navigationButtonContainer}>
                         <NavigationButton
-                            onPress={() => {
-                                props.navigation.navigate('AddRecord',{radioState : [false, false, true]});
-                            }}
+                            onPress={() => { props.navigation.navigate('AddRecord',{radioState : [false, false, true]}) }}
                             style={{flex: 1}}
                             imageStyle={styles.navigationButtonStyle}
                             imageType="note"
-                            buttonName={'성장 노트'}
+                            buttonName={'메모'}
                         />
 
                         <NavigationButton
+                            onPress={() => { props.navigation.navigate('AddRecord',{radioState : [false, true, false]}) }}
                             style={{flex: 1}}
                             imageStyle={styles.navigationButtonStyle}
                             imageType="trouble"
-                            buttonName={'호소문제 등록'}
+                            buttonName={'문제행동 등록'}
                         />
 
                         <NavigationButton
+                            onPress={() => { props.navigation.navigate('AddHomeWork') }}
                             style={{flex: 1}}
                             imageStyle={styles.navigationButtonStyle}
                             imageType="homeWork"

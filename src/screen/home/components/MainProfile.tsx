@@ -11,6 +11,7 @@ import {
 import {FONT_COLOR_BLACK, SIZE_WIDTH} from '../../common/constants';
 import Icon from 'react-native-vector-icons/Ionicons'
 import { childInfoHome } from '../../../types/types';
+import { useNavigation } from '@react-navigation/core';
 
 interface mainProfileProps {
     style: ViewStyle;
@@ -19,6 +20,7 @@ interface mainProfileProps {
 }
 
 export function MainProfile(props: mainProfileProps) {
+    const navigation = useNavigation()
     return (
         props.data 
         ?
@@ -26,12 +28,8 @@ export function MainProfile(props: mainProfileProps) {
             {/* 헤더 텍스트 */}
             <TouchableOpacity style={styles.profileImage} onPress={() => props.onPress(true) }>
                 <Image style={{height: SIZE_WIDTH * 0.22, width: SIZE_WIDTH * 0.22, borderRadius: props.data.imageURL ? 100 : 0 }}
-                    source={
-                        props.data.imageURL
-                            ? {uri: props.data.imageURL}
-                            : require('../../../assets/icons/ic_profile.png')
-                    }
-                />
+                    source={ props.data.imageURL ? {uri: props.data.imageURL} : require('../../../assets/icons/ic_profile.png') } 
+                    />
             </TouchableOpacity>
             <View>
                 <Text style={styles.babyName}>
@@ -47,7 +45,7 @@ export function MainProfile(props: mainProfileProps) {
                 <Image style={{height: SIZE_WIDTH * 0.22, width: SIZE_WIDTH * 0.22 }} source={ require('../../../assets/icons/ic_profile.png') }/>
             </TouchableOpacity>
             <View>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('EnterChildInfo')}>
                     <Text style={styles.babyName}>
                         아이정보를 등록해주세요!
                     </Text>

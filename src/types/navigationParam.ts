@@ -43,4 +43,5 @@ export type stackInterface = {
     Question : undefined
     AddRecord : any
     AddHomeWork : any
+    ServerProblem : undefined
 }

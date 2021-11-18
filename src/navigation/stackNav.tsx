@@ -27,6 +27,7 @@ import { addRecord } from '../screen/record/addRecord';
 import { Splash } from '../screen/common/components/Splash';
 import { authCheck } from '../screen/common/authCheck';
 import { addHomeWork } from '../screen/record/addHomework';
+import { serverProblem } from '../screen/common/serverProblem';
 
 
 const  Stack  =  createStackNavigator<stackInterface>();
@@ -66,6 +67,7 @@ export  const  StackNav:  React.FC  =  ({})  =>  {
 
                 <Stack.Screen name="map"  component={Map} options={{headerShown:  false}} />
                 
+                <Stack.Screen name='ServerProblem'  component={serverProblem} options={{headerShown:  false}} />
             </Stack.Navigator>
     );
 };

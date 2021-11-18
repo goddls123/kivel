@@ -28,6 +28,7 @@ export function addRecord(props : addRecordProps) {
 		}
 		BackHandler.addEventListener("hardwareBackPress" , () => handleBackButtonClick());
 	
+		console.log(props.route.params?.radioState)
 		const [radioState, setRadioState] = React.useState(props.route.params? props.route.params.radioState : [true, false, false])
 		function renderRadioButton() {
 			let viewArr : any = []
