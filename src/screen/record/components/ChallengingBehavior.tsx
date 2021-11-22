@@ -7,21 +7,48 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { Divider } from '../../common/divider';
 import Modal from 'react-native-modal'
 import { DateTimeScroller } from './DateTimeScroller';
-import { getDateYMD, getDayKorean, getTime } from '../../common/service/dateService';
+import { getDateFromYMDHmsString, getDateYMD, getDateYMDHms, getDayKorean, getTime } from '../../common/service/dateService';
 import { Button } from '../../common/components/Button';
 import { ReactNativeFile } from 'extract-files';
 import ImagePicker from 'react-native-image-crop-picker'
 import { requestCameraPermission } from '../../common/service/cameraServices';
+import { challengingBehaviorType } from '../../../types/types';
+import { useMutation } from '@apollo/client';
+import { UPLOAD_CHALLENGING_BEHAVIOR } from '../../../connection/queries';
+import { useNavigation } from '@react-navigation/core';
 
 interface ChallengingBehaviorProps {
 }
 
 export function ChallengingBehavior(props: ChallengingBehaviorProps) {
+	const navigation = useNavigation()
+	const [uploadBehavior ,{data, loading, error}] = useMutation(UPLOAD_CHALLENGING_BEHAVIOR)
+
 	
+	const [challengingBehavior , setChallengingBehavior] = React.useState<challengingBehaviorType>({
+		occurenceDate : getDateYMDHms(new Date()),
+		content : '',
+		fixedMethod : '',
+		title : '',
+	})
+	console.log(challengingBehavior)
+	const setOccurenceDate = (value : Date) => {
+		let date = getDateYMDHms(value)
+		setChallengingBehavior({...challengingBehavior,occurenceDate : date})
+	}
+	const setTitle = ( value : string ) => {
+		setChallengingBehavior({...challengingBehavior, title : value})
+	}
+	const setContent = ( value : string ) => {
+		setChallengingBehavior({...challengingBehavior, content : value})
+	}
+	const setFixedMethod = ( value : string ) => {
+		setChallengingBehavior({...challengingBehavior, fixedMethod : value})
+	}
+
+
 	const [modalVisible, setModalVisible] = React.useState(false)
 	const [isEmergency, setIsEmergency] = React.useState(false)
-	const [occurenceDate, setOccurenceDate] = React.useState(new Date())
-	const [problemArea, setProblemArea] = React.useState<string>()
 	const [images, setImages] = React.useState<ReactNativeFile[]>()
 
 	function renderDateButton() {
@@ -29,14 +56,14 @@ export function ChallengingBehavior(props: ChallengingBehaviorProps) {
 			<View style={styles.dateButtonInnerContainer}>
 				<TouchableOpacity onPress = {() => setModalVisible(true)}>
 					<View style={styles.dateTextBox}>
-						<Text style={styles.dateText}>{getDateYMD(occurenceDate,'. ') + '(' + getDayKorean(occurenceDate.getDay()) + ')'}</Text>
+						<Text style={styles.dateText}>{challengingBehavior.occurenceDate.substr(0,10) + '(' + getDayKorean(getDateFromYMDHmsString(challengingBehavior.occurenceDate).getDay()) + ')'}</Text>
 						<Icon style={styles.chevronDownIcon} name="chevron-down"></Icon>
 					</View>
 				</TouchableOpacity>
 
 				<TouchableOpacity onPress = {() => setModalVisible(true)}>
 					<View style={styles.dateTextBox}>
-						<Text style={styles.dateText}>{getTime(occurenceDate, ' : ')}</Text>
+						<Text style={styles.dateText}>{challengingBehavior.occurenceDate.substr(11,5)}</Text>
 						<Icon style={styles.chevronDownIcon} name="chevron-down"></Icon>
 					</View>
 				</TouchableOpacity>
@@ -132,7 +159,10 @@ export function ChallengingBehavior(props: ChallengingBehaviorProps) {
                 <TextInput
                     style={styles.textInputStyle}
                     placeholder="문제를 입력해주세요"
-                    placeholderTextColor="#d5d5d5"></TextInput>
+                    placeholderTextColor="#d5d5d5"
+					onChangeText={(text) => setTitle(text)}
+					value={challengingBehavior.title}
+					></TextInput>
                 <Text style={{color: 'black', fontSize: 16}}>+ 이전 문제에서 추가</Text>
             </View>
             <Divider height={4} color={'#ededed'}></Divider>
@@ -144,6 +174,8 @@ export function ChallengingBehavior(props: ChallengingBehaviorProps) {
 				style={{marginTop : 10, borderRadius : 10, borderColor : '#d5d5d5', borderWidth : 1, height : SIZE_WIDTH * 0.4, textAlignVertical : 'top', padding : 15}}
 				placeholder="누구와, 어디서, 어떤 상황에서 생긴 일인지 메모로 남겨주시면 큰 도움이 돼요!"
 				placeholderTextColor="#d5d5d5"
+				onChangeText={(text) => setContent(text)}
+				value={challengingBehavior.content}
 				multiline
 				></TextInput>
                 
@@ -157,6 +189,8 @@ export function ChallengingBehavior(props: ChallengingBehaviorProps) {
 				style={{marginTop : 10, borderRadius : 10, borderColor : '#d5d5d5', borderWidth : 1, height : SIZE_WIDTH * 0.4, textAlignVertical : 'top', padding : 15}}
 				placeholder="당시에 보호자분께서 어떻게 대처하셨는지 메모를 남겨주시면 더 나은 대처법을 익히는데 도움이 돼요!"
 				placeholderTextColor="#d5d5d5"
+				onChangeText={(text) => setFixedMethod(text)}
+				value={challengingBehavior.fixedMethod}
 				multiline
 				></TextInput>
 
@@ -164,7 +198,16 @@ export function ChallengingBehavior(props: ChallengingBehaviorProps) {
             </View>            
 
 			<View style={{marginHorizontal : GLOBAL_MARGIN_HORIZON, marginVertical : GLOBAL_MARGIN_VERTICAL}}>
-				<Button text={'작성완료'} textColor={'white'} style={{backgroundColor : MAIN_COLOR, elevation :3}}></Button>
+				<Button onPress={() => uploadBehavior({
+					variables : {
+						ChallengingBehaviorInput : challengingBehavior
+					}
+				}).then(() => navigation.goBack())
+				.catch(e => {
+						console.log(e)
+					})
+				}
+				text={'작성완료'} textColor={'white'} style={{backgroundColor : MAIN_COLOR, elevation :3}}></Button>
 			</View>
 
 
@@ -172,7 +215,7 @@ export function ChallengingBehavior(props: ChallengingBehaviorProps) {
             <Modal isVisible={modalVisible}>
                 <DateTimeScroller
 				setDate={setOccurenceDate}
-				date={occurenceDate}
+				date={getDateFromYMDHmsString(challengingBehavior.occurenceDate)}
 				setModalVisible={setModalVisible} />
             </Modal>
 

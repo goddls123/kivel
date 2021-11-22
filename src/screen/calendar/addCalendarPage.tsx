@@ -15,8 +15,9 @@ import { NavigationButton } from '../home/components/NavigationButton';
 import Modal from 'react-native-modal'
 import { Map } from '../map/map';
 import { RouteProp } from '@react-navigation/native';
+
 // test
-import { scheduleTypeTest, schedule_data } from '../test/testData';
+import { scheduleTypeTest } from '../test/testData';
 import { parsedScheduleType } from '../../types/types';
 
 
@@ -151,10 +152,7 @@ export function addCalendarPage(props : addCalendarPageProps) {
 				variables : {
 					ScheduleInput : {
 						title : title,
-						// scheduleDate : new Date(),
 						scheduleDate : '2021-11-15',
-						// startTime : startDate,
-						// endTime : endDate,
 						startTime : '12:00:00',
 						endTime : '13:00:00',
 						repeatCycle : value,

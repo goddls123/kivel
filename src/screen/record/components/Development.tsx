@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { Divider } from '../../common/divider';
 import Modal from 'react-native-modal'
 import { DateTimeScroller } from '../components/DateTimeScroller';
-import { getDateYMD, getDayKorean, getTime } from '../../common/service/dateService';
+import { getDateFromYMDHmsString, getDateYMD, getDateYMDHms, getDayKorean, getTime } from '../../common/service/dateService';
 import { Button } from '../../common/components/Button';
 import { ReactNativeFile } from 'extract-files';
 import ImagePicker from 'react-native-image-crop-picker'
@@ -18,18 +18,21 @@ import { UPLOAD_DEVELOPMENT_RECORD } from '../../../connection/queries';
 import { useNavigation } from '@react-navigation/core';
 
 interface DevelopmentProps {
+	data? : developmentRecordType
 }
 
 export function Development(props: DevelopmentProps) {
 	const navigation = useNavigation()
-
-	const [record, setRecord] = React.useState<developmentRecordType>({
+	
+	
+	const [record, setRecord] = React.useState<developmentRecordType>( props.data? props.data : {
 		title : '',
 		detail : '',
 		emergency : false,
-		occurenceDate : new Date(),
+		occurenceDate : getDateYMDHms(new Date()),
 		problem : ''
 	})
+	
 	const setTitle = (value : string) => {
 		setRecord({...record, title : value})
 	}
@@ -37,7 +40,7 @@ export function Development(props: DevelopmentProps) {
 		setRecord({...record, emergency : value})
 	}
 	const setOccurenceDate = (value : Date) => {
-		setRecord({...record, occurenceDate : new Date()})
+		setRecord({...record, occurenceDate : getDateYMDHms(value)})
 	}
 	const setProblemArea = (value : string) => {
 		setRecord({...record, problem : value})
@@ -56,14 +59,14 @@ export function Development(props: DevelopmentProps) {
 			<View style={styles.dateButtonInnerContainer}>
 				<TouchableOpacity onPress = {() => setModalVisible(true)}>
 					<View style={styles.dateTextBox}>
-						<Text style={styles.dateText}>{getDateYMD(record.occurenceDate,'. ') + '(' + getDayKorean(record.occurenceDate.getDay()) + ')'}</Text>
+						<Text style={styles.dateText}>{record.occurenceDate.substr(0,10) + '(' + getDayKorean(getDateFromYMDHmsString(record.occurenceDate).getDay()) + ')'}</Text>
 						<Icon style={styles.chevronDownIcon} name="chevron-down"></Icon>
 					</View>
 				</TouchableOpacity>
 
 				<TouchableOpacity onPress = {() => setModalVisible(true)}>
 					<View style={styles.dateTextBox}>
-						<Text style={styles.dateText}>{getTime(record.occurenceDate, ' : ')}</Text>
+						<Text style={styles.dateText}>{record.occurenceDate.substr(11,5)}</Text>
 						<Icon style={styles.chevronDownIcon} name="chevron-down"></Icon>
 					</View>
 				</TouchableOpacity>
@@ -252,7 +255,7 @@ export function Development(props: DevelopmentProps) {
             <Modal isVisible={modalVisible}>
                 <DateTimeScroller
 				setDate={setOccurenceDate}
-				date={record.occurenceDate}
+				date={getDateFromYMDHmsString(record.occurenceDate)}
 				setModalVisible={setModalVisible} />
             </Modal>
 

@@ -1,14 +1,15 @@
 import React from 'react'
 import { View, StyleSheet, Text } from 'react-native';
+import { developmentRecordType } from '../../../types/types';
 import { GLOBAL_MARGIN_HORIZON, SIZE_WIDTH } from '../../common/constants';
 
 interface recordCardProps {
-	data : any
+	data : developmentRecordType
 }
 
 export function RecordCard(props : recordCardProps) {
     
-    function getBadgeStyle(value : string) {
+    function getBadgeStyle(value : string | undefined) {
         let style : any = [styles.badgeText]
         if(value=='발달기록')
             style.push({ color: '#0fafe9', backgroundColor: '#d1f3ff' })
@@ -20,7 +21,7 @@ export function RecordCard(props : recordCardProps) {
         return style
     }
 
-    function getLabelStyle(value : string){
+    function getLabelStyle(value : string | undefined){
         let style : any = [{width : '1%'}]
         if(value=='발달기록')
             style.push({ backgroundColor: '#0fafe9' })

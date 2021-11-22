@@ -76,9 +76,20 @@ export type childInfoHome = {
 }
 
 export type developmentRecordType = {
-	occurenceDate : Date
+	id? : number
+	kind? : string
+	occurenceDate : string
 	emergency : boolean
 	title : string
 	problem : string
 	detail : string
+	image? : string[]
+}
+
+export type challengingBehaviorType = {
+	id ? : number
+	occurenceDate : string
+	title : string
+	content : string
+	fixedMethod : string
 }

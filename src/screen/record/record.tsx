@@ -1,7 +1,7 @@
 import { offsetLimitPagination } from '@apollo/client/utilities';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
-import {View, StyleSheet, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity, ScrollView, Image, BackHandler} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import { stackInterface } from '../../types/navigationParam';
 import { getKoreanDay } from '../calendar/service/calendarService';
@@ -17,10 +17,12 @@ interface recordProps {
 
 export function record(props: recordProps) {
 
+
+
 	const [sortingState, setSortingState] = React.useState({ '전체' : true, '발달지연' : false, '문제행동' : false, '메모' : false })
     const [modalVisible, setModalVisible] = React.useState<boolean>(false)
     const [modalItem, setModalItem] = React.useState()
-    
+
     function recordCardPressHandler(data : any){
         setModalVisible(true)
         setModalItem(data)
@@ -30,8 +32,8 @@ export function record(props: recordProps) {
         let viewArr : Element[] = []
         let key = 0
         record_data.map((item) => {
-            if(dateFlag != item.date){
-                let currentDate = new Date(item.date)
+            if(dateFlag != item.occurenceDate.substr(0,10)){
+                let currentDate = new Date(item.occurenceDate.substr(0,10))
                 viewArr.push(
                     <View key={key} style={{marginTop : GLOBAL_MARGIN_HORIZON * 1.5}}>
                         <Text style={{fontSize : 16, color  : '#707070'}}>
@@ -51,7 +53,7 @@ export function record(props: recordProps) {
                 </TouchableOpacity>
             )
             key++
-            dateFlag= item.date
+            dateFlag= item.occurenceDate.substr(0,10)
         })
 
         return viewArr

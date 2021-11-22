@@ -17,7 +17,6 @@ interface addRecordProps {
 }
 
 export function addRecord(props : addRecordProps) {
-	
 		const [warningModal, setWarningModal] = React.useState<boolean>(false)
 		const handleBackButtonClick = () => {
 			if(!props.navigation.isFocused()){
@@ -55,7 +54,7 @@ export function addRecord(props : addRecordProps) {
 
 		function renderComponent() {
 			if(radioState[0]){
-				return <Development /> 
+				return <Development data={props.route.params?.developmentData}/> 
 			}
 			else if(radioState[1]) {
 				return <ChallengingBehavior />

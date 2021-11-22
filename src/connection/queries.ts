@@ -114,3 +114,10 @@ mutation saveDevelopmentRecord($DevelopmentRecordInput : DevelopmentRecordInput!
 		id
 	}
 }`
+
+export const UPLOAD_CHALLENGING_BEHAVIOR = gql`
+mutation saveChallengingBehavior($ChallengingBehaviorInput : ChallengingBehaviorInput!){
+	saveChallengingBehavior(ChallengingBehaviorInput : $ChallengingBehaviorInput){
+		id
+	}
+}`

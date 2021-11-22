@@ -73,7 +73,7 @@ export function Memo(props: diaryProps) {
 	function renderImage() {
 		return(
 			<View style={{ paddingHorizontal : GLOBAL_MARGIN_HORIZON ,flexDirection : 'row', justifyContent : 'space-between', alignItems : 'center',marginTop : GLOBAL_MARGIN_HORIZON}}>
-				<ScrollView style={{flex: 1}} horizontal showsHorizontalScrollIndicator={false}>
+				<ScrollView style={{flex: 1}} horizontal showsHorizontalScrollIndicator={false} >
 				{
 					images?.map((image: ReactNativeFile, idx) => {
 						return (

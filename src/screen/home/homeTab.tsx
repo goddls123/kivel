@@ -32,7 +32,7 @@ import {HomeWorkCard} from './components/HomeWorkCard';
 import {ProfileModal} from './components/ProfileModal';
 
 // Test
-import {scheduleTypeTest, schedule_data} from '../test/testData';
+import {scheduleTypeTest } from '../test/testData';
 import {gql, useQuery} from '@apollo/client';
 import {GET_CHILD_INFO_HOME, GET_SCHEDULE, WEEKLY_SCHEDULE} from '../../connection/queries';
 import { getThisWeek, scheduleDataParser } from '../calendar/service/calendarService';
@@ -53,7 +53,6 @@ export function homeTab(props: homeTabProps) {
     const [childInfo, setChildInfo] = React.useState<childInfoHome>()
     React.useEffect(() => {
         if(childInfoError){
-            console.log(childInfoError)
             props.navigation.navigate('ServerProblem')
         }
         else if(childInfoData && childInfoData.userChild){
@@ -65,7 +64,7 @@ export function homeTab(props: homeTabProps) {
     //이번주 일정
     const {data : weeklyScheduleData , loading : weeklyScheduleLoading, error : weeklyScheduleError} = useQuery(WEEKLY_SCHEDULE)
     const [weekSchedule, setWeekSchedule] = React.useState<parsedScheduleType[]>(); //이번 주 일정
-    
+
     React.useEffect(() => {
         if(weeklyScheduleData && weeklyScheduleData.userSchedules){            
             let data = scheduleDataParser(weeklyScheduleData.userSchedules[0].schedules).sort(function(a : any, b : any){

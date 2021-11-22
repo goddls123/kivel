@@ -61,7 +61,14 @@ export function inspectionRecord(props : inspectionRecordProps) {
 	// 선택한 screen
 	const [selectedScreen, setSelectedScreen] = React.useState<screeningResult>()
 
-	
+	// 메뉴
+	const [menuText, setMenuText] = React.useState<string>('1년')
+	function selectMenu (value : string) {
+		setMenuVisible(false)
+		setMenuText(value)
+	}
+
+
 	// modal 창
 	const [isSearchOpen, setIsSearchOpen] = React.useState<boolean>(false)
 	const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false) 
@@ -94,31 +101,31 @@ export function inspectionRecord(props : inspectionRecordProps) {
 					<View style={{flexDirection : 'row',  alignItems : 'center', marginTop : 10, marginBottom : 20}}>
 						<Text style={{fontSize : 18, color: 'black', fontWeight : '600', marginRight : 20}}>{'자폐,학습장애'}</Text>
 					</View>
+				</View>
 
+				<View style={{backgroundColor : '#ededed', height : SIZE_WIDTH * 0.12, justifyContent : 'center', paddingHorizontal : GLOBAL_MARGIN_HORIZON}}>
 					<View style={{flexDirection : 'row', justifyContent : 'space-between'}}>
 						<Menu
 						visible={menuVisible}
 						anchor={
 							<TouchableOpacity onPress={() => setMenuVisible(true)}>
-								<Text>{'최근 3개월'}</Text>
+								<Text style={{fontSize : 16, fontWeight : 'bold', color : '#707070'}}>최근 {menuText}</Text>
 							</TouchableOpacity>
 						}
 						onRequestClose={() => setMenuVisible(false)}>
-							<MenuItem onPress={() => setMenuVisible(false)}>1개월</MenuItem>
+							<MenuItem onPress={(text) => {selectMenu('1개월')}}>1개월</MenuItem>
 							<MenuDivider />
-							<MenuItem onPress={() => setMenuVisible(false)}>3개월</MenuItem>
+							<MenuItem onPress={() => {selectMenu('3개월')}}>3개월</MenuItem>
 							<MenuDivider />
-							<MenuItem onPress={() => setMenuVisible(false)}>6개월</MenuItem>
+							<MenuItem onPress={() => {selectMenu('6개월')}}>6개월</MenuItem>
 							<MenuDivider />
-							<MenuItem onPress={() => setMenuVisible(false)}>1년</MenuItem>
+							<MenuItem onPress={() => {selectMenu('1년')}}>1년</MenuItem>
 							<MenuDivider />
-							<MenuItem onPress={() => setMenuVisible(false)}>2년</MenuItem>
+							<MenuItem onPress={() => {selectMenu('2년')}}>2년</MenuItem>
 						</Menu>
 						
-						<TouchableOpacity style={{flexDirection : 'row', justifyContent : 'space-between' , paddingHorizontal : 10 ,alignSelf : 'flex-end', width : SIZE_WIDTH * 0.4, backgroundColor : '#d5d5d5', borderRadius : 15 }} 
-						onPress={() => setIsSearchOpen(!isSearchOpen)}>
-							<Text>검사기록지 검색하기</Text>
-							<Icon style={{ textAlignVertical : 'bottom' ,fontSize : 22}} name="search-outline"></Icon>
+						<TouchableOpacity onPress={() => {}}>
+							<Text style={{fontSize : 16, fontWeight : 'bold', color : '#707070'}}>상세조회 +</Text>
 						</TouchableOpacity>
 						
 					</View>
@@ -211,7 +218,7 @@ export function inspectionRecord(props : inspectionRecordProps) {
 		);
 }
 const styles = StyleSheet.create({
-	headerContainer : {marginHorizontal : GLOBAL_MARGIN_HORIZON, marginVertical : GLOBAL_MARGIN_VERTICAL},
+	headerContainer : {marginHorizontal : GLOBAL_MARGIN_HORIZON, marginTop : GLOBAL_MARGIN_VERTICAL },
 	headerTitle: {flexDirection : 'row', alignItems : 'center' },
 	stick : { height : 20, width : 3, backgroundColor : MAIN_COLOR},
 	headerText : {fontSize : 18, color : MAIN_COLOR, fontWeight : '500'},
