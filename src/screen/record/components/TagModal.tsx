@@ -2,17 +2,18 @@ import React from 'react';
 import {View, StyleSheet, TouchableOpacity, Text, TextInput} from 'react-native';
 import { MAIN_COLOR, SIZE_HEIGHT, SIZE_WIDTH } from '../../common/constants';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { tagType } from '../../../types/types';
 interface TagModalProps {
 	setModalVisible(value : boolean) : void
-	data : string[] | undefined
-	setData(value : string[]) : void
+	data? : tagType[]
+	setData(value : tagType[]) : void
 }
 
 export function TagModal(props: TagModalProps) {
 
-	const [tag, setTag] = React.useState<string>()
+	const [tag, setTag] = React.useState<tagType>()
+
 	function onPressHandler(){
-		console.log(tag)
 		if(tag){
 			if(props.data){
 				props.setData([...props.data,tag])
@@ -27,8 +28,8 @@ export function TagModal(props: TagModalProps) {
 		<View style={styles.container}>
 
 			<TextInput
-			value={tag}
-			onChangeText={(text)=>setTag(text)}
+			value={tag?.tag}
+			onChangeText={(text)=>setTag({tag : text})}
 			placeholder="#태그를 입력해주세요"
 			placeholderTextColor="#d5d5d5"
 			style={styles.textInput}></TextInput>

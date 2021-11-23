@@ -121,3 +121,11 @@ mutation saveChallengingBehavior($ChallengingBehaviorInput : ChallengingBehavior
 		id
 	}
 }`
+
+export const UPLOAD_MEMO = gql`
+mutation saveMemoMemoTag($MemoInput : MemoInput!, $MemoTagInput : [MemoTagInput!]!){
+	saveMemoMemoTag(MemoInput : $MemoInput, MemoTagInput : $MemoTagInput){
+		id
+	}
+}
+`

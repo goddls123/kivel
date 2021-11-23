@@ -22,23 +22,41 @@ import {
     SIZE_HEIGHT,
     SIZE_WIDTH,
 } from '../../common/constants';
-import {UPLOAD_FILE} from '../../../connection/queries';
+import {UPLOAD_FILE, UPLOAD_MEMO} from '../../../connection/queries';
 import {Button} from '../../common/components/Button';
 import { DateScroller } from '../../childEnroll/components/DateScroller';
-import { getDateYMD } from '../../common/service/dateService';
+import { getDateFromYMDHmsString, getDateYMD } from '../../common/service/dateService';
 import { getKoreanDay } from '../../calendar/service/calendarService';
 import { TagModal } from './TagModal';
+import { memoType, tagType } from '../../../types/types';
+import { useNavigation } from '@react-navigation/core';
 
 interface diaryProps {}
 
 export function Memo(props: diaryProps) {
+	const navigation = useNavigation()
     // Todo
     // 1 : modal component로 빼내기
     // 2 : 기존 입력되있는 문제 행동 띄우기, 화면에 배치 신경써서
-
-    const [date, setDate] = React.useState<Date>(new Date());
+	const [uploadMemo, {data, error, loading}] = useMutation(UPLOAD_MEMO)
+	const [memo, setMemo] = React.useState<memoType>({
+		content : '',
+		title : '',
+		occurenceDate : getDateYMD(new Date(), '-')
+	})
+	const setTitle = (value : string) => {
+		setMemo({...memo, title : value})
+	}
+	const setContent = (value : string) => {
+		setMemo({...memo, content : value})
+	}
+	const setDate = (value : Date) => {
+		setMemo({...memo, occurenceDate : getDateYMD(value,'-')})
+	}
+	
+    // const [date, setDate] = React.useState<Date>(new Date());
     const [images, setImages] = React.useState<ReactNativeFile[]>();
-    const [tag, setTag] = React.useState<string[]>();
+    const [tag, setTag] = React.useState<tagType[]>();
     const [dateModalVisible, setDateModalVisible] = React.useState<boolean>(false);
 	const [tagModalVisible, setTagModalVisible] = React.useState<boolean>(false)
     const [fileUpload] = useMutation(UPLOAD_FILE, {
@@ -102,12 +120,14 @@ export function Memo(props: diaryProps) {
             <TextInput
                 style={styles.titleTextInputStyle}
                 placeholder="제목을 입력해주세요"
-                placeholderTextColor="#d5d5d5"/>
+                placeholderTextColor="#d5d5d5"
+				value={memo.title}
+				onChangeText={(text) => setTitle(text)} />
 
             <View style={styles.dateTextContainer}>
                 <TouchableOpacity onPress={() => setDateModalVisible(true)}>
                     <Text style={styles.dateText}>
-                        {getDateYMD(date,'.') + '(' + getKoreanDay(date.getDay()) + ')' }
+                        {memo.occurenceDate + '(' + getKoreanDay(new Date(memo.occurenceDate).getDay()) + ')' }
                     </Text>
                 </TouchableOpacity>
             </View>
@@ -117,15 +137,17 @@ export function Memo(props: diaryProps) {
 			<TextInput
 			style={styles.contentTextInput}
 			placeholder="우리 아이의 성장 내용을 입력해주세요"
-			multiline/>
+			multiline
+			value={memo.content}
+			onChangeText={(text) => setContent(text)}/>
 
 			{/* 태그 */}
 			<View style={styles.tagContainer}>
 				{
-					tag?.map((tag) => {
+					tag?.map((tag : tagType, id) => {
 						return(
-							<Text style={styles.tagText}>
-								{tag}
+							<Text key={id} style={styles.tagText}>
+								{tag.tag}
 							</Text>	
 						)
 					})
@@ -153,16 +175,27 @@ export function Memo(props: diaryProps) {
 
             <View style={styles.submitButtonContainer}>
                 <Button
+				style={{backgroundColor: MAIN_COLOR, elevation :3,}} 
 				text={'작성완료'}
 				textColor={'white'}
-				style={{backgroundColor: MAIN_COLOR, elevation :3,}} />
+				onPress={() => uploadMemo({ variables : 
+					{ 
+						MemoInput : {...memo},
+						MemoTagInput : tag
+					}
+				})
+				.then(() => navigation.goBack())
+				.catch(e => 
+					console.log(e)
+				)}
+				/>
             </View>
 
 			<Modal
 			isVisible={dateModalVisible}>
 				<DateScroller 
 				setDate={setDate} 
-				date={date} 
+				date={new Date(memo.occurenceDate)} 
 				setModalVisible={setDateModalVisible}></DateScroller>
 			</Modal>
             

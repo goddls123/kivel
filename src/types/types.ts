@@ -93,3 +93,14 @@ export type challengingBehaviorType = {
 	content : string
 	fixedMethod : string
 }
+
+export type memoType = {
+	title : string
+	content : string
+	occurenceDate : string
+	tag? : string[]
+}
+
+export type tagType = {
+	tag : string
+}
