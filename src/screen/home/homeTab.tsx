@@ -9,6 +9,7 @@ import {
     TouchableOpacity,
     BackHandler,
     ToastAndroid,
+    ActivityIndicator
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -37,7 +38,6 @@ import {gql, useQuery} from '@apollo/client';
 import {GET_CHILD_INFO_HOME, GET_SCHEDULE, WEEKLY_SCHEDULE} from '../../connection/queries';
 import { getThisWeek, scheduleDataParser } from '../calendar/service/calendarService';
 import { getDateYMD } from '../common/service/dateService';
-import { ActivityIndicator } from 'react-native-paper';
 import { ScreenStackHeaderBackButtonImage } from 'react-native-screens';
 //
 
@@ -53,6 +53,7 @@ export function homeTab(props: homeTabProps) {
     const [childInfo, setChildInfo] = React.useState<childInfoHome>()
     React.useEffect(() => {
         if(childInfoError){
+            console.log(childInfoError)
             props.navigation.navigate('ServerProblem')
         }
         else if(childInfoData && childInfoData.userChild){
@@ -66,7 +67,8 @@ export function homeTab(props: homeTabProps) {
     const [weekSchedule, setWeekSchedule] = React.useState<parsedScheduleType[]>(); //이번 주 일정
 
     React.useEffect(() => {
-        if(weeklyScheduleData && weeklyScheduleData.userSchedules){            
+        if(weeklyScheduleData && weeklyScheduleData.userSchedules){     
+            console.log(weeklyScheduleData.userSchedules)       
             let data = scheduleDataParser(weeklyScheduleData.userSchedules[0].schedules).sort(function(a : any, b : any){
                             if(a.date > b.date) return 1
                             else if(a.date < b.date) return -1

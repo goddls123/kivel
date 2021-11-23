@@ -1,15 +1,12 @@
 import React from 'react'
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import DatePicker from 'react-native-date-picker'
-import Modal from 'react-native-modal';
 import { weekInfo } from '../../../types/calendarTypes';
 import { GLOBAL_MARGIN_HORIZON, GLOBAL_MARGIN_VERTICAL, MAIN_COLOR, SIZE_WIDTH } from '../../common/constants';
 import { getLastWeek, getNextWeek, getThisWeek } from '../service/calendarService';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { parsedScheduleType } from '../../../types/types';
 import { TimeTable } from './TimeTable';
-import { JSXElement } from '@babel/types';
-import { SubscriptionServer } from 'subscriptions-transport-ws';
+
 
 
 interface schedulerTestProps {
@@ -149,50 +146,50 @@ export function CalendarStrip(props : schedulerTestProps) {
 
         return (
 			<View>
-            <View style={styles.container}>
+                <View style={styles.calendarStripContainer}>
 
-				{/* 월 , monthArrow */}
-                <View style={{marginBottom : GLOBAL_MARGIN_HORIZON -3 , flexDirection : 'row', alignItems : 'center'}} >
-                    <TouchableOpacity onPress={() => setThisWeek(getLastWeek(new Date(thisWeek[0].fullDateString)))}>
-                        <Icon
-                            name="chevron-back-outline"
-                            style={styles.arrowLeftIconStyle}/>
-                    </TouchableOpacity>
+                    {/* 월 , monthArrow */}
+                    <View style={{marginBottom : GLOBAL_MARGIN_HORIZON -3 , flexDirection : 'row', alignItems : 'center'}} >
+                        <TouchableOpacity onPress={() => setThisWeek(getLastWeek(new Date(thisWeek[0].fullDateString)))}>
+                            <Icon
+                                name="chevron-back-outline"
+                                style={styles.arrowLeftIconStyle}/>
+                        </TouchableOpacity>
 
-                    <Text style={styles.monthText}>{ getMonthText() }</Text>
+                        <Text style={styles.monthText}>{ getMonthText() }</Text>
+                        
+                        <TouchableOpacity onPress={() => setThisWeek(getNextWeek(new Date(thisWeek[0].fullDateString)))}>
+                            <Icon
+                                name="chevron-forward-outline"
+                                style={styles.arrowRightIconStyle}/>
+                        </TouchableOpacity>
+                    </View>
+
+                    {/* calendarStrip  */}
+                    <View style={{ flex :1,flexDirection : 'row', justifyContent : 'space-between'}}>
+                        { renderWeekView() }
+                    </View>
                     
-                    <TouchableOpacity onPress={() => setThisWeek(getNextWeek(new Date(thisWeek[0].fullDateString)))}>
-                        <Icon
-                            name="chevron-forward-outline"
-                            style={styles.arrowRightIconStyle}/>
-                    </TouchableOpacity>
                 </View>
 
-				{/* calendarStrip  */}
-                <View style={{ flex :1,flexDirection : 'row', justifyContent : 'space-between'}}>
-                    { renderWeekView() }
+                <View>
+                    <TimeTable
+                    hourHeight={HOUR_HEIGHT}
+                    ></TimeTable>
+
+                    { renderScheduleStick() }
+
                 </View>
-                
-            </View>
-
-			<View>
-				<TimeTable
-				hourHeight={HOUR_HEIGHT}
-				></TimeTable>
-
-                { renderScheduleStick() }
-
-			</View>
 			</View>
         );
 }
 const styles = StyleSheet.create({
-    container : {
+    calendarStripContainer : {
         backgroundColor : 'white',
         alignItems : 'center',
         justifyContent : 'center',
         paddingTop : GLOBAL_MARGIN_HORIZON - 3 ,
-        paddingHorizontal : GLOBAL_MARGIN_VERTICAL,
+        paddingHorizontal : GLOBAL_MARGIN_HORIZON,
         paddingBottom : 20
         // borderWidth : 0,
     },

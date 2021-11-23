@@ -198,11 +198,8 @@ export function ChallengingBehavior(props: ChallengingBehaviorProps) {
             </View>            
 
 			<View style={{marginHorizontal : GLOBAL_MARGIN_HORIZON, marginVertical : GLOBAL_MARGIN_VERTICAL}}>
-				<Button onPress={() => uploadBehavior({
-					variables : {
-						ChallengingBehaviorInput : challengingBehavior
-					}
-				}).then(() => navigation.goBack())
+				<Button onPress={() => uploadBehavior({ variables : { ChallengingBehaviorInput : {...challengingBehavior}}})
+				.then(() => navigation.goBack())
 				.catch(e => {
 						console.log(e)
 					})

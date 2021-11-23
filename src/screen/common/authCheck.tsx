@@ -1,8 +1,7 @@
 import { useMutation } from '@apollo/client';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React from 'react'
-import { View, StyleSheet, SafeAreaView } from 'react-native';
-import { ActivityIndicator } from 'react-native-paper';
+import { View, StyleSheet, SafeAreaView, ActivityIndicator } from 'react-native';
 import { USER_LOGIN } from '../../connection/queries';
 import { logInWithKakao } from '../login/service/loginService';
 import { Button } from './components/Button';

@@ -234,19 +234,14 @@ export function Development(props: DevelopmentProps) {
 
 			<View style={{marginHorizontal : GLOBAL_MARGIN_HORIZON, marginVertical : GLOBAL_MARGIN_VERTICAL}}>
 				<Button onPress={() => 
-				uploadRecord({
-					variables : {
-						DevelopmentRecordInput : record
-					}
-				})
+				uploadRecord({ variables : { DevelopmentRecordInput : {...record}}})
 				.then(() => navigation.goBack())
 				.catch(e => 
 					{
 						console.log(e)
 					}
 					
-				)
-			}
+				)}
 				text={'작성완료'} textColor={'white'} style={{backgroundColor : MAIN_COLOR, elevation :3}}></Button>
 			</View>
 

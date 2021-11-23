@@ -20,8 +20,7 @@ import {
     SIZE_HEIGHT,
     SIZE_WIDTH,
 } from '../common/constants';
-import {Divider} from '../common/divider';
-import {schedule_data, } from '../test/testData';
+import {Divider} from '../common/divider'
 import {ScheduleCard} from './components/ScheduleCard';
 import {ScheduleFrame} from './components/ScheduleFrame';
 import { scheduleCheck, scheduleDataParser} from './service/calendarService';
@@ -29,7 +28,6 @@ import { scheduleCheck, scheduleDataParser} from './service/calendarService';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { getDateYMD, getDayKorean } from '../common/service/dateService';
 import axios from 'axios';
-import WeekView from './components/WeekView';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import {CalendarStrip} from './components/CalendarStrip';
@@ -278,7 +276,7 @@ export default function calendar({navigation, route}: calendarProps) {
 					</Text>
 					{/* 일정 card */}
 					{
-						parsedData?.map((data ,id) => {
+						parsedData?.map((data : parsedScheduleType ,id : number) => {
 							if(data.date == selectedDate){
 								return(
 									<ScheduleCard
