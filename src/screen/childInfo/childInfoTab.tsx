@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { View, StyleSheet , SafeAreaView} from 'react-native';
+import { View, StyleSheet , SafeAreaView ,ActivityIndicator} from 'react-native';
 
 
 import { createMaterialTopTabNavigator, MaterialTopTabNavigationOptions } from '@react-navigation/material-top-tabs';
@@ -39,11 +39,17 @@ export function childInfoTab() {
 		}
 		)
 	}
+	console.log(childInfo)
   return (
     <>
-    <Header
-	data={childInfo}
-    ></Header>
+	{
+		loading 
+		? <ActivityIndicator size='large' />
+		: <Header
+		data={childInfo}
+		></Header>
+	}
+    
     <Tab.Navigator screenOptions={screenOptionStyle()}>
     	<Tab.Screen name="아이정보" component={childInfoDetail} />
     	<Tab.Screen name="검사기록" component={inspectionRecord} />

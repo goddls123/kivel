@@ -68,7 +68,6 @@ export function homeTab(props: homeTabProps) {
 
     React.useEffect(() => {
         if(weeklyScheduleData && weeklyScheduleData.userSchedules){     
-            console.log(weeklyScheduleData.userSchedules)       
             let data = scheduleDataParser(weeklyScheduleData.userSchedules[0].schedules).sort(function(a : any, b : any){
                             if(a.date > b.date) return 1
                             else if(a.date < b.date) return -1
@@ -84,6 +83,8 @@ export function homeTab(props: homeTabProps) {
         }
     },[weeklyScheduleData,weeklyScheduleLoading,weeklyScheduleError])
     ////////////////////////////////////////////////////////
+    console.log(childInfoData, weekSchedule)
+
 
     const [scheduleModal, setScheduleModal] = React.useState(true);
     const [profileImageModal, setProfileImageModal] = React.useState(false);
@@ -132,8 +133,7 @@ export function homeTab(props: homeTabProps) {
 							homework.map(() => {
 								<HomeWorkCard
 								height={SIZE_HEIGHT * 0.2}
-								width={SIZE_WIDTH * 0.4}
-								/>
+								width={SIZE_WIDTH * 0.4}/>
 							})
 						}
 					</View>

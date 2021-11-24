@@ -1,11 +1,6 @@
 import React from 'react'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet, Text, View, Dimensions, Image } from 'react-native';
-
 import { homeTab } from '../screen/home/homeTab';
-import topTabNav from './topTabNav';
-import { aa } from '../screen/chat/aa';
 import { chatTab } from '../screen/chat/chatTab';
 import { myPage } from '../screen/myPage/myPage';
 import { recordTab } from '../screen/record/recordTab';

@@ -14,7 +14,7 @@ import ImagePicker from 'react-native-image-crop-picker'
 import { requestCameraPermission } from '../../common/service/cameraServices';
 import { developmentRecordType } from '../../../types/types';
 import { useMutation } from '@apollo/client';
-import { UPLOAD_DEVELOPMENT_RECORD } from '../../../connection/queries';
+import { UPLOAD_DEVELOPMENT_RECORD, UPLOAD_FILE } from '../../../connection/queries';
 import { useNavigation } from '@react-navigation/core';
 
 interface DevelopmentProps {
@@ -50,7 +50,7 @@ export function Development(props: DevelopmentProps) {
 	}
 	
 	const [uploadRecord, {loading, data, error}] = useMutation(UPLOAD_DEVELOPMENT_RECORD)
-
+	const [uploadFile] = useMutation(UPLOAD_FILE)
 	const [modalVisible, setModalVisible] = React.useState(false)
 	const [images, setImages] = React.useState<ReactNativeFile[]>()
 
@@ -231,10 +231,11 @@ export function Development(props: DevelopmentProps) {
 				</View>
 				{ renderImage() }
             </View>            
-
+			
 			<View style={{marginHorizontal : GLOBAL_MARGIN_HORIZON, marginVertical : GLOBAL_MARGIN_VERTICAL}}>
 				<Button onPress={() => 
 				uploadRecord({ variables : { DevelopmentRecordInput : {...record}}})
+				.then(() => uploadFile({ variables : { code : '001', file : images }}))
 				.then(() => navigation.goBack())
 				.catch(e => 
 					{

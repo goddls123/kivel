@@ -103,8 +103,8 @@ query {
 }`
 
 export const UPLOAD_FILE = gql`
-mutation uploadFile($file: [Upload!]!) {
-  uploadFile(file: $file) 
+mutation uploadFile($file: [Upload!]!, $code : String!) {
+  uploadFile(file: $file, code : $code) 
 }`;
 
 

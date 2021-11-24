@@ -34,6 +34,7 @@ import { useNavigation } from '@react-navigation/core';
 interface diaryProps {}
 
 export function Memo(props: diaryProps) {
+
 	const navigation = useNavigation()
     // Todo
     // 1 : modal component로 빼내기
@@ -57,11 +58,13 @@ export function Memo(props: diaryProps) {
     // const [date, setDate] = React.useState<Date>(new Date());
     const [images, setImages] = React.useState<ReactNativeFile[]>();
     const [tag, setTag] = React.useState<tagType[]>();
-    const [dateModalVisible, setDateModalVisible] = React.useState<boolean>(false);
+    const [dateModalVisible, setDateModalVisible] = React.useState<boolean>(false)
 	const [tagModalVisible, setTagModalVisible] = React.useState<boolean>(false)
+
     const [fileUpload] = useMutation(UPLOAD_FILE, {
         onCompleted: data => console.log(data),
     });
+
     const handleFileChange = () => {
         const file = images;
         if (!file) return;
@@ -178,8 +181,8 @@ export function Memo(props: diaryProps) {
 				style={{backgroundColor: MAIN_COLOR, elevation :3,}} 
 				text={'작성완료'}
 				textColor={'white'}
-				onPress={() => uploadMemo({ variables : 
-					{ 
+				onPress={() => 
+				uploadMemo({ variables : { 
 						MemoInput : {...memo},
 						MemoTagInput : tag
 					}
@@ -187,8 +190,7 @@ export function Memo(props: diaryProps) {
 				.then(() => navigation.goBack())
 				.catch(e => 
 					console.log(e)
-				)}
-				/>
+				)}/>
             </View>
 
 			<Modal
