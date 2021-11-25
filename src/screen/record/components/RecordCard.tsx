@@ -1,10 +1,10 @@
 import React from 'react'
 import { View, StyleSheet, Text } from 'react-native';
-import { developmentRecordType } from '../../../types/types';
+import { developmentRecordType, recordCardType } from '../../../types/types';
 import { GLOBAL_MARGIN_HORIZON, SIZE_WIDTH } from '../../common/constants';
 
 interface recordCardProps {
-	data : developmentRecordType
+	data : recordCardType
 }
 
 export function RecordCard(props : recordCardProps) {
@@ -35,11 +35,11 @@ export function RecordCard(props : recordCardProps) {
 
 		return (
 			<View style={styles.container}>
-				<View style={getLabelStyle(props.data.kind)}></View>
+				<View style={getLabelStyle(props.data.tableName)}></View>
 				<View style={styles.textBoxContainer}>
 					<View style={styles.titleBadge}>
 						<Text style={styles.titleText}>{props.data.title.length > 15 ? props.data.title.substr(0,15) + '...' : props.data.title }</Text>
-						<Text style={getBadgeStyle(props.data.kind)}>{props.data.kind}</Text>
+						<Text style={getBadgeStyle(props.data.tableName)}>{props.data.tableName}</Text>
 					</View>
 					<Text>약 주2회 발생</Text>
 				</View>

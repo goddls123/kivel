@@ -86,6 +86,13 @@ export type developmentRecordType = {
 	image? : string[]
 }
 
+export type recordCardType = {
+	id : number
+	occurenceDate : string
+	title : string
+	tableName : string
+}
+
 export type challengingBehaviorType = {
 	id ? : number
 	occurenceDate : string

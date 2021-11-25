@@ -129,3 +129,39 @@ mutation saveMemoMemoTag($MemoInput : MemoInput!, $MemoTagInput : [MemoTagInput!
 	}
 }
 `
+
+
+
+
+export const GET_DEVELOPMENT_CARD = gql`
+query{
+	userDevelopmentRecords{
+		developmentRecords{
+			id
+			title
+			occurenceDate
+		}
+	}
+}`
+
+export const GET_CHALLENGING_CARD = gql`
+query{
+	userChallengingBehaviors{
+	  	challengingBehaviors{
+			id
+			title
+			occurenceDate
+	  	}
+	}
+}`
+
+export const GET_MEMO_CARD = gql`
+query{
+	userMemos{
+	  memos{
+		id
+		title
+		occurenceDate
+	  }
+	}
+  }`
