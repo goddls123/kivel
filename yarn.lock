@@ -1231,10 +1231,10 @@
   "resolved" "https://registry.npmjs.org/@miblanchard/react-native-slider/-/react-native-slider-2.0.2.tgz"
   "version" "2.0.2"
 
-"@react-native-async-storage/async-storage@^1.15.8":
-  "integrity" "sha512-LrVPfhKqodRiDWCgZp7J2X55JQqOhdQUxbl17RrktIGCZ0ud2XHdNoTIvyI1VccqHoF/CZK6v+G0IoX5NYZ1JA=="
-  "resolved" "https://registry.npmjs.org/@react-native-async-storage/async-storage/-/async-storage-1.15.9.tgz"
-  "version" "1.15.9"
+"@react-native-async-storage/async-storage@^1.15.13":
+  "integrity" "sha512-OnbPmjiBOREiutFMG356w+eWiEL1WRCgXDH/o6+4S1cIkfl9SZFanxUBlGi4/Ny22KXcJHN0VtWy0gL8jqYYLg=="
+  "resolved" "https://registry.npmjs.org/@react-native-async-storage/async-storage/-/async-storage-1.15.13.tgz"
+  "version" "1.15.13"
   dependencies:
     "merge-options" "^3.0.4"
 
@@ -3780,11 +3780,6 @@
   "integrity" "sha1-FQStJSMVjKpA20onh8sBQRmU6k8="
   "resolved" "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
   "version" "1.0.0"
-
-"fsevents@^2.1.2", "fsevents@^2.3.2":
-  "integrity" "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA=="
-  "resolved" "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz"
-  "version" "2.3.2"
 
 "function-bind@^1.1.1":
   "integrity" "sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A=="

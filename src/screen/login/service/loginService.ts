@@ -64,11 +64,14 @@ export const unlinkKakao = async (): Promise<string> => {
   return message;
 };
 
-export const logoutKakao = async (): Promise<string> => {
-  const message = await kakaoLogout();
+export const logoutKakao = async (): Promise<void> => {
+  const message = await kakaoLogout().then(() => {
+    AsyncStorage.removeItem('ACT')
+    AsyncStorage.removeItem('RFT')
+    AsyncStorage.removeItem('platform')
+  });
 
-  console.log(message);
-  return message;
+  console.log(message); 
 };
 
 ////////////////////////////카카오////////////////////////////

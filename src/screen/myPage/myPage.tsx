@@ -8,6 +8,7 @@ import { Header } from '../childInfo/components/Header';
 import { GLOBAL_MARGIN_HORIZON, SIZE_HEIGHT, SIZE_WIDTH } from '../common/constants';
 import { Divider } from '../common/divider';
 import { MainProfile } from '../home/components/MainProfile';
+import { logoutKakao, unlinkKakao } from '../login/service/loginService';
 
 interface myPageProps {
 	navigation: StackNavigationProp<stackInterface>;
@@ -42,7 +43,7 @@ export function myPage(props : myPageProps) {
 					</View>
 
 					<View style={styles.itemContainer}>
-						<TouchableOpacity style={styles.touchItemContainer}>
+						<TouchableOpacity style={styles.touchItemContainer} onPress={() => unlinkKakao()}>
 						<Image style={styles.imageStyle} source={require('../../assets/icons/ic_logout_24.png')} />
 						<Text style={styles.textStyle}>  로그아웃</Text>
 						</TouchableOpacity>

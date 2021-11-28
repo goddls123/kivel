@@ -15,7 +15,7 @@ import { requestCameraPermission } from '../../common/service/cameraServices';
 import { developmentRecordType } from '../../../types/types';
 import { useMutation } from '@apollo/client';
 import { UPLOAD_DEVELOPMENT_RECORD, UPLOAD_FILE } from '../../../connection/queries';
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation } from '@react-navigation/native';
 
 interface DevelopmentProps {
 	data? : developmentRecordType
@@ -235,7 +235,7 @@ export function Development(props: DevelopmentProps) {
 			<View style={{marginHorizontal : GLOBAL_MARGIN_HORIZON, marginVertical : GLOBAL_MARGIN_VERTICAL}}>
 				<Button onPress={() => 
 				uploadRecord({ variables : { DevelopmentRecordInput : {...record}}})
-				.then(() => uploadFile({ variables : { code : '001', file : images }}))
+				// .then(() => uploadFile({ variables : { code : '001', file : images }}))
 				.then(() => navigation.goBack())
 				.catch(e => 
 					{

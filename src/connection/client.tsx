@@ -7,8 +7,8 @@ import {setContext} from '@apollo/client/link/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // graphql api 주소
 const wsLink = new WebSocketLink({
-	// uri : `ws://ec2-3-145-54-24.us-east-2.compute.amazonaws.com:3000/graphql`,
-	uri: `ws://192.168.35.19:3000/graphql`,
+	uri : `ws://ec2-13-59-203-219.us-east-2.compute.amazonaws.com:3080/graphql`,
+	// uri: `ws://192.168.35.19:3000/graphql`,
 	// uri: `ws://192.168.35.252:3000/graphql`,
 	// uri: `ws://carnorm.com:3000/graphql`,
 	options: {
@@ -28,13 +28,12 @@ const authLink = setContext(async (_, {headers}) => {
 			},
 		};
 	}
-
 	throw new Error('토큰없음');
 });
 
 const httpLink = createUploadLink({
-	// uri : `http://ec2-3-145-54-24.us-east-2.compute.amazonaws.com:3000/graphql`,
-	uri: 'http://192.168.35.19:3000/graphql',
+	uri : `http://ec2-13-59-203-219.us-east-2.compute.amazonaws.com:3080/graphql`,
+	// uri: 'http://192.168.35.19:3000/graphql',
 	// uri: 'http://192.168.35.252:3000/graphql',
 	// uri: 'http://carnorm.com:3000/graphql',
 });
