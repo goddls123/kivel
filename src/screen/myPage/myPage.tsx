@@ -1,4 +1,5 @@
-import { RouteProp } from '@react-navigation/core';
+
+import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react'
 import { View, StyleSheet, SafeAreaView, Text, Image } from 'react-native';
