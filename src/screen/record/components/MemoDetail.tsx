@@ -122,7 +122,10 @@ export function MemoDetail(props : MemoDetailProps) {
 					</View>
 					<View style={{flex : 1, marginLeft : 5}}>
 						<Button text={'수정'}
-						onPress={() => props.navigation.navigate('AddRecord',{radioState : [false, false, true], memoData : detailInfo})}
+						onPress={() => {
+							props.setModalVisible(false)
+							props.navigation.navigate('AddRecord',{radioState : [false, false, true], memoData : detailInfo})
+						}}
 						textColor={'white'}
 						style={{backgroundColor : MAIN_COLOR}}
 						></Button>

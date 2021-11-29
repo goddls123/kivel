@@ -6,11 +6,9 @@ import {OperationDefinitionNode} from 'graphql';
 import {setContext} from '@apollo/client/link/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // graphql api 주소
+
 const wsLink = new WebSocketLink({
-	uri : `ws://ec2-18-191-231-96.us-east-2.compute.amazonaws.com:3080/graphql`,
-	// uri: `ws://192.168.35.19:3000/graphql`,
-	// uri: `ws://192.168.35.252:3000/graphql`,
-	// uri: `ws://carnorm.com:3000/graphql`,
+	uri : `ws://ec2-3-34-5-147.ap-northeast-2.compute.amazonaws.com:3080/graphql`,
 	options: {
 		reconnect: true,
 	},
@@ -32,10 +30,7 @@ const authLink = setContext(async (_, {headers}) => {
 });
 
 const httpLink = createUploadLink({
-	uri : `http://ec2-18-191-231-96.us-east-2.compute.amazonaws.com:3080/graphql`,
-	// uri: 'http://192.168.35.19:3000/graphql',
-	// uri: 'http://192.168.35.252:3000/graphql',
-	// uri: 'http://carnorm.com:3000/graphql',
+	uri : `http://ec2-3-34-5-147.ap-northeast-2.compute.amazonaws.com:3080/graphql`,
 });
 
 // subscription socket 통신 주소

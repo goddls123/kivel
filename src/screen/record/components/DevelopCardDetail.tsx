@@ -118,7 +118,10 @@ export function DevelopCardDetail(props : RecordDetailModalProps) {
 					</View>
 					<View style={{flex : 1, marginLeft : 5}}>
 						<Button text={'수정'}
-						onPress={() => props.navigation.navigate('AddRecord',{radioState : [true, false, false], developmentData : detailInfo})}
+						onPress={() => {
+							props.setModalVisible(false)
+							props.navigation.navigate('AddRecord',{radioState : [true, false, false], developmentData : detailInfo})
+						}}
 						textColor={'white'}
 						style={{backgroundColor : MAIN_COLOR}}
 						></Button>

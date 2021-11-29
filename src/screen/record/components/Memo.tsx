@@ -62,9 +62,8 @@ export function Memo(props: memoProps) {
 	const setTag = (value : tagType[]) => {
 		setMemo({...memo, memoTags : [...value]})
 	}
-    // const [date, setDate] = React.useState<Date>(new Date());
+
     const [images, setImages] = React.useState<ReactNativeFile[]>();
-    // const [tag, setTag] = React.useState<tagType[]>();
     const [dateModalVisible, setDateModalVisible] = React.useState<boolean>(false)
 	const [tagModalVisible, setTagModalVisible] = React.useState<boolean>(false)
 
