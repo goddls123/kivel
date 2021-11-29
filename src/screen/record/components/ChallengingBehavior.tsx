@@ -14,10 +14,13 @@ import ImagePicker from 'react-native-image-crop-picker'
 import { requestCameraPermission } from '../../common/service/cameraServices';
 import { challengingBehaviorType } from '../../../types/types';
 import { useMutation } from '@apollo/client';
-import { UPLOAD_CHALLENGING_BEHAVIOR } from '../../../connection/queries';
+import { GET_CHALLENGING_CARD, UPLOAD_CHALLENGING_BEHAVIOR } from '../../../connection/queries';
 import { useNavigation } from '@react-navigation/core';
 
 interface ChallengingBehaviorProps {
+	data : any
+	navigation : any
+	setModalVisible(value : boolean) : void
 }
 
 export function ChallengingBehavior(props: ChallengingBehaviorProps) {
@@ -198,7 +201,10 @@ export function ChallengingBehavior(props: ChallengingBehaviorProps) {
             </View>            
 
 			<View style={{marginHorizontal : GLOBAL_MARGIN_HORIZON, marginVertical : GLOBAL_MARGIN_VERTICAL}}>
-				<Button onPress={() => uploadBehavior({ variables : { ChallengingBehaviorInput : {...challengingBehavior}}})
+				<Button onPress={() => uploadBehavior({ 
+					variables : { ChallengingBehaviorInput : {...challengingBehavior}},
+					refetchQueries : [GET_CHALLENGING_CARD]
+				})
 				.then(() => navigation.goBack())
 				.catch(e => {
 						console.log(e)

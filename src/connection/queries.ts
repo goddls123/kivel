@@ -144,7 +144,7 @@ query{
 
 export const GET_CHALLENGING_CARD = gql`
 query{
-	challengingBehaviors{
+	challengingBehavoirs{
 		id
 		title
 		occurenceDate
@@ -159,3 +159,50 @@ query{
 		occurenceDate
 	  }
   }`
+
+export const GET_DEVELOPMENT_DETAIL = gql`
+query developmentRecord($id : Float!){
+	developmentRecord(id : $id){
+		id
+		occurenceDate
+		emergency
+		title
+		problem
+		detail
+		files{
+			id
+		}
+	}
+}`
+
+export const GET_CHALLENGING_DETAIL = gql`
+query challengingBehavoir($id : Float!){
+	challengingBehavoir(id : $id){
+		id
+		occurenceDate
+		title
+		content
+		fixedMethod
+		files{
+			id
+		}
+	}
+}
+`
+
+export const GET_MEMO_DETAIL = gql`
+query memo($id : Float!){
+	memo(id : $id){
+		id
+		occurenceDate
+		title
+		content
+		memoTags{
+			tag
+		}
+		files{
+			id
+		}
+	}
+}
+`

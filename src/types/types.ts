@@ -82,7 +82,7 @@ export type developmentRecordType = {
 	emergency : boolean
 	title : string
 	problem : string
-	detail : string
+	detail? : string
 	image? : string[]
 }
 
@@ -105,7 +105,7 @@ export type memoType = {
 	title : string
 	content : string
 	occurenceDate : string
-	tag? : string[]
+	memoTags? : object[]
 }
 
 export type tagType = {

@@ -22,7 +22,7 @@ import {
     SIZE_HEIGHT,
     SIZE_WIDTH,
 } from '../../common/constants';
-import {UPLOAD_FILE, UPLOAD_MEMO} from '../../../connection/queries';
+import {GET_MEMO_CARD, UPLOAD_FILE, UPLOAD_MEMO} from '../../../connection/queries';
 import {Button} from '../../common/components/Button';
 import { DateScroller } from '../../childEnroll/components/DateScroller';
 import { getDateFromYMDHmsString, getDateYMD } from '../../common/service/dateService';
@@ -182,10 +182,12 @@ export function Memo(props: diaryProps) {
 				text={'작성완료'}
 				textColor={'white'}
 				onPress={() => 
-				uploadMemo({ variables : { 
+				uploadMemo({ 
+					variables : { 
 						MemoInput : {...memo},
 						MemoTagInput : tag
-					}
+					},
+					refetchQueries : [GET_MEMO_CARD]
 				})
 				.then(() => navigation.goBack())
 				.catch(e => 

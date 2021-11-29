@@ -10,47 +10,48 @@ import { getDateYMD } from '../common/service/dateService';
 import { record_data } from '../test/testData';
 import { RecordCard } from './components/RecordCard';
 import Modal from 'react-native-modal'
-import { RecordDetailModal } from './components/RecordDetailModal';
-import { useLazyQuery } from '@apollo/client';
+import { useLazyQuery, useQuery } from '@apollo/client';
 import { GET_CHALLENGING_CARD, GET_DEVELOPMENT_CARD, GET_MEMO_CARD, } from '../../connection/queries';
 import { recordCardType } from '../../types/types';
 import { Divider } from '../common/divider';
+import { DevelopCardDetail } from './components/DevelopCardDetail';
+import { ChallengingBehavior } from './components/ChallengingBehavior';
+import { ChallengingCardDetail } from './components/ChallengingCardDetail';
+import { MemoDetail } from './components/MemoDetail';
 interface recordProps {
 	navigation: StackNavigationProp<stackInterface>;
 }
 
 export function record(props: recordProps) {
 
-    const [getDevelopmentCard ,{loading : developCardLoading, data : developCardData, error : developCardError, refetch : developCardRetch}] = useLazyQuery(GET_DEVELOPMENT_CARD)
-	const [getChallengingCard ,{loading : challengingCardLoading, data : challengingCardData, error : challengingCardError, refetch : challengingCardRefetch}] = useLazyQuery(GET_CHALLENGING_CARD)
-    const [getMemoCard ,{loading : memoCardLoading, data : memoCardData, error : memoCardError, refetch : memoCardRefetch}] = useLazyQuery(GET_MEMO_CARD)
+    const {loading : developCardLoading, data : developCardData, error : developCardError, refetch : developCardRetch} = useQuery(GET_DEVELOPMENT_CARD)
+	const {loading : challengingCardLoading, data : challengingCardData, error : challengingCardError, refetch : challengingCardRefetch} = useQuery(GET_CHALLENGING_CARD)
+    const {loading : memoCardLoading, data : memoCardData, error : memoCardError, refetch : memoCardRefetch} = useQuery(GET_MEMO_CARD)
     
 
     const [card,setcard] = React.useState<recordCardType[]>([])
     const [sortingState, setSortingState] = React.useState({ '전체' : true, '발달지연' : false, '문제행동' : false, '메모' : false })
-	React.useEffect(() => {
-		getDevelopmentCard(),getChallengingCard(),getMemoCard()
-	},[])
+
     React.useEffect(() => {
 		async function setCardData() {
 			let card : recordCardType[] = []
 			if((sortingState.전체 && !developCardLoading && developCardData) || (sortingState.발달지연 && !developCardLoading && developCardData)){
 				let data : recordCardType[]= []
-				await developCardData.userDevelopmentRecords.developmentRecords.map((e : any) => {
+				await developCardData.developmentRecords.map((e : any) => {
 					data.push({...e,tableName : '발달기록'})
 				})
 				card = [...card, ...data]
 			} 
 			if((sortingState.전체 && !challengingCardLoading && challengingCardData) || (sortingState.문제행동 && !challengingCardLoading && challengingCardData)){
 				let data : recordCardType[] = []
-				await challengingCardData.userChallengingBehaviors.challengingBehaviors.map((e : any) => {
+				await challengingCardData.challengingBehavoirs.map((e : any) => {
 					data.push({...e,tableName : '문제행동'})
 				})
 				card = [...card, ...data]
 			}
 			if((sortingState.전체 && !memoCardLoading && memoCardData) || (sortingState.메모 && !memoCardLoading && memoCardData)){
 				let data : recordCardType[] = []
-				await memoCardData.userMemos.memos.map((e : any) => {
+				await memoCardData.memos.map((e : any) => {
 					data.push({...e,tableName : '메모'})
 				})
 				card = [...card, ...data]
@@ -64,8 +65,9 @@ export function record(props: recordProps) {
 		setCardData().then((card) => setcard(card))
     },[developCardData,memoCardData,challengingCardData,sortingState])
 	
+	
     const [modalVisible, setModalVisible] = React.useState<boolean>(false)
-    const [modalItem, setModalItem] = React.useState()
+    const [modalItem, setModalItem] = React.useState<any>()
 
 	let dateBuffer : string;
 
@@ -74,10 +76,41 @@ export function record(props: recordProps) {
         setModalItem(data)
     }
 
-	console.log(developCardData, challengingCardData, memoCardData)
-
+	
+	const renderDetail = () => {
+		if(modalItem?.tableName == '발달기록'){
+			return(
+				<DevelopCardDetail
+				navigation={props.navigation}
+				setModalVisible={setModalVisible}
+				data={modalItem} />
+			)
+		}
+		else if(modalItem?.tableName == '문제행동'){
+			return(
+				<ChallengingCardDetail
+				navigation={props.navigation}
+				setModalVisible={setModalVisible}
+				data={modalItem} />
+			)
+			
+		}
+		else if(modalItem?.tableName == '메모'){
+			return(
+				<MemoDetail
+				navigation={props.navigation}
+				setModalVisible={setModalVisible}
+				data={modalItem} />
+			)
+		}
+		return (
+			<>
+			</>
+		)
+	}
     
 	const renderItem : ListRenderItem<recordCardType>= ({item} : {item : recordCardType}) => {
+
 		let viewArr : any = []
 		let key = 0;
 
@@ -106,7 +139,7 @@ export function record(props: recordProps) {
 	
     return (
         <SafeAreaView style={styles.container}>
-            <View style={{marginHorizontal: GLOBAL_MARGIN_HORIZON}}>
+            <View style={{flex : 1, marginHorizontal: GLOBAL_MARGIN_HORIZON}}>
 
 				{/* 버튼 */}
                 <View style={styles.sortingButtonContainer}>
@@ -117,21 +150,17 @@ export function record(props: recordProps) {
                     </TouchableOpacity>
 					
                     <TouchableOpacity onPress={() => {
-                        setSortingState({...sortingState, '전체' : false , '발달지연' : !sortingState.발달지연}),
-                        getDevelopmentCard()
+                        setSortingState({...sortingState, '전체' : false , '발달지연' : !sortingState.발달지연})
                     }}>
                         <Text style={[styles.sortingButtonText, sortingState.발달지연 ? { backgroundColor :  'black', color : 'white'} : null ]}>발달지연</Text>
                     </TouchableOpacity>
 					<TouchableOpacity onPress={() => {
-                        setSortingState({...sortingState, '전체' : false , '문제행동' : !sortingState.문제행동}),
-                        getChallengingCard()
-						
+                        setSortingState({...sortingState, '전체' : false , '문제행동' : !sortingState.문제행동})
                     }}>
                         <Text style={[styles.sortingButtonText, sortingState.문제행동 ? { backgroundColor :  'black', color : 'white'} : null ]}>문제행동</Text>
                     </TouchableOpacity>
 					<TouchableOpacity onPress={() => {
-                        setSortingState({...sortingState, '전체' : false , '메모' : !sortingState.메모}),
-                        getMemoCard()
+                        setSortingState({...sortingState, '전체' : false , '메모' : !sortingState.메모})
                     }}>
                         <Text style={[styles.sortingButtonText, sortingState.메모 ? { backgroundColor :  'black', color : 'white'} : null ]}>메모</Text>
                     </TouchableOpacity>
@@ -143,12 +172,13 @@ export function record(props: recordProps) {
                 }
 				</ScrollView> */}
 				<FlatList
+				showsVerticalScrollIndicator={false}
 				data={card}
 				renderItem={renderItem}
 				keyExtractor={(item : any, index : number) => index.toString()}
 				></FlatList>
 				
-
+				{/* <Divider height={SIZE_WIDTH * 0.5}></Divider> */}
 				
 
             </View>
@@ -162,11 +192,9 @@ export function record(props: recordProps) {
 			
             <Modal isVisible={modalVisible} style={{margin : 0, justifyContent : 'flex-end'}}
             onBackdropPress={() => setModalVisible(false)}>
-                <RecordDetailModal
-                setModalVisible={setModalVisible}
-                data={modalItem} />
+				{renderDetail()}
             </Modal>
-			
+			{console.log(modalItem)}
         </SafeAreaView>
     );
 }
