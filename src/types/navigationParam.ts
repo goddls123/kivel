@@ -1,7 +1,7 @@
 import { SchemaExtensionNode } from "graphql";
 import { essentialChildInfo, nurseryCaution, nurseryCaution2 } from "./childInfoTypes";
 import { diary } from "./DiaryTypes";
-import { childInfo, screeningResult } from "./types";
+import { childInfo, developmentRecordType, screeningResult } from "./types";
 import { noticeType } from "./types";
 
 export type stackInterface = {
@@ -44,4 +44,10 @@ export type stackInterface = {
     AddRecord : any
     AddHomeWork : any
     ServerProblem : undefined
+
+    // 기록
+    EditDevelopment? : developmentRecordType
+    EditChallenging? : developmentRecordType
+    EditMemo? : developmentRecordType
+
 }

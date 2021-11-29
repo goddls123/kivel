@@ -25,26 +25,31 @@ import {
 import {GET_MEMO_CARD, UPLOAD_FILE, UPLOAD_MEMO} from '../../../connection/queries';
 import {Button} from '../../common/components/Button';
 import { DateScroller } from '../../childEnroll/components/DateScroller';
-import { getDateFromYMDHmsString, getDateYMD } from '../../common/service/dateService';
+import { getDateFromYMDHmsString, getDateYMD, getDateYMDHms } from '../../common/service/dateService';
 import { getKoreanDay } from '../../calendar/service/calendarService';
 import { TagModal } from './TagModal';
 import { memoType, tagType } from '../../../types/types';
 import { useNavigation } from '@react-navigation/core';
 
-interface diaryProps {}
+interface memoProps {
+	navigation : any
+	data? : memoType
+}
 
-export function Memo(props: diaryProps) {
+export function Memo(props: memoProps) {
 
 	const navigation = useNavigation()
     // Todo
     // 1 : modal component로 빼내기
     // 2 : 기존 입력되있는 문제 행동 띄우기, 화면에 배치 신경써서
 	const [uploadMemo, {data, error, loading}] = useMutation(UPLOAD_MEMO)
-	const [memo, setMemo] = React.useState<memoType>({
+	const [memo, setMemo] = React.useState<memoType>(props.data? props.data : {
 		content : '',
 		title : '',
-		occurenceDate : getDateYMD(new Date(), '-')
+		occurenceDate : getDateYMDHms(new Date()),
+		memoTags : []
 	})
+	console.log('data', props.data )
 	const setTitle = (value : string) => {
 		setMemo({...memo, title : value})
 	}
@@ -54,10 +59,12 @@ export function Memo(props: diaryProps) {
 	const setDate = (value : Date) => {
 		setMemo({...memo, occurenceDate : getDateYMD(value,'-')})
 	}
-	
+	const setTag = (value : tagType[]) => {
+		setMemo({...memo, memoTags : [...value]})
+	}
     // const [date, setDate] = React.useState<Date>(new Date());
     const [images, setImages] = React.useState<ReactNativeFile[]>();
-    const [tag, setTag] = React.useState<tagType[]>();
+    // const [tag, setTag] = React.useState<tagType[]>();
     const [dateModalVisible, setDateModalVisible] = React.useState<boolean>(false)
 	const [tagModalVisible, setTagModalVisible] = React.useState<boolean>(false)
 
@@ -130,7 +137,7 @@ export function Memo(props: diaryProps) {
             <View style={styles.dateTextContainer}>
                 <TouchableOpacity onPress={() => setDateModalVisible(true)}>
                     <Text style={styles.dateText}>
-                        {memo.occurenceDate + '(' + getKoreanDay(new Date(memo.occurenceDate).getDay()) + ')' }
+                        {memo.occurenceDate.substr(0,10) + ' (' + getKoreanDay(new Date(memo.occurenceDate).getDay()) + ')' }
                     </Text>
                 </TouchableOpacity>
             </View>
@@ -147,7 +154,7 @@ export function Memo(props: diaryProps) {
 			{/* 태그 */}
 			<View style={styles.tagContainer}>
 				{
-					tag?.map((tag : tagType, id) => {
+					memo.memoTags?.map((tag : any, id) => {
 						return(
 							<Text key={id} style={styles.tagText}>
 								{tag.tag}
@@ -185,7 +192,7 @@ export function Memo(props: diaryProps) {
 				uploadMemo({ 
 					variables : { 
 						MemoInput : {...memo},
-						MemoTagInput : tag
+						MemoTagInput : memo.memoTags
 					},
 					refetchQueries : [GET_MEMO_CARD]
 				})
@@ -207,7 +214,7 @@ export function Memo(props: diaryProps) {
 			isVisible={tagModalVisible}>
 				<TagModal
 				setModalVisible={setTagModalVisible}
-				data={tag}
+				data={memo.memoTags}
 				setData={setTag}
 				></TagModal>
 			</Modal>

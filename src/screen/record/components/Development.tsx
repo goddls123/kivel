@@ -18,11 +18,11 @@ import { GET_DEVELOPMENT_CARD, UPLOAD_DEVELOPMENT_RECORD, UPLOAD_FILE } from '..
 import { useNavigation } from '@react-navigation/native';
 
 interface DevelopmentProps {
+	navigation : any
 	data? : developmentRecordType
 }
 
 export function Development(props: DevelopmentProps) {
-	const navigation = useNavigation()
 	
 	
 	const [record, setRecord] = React.useState<developmentRecordType>( props.data? props.data : {
@@ -32,7 +32,7 @@ export function Development(props: DevelopmentProps) {
 		occurenceDate : getDateYMDHms(new Date()),
 		problem : ''
 	})
-	
+	console.log('aaaa',record)
 	const setTitle = (value : string) => {
 		setRecord({...record, title : value})
 	}
@@ -54,12 +54,15 @@ export function Development(props: DevelopmentProps) {
 	const [modalVisible, setModalVisible] = React.useState(false)
 	const [images, setImages] = React.useState<ReactNativeFile[]>()
 
-	function renderDateButton() {
+	
+	function renderDateButton() {		
+
+		
 		return (
 			<View style={styles.dateButtonInnerContainer}>
 				<TouchableOpacity onPress = {() => setModalVisible(true)}>
 					<View style={styles.dateTextBox}>
-						<Text style={styles.dateText}>{record.occurenceDate.substr(0,10) + '(' + getDayKorean(getDateFromYMDHmsString(record.occurenceDate).getDay()) + ')'}</Text>
+						<Text style={styles.dateText}>{record.occurenceDate.substr(0,10) + '(' + getDayKorean(new Date(record.occurenceDate).getDay()) + ')'}</Text>
 						<Icon style={styles.chevronDownIcon} name="chevron-down"></Icon>
 					</View>
 				</TouchableOpacity>
@@ -240,7 +243,7 @@ export function Development(props: DevelopmentProps) {
 
 				})
 				// .then(() => uploadFile({ variables : { code : '001', file : images }}))
-				.then(() => navigation.goBack())
+				.then(() => props.navigation.goBack())
 				.catch(e => 
 					{
 						console.log(e)

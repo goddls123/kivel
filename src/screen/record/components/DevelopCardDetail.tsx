@@ -23,7 +23,6 @@ interface RecordDetailModalProps {
 
 export function DevelopCardDetail(props : RecordDetailModalProps) {
 	
-	const navigation = useNavigation()
 	const [detailInfo, setDetailInfo] = React.useState<developmentRecordType>()
 	const {data , loading , error} = useQuery(GET_DEVELOPMENT_DETAIL,{variables : {id : props.data.id}})
 	React.useEffect(() => {
@@ -58,7 +57,7 @@ export function DevelopCardDetail(props : RecordDetailModalProps) {
 		
 		return detailInfo?.occurenceDate.substr(0,10) + '(' + getDayKorean(date.getDay()) + ')' + '  |  ' + detailInfo?.occurenceDate.substr(11,5)
 	}
-	
+
 	
 		return (
 			<View style={styles.container}>
@@ -80,9 +79,8 @@ export function DevelopCardDetail(props : RecordDetailModalProps) {
 				</View>
 				<View style={{paddingHorizontal : GLOBAL_MARGIN_HORIZON, marginBottom : GLOBAL_MARGIN_HORIZON}}>
 					<Text style={styles.topText}>발달기록<Text style={{color : 'black'}}>상세보기</Text></Text>
+					<Divider height={1} color={'#ededed'}></Divider>
 				</View>
-				<Divider height={1} color={'#ededed'}></Divider>
-				
 				
 				<View style={styles.mainContainer}>
 
@@ -120,7 +118,7 @@ export function DevelopCardDetail(props : RecordDetailModalProps) {
 					</View>
 					<View style={{flex : 1, marginLeft : 5}}>
 						<Button text={'수정'}
-						onPress={() => props.navigation.navigate('AddRecord',{radioState : [true, false, false], developmentData : props.data})}
+						onPress={() => props.navigation.navigate('AddRecord',{radioState : [true, false, false], developmentData : detailInfo})}
 						textColor={'white'}
 						style={{backgroundColor : MAIN_COLOR}}
 						></Button>
@@ -137,7 +135,7 @@ export function DevelopCardDetail(props : RecordDetailModalProps) {
 const styles = StyleSheet.create({
 	container : {borderTopLeftRadius: 20, borderTopRightRadius : 20, backgroundColor : 'white', height : SIZE_HEIGHT * 0.8 },
 	closeIcon : {position : 'absolute', top : GLOBAL_MARGIN_HORIZON, right : GLOBAL_MARGIN_HORIZON ,fontSize: 35, fontWeight : 'bold', color : 'black'},
-	topText : {paddingTop : GLOBAL_MARGIN_HORIZON , fontSize : 20, fontWeight : 'bold', color : '#0fafe9'},
+	topText : {paddingTop : GLOBAL_MARGIN_HORIZON , fontSize : 20, fontWeight : 'bold', color : '#0fafe9', marginBottom : GLOBAL_MARGIN_HORIZON},
 	topImageContainer : {height: SIZE_WIDTH * 0.18, width : SIZE_WIDTH * 0.18, backgroundColor : '#f6f6f6', borderRadius : 8, alignItems : 'center', justifyContent : 'center'},
 	topImage : {height : SIZE_WIDTH * 0.12, width :SIZE_WIDTH * 0.12},
 	mainContainer : {paddingTop : GLOBAL_MARGIN_VERTICAL, paddingHorizontal : GLOBAL_MARGIN_HORIZON, paddingBottom : GLOBAL_MARGIN_VERTICAL * 3},
@@ -158,7 +156,7 @@ const styles = StyleSheet.create({
 	contentHeaderText : {fontSize: 16, color : '#707070', marginBottom : 5 },
 	contentText : {fontSize: 18, color : 'black', marginBottom : GLOBAL_MARGIN_HORIZON * 1.5},
 	topIconContainer : {paddingHorizontal : GLOBAL_MARGIN_HORIZON, paddingTop : GLOBAL_MARGIN_VERTICAL},
-	buttonContainer : {position : 'absolute', bottom : 0, flexDirection : 'row', paddingHorizontal : GLOBAL_MARGIN_HORIZON, backgroundColor : 'white'},
+	buttonContainer : {flexDirection : 'row', paddingHorizontal : GLOBAL_MARGIN_HORIZON, backgroundColor : 'white', paddingBottom : GLOBAL_MARGIN_HORIZON},
 	tagContainer : {
 		flexDirection: 'row',
 		marginBottom: GLOBAL_MARGIN_VERTICAL * 0.5,

@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { tagType } from '../../../types/types';
 interface TagModalProps {
 	setModalVisible(value : boolean) : void
-	data? : tagType[]
+	data? : any
 	setData(value : tagType[]) : void
 }
 

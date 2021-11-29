@@ -54,13 +54,23 @@ export function addRecord(props : addRecordProps) {
 
 		function renderComponent() {
 			if(radioState[0]){
-				return <Development data={props.route.params?.developmentData}/> 
+				return <Development 
+						navigation={props.navigation}
+						data={props.route.params?.developmentData}
+						/> 
 			}
 			else if(radioState[1]) {
-				return <ChallengingBehavior />
+				return <ChallengingBehavior 
+						navigation={props.navigation}
+						data={props.route.params?.challengingData}
+						/>
 			}
 			else if(radioState[2]) {
-				return <Memo />
+				return <Memo 
+						navigation={props.navigation}
+						data={props.route.params?.memoData}
+						/>
+						
 			}
 		}
 		
@@ -95,7 +105,7 @@ export function addRecord(props : addRecordProps) {
 				<WarningModal
 				isVisible={warningModal}
 				setIsVisible={setWarningModal}
-				onPress={() => props.navigation.reset({routes: [{name: 'Home'}]})}
+				onPress={() => props.navigation.goBack()}
 				></WarningModal> 
 
 			</SafeAreaView>

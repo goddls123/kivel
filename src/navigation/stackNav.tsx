@@ -28,6 +28,9 @@ import { Splash } from '../screen/common/components/Splash';
 import { authCheck } from '../screen/common/authCheck';
 import { addHomeWork } from '../screen/record/addHomework';
 import { serverProblem } from '../screen/common/serverProblem';
+import { Development } from '../screen/record/components/Development';
+import { ChallengingBehavior } from '../screen/record/components/ChallengingBehavior';
+import { Memo } from '../screen/record/components/Memo';
 
 
 const  Stack  =  createStackNavigator<stackInterface>();
@@ -64,6 +67,11 @@ export  const  StackNav:  React.FC  =  ({})  =>  {
                 <Stack.Screen name='Question'  component={question} options={{headerShown:  false}} />
                 <Stack.Screen name='AddRecord'  component={addRecord} options={{headerShown:  false}} />
                 <Stack.Screen name='AddHomeWork'  component={addHomeWork} options={{headerShown:  false}} />
+
+                {/* 기록 */}
+                <Stack.Screen name='EditDevelopment'  component={Development} options={{headerShown:  false}} />
+                <Stack.Screen name='EditChallenging'  component={ChallengingBehavior} options={{headerShown:  false}} />
+                <Stack.Screen name='EditMemo'  component={Memo} options={{headerShown:  false}} />
 
                 <Stack.Screen name="map"  component={Map} options={{headerShown:  false}} />
                 

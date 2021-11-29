@@ -120,7 +120,7 @@ export function ChallengingCardDetail(props : ChallengingCardDetailProps) {
 						</View>
 						<View style={{flex : 1, marginLeft : 5}}>
 							<Button text={'수정'}
-							onPress={() => props.navigation.navigate('AddRecord',{radioState : [false, true, false], developmentData : detailInfo})}
+							onPress={() => props.navigation.navigate('AddRecord',{radioState : [false, true, false], challengingData : detailInfo})}
 							textColor={'white'}
 							style={{backgroundColor : MAIN_COLOR}}
 							></Button>

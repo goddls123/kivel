@@ -1,7 +1,7 @@
 import { offsetLimitPagination } from '@apollo/client/utilities';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
-import {View, StyleSheet, Text, TouchableOpacity, ScrollView, Image, BackHandler, FlatList, ListRenderItem } from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity, ScrollView, Image, BackHandler, FlatList, ListRenderItem,ActivityIndicator  } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import { stackInterface } from '../../types/navigationParam';
 import { getKoreanDay } from '../calendar/service/calendarService';
@@ -143,43 +143,35 @@ export function record(props: recordProps) {
 
 				{/* 버튼 */}
                 <View style={styles.sortingButtonContainer}>
-					<TouchableOpacity onPress={() => {
-                        setSortingState({ '전체' : true, '발달지연' : false, '문제행동' : false, '메모' : false })
-                    }}>
+					<TouchableOpacity onPress={() => setSortingState({ '전체' : true, '발달지연' : false, '문제행동' : false, '메모' : false })}>
                         <Text style={[styles.sortingButtonText, sortingState.전체 ? { backgroundColor :  'black', color : 'white'} : null ]}>전체</Text>
                     </TouchableOpacity>
 					
-                    <TouchableOpacity onPress={() => {
-                        setSortingState({...sortingState, '전체' : false , '발달지연' : !sortingState.발달지연})
-                    }}>
+                    <TouchableOpacity onPress={() => setSortingState({...sortingState, '전체' : false , '발달지연' : !sortingState.발달지연})}>
                         <Text style={[styles.sortingButtonText, sortingState.발달지연 ? { backgroundColor :  'black', color : 'white'} : null ]}>발달지연</Text>
                     </TouchableOpacity>
-					<TouchableOpacity onPress={() => {
-                        setSortingState({...sortingState, '전체' : false , '문제행동' : !sortingState.문제행동})
-                    }}>
+
+					<TouchableOpacity onPress={() => setSortingState({...sortingState, '전체' : false , '문제행동' : !sortingState.문제행동})}>
                         <Text style={[styles.sortingButtonText, sortingState.문제행동 ? { backgroundColor :  'black', color : 'white'} : null ]}>문제행동</Text>
                     </TouchableOpacity>
-					<TouchableOpacity onPress={() => {
-                        setSortingState({...sortingState, '전체' : false , '메모' : !sortingState.메모})
-                    }}>
+
+					<TouchableOpacity onPress={() => setSortingState({...sortingState, '전체' : false , '메모' : !sortingState.메모})}>
                         <Text style={[styles.sortingButtonText, sortingState.메모 ? { backgroundColor :  'black', color : 'white'} : null ]}>메모</Text>
                     </TouchableOpacity>
                 </View>
 
-				{/* <ScrollView showsVerticalScrollIndicator={false}>
-				{
-                    renderRecordData()
-                }
-				</ScrollView> */}
-				<FlatList
-				showsVerticalScrollIndicator={false}
-				data={card}
-				renderItem={renderItem}
-				keyExtractor={(item : any, index : number) => index.toString()}
-				></FlatList>
-				
-				{/* <Divider height={SIZE_WIDTH * 0.5}></Divider> */}
-				
+				{/* 아이템 */}
+				{ developCardLoading || challengingCardLoading || memoCardLoading 
+					? <View style={{flex : 1, justifyContent : 'center', alignItems : 'center'}}>
+						<ActivityIndicator size='large'></ActivityIndicator>
+					</View>
+					: <FlatList
+					showsVerticalScrollIndicator={false}
+					data={card}
+					renderItem={renderItem}
+					keyExtractor={(item : any, index : number) => index.toString()}
+					></FlatList>
+				}
 
             </View>
 			
@@ -194,7 +186,7 @@ export function record(props: recordProps) {
             onBackdropPress={() => setModalVisible(false)}>
 				{renderDetail()}
             </Modal>
-			{console.log(modalItem)}
+
         </SafeAreaView>
     );
 }

@@ -18,9 +18,8 @@ import { GET_CHALLENGING_CARD, UPLOAD_CHALLENGING_BEHAVIOR } from '../../../conn
 import { useNavigation } from '@react-navigation/core';
 
 interface ChallengingBehaviorProps {
-	data : any
 	navigation : any
-	setModalVisible(value : boolean) : void
+	data? : challengingBehaviorType
 }
 
 export function ChallengingBehavior(props: ChallengingBehaviorProps) {
@@ -28,7 +27,7 @@ export function ChallengingBehavior(props: ChallengingBehaviorProps) {
 	const [uploadBehavior ,{data, loading, error}] = useMutation(UPLOAD_CHALLENGING_BEHAVIOR)
 
 	
-	const [challengingBehavior , setChallengingBehavior] = React.useState<challengingBehaviorType>({
+	const [challengingBehavior , setChallengingBehavior] = React.useState<challengingBehaviorType>(props.data? props.data : {
 		occurenceDate : getDateYMDHms(new Date()),
 		content : '',
 		fixedMethod : '',
@@ -59,7 +58,7 @@ export function ChallengingBehavior(props: ChallengingBehaviorProps) {
 			<View style={styles.dateButtonInnerContainer}>
 				<TouchableOpacity onPress = {() => setModalVisible(true)}>
 					<View style={styles.dateTextBox}>
-						<Text style={styles.dateText}>{challengingBehavior.occurenceDate.substr(0,10) + '(' + getDayKorean(getDateFromYMDHmsString(challengingBehavior.occurenceDate).getDay()) + ')'}</Text>
+						<Text style={styles.dateText}>{challengingBehavior.occurenceDate.substr(0,10) + '(' + getDayKorean(new Date(challengingBehavior.occurenceDate).getDay()) + ')'}</Text>
 						<Icon style={styles.chevronDownIcon} name="chevron-down"></Icon>
 					</View>
 				</TouchableOpacity>
