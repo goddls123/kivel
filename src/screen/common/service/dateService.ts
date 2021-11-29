@@ -25,7 +25,7 @@ export function getDateYMDHms(date : Date){
 	if(s.length == 1 ){
 		s = '0' + s
 	}
-	return YMD + ' ' + H + ':' + m + ':' + s
+	return YMD + 'T' + H + ':' + m + ':' + s
 }
 
 export function getDateFromYMDHmsString(date : string){

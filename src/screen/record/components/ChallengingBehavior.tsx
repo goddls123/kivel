@@ -201,11 +201,15 @@ export function ChallengingBehavior(props: ChallengingBehaviorProps) {
 
 			<View style={{marginHorizontal : GLOBAL_MARGIN_HORIZON, marginVertical : GLOBAL_MARGIN_VERTICAL}}>
 				<Button onPress={() => uploadBehavior({ 
-					variables : { ChallengingBehaviorInput : {...challengingBehavior}},
+					variables : { 
+						ChallengingBehaviorInput : {...challengingBehavior},
+						file : images
+					},
 					refetchQueries : [GET_CHALLENGING_CARD]
 				})
 				.then(() => navigation.goBack())
-				.catch(e => {
+				.catch(e => 
+					{
 						console.log(e)
 					})
 				}

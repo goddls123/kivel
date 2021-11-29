@@ -28,7 +28,7 @@ export function ChallengingCardDetail(props : ChallengingCardDetailProps) {
 	const {data , loading , error} = useQuery(GET_CHALLENGING_DETAIL,{variables : {id : props.data.id}})
 	React.useEffect(() => {
 		if(data && !loading){
-			setDetailInfo(data.challengingBehavoir)
+			setDetailInfo(data.challengingBehavior)
 		}
 	},[data])
 	

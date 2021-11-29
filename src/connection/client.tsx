@@ -7,8 +7,11 @@ import {setContext} from '@apollo/client/link/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // graphql api 주소
 
+const ip = 'ec2-3-34-5-147.ap-northeast-2.compute.amazonaws.com:3080/graphql'
+
+// const ip = '192.168.0.39:3000/graphql'
 const wsLink = new WebSocketLink({
-	uri : `ws://ec2-3-34-5-147.ap-northeast-2.compute.amazonaws.com:3080/graphql`,
+	uri : `ws://` + ip,
 	options: {
 		reconnect: true,
 	},
@@ -30,7 +33,7 @@ const authLink = setContext(async (_, {headers}) => {
 });
 
 const httpLink = createUploadLink({
-	uri : `http://ec2-3-34-5-147.ap-northeast-2.compute.amazonaws.com:3080/graphql`,
+	uri : `http://` + ip,
 });
 
 // subscription socket 통신 주소

@@ -116,8 +116,8 @@ mutation saveDevelopmentRecord($DevelopmentRecordInput : DevelopmentRecordInput!
 }`
 
 export const UPLOAD_CHALLENGING_BEHAVIOR = gql`
-mutation saveChallengingBehavior($ChallengingBehaviorInput : ChallengingBehaviorInput!){
-	saveChallengingBehavior(ChallengingBehaviorInput : $ChallengingBehaviorInput){
+mutation saveChallengingBehavior($ChallengingBehaviorInput : ChallengingBehaviorInput!, $file: [Upload!]){
+	saveChallengingBehavior(ChallengingBehaviorInput : $ChallengingBehaviorInput, file : $file){
 		id
 	}
 }`
@@ -144,7 +144,7 @@ query{
 
 export const GET_CHALLENGING_CARD = gql`
 query{
-	challengingBehavoirs{
+	challengingBehaviors{
 		id
 		title
 		occurenceDate
@@ -176,8 +176,8 @@ query developmentRecord($id : Float!){
 }`
 
 export const GET_CHALLENGING_DETAIL = gql`
-query challengingBehavoir($id : Float!){
-	challengingBehavoir(id : $id){
+query challengingBehavior($id : Float!){
+	challengingBehavior(id : $id){
 		id
 		occurenceDate
 		title

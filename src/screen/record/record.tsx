@@ -28,11 +28,13 @@ export function record(props: recordProps) {
 	const {loading : challengingCardLoading, data : challengingCardData, error : challengingCardError, refetch : challengingCardRefetch} = useQuery(GET_CHALLENGING_CARD)
     const {loading : memoCardLoading, data : memoCardData, error : memoCardError, refetch : memoCardRefetch} = useQuery(GET_MEMO_CARD)
     
-
-    const [card,setcard] = React.useState<recordCardType[]>([])
+	
+    
+	const [card,setcard] = React.useState<recordCardType[]>([])
     const [sortingState, setSortingState] = React.useState({ '전체' : true, '발달지연' : false, '문제행동' : false, '메모' : false })
 
     React.useEffect(() => {
+		
 		async function setCardData() {
 			let card : recordCardType[] = []
 			if((sortingState.전체 && !developCardLoading && developCardData) || (sortingState.발달지연 && !developCardLoading && developCardData)){
@@ -44,7 +46,7 @@ export function record(props: recordProps) {
 			} 
 			if((sortingState.전체 && !challengingCardLoading && challengingCardData) || (sortingState.문제행동 && !challengingCardLoading && challengingCardData)){
 				let data : recordCardType[] = []
-				await challengingCardData.challengingBehavoirs.map((e : any) => {
+				await challengingCardData.challengingBehaviors.map((e : any) => {
 					data.push({...e,tableName : '문제행동'})
 				})
 				card = [...card, ...data]
@@ -65,7 +67,10 @@ export function record(props: recordProps) {
 		setCardData().then((card) => setcard(card))
     },[developCardData,memoCardData,challengingCardData,sortingState])
 	
-	
+	if(challengingCardError){
+		console.log(challengingCardError)
+	}
+
     const [modalVisible, setModalVisible] = React.useState<boolean>(false)
     const [modalItem, setModalItem] = React.useState<any>()
 

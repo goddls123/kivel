@@ -237,12 +237,13 @@ export function Development(props: DevelopmentProps) {
 			
 			<View style={{marginHorizontal : GLOBAL_MARGIN_HORIZON, marginVertical : GLOBAL_MARGIN_VERTICAL}}>
 				<Button onPress={() => 
+				// uploadFile({ variables : { code : '001', file : images }})}
 				uploadRecord({ 
 					variables : { DevelopmentRecordInput : {...record}},
 					refetchQueries : [GET_DEVELOPMENT_CARD]
 
 				})
-				// .then(() => uploadFile({ variables : { code : '001', file : images }}))
+				.then(() => uploadFile({ variables : { code : '001', file : images }}))
 				.then(() => props.navigation.goBack())
 				.catch(e => 
 					{

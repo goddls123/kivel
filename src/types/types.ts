@@ -1,4 +1,5 @@
 import { ReactNativeFile } from "apollo-upload-client"
+import React from "react"
 
 export type noticeType = {
 	title : string
@@ -84,6 +85,7 @@ export type developmentRecordType = {
 	problem : string
 	detail? : string
 	image? : string[]
+	files? : ReactNativeFile[]
 }
 
 export type recordCardType = {
@@ -99,6 +101,7 @@ export type challengingBehaviorType = {
 	title : string
 	content : string
 	fixedMethod : string
+	files? : ReactNativeFile[]
 }
 
 export type memoType = {
@@ -106,6 +109,7 @@ export type memoType = {
 	content : string
 	occurenceDate : string
 	memoTags? : object[]
+	files? : ReactNativeFile[]
 }
 
 export type tagType = {
