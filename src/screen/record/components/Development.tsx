@@ -32,7 +32,7 @@ export function Development(props: DevelopmentProps) {
 		occurenceDate : getDateYMDHms(new Date()),
 		problem : ''
 	})
-	console.log('aaaa',record)
+	
 	const setTitle = (value : string) => {
 		setRecord({...record, title : value})
 	}
@@ -189,29 +189,19 @@ export function Development(props: DevelopmentProps) {
             </View>
             <Divider height={4} color={'#ededed'}></Divider>
 
-            {/* titleInputContainer */}
-            <View style={styles.containerNoHeight}>
-                <Text style={styles.boldText}> 어떤 문제가 있었나요? </Text>
-                <TextInput
-                    style={styles.textInputStyle}
-                    placeholder="문제를 입력해주세요"
-                    placeholderTextColor="#d5d5d5"
-					onChangeText={(text) => setTitle(text)}
-					value={record.title}></TextInput>
-                <Text style={{color: 'black', fontSize: 16}}>+ 이전 문제에서 추가</Text>
-            </View>
-            <Divider height={4} color={'#ededed'}></Divider>
+            
 
             {/* problemAreaButton */}
             <View style={styles.containerNoHeight}>
                 <Text style={styles.boldText}>어떤 영역의 문제인가요? </Text>
                 {renderProblemButton()}
-                <Text style={styles.boldText}>어떤 선생님한테 공유할까요? </Text>
+                
             </View>
             <Divider height={4} color={'#ededed'}></Divider>
 
-            <View style={styles.containerNoHeight}>
-                <Text style={styles.boldText}>좀 더 자세히 알려주세요! </Text>
+			{/* titleInputContainer */}
+			<View style={styles.containerNoHeight}>
+                <Text style={styles.boldText}> 어떤 문제가 있었나요? </Text>
                 <TextInput
 				style={styles.detailTextInputStyle}
 				placeholder='ex) 키블이가 자꾸 걷다가 넘어져요'
@@ -221,6 +211,22 @@ export function Development(props: DevelopmentProps) {
 				value = {record.detail}
 				onChangeText={(text) => setDetail(text)}
 				></TextInput>
+                {/* <Text style={{color: 'black', fontSize: 16}}>+ 이전 문제에서 추가</Text> */}
+            </View>
+            <Divider height={4} color={'#ededed'}></Divider>
+
+            <View style={styles.containerNoHeight}>
+				{/* <Text style={styles.boldText}>어떤 선생님한테 공유할까요? </Text> */}
+                {/* <Text style={styles.boldText}>좀 더 자세히 알려주세요! </Text>
+                <TextInput
+				style={styles.detailTextInputStyle}
+				placeholder='ex) 키블이가 자꾸 걷다가 넘어져요'
+				placeholderTextColor='#d5d5d5'
+				textAlignVertical='top'
+				multiline
+				value = {record.detail}
+				onChangeText={(text) => setDetail(text)}
+				></TextInput> */}
 
 				<Text style={styles.boldText}>사진을 첨부해주세요</Text>
 				<View style={styles.addCameraButton}>
@@ -316,6 +322,6 @@ const styles = StyleSheet.create({
 		  color : 'white', 
 		  fontSize: 15,
 		},
-	detailTextInputStyle : { maxHeight : SIZE_WIDTH * 0.5 ,borderRadius : 10, borderWidth : 1, borderColor : '#d5d5d5', padding : 15, marginTop : 10, marginBottom : 20 },
+	detailTextInputStyle : { height : SIZE_WIDTH * 0.25 , maxHeight : SIZE_WIDTH * 0.5 ,borderRadius : 10, borderWidth : 1, borderColor : '#d5d5d5', padding : 15, marginTop : 10, marginBottom : 20 },
 	addCameraButton : { borderRadius : 8, borderColor : '#ededed', borderWidth : 1, padding : 10, marginTop : 10, backgroundColor : '#ededed'},
 });

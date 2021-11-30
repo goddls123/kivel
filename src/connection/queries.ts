@@ -206,3 +206,13 @@ query memo($id : Float!){
 	}
 }
 `
+
+export const GET_CHALLENGING_DISTINCT = gql`
+query distinctChallengingBehaviors($column : String!){
+	distinctChallengingBehaviors(column : $column){
+		id
+		title
+		occurenceDate
+	}
+}
+`

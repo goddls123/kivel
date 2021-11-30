@@ -12,9 +12,9 @@ import { Button } from '../../common/components/Button';
 import { ReactNativeFile } from 'extract-files';
 import ImagePicker from 'react-native-image-crop-picker'
 import { requestCameraPermission } from '../../common/service/cameraServices';
-import { challengingBehaviorType } from '../../../types/types';
-import { useMutation } from '@apollo/client';
-import { GET_CHALLENGING_CARD, UPLOAD_CHALLENGING_BEHAVIOR } from '../../../connection/queries';
+import { challengingBehaviorType, previousRecordType } from '../../../types/types';
+import { useMutation, useQuery } from '@apollo/client';
+import { GET_CHALLENGING_CARD, GET_CHALLENGING_DISTINCT, UPLOAD_CHALLENGING_BEHAVIOR } from '../../../connection/queries';
 import { useNavigation } from '@react-navigation/core';
 
 interface ChallengingBehaviorProps {
@@ -23,17 +23,33 @@ interface ChallengingBehaviorProps {
 }
 
 export function ChallengingBehavior(props: ChallengingBehaviorProps) {
-	const navigation = useNavigation()
-	const [uploadBehavior ,{data, loading, error}] = useMutation(UPLOAD_CHALLENGING_BEHAVIOR)
-
-	
 	const [challengingBehavior , setChallengingBehavior] = React.useState<challengingBehaviorType>(props.data? props.data : {
 		occurenceDate : getDateYMDHms(new Date()),
 		content : '',
 		fixedMethod : '',
 		title : '',
 	})
-	console.log(challengingBehavior)
+	const [modalVisible, setModalVisible] = React.useState(false)
+	const [isEmergency, setIsEmergency] = React.useState(false)
+	const [images, setImages] = React.useState<ReactNativeFile[]>()
+	const [uploadBehavior ,{data, loading, error}] = useMutation(UPLOAD_CHALLENGING_BEHAVIOR)
+	
+	
+
+	const [previousRecord, setPreviousRecord] = React.useState<previousRecordType[]>([])
+	const [previousRecordLength, setPreviousRecordLength] = React.useState(5)
+	const [selectedPreviousRecord, setSelectedPreviousRecord] = React.useState<any>()
+
+	const {data : distinctData, loading : distinctLoading , error : distinctError} = useQuery(GET_CHALLENGING_DISTINCT,{variables : {column : "title"}})
+	React.useEffect(() => {
+		if(distinctData && !distinctLoading){
+			setPreviousRecord(distinctData.distinctChallengingBehaviors)
+		}
+	},[distinctData])
+
+	
+
+	// state set function
 	const setOccurenceDate = (value : Date) => {
 		let date = getDateYMDHms(value)
 		setChallengingBehavior({...challengingBehavior,occurenceDate : date})
@@ -49,10 +65,57 @@ export function ChallengingBehavior(props: ChallengingBehaviorProps) {
 	}
 
 
-	const [modalVisible, setModalVisible] = React.useState(false)
-	const [isEmergency, setIsEmergency] = React.useState(false)
-	const [images, setImages] = React.useState<ReactNativeFile[]>()
 
+	// rendering function
+	function renderSelectCategory(){
+		let viewArr : Element[] = []
+		let selectedColor = 'rgba(255,138,92,0.8)'
+		
+		viewArr.push(
+			<View style={{backgroundColor : selectedPreviousRecord == 'X' ? selectedColor : 'white'}}>
+				<TextInput
+				style={{paddingHorizontal : 15, borderBottomWidth : 1, borderColor : '#d5d5d5'}}
+				placeholder="+ 카테고리 추가하기 (직접입력) "
+				onPressIn={() => setSelectedPreviousRecord('X')}
+				onChangeText={(text) => setTitle(text)}
+				></TextInput>
+			</View>
+		)
+		if(previousRecord.length){
+			
+			for(let i = 0; i < previousRecordLength; i ++){
+				if(i == previousRecord.length) break;
+	
+				viewArr.push(
+					<TouchableOpacity key={i} 
+					style={[styles.previousRecordItem, { 
+						borderTopWidth : 1,
+						backgroundColor : selectedPreviousRecord == i ? selectedColor : 'white'
+					}]}
+					onPress={() => setSelectedPreviousRecord(i)}>
+						<Text style={{fontSize : 16, color : selectedPreviousRecord == i ? 'white' : '#707070'}}>{previousRecord[i].title}</Text>
+						<Text style={{fontSize : 12, color : selectedPreviousRecord == i ? 'white' : '#aaaaaa'}}> 최근 기록 : {getDateYMD(new Date(previousRecord[i].occurenceDate),'.').substr(5)}</Text>
+					</TouchableOpacity>
+				)
+			}
+			return (
+				<View>
+					<View style={{borderRadius : 6, borderWidth : 1, borderColor : '#d5d5d5', overflow : 'hidden'}}>
+						{viewArr}
+					</View>
+					{
+						previousRecordLength >= previousRecord.length 
+						? null 
+						: <TouchableOpacity 
+						onPress={() => setPreviousRecordLength(previousRecordLength + 5)}
+						style={{marginTop : 20,}}>
+							<Text style={{alignSelf : 'center', fontSize : 18}}>더보기 <Icon style={{fontSize : 20}} name="chevron-down-outline"></Icon></Text>
+						</TouchableOpacity>
+					}	
+				</View>
+			)
+		}
+	}
 	function renderDateButton() {
 		return (
 			<View style={styles.dateButtonInnerContainer}>
@@ -104,7 +167,7 @@ export function ChallengingBehavior(props: ChallengingBehaviorProps) {
 	function renderImage() {
 		return(
 			<View style={{flexDirection : 'row', justifyContent : 'space-between', alignItems : 'center', marginVertical : GLOBAL_MARGIN_HORIZON, overflow:'hidden'}}>
-				<ScrollView style={{flex: 1}} horizontal showsHorizontalScrollIndicator={false}>
+				<ScrollView style={{flex: 1}} horizontal showsVerticalScrollIndicator={false}>
 					<TouchableOpacity style={styles.imageBox} onPress={() => imagePickMultiple()}>
 						<Icon name="camera-outline" style={{fontSize : 30}}></Icon>
 						<Text style={{fontSize : 14, color : 'black'}}>사진 0/10</Text>
@@ -131,6 +194,8 @@ export function ChallengingBehavior(props: ChallengingBehaviorProps) {
 		)
 	}
 	
+
+
     return (
         <View style={styles.container}>
 
@@ -157,21 +222,25 @@ export function ChallengingBehavior(props: ChallengingBehaviorProps) {
 
             {/* titleInputContainer */}
             <View style={styles.containerNoHeight}>
-                <Text style={styles.boldText}> 어떤 문제가 있었나요? </Text>
-                <TextInput
-                    style={styles.textInputStyle}
-                    placeholder="문제를 입력해주세요"
-                    placeholderTextColor="#d5d5d5"
-					onChangeText={(text) => setTitle(text)}
-					value={challengingBehavior.title}
-					></TextInput>
-                <Text style={{color: 'black', fontSize: 16}}>+ 이전 문제에서 추가</Text>
+
+                <Text style={{color: 'black', fontSize: 16, marginBottom : 10,}}>+ 카테고리 선택</Text>
+				{renderSelectCategory()}
+
+				{/* <Text style={[styles.boldText, {marginTop : GLOBAL_MARGIN_HORIZON}]}> 새로 추가하기 </Text> */}
+                {/* <TextInput
+				style={styles.textInputStyle}
+				placeholder="문제를 입력해주세요"
+				placeholderTextColor="#d5d5d5"
+				onChangeText={(text) => setTitle(text)}
+				value={challengingBehavior.title}
+				></TextInput> */}
+
             </View>
             <Divider height={4} color={'#ededed'}></Divider>
 
             {/* problemAreaButton */}
             <View style={styles.containerNoHeight}>
-                <Text style={styles.boldText}>어떤 문제가 있었나요?</Text>
+                <Text style={styles.boldText}>어떤 상황 이었나요?</Text>
                 <TextInput
 				style={{marginTop : 10, borderRadius : 10, borderColor : '#d5d5d5', borderWidth : 1, height : SIZE_WIDTH * 0.4, textAlignVertical : 'top', padding : 15}}
 				placeholder="누구와, 어디서, 어떤 상황에서 생긴 일인지 메모로 남겨주시면 큰 도움이 돼요!"
@@ -207,7 +276,7 @@ export function ChallengingBehavior(props: ChallengingBehaviorProps) {
 					},
 					refetchQueries : [GET_CHALLENGING_CARD]
 				})
-				.then(() => navigation.goBack())
+				.then(() => props.navigation.goBack())
 				.catch(e => 
 					{
 						console.log(e)
@@ -290,4 +359,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
+	previousRecordItem : {
+		flexDirection : 'row', justifyContent: 'space-between', paddingHorizontal : 15, paddingVertical : 12, borderColor : '#d5d5d5',
+	}
 });

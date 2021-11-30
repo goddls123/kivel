@@ -29,7 +29,6 @@ export function getDateYMDHms(date : Date){
 }
 
 export function getDateFromYMDHmsString(date : string){
-	console.log(date)
 	let newDate = new Date((date + '+09:00').replace(' ','T'))
 	return newDate
 }

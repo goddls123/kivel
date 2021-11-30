@@ -115,3 +115,9 @@ export type memoType = {
 export type tagType = {
 	tag : string
 }
+
+export type previousRecordType = {
+	id : number
+	title : string
+	occurenceDate : string
+}
