@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { stackInterface } from '../../types/navigationParam';
 import { Divider } from '../common/divider';
-import { getDateYMD, getDateYMDD, getDayKorean, getTime } from '../common/service/dateService';
+import { getDateYMD, getDateYMDD, getDayKorean, getTime, getTimeHms } from '../common/service/dateService';
 import DatePicker from 'react-native-date-picker'
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Button } from '../common/components/Button';
@@ -19,6 +19,7 @@ import { RouteProp } from '@react-navigation/native';
 // test
 import { scheduleTypeTest } from '../test/testData';
 import { parsedScheduleType } from '../../types/types';
+import { DateScroller } from '../childEnroll/components/DateScroller';
 
 
 interface addCalendarPageProps {
@@ -28,7 +29,6 @@ interface addCalendarPageProps {
 
 export function addCalendarPage(props : addCalendarPageProps) {
 
-	
 	const editData : any = props.route.params
 	const [insertSchedule , { data, loading, error }] = useMutation(INSERT_SCHEDULE,{
 		refetchQueries : [GET_SCHEDULE]
@@ -39,10 +39,10 @@ export function addCalendarPage(props : addCalendarPageProps) {
 	const [location, setLocation] = React.useState<string>(editData?.location || '');
 	
 	// date picker
-	let date = new Date(new Date().getDate())
-	const [startDate, setStartDate] = React.useState<Date>(editData ? new Date(editData.scheduleDate + 'T' + editData.startTime + '+09:00') : new Date(date));
-	const [endDate, setEndDate] = React.useState<Date>(editData ? new Date(editData.scheduleDate + 'T' + editData.endTime +'+09:00') : new Date(date.setHours(date.getHours() + 1)));
-
+	const [scheduleDate, setScheduleDate] = React.useState<Date>(editData? new Date(editData.scheduleDate) : new Date() )
+	const [startDate, setStartDate] = React.useState<Date>(editData ? new Date(editData.scheduleDate + 'T' + editData.startTime + '+09:00') : new Date(scheduleDate));
+	const [endDate, setEndDate] = React.useState<Date>(editData ? new Date(editData.scheduleDate + 'T' + editData.endTime +'+09:00') : new Date(scheduleDate.setHours(scheduleDate.getHours() + 1)));
+	const [dateModalVisible, setDateModalVisible] = React.useState<boolean>(false)
 
 
 	const timePicker1 = React.useRef(new Animated.Value(0)).current
@@ -53,8 +53,8 @@ export function addCalendarPage(props : addCalendarPageProps) {
 	
 	const handlePress=(value : any, expanded : boolean) => {
 		Animated.timing(value, {
-			toValue : expanded? 0 : 500,
-			duration : 500,
+			toValue : expanded? 0 : 300,
+			duration : 300,
 			easing : Easing.ease,
 			useNativeDriver : false,
 		}).start()
@@ -62,7 +62,7 @@ export function addCalendarPage(props : addCalendarPageProps) {
 
 
 	// dropdown picker
-	const daySelectorHeight = React.useRef(new Animated.Value(0)).current
+	const daySelectorHeight = React.useRef(new Animated.Value(SIZE_WIDTH * 0.15)).current
 	const weekSelector=() => {
 		Animated.timing(daySelectorHeight, {
 			toValue : value == 'W' || value == '2W' ? SIZE_WIDTH * 0.15 : 0,
@@ -101,9 +101,6 @@ export function addCalendarPage(props : addCalendarPageProps) {
 		}
 		setDaySelected(Arr)
 	}
-	React.useEffect(() => {
-		weekSelector()
-	},[])
 
 
 
@@ -152,9 +149,9 @@ export function addCalendarPage(props : addCalendarPageProps) {
 				variables : {
 					ScheduleInput : {
 						title : title,
-						scheduleDate : '2021-11-15',
-						startTime : '12:00:00',
-						endTime : '13:00:00',
+						scheduleDate : getDateYMD(scheduleDate,'-'),
+						startTime : getTimeHms(startDate),
+						endTime : getTimeHms(endDate),
 						repeatCycle : value,
 						repeatDay : daySelected,
 						period : '2022-02-22',
@@ -198,8 +195,11 @@ export function addCalendarPage(props : addCalendarPageProps) {
 
 					{/* 날짜 */}
 					<View style={styles.dateContainer}>
-						<TouchableOpacity style={styles.dateInnerContainer}>
-							<Text style={styles.dateText}>{getDateYMDD(new Date(),'.')}</Text>
+						<TouchableOpacity 
+						style={styles.dateInnerContainer}
+						onPress={() => setDateModalVisible(true)}
+						>
+							<Text style={styles.dateText}>{getDateYMDD(scheduleDate,'.')}</Text>
 							<Icon name="chevron-forward-outline" style={styles.arrowRight}></Icon>
 						</TouchableOpacity>
 					</View>
@@ -361,15 +361,15 @@ export function addCalendarPage(props : addCalendarPageProps) {
 						</View>
 						<View>
 						<DropDownPicker
-									style={{ height: 30, width: SIZE_WIDTH * 0.3 , borderColor : '#d5d5d5'}}
-									dropDownContainerStyle={{ height: 100, width: SIZE_WIDTH * 0.3 , borderColor : '#d5d5d5'}}
-									open={alarmOpen}
-									value={alarmValue}
-									items={alarmItems}
-									setOpen={setAlarmOpen}
-									setValue={setAlarmValue}
-									setItems={setAlarmItems}
-									listMode='SCROLLVIEW'
+							style={{ height: 30, width: SIZE_WIDTH * 0.3 , borderColor : '#d5d5d5'}}
+							dropDownContainerStyle={{ height: 100, width: SIZE_WIDTH * 0.3 , borderColor : '#d5d5d5'}}
+							open={alarmOpen}
+							value={alarmValue}
+							items={alarmItems}
+							setOpen={setAlarmOpen}
+							setValue={setAlarmValue}
+							setItems={setAlarmItems}
+							listMode='SCROLLVIEW'
 						/>
 						</View>
 					</View>
@@ -380,6 +380,13 @@ export function addCalendarPage(props : addCalendarPageProps) {
 					</View>
 				
 				</ScrollView>
+
+				<Modal isVisible={dateModalVisible}>
+                    <DateScroller
+                        setDate={setScheduleDate}
+                        date={scheduleDate}
+                        setModalVisible={setDateModalVisible}></DateScroller>
+                </Modal>
 			</SafeAreaView>
 		);
 }

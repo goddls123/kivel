@@ -72,7 +72,7 @@ export function ChallengingBehavior(props: ChallengingBehaviorProps) {
 		let selectedColor = 'rgba(255,138,92,0.8)'
 		
 		viewArr.push(
-			<View style={{backgroundColor : selectedPreviousRecord == 'X' ? selectedColor : 'white'}}>
+			<View key={'X'} style={{backgroundColor : selectedPreviousRecord == 'X' ? selectedColor : 'white'}}>
 				<TextInput
 				style={{paddingHorizontal : 15, borderBottomWidth : 1, borderColor : '#d5d5d5'}}
 				placeholder="+ 카테고리 추가하기 (직접입력) "
@@ -170,7 +170,7 @@ export function ChallengingBehavior(props: ChallengingBehaviorProps) {
 				<ScrollView style={{flex: 1}} horizontal showsVerticalScrollIndicator={false}>
 					<TouchableOpacity style={styles.imageBox} onPress={() => imagePickMultiple()}>
 						<Icon name="camera-outline" style={{fontSize : 30}}></Icon>
-						<Text style={{fontSize : 14, color : 'black'}}>사진 0/10</Text>
+						<Text style={{fontSize : 14, color : 'black'}}>사진 { images?.length ? 0 : images?.length}/10</Text>
 					</TouchableOpacity>
 				{
 					images?.map((image: ReactNativeFile, idx) => {
@@ -225,15 +225,6 @@ export function ChallengingBehavior(props: ChallengingBehaviorProps) {
 
                 <Text style={{color: 'black', fontSize: 16, marginBottom : 10,}}>+ 카테고리 선택</Text>
 				{renderSelectCategory()}
-
-				{/* <Text style={[styles.boldText, {marginTop : GLOBAL_MARGIN_HORIZON}]}> 새로 추가하기 </Text> */}
-                {/* <TextInput
-				style={styles.textInputStyle}
-				placeholder="문제를 입력해주세요"
-				placeholderTextColor="#d5d5d5"
-				onChangeText={(text) => setTitle(text)}
-				value={challengingBehavior.title}
-				></TextInput> */}
 
             </View>
             <Divider height={4} color={'#ededed'}></Divider>

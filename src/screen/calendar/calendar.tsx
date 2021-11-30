@@ -282,6 +282,7 @@ export default function calendar({navigation, route}: calendarProps) {
 									<ScheduleCard
 									key={id}
 									data={data}
+									navigation={navigation}
 									></ScheduleCard>
 								)
 							}

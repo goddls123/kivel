@@ -53,7 +53,6 @@ export function homeTab(props: homeTabProps) {
     const [childInfo, setChildInfo] = React.useState<childInfoHome>()
     React.useEffect(() => {
         if(childInfoError){
-            console.log(childInfoError)
             props.navigation.navigate('ServerProblem')
         }
         else if(childInfoData && childInfoData.userChild){
@@ -65,7 +64,7 @@ export function homeTab(props: homeTabProps) {
     //이번주 일정
     const {data : weeklyScheduleData , loading : weeklyScheduleLoading, error : weeklyScheduleError} = useQuery(WEEKLY_SCHEDULE)
     const [weekSchedule, setWeekSchedule] = React.useState<parsedScheduleType[]>(); //이번 주 일정
-
+    const [scheduleModalItem, setScheduleModalItem] = React.useState<parsedScheduleType>();
     React.useEffect(() => {
         if(weeklyScheduleData && weeklyScheduleData.userSchedules){     
             let data = scheduleDataParser(weeklyScheduleData.userSchedules[0].schedules).sort(function(a : any, b : any){
@@ -83,14 +82,38 @@ export function homeTab(props: homeTabProps) {
         }
     },[weeklyScheduleData,weeklyScheduleLoading,weeklyScheduleError])
     ////////////////////////////////////////////////////////
-    console.log(childInfoData, weekSchedule)
 
-
-    const [scheduleModal, setScheduleModal] = React.useState(true);
+    const [scheduleModal, setScheduleModal] = React.useState(false);
     const [profileImageModal, setProfileImageModal] = React.useState(false);
     
     const [homework, setHomeWork] = React.useState<any>(); //이번 주 과제
 
+
+    // backPressHandler
+    const [exitApp, setExitApp] = React.useState<boolean>(false)
+	const timerRef= React.useRef<any>(null)
+    const handleBackButtonClick = () => {
+        if(!props.navigation.isFocused()){
+            return false
+        } else {
+            if (exitApp == undefined || !exitApp) {
+                setExitApp(true)
+                ToastAndroid.show('한번 더 누르시면 종료됩니다.', ToastAndroid.SHORT)
+                timerRef.current = setTimeout(() => { setExitApp(false) },2000);
+            } else {
+                if(timerRef.current){
+                    clearTimeout(timerRef.current)
+                }
+                BackHandler.exitApp(); 
+            }
+            return true;
+        }
+    }
+    BackHandler.addEventListener("hardwareBackPress" , () => handleBackButtonClick());
+    // backPressHandler
+
+
+    // rendering function
 	function renderWeeklySchedule() {
         let viewArr : Element[] = []
         
@@ -98,7 +121,10 @@ export function homeTab(props: homeTabProps) {
             weekSchedule.map((item, id) => {
                 viewArr.push(
                     <View key={id} style={styles.scheduleCardContainer}>
-                        <TouchableOpacity onPress={() => {}}>
+                        <TouchableOpacity onPress={() => {
+                            setScheduleModalItem(item)
+                            setScheduleModal(true)
+                        }}>
                             <ScheduleCard
                             height={SIZE_HEIGHT * 0.285}
                             width={SIZE_WIDTH * 0.6}
@@ -151,31 +177,6 @@ export function homeTab(props: homeTabProps) {
 		}
 	}
 
-
-    // backPressHandler
-    const [exitApp, setExitApp] = React.useState<boolean>(false)
-	const timerRef= React.useRef<any>(null)
-    const handleBackButtonClick = () => {
-        if(!props.navigation.isFocused()){
-            return false
-        } else {
-            if (exitApp == undefined || !exitApp) {
-                setExitApp(true)
-                ToastAndroid.show('한번 더 누르시면 종료됩니다.', ToastAndroid.SHORT)
-                timerRef.current = setTimeout(() => { setExitApp(false) },2000);
-            } else {
-                if(timerRef.current){
-                    clearTimeout(timerRef.current)
-                }
-                BackHandler.exitApp(); 
-            }
-            return true;
-        }
-    }
-    BackHandler.addEventListener("hardwareBackPress" , () => handleBackButtonClick());
-    // backPressHandler
-
-
     return (
         <SafeAreaView style={styles.container}>
             {/* 헤더 */}
@@ -215,28 +216,37 @@ export function homeTab(props: homeTabProps) {
                     {/* navigation 버튼 */}
                     <View style={styles.navigationButtonContainer}>
                         <NavigationButton
-                            onPress={() => { props.navigation.navigate('AddRecord',{radioState : [false, false, true]}) }}
-                            style={{flex: 1}}
-                            imageStyle={styles.navigationButtonStyle}
-                            imageType="note"
-                            buttonName={'메모'}
+                        onPress={() => { props.navigation.navigate('AddRecord',{radioState : [false, false, true]}) }}
+                        style={{flex: 1}}
+                        imageStyle={styles.navigationButtonStyle}
+                        imageType="note"
+                        buttonName={'메모'}
                         />
 
                         <NavigationButton
-                            onPress={() => { props.navigation.navigate('AddRecord',{radioState : [false, true, false]}) }}
-                            style={{flex: 1}}
-                            imageStyle={styles.navigationButtonStyle}
-                            imageType="trouble"
-                            buttonName={'문제행동 등록'}
+                        onPress={() => { props.navigation.navigate('AddRecord',{radioState : [false, true, false]}) }}
+                        style={{flex: 1}}
+                        imageStyle={styles.navigationButtonStyle}
+                        imageType="trouble"
+                        buttonName={'문제행동 등록'}
                         />
 
                         <NavigationButton
-                            onPress={() => { props.navigation.navigate('AddHomeWork') }}
-                            style={{flex: 1}}
-                            imageStyle={styles.navigationButtonStyle}
-                            imageType="homeWork"
-                            buttonName={'과제 등록'}
+                        onPress={() => { props.navigation.navigate('AddHomeWork') }}
+                        style={{flex: 1}}
+                        imageStyle={styles.navigationButtonStyle}
+                        imageType="homeWork"
+                        buttonName={'과제 등록'}
                         />
+
+                        <NavigationButton
+                        onPress={() => { props.navigation.navigate('AddHomeWork') }}
+                        style={{flex: 1}}
+                        imageStyle={styles.navigationButtonStyle}
+                        imageType="homeWork"
+                        buttonName={'병원 찾기'}
+                        />
+
                     </View>
                 </View>
                 <Divider height={3} color="#ededed" />
@@ -272,12 +282,13 @@ export function homeTab(props: homeTabProps) {
                 </View>
             </ScrollView>
 
-            {/* <Modal
-				isVisible={scheduleModal}>
-					<ScheduleModalView
-					setModalView={setScheduleModal}
-					></ScheduleModalView>
-				</Modal> */}
+            <Modal
+            isVisible={scheduleModal}>
+                <ScheduleModalView
+                data={scheduleModalItem}
+                setModalView={setScheduleModal}
+                ></ScheduleModalView>
+            </Modal>
 
             <Modal
                 isVisible={profileImageModal}
