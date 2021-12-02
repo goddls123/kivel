@@ -22,7 +22,7 @@ interface chatSendedProps {
   id: string;
   image?: any;
   text: string;
-  // setModalData(value: string): any;
+  setModalData(value: string): any;
 }
 const userId = '12345';
 

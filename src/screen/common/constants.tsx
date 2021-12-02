@@ -1,7 +1,11 @@
 import {Dimensions} from 'react-native';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {getBottomSpace, isIphoneX} from 'react-native-iphone-x-helper';
 
 export const SIZE_WIDTH = Dimensions.get('window').width;
 export const SIZE_HEIGHT = Dimensions.get('window').height;
+export const STATUS_BAR_HEIGHT = getStatusBarHeight(true);
+
 export const GLOBAL_MARGIN_HORIZON = SIZE_WIDTH * 0.05;
 export const GLOBAL_MARGIN_VERTICAL = SIZE_HEIGHT * 0.05;
 export const ANDROID_KEYS = {
@@ -20,3 +24,11 @@ export const FONT_GREY = '#aaaaaa';
 export const FONT_LIGHT_GREY = '#dadada';
 export const FONT_DARK_GREY = '#707070';
 export const WHITE = '#ffffff';
+
+export const SAFE_AREA_HEIGHT = () => {
+  if (isIphoneX()) {
+    return SIZE_HEIGHT - STATUS_BAR_HEIGHT - getBottomSpace();
+  } else {
+    return SIZE_HEIGHT - STATUS_BAR_HEIGHT;
+  }
+};

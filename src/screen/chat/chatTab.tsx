@@ -1,6 +1,13 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
-import {View, StyleSheet, Text, FlatList, SafeAreaView} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  FlatList,
+  SafeAreaView,
+  TouchableOpacity,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {stackInterface} from '../../types/navigationParam';
 import {FONT_COLOR_BLACK, SIZE_HEIGHT} from '../common/constants';
@@ -15,12 +22,16 @@ export function chatTab(props: chatTabProps) {
   const gotoChatRoom = () => {
     props.navigation.navigate('ChatRoom');
   };
+  const goBack = () => {
+    props.navigation.pop();
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
-        <View style={styles.headerFront}>
+        <TouchableOpacity style={styles.headerFront} onPress={goBack}>
           <Icon style={styles.iconStyle} name="arrow-back"></Icon>
-        </View>
+        </TouchableOpacity>
         <View style={styles.headerCenter}>
           <Text
             style={{

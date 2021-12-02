@@ -19,10 +19,13 @@ import {
   GREY_BACKGOUND_COLOR,
   GREY_BORDER_COLOR,
   SIZE_WIDTH,
+  WHITE,
 } from '../common/constants';
 import {ChatBox} from './components/chatBox';
 import {ChatInput} from './components/chatInput';
 import {Item} from 'react-native-paper/lib/typescript/components/List/List';
+import ChatBottomMenu from './components/chatBottomMenu';
+import ChatSlideMenu from './components/chatSlideMenu';
 
 interface chatRoomProps {
   navigation: StackNavigationProp<stackInterface>;
@@ -54,10 +57,16 @@ const data = [
 ]; // 맨앞에 빈 값 추가
 
 export default function chatRoom(props: chatRoomProps) {
+  const [isMenu, onMenu] = React.useState<boolean>(false);
+  const [isSlideVisible, setSlideVisible] = React.useState<boolean>(false);
   const goBack = () => {
     props.navigation.pop();
   };
-
+  const toggleSlideVisible = () => {
+    console.log(isSlideVisible);
+    setSlideVisible(!isSlideVisible);
+  };
+  const onLongPress = (value: string) => {};
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -71,11 +80,15 @@ export default function chatRoom(props: chatRoomProps) {
           <Text style={{color: FONT_GREY}}>운동치료</Text>
         </View>
         <View style={styles.headerBack}>
-          <Icon
-            style={[styles.iconStyle, {marginLeft: 8}]}
-            name="search-outline"
-          />
-          <Icon style={[styles.iconStyle, {marginLeft: 8}]} name="menu" />
+          <TouchableOpacity>
+            <Icon
+              style={[styles.iconStyle, {marginLeft: 8}]}
+              name="search-outline"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => toggleSlideVisible()}>
+            <Icon style={[styles.iconStyle, {marginLeft: 8}]} name="menu" />
+          </TouchableOpacity>
         </View>
       </View>
       <FlatList
@@ -83,10 +96,24 @@ export default function chatRoom(props: chatRoomProps) {
         inverted
         keyExtractor={item => item.id}
         renderItem={({item}) => {
-          return <ChatBox id={item.id} text={item.text} image={item?.image} />;
+          return (
+            <ChatBox
+              id={item.id}
+              text={item.text}
+              image={item?.image}
+              setModalData={onLongPress}
+            />
+          );
         }}
       />
+
+      <ChatSlideMenu
+        toggleSlideVisible={toggleSlideVisible}
+        isVisible={isSlideVisible}
+      />
+
       <ChatInput />
+      {isMenu ? <ChatBottomMenu /> : null}
     </SafeAreaView>
   );
 }
@@ -102,6 +129,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 16,
     flexDirection: 'row',
+    backgroundColor: 'red',
+
     borderBottomWidth: 1,
     borderColor: GREY_BORDER_COLOR,
   },
