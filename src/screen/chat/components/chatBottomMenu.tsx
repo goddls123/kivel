@@ -11,7 +11,8 @@ export default function ChatBottomMenu() {
           <TouchableOpacity>
             <Image
               style={styles.menuIcon}
-              source={require('../../../assets/icons/ic_album.png')}></Image>
+              source={require('../../../assets/icons/ic_album.png')}
+            />
             <Text style={styles.menuText}>앨범</Text>
           </TouchableOpacity>
         </View>
@@ -19,7 +20,8 @@ export default function ChatBottomMenu() {
           <TouchableOpacity>
             <Image
               style={styles.menuIcon}
-              source={require('../../../assets/icons/ic_camera.png')}></Image>
+              source={require('../../../assets/icons/ic_camera.png')}
+            />
             <Text style={styles.menuText}>카메라</Text>
           </TouchableOpacity>
         </View>
@@ -27,7 +29,8 @@ export default function ChatBottomMenu() {
           <TouchableOpacity>
             <Image
               style={styles.menuIcon}
-              source={require('../../../assets/icons/ic_schedule.png')}></Image>
+              source={require('../../../assets/icons/ic_schedule.png')}
+            />
             <Text style={styles.menuText}>일정조율</Text>
           </TouchableOpacity>
         </View>
@@ -35,7 +38,8 @@ export default function ChatBottomMenu() {
           <TouchableOpacity>
             <Image
               style={styles.menuIcon}
-              source={require('../../../assets/icons/ic_call.png')}></Image>
+              source={require('../../../assets/icons/ic_call.png')}
+            />
             <Text style={styles.menuText}>통화하기</Text>
           </TouchableOpacity>
         </View>

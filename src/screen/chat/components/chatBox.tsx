@@ -1,15 +1,6 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  Image,
-  Text,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import {View, StyleSheet, Image, Text, TouchableOpacity} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
-import Modal from 'react-native-modal';
-import {assertScalarType} from 'graphql';
 import {
   CHAT_BACKGOUND_COLOR,
   FONT_COLOR_BLACK,
@@ -32,7 +23,7 @@ export function ChatBox(props: chatSendedProps) {
   };
 
   const getCloudStyle = () => {
-    return isMyMessage() ? styles.myMessage : styles.othersMessage;
+    return isMyMessage() ? styles.myCloud : styles.othersCloud;
   };
 
   return (
@@ -105,14 +96,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 22,
   },
-  myMessage: {
+  myCloud: {
     backgroundColor: MAIN_COLOR,
     borderTopStartRadius: 20,
     borderTopEndRadius: 10,
   },
-  othersMessage: {
+  othersCloud: {
     backgroundColor: CHAT_BACKGOUND_COLOR,
     borderTopStartRadius: 10,
-    borderTopEndRadius: 200,
+    borderTopEndRadius: 20,
   },
 });

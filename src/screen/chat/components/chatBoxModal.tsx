@@ -32,7 +32,7 @@ export default function ChatBoxModal(props: chatBoxModalProps) {
           <Text style={styles.text}>상단고정</Text>
           <Image source={require('../../../assets/icons/ic_pin_24.png')} />
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.menu, {marginBottom: 0}]}>
+        <TouchableOpacity style={[styles.menu, styles.menuLastChild]}>
           <Text style={styles.text}>삭제</Text>
           <Image source={require('../../../assets/icons/ic_delete_24.png')} />
         </TouchableOpacity>
@@ -56,6 +56,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  menuLastChild: {
+    marginBottom: 0,
   },
   text: {fontSize: 17, color: FONT_COLOR_BLACK, fontWeight: '600'},
   image: {
