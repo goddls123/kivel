@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, StyleSheet, Image, TextInput} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Image,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {
   GREY_BACKGOUND_COLOR,
@@ -7,13 +14,17 @@ import {
   SIZE_WIDTH,
 } from '../../common/constants';
 
-interface chatInputProps {}
+interface chatInputProps {
+  toggleMenu(): any;
+}
 
-export function ChatInput() {
+export function ChatInput(props: chatInputProps) {
   const [text, onChangeText] = React.useState('');
   return (
-    <View style={styles.container}>
-      <TouchableOpacity>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <TouchableOpacity onPress={() => props.toggleMenu()}>
         <Image source={require('../../../assets/icons/ic_more_share_24.png')} />
       </TouchableOpacity>
       <View style={styles.inputBox}>
@@ -31,7 +42,7 @@ export function ChatInput() {
           <Image source={require('../../../assets/icons/ic_send_off.png')} />
         )}
       </TouchableOpacity>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 const styles = StyleSheet.create({

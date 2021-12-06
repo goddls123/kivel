@@ -15,8 +15,8 @@ import {
 
 interface chatSlideMenuProps {
   myProfile;
-  otherProfile;
-  toggleSlideVisible(): any;
+  // otherProfile;
+  toggleVisible(): any;
   isVisible: boolean;
 }
 
@@ -27,7 +27,7 @@ export default function ChatSlideMenu(props: chatSlideMenuProps) {
       isVisible={props.isVisible}
       animationIn="slideInRight"
       animationOut="slideOutRight"
-      onBackdropPress={() => props.toggleSlideVisible()}>
+      onBackdropPress={() => props.toggleVisible()}>
       <View style={styles.containeer}>
         <View style={styles.header}>
           <Text style={styles.headerText}>채팅방 보관함</Text>

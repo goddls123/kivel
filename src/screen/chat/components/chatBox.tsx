@@ -22,7 +22,7 @@ interface chatSendedProps {
   id: string;
   image?: any;
   text: string;
-  setModalData(value: string): any;
+  setModalData(id: string, value: string): any;
 }
 const userId = '12345';
 
@@ -30,6 +30,11 @@ export function ChatBox(props: chatSendedProps) {
   const isMyMessage = () => {
     return props.id === userId;
   };
+
+  const getCloudStyle = () => {
+    return isMyMessage() ? styles.myMessage : styles.othersMessage;
+  };
+
   return (
     <View
       style={[
@@ -38,13 +43,7 @@ export function ChatBox(props: chatSendedProps) {
       ]}>
       {!isMyMessage() ? (
         <Image
-          style={{
-            alignSelf: 'flex-start',
-            // backgroundColor: 'red',
-            marginRight: 8,
-            width: SIZE_WIDTH * 0.09,
-            height: SIZE_WIDTH * 0.09,
-          }}
+          style={styles.profileImage}
           borderRadius={50}
           source={
             props.image
@@ -55,17 +54,10 @@ export function ChatBox(props: chatSendedProps) {
       ) : null}
       <TouchableOpacity
         activeOpacity={0.8}
-        style={[
-          styles.cloud,
-          {
-            backgroundColor: isMyMessage() ? MAIN_COLOR : CHAT_BACKGOUND_COLOR,
-            borderTopStartRadius: isMyMessage() ? 20 : 10,
-            borderTopEndRadius: isMyMessage() ? 10 : 20,
-          },
-        ]}
-        delayLongPress={5000}
+        style={[styles.cloud, getCloudStyle()]}
+        delayLongPress={500}
         onLongPress={() => {
-          props.setModalData(props.text);
+          props.setModalData(props.id, props.text);
         }}>
         {props.text ? (
           <Text
@@ -80,6 +72,7 @@ export function ChatBox(props: chatSendedProps) {
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   message: {
     flexDirection: 'row',
@@ -101,9 +94,25 @@ const styles = StyleSheet.create({
     borderBottomStartRadius: 20,
     borderBottomEndRadius: 20,
   },
+  profileImage: {
+    alignSelf: 'flex-start',
+    marginRight: 8,
+    width: SIZE_WIDTH * 0.09,
+    height: SIZE_WIDTH * 0.09,
+  },
   text: {
     paddingTop: 3,
     fontSize: 14,
     lineHeight: 22,
+  },
+  myMessage: {
+    backgroundColor: MAIN_COLOR,
+    borderTopStartRadius: 20,
+    borderTopEndRadius: 10,
+  },
+  othersMessage: {
+    backgroundColor: CHAT_BACKGOUND_COLOR,
+    borderTopStartRadius: 10,
+    borderTopEndRadius: 200,
   },
 });

@@ -1,12 +1,5 @@
-import React from 'react';
-import {
-  FlatList,
-  SafeAreaView,
-  StyleSheet,
-  TextInput,
-  View,
-  Image,
-} from 'react-native';
+import React, {useState} from 'react';
+import {FlatList, Keyboard, SafeAreaView, StyleSheet, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Text} from 'react-native-paper';
@@ -15,17 +8,13 @@ import {stackInterface} from '../../types/navigationParam';
 import {
   FONT_COLOR_BLACK,
   FONT_GREY,
-  FONT_LIGHT_GREY,
-  GREY_BACKGOUND_COLOR,
   GREY_BORDER_COLOR,
-  SIZE_WIDTH,
-  WHITE,
 } from '../common/constants';
 import {ChatBox} from './components/chatBox';
 import {ChatInput} from './components/chatInput';
-import {Item} from 'react-native-paper/lib/typescript/components/List/List';
 import ChatBottomMenu from './components/chatBottomMenu';
 import ChatSlideMenu from './components/chatSlideMenu';
+import ChatBoxModal from './components/chatBoxModal';
 
 interface chatRoomProps {
   navigation: StackNavigationProp<stackInterface>;
@@ -57,22 +46,32 @@ const data = [
 ]; // 맨앞에 빈 값 추가
 
 export default function chatRoom(props: chatRoomProps) {
-  const [isMenu, onMenu] = React.useState<boolean>(false);
+  const [isMenu, setMenu] = React.useState<boolean>(false);
   const [isSlideVisible, setSlideVisible] = React.useState<boolean>(false);
+  const [isBoxModal, setBoxModal] = React.useState<boolean>(false);
+
   const goBack = () => {
     props.navigation.pop();
   };
   const toggleSlideVisible = () => {
-    console.log(isSlideVisible);
     setSlideVisible(!isSlideVisible);
   };
-  const onLongPress = (value: string) => {};
+  const toggleBoxVisible = () => {
+    setBoxModal(false);
+  };
+  const onLongPress = (id: string, value: string) => {
+    setBoxModal(true);
+  };
+  const toggleMenu = () => {
+    Keyboard.dismiss();
+    setMenu(!isMenu);
+  };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <View style={styles.headerFont}>
           <TouchableOpacity onPress={goBack}>
-            <Icon style={styles.iconStyle} name="arrow-back"></Icon>
+            <Icon style={styles.iconStyle} name="arrow-back" />
           </TouchableOpacity>
         </View>
         <View style={styles.headerCenter}>
@@ -108,11 +107,12 @@ export default function chatRoom(props: chatRoomProps) {
       />
 
       <ChatSlideMenu
-        toggleSlideVisible={toggleSlideVisible}
+        toggleVisible={toggleSlideVisible}
         isVisible={isSlideVisible}
       />
+      <ChatBoxModal toggleVisible={toggleBoxVisible} isVisible={isBoxModal} />
 
-      <ChatInput />
+      <ChatInput toggleMenu={toggleMenu} />
       {isMenu ? <ChatBottomMenu /> : null}
     </SafeAreaView>
   );

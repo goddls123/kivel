@@ -45,7 +45,8 @@ export default function ChatBottomMenu() {
           <TouchableOpacity>
             <Image
               style={styles.menuIcon}
-              source={require('../../../assets/icons/ic_file.png')}></Image>
+              source={require('../../../assets/icons/ic_file.png')}
+            />
             <Text style={styles.menuText}>파일</Text>
           </TouchableOpacity>
         </View>
@@ -53,7 +54,8 @@ export default function ChatBottomMenu() {
           <TouchableOpacity>
             <Image
               style={styles.menuIcon}
-              source={require('../../../assets/icons/ic_voice.png')}></Image>
+              source={require('../../../assets/icons/ic_voice.png')}
+            />
             <Text style={styles.menuText}>음성메시지</Text>
           </TouchableOpacity>
         </View>
@@ -61,7 +63,8 @@ export default function ChatBottomMenu() {
           <TouchableOpacity>
             <Image
               style={styles.menuIcon}
-              source={require('../../../assets/icons/ic_project.png')}></Image>
+              source={require('../../../assets/icons/ic_project.png')}
+            />
             <Text style={styles.menuText}>과제</Text>
           </TouchableOpacity>
         </View>
@@ -69,7 +72,8 @@ export default function ChatBottomMenu() {
           <TouchableOpacity>
             <Image
               style={styles.menuIcon}
-              source={require('../../../assets/icons/ic_calendar.png')}></Image>
+              source={require('../../../assets/icons/ic_calendar.png')}
+            />
             <Text style={styles.menuText}>캘린더</Text>
           </TouchableOpacity>
         </View>
