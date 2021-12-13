@@ -44,7 +44,7 @@ export default function ChatBottomMenu() {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.lineContainer}>
+      {/* <View style={styles.lineContainer}>
         <View style={styles.menu}>
           <TouchableOpacity>
             <Image
@@ -81,7 +81,7 @@ export default function ChatBottomMenu() {
             <Text style={styles.menuText}>캘린더</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </View> */}
     </View>
   );
 }

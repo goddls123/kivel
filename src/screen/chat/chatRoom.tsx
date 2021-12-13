@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
 import {FlatList, Keyboard, SafeAreaView, StyleSheet, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -46,9 +46,23 @@ const data = [
 ]; // 맨앞에 빈 값 추가
 
 export default function chatRoom(props: chatRoomProps) {
-  const [isMenu, setMenu] = React.useState<boolean>(false);
+  const [isBottomMenuOn, setBottomMenu] = React.useState<boolean>(false);
   const [isSlideVisible, setSlideVisible] = React.useState<boolean>(false);
   const [isBoxModal, setBoxModal] = React.useState<boolean>(false);
+
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
+      setBottomMenu(false);
+    });
+    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+      console.log('key board hide');
+    });
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
 
   const goBack = () => {
     props.navigation.pop();
@@ -64,7 +78,8 @@ export default function chatRoom(props: chatRoomProps) {
   };
   const toggleMenu = () => {
     Keyboard.dismiss();
-    setMenu(!isMenu);
+
+    setBottomMenu(!isBottomMenuOn);
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -112,8 +127,8 @@ export default function chatRoom(props: chatRoomProps) {
       />
       <ChatBoxModal toggleVisible={toggleBoxVisible} isVisible={isBoxModal} />
 
-      <ChatInput toggleMenu={toggleMenu} />
-      {isMenu ? <ChatBottomMenu /> : null}
+      <ChatInput toggleMenu={toggleMenu} isMenuOn={isBottomMenuOn} />
+      {isBottomMenuOn ? <ChatBottomMenu /> : null}
     </SafeAreaView>
   );
 }

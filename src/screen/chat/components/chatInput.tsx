@@ -16,6 +16,7 @@ import {
 
 interface chatInputProps {
   toggleMenu(): any;
+  isMenuOn: boolean;
 }
 
 export function ChatInput(props: chatInputProps) {
@@ -25,7 +26,13 @@ export function ChatInput(props: chatInputProps) {
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <TouchableOpacity onPress={() => props.toggleMenu()}>
-        <Image source={require('../../../assets/icons/ic_more_share_24.png')} />
+        <Image
+          source={
+            props.isMenuOn
+              ? require('../../../assets/icons/ic_cloesed_24.png')
+              : require('../../../assets/icons/ic_more_share_24.png')
+          }
+        />
       </TouchableOpacity>
       <View style={styles.inputBox}>
         <TextInput

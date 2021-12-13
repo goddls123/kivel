@@ -27,6 +27,7 @@ export const WHITE = '#ffffff';
 
 export const SAFE_AREA_HEIGHT = () => {
   if (isIphoneX()) {
+    console.log('iphone x');
     return SIZE_HEIGHT - STATUS_BAR_HEIGHT - getBottomSpace();
   } else {
     return SIZE_HEIGHT - STATUS_BAR_HEIGHT;

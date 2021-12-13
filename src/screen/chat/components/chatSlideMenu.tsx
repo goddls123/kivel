@@ -28,7 +28,7 @@ export default function ChatSlideMenu(props: chatSlideMenuProps) {
       animationIn="slideInRight"
       animationOut="slideOutRight"
       onBackdropPress={() => props.toggleVisible()}>
-      <View style={styles.containeer}>
+      <View style={[styles.containeer, {height: SAFE_AREA_HEIGHT()}]}>
         <View style={styles.header}>
           <Text style={styles.headerText}>채팅방 보관함</Text>
         </View>
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
     borderTopLeftRadius: 30,
     width: SIZE_WIDTH * 0.817,
-    flex: 1,
+    // flex: 1,
   },
   header: {
     paddingTop: 48,
