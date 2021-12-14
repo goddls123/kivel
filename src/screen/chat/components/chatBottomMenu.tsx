@@ -3,7 +3,10 @@ import {View, Text, StyleSheet, Image} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {GREY_BACKGOUND_COLOR} from '../../common/constants';
 
-export default function ChatBottomMenu() {
+interface chatBottomMenu {
+  toggleScheduleVisible(): any;
+}
+export default function ChatBottomMenu(props: chatBottomMenu) {
   return (
     <View style={styles.container}>
       <View style={styles.lineContainer}>
@@ -26,7 +29,7 @@ export default function ChatBottomMenu() {
           </TouchableOpacity>
         </View>
         <View style={styles.menu}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => props.toggleScheduleVisible()}>
             <Image
               style={styles.menuIcon}
               source={require('../../../assets/icons/ic_schedule.png')}

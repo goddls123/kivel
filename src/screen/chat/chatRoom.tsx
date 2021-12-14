@@ -15,6 +15,7 @@ import {ChatInput} from './components/chatInput';
 import ChatBottomMenu from './components/chatBottomMenu';
 import ChatSlideMenu from './components/chatSlideMenu';
 import ChatBoxModal from './components/chatBoxModal';
+import ScheduleModal from './components/scheduleModal';
 
 interface chatRoomProps {
   navigation: StackNavigationProp<stackInterface>;
@@ -46,13 +47,15 @@ const data = [
 ]; // 맨앞에 빈 값 추가
 
 export default function chatRoom(props: chatRoomProps) {
-  const [isBottomMenuOn, setBottomMenu] = React.useState<boolean>(false);
+  const [isBottomMenuOn, setBottonMenuOn] = React.useState<boolean>(false);
   const [isSlideVisible, setSlideVisible] = React.useState<boolean>(false);
   const [isBoxModal, setBoxModal] = React.useState<boolean>(false);
+  const [isScheduleVisible, setScheduleVisible] =
+    React.useState<boolean>(false);
 
   useEffect(() => {
     const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
-      setBottomMenu(false);
+      setBottonMenuOn(false);
     });
     const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
       console.log('key board hide');
@@ -64,6 +67,10 @@ export default function chatRoom(props: chatRoomProps) {
     };
   }, []);
 
+  const toggleScheduleVisible = () => {
+    setBottonMenuOn(!isBottomMenuOn);
+    setScheduleVisible(!isScheduleVisible);
+  };
   const goBack = () => {
     props.navigation.pop();
   };
@@ -79,10 +86,10 @@ export default function chatRoom(props: chatRoomProps) {
   const toggleMenu = () => {
     Keyboard.dismiss();
 
-    setBottomMenu(!isBottomMenuOn);
+    setBottonMenuOn(!isBottomMenuOn);
   };
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.safeContainer}>
       <View style={styles.header}>
         <View style={styles.headerFont}>
           <TouchableOpacity onPress={goBack}>
@@ -126,16 +133,22 @@ export default function chatRoom(props: chatRoomProps) {
         isVisible={isSlideVisible}
       />
       <ChatBoxModal toggleVisible={toggleBoxVisible} isVisible={isBoxModal} />
-
+      <ScheduleModal
+        isVisible={isScheduleVisible}
+        toggleVisible={toggleScheduleVisible}
+      />
       <ChatInput toggleMenu={toggleMenu} isMenuOn={isBottomMenuOn} />
-      {isBottomMenuOn ? <ChatBottomMenu /> : null}
+      {isBottomMenuOn ? (
+        <ChatBottomMenu toggleScheduleVisible={toggleScheduleVisible} />
+      ) : null}
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  safeContainer: {
     flex: 1,
+    backgroundColor: 'green',
   },
   header: {
     display: 'flex',

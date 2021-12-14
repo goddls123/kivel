@@ -1,6 +1,13 @@
 import React from 'react';
 import Modal from 'react-native-modal';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {
+  Image,
+  Platform,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {
   FONT_COLOR_BLACK,
@@ -21,89 +28,98 @@ interface chatSlideMenuProps {
 }
 
 export default function ChatSlideMenu(props: chatSlideMenuProps) {
+  const getSafeHeight = () => {
+    return Platform.OS === 'ios' ? SAFE_AREA_HEIGHT() : SIZE_HEIGHT;
+  };
   return (
-    <Modal
-      style={styles.modal}
-      isVisible={props.isVisible}
-      animationIn="slideInRight"
-      animationOut="slideOutRight"
-      onBackdropPress={() => props.toggleVisible()}>
-      <View style={[styles.containeer, {height: SAFE_AREA_HEIGHT()}]}>
-        <View style={styles.header}>
-          <Text style={styles.headerText}>채팅방 보관함</Text>
-        </View>
-        <View style={styles.body}>
-          <View style={styles.menuList}>
-            <TouchableOpacity style={styles.menu}>
-              <View style={styles.contents}>
+    <View>
+      <Modal
+        style={[styles.modal]}
+        isVisible={props.isVisible}
+        animationIn="slideInRight"
+        animationOut="slideOutRight"
+        onBackdropPress={() => props.toggleVisible()}>
+        <View style={[styles.containeer]}>
+          <View style={styles.header}>
+            <Text style={styles.headerText}>채팅방 보관함</Text>
+          </View>
+          <View style={styles.body}>
+            <View style={styles.menuList}>
+              <TouchableOpacity style={styles.menu}>
+                <View style={styles.contents}>
+                  <Image
+                    style={styles.icon}
+                    source={require('../../../assets/icons/ic_gallery_16.png')}
+                  />
+                  <Text style={styles.title}>사진, 동영상</Text>
+                </View>
                 <Image
-                  style={styles.icon}
-                  source={require('../../../assets/icons/ic_gallery_16.png')}
+                  style={styles.arrow}
+                  source={require('../../../assets/icons/ic_arrow_gray_16.png')}
                 />
-                <Text style={styles.title}>사진, 동영상</Text>
+              </TouchableOpacity>
+              <View style={styles.imageList}></View>
+              <TouchableOpacity style={styles.menu}>
+                <View style={styles.contents}>
+                  <Image
+                    style={styles.icon}
+                    source={require('../../../assets/icons/ic_link_16.png')}
+                  />
+                  <Text style={styles.title}>링크</Text>
+                </View>
+                <Image
+                  style={styles.arrow}
+                  source={require('../../../assets/icons/ic_arrow_gray_16.png')}
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.chaterList}>
+              <View style={styles.subHeader}>
+                <Text style={styles.headerText}>채팅방 보관함</Text>
               </View>
+              <View style={styles.user}>
+                <Image
+                  style={styles.profile}
+                  source={require('../../../assets/icons/ic_profile_32.png')}
+                  resizeMode="contain"
+                />
+                <Text style={styles.name}>김키블</Text>
+                <Text style={styles.role}>나</Text>
+              </View>
+              <View style={styles.user}>
+                <Image
+                  style={styles.profile}
+                  source={require('../../../assets/icons/ic_profile_32.png')}
+                  resizeMode="contain"
+                />
+                <Text style={styles.name}></Text>
+                <Text style={styles.role}></Text>
+              </View>
+            </View>
+          </View>
+          <View style={styles.footer}>
+            <TouchableOpacity>
               <Image
-                style={styles.arrow}
-                source={require('../../../assets/icons/ic_arrow_gray_16.png')}
+                source={require('../../../assets/icons/ic_out_gray_24.png')}
               />
             </TouchableOpacity>
-            <View style={styles.imageList}></View>
-            <TouchableOpacity style={styles.menu}>
-              <View style={styles.contents}>
-                <Image
-                  style={styles.icon}
-                  source={require('../../../assets/icons/ic_link_16.png')}
-                />
-                <Text style={styles.title}>링크</Text>
-              </View>
+            <TouchableOpacity>
               <Image
-                style={styles.arrow}
-                source={require('../../../assets/icons/ic_arrow_gray_16.png')}
+                source={require('../../../assets/icons/ic_notification_gray_24.png')}
               />
             </TouchableOpacity>
           </View>
-          <View style={styles.chaterList}>
-            <View style={styles.subHeader}>
-              <Text style={styles.headerText}>채팅방 보관함</Text>
-            </View>
-            <View style={styles.user}>
-              <Image
-                style={styles.profile}
-                source={require('../../../assets/icons/ic_profile_32.png')}
-                resizeMode="contain"
-              />
-              <Text style={styles.name}>김키블</Text>
-              <Text style={styles.role}>나</Text>
-            </View>
-            <View style={styles.user}>
-              <Image
-                style={styles.profile}
-                source={require('../../../assets/icons/ic_profile_32.png')}
-                resizeMode="contain"
-              />
-              <Text style={styles.name}></Text>
-              <Text style={styles.role}></Text>
-            </View>
-          </View>
         </View>
-      </View>
-      <View style={styles.footer}>
-        <TouchableOpacity>
-          <Image source={require('../../../assets/icons/ic_out_gray_24.png')} />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Image
-            source={require('../../../assets/icons/ic_notification_gray_24.png')}
-          />
-        </TouchableOpacity>
-      </View>
-    </Modal>
+      </Modal>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   modal: {
     paddingBottom: 0,
+    // marginTop: 0,
+    backgroundColor: 'blue',
     marginLeft: SIZE_WIDTH * 0.183,
   },
   containeer: {
@@ -111,7 +127,8 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
     borderTopLeftRadius: 30,
     width: SIZE_WIDTH * 0.817,
-    // flex: 1,
+    flex: 1,
+    height: SIZE_HEIGHT,
   },
   header: {
     paddingTop: 48,
@@ -170,7 +187,6 @@ const styles = StyleSheet.create({
   role: {fontSize: 12, letterSpacing: 14, color: FONT_GREY, fontWeight: '500'},
   footer: {
     width: SIZE_WIDTH * 0.817,
-
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingVertical: 12,
