@@ -1,5 +1,12 @@
 import React, {useEffect} from 'react';
-import {FlatList, Keyboard, SafeAreaView, StyleSheet, View} from 'react-native';
+import {
+  FlatList,
+  Keyboard,
+  SafeAreaView,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Text} from 'react-native-paper';
@@ -16,6 +23,7 @@ import ChatBottomMenu from './components/chatBottomMenu';
 import ChatSlideMenu from './components/chatSlideMenu';
 import ChatBoxModal from './components/chatBoxModal';
 import ScheduleModal from './components/scheduleModal';
+import ChatBottonContainer from './components/chatBottonContainer';
 
 interface chatRoomProps {
   navigation: StackNavigationProp<stackInterface>;
@@ -55,7 +63,8 @@ export default function chatRoom(props: chatRoomProps) {
 
   useEffect(() => {
     const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
-      setBottonMenuOn(false);
+      // setBottonMenuOn(false);
+      console.log('keyboard show');
     });
     const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
       console.log('key board hide');
@@ -68,7 +77,7 @@ export default function chatRoom(props: chatRoomProps) {
   }, []);
 
   const toggleScheduleVisible = () => {
-    setBottonMenuOn(!isBottomMenuOn);
+    setBottonMenuOn(false);
     setScheduleVisible(!isScheduleVisible);
   };
   const goBack = () => {
@@ -83,7 +92,7 @@ export default function chatRoom(props: chatRoomProps) {
   const onLongPress = (id: string, value: string) => {
     setBoxModal(true);
   };
-  const toggleMenu = () => {
+  const toggleBottomMenu = () => {
     Keyboard.dismiss();
 
     setBottonMenuOn(!isBottomMenuOn);
@@ -137,10 +146,21 @@ export default function chatRoom(props: chatRoomProps) {
         isVisible={isScheduleVisible}
         toggleVisible={toggleScheduleVisible}
       />
-      <ChatInput toggleMenu={toggleMenu} isMenuOn={isBottomMenuOn} />
+      {/* <ChatInput
+        toggleMenu={toggleBottomMenu}
+        isMenuOn={isBottomMenuOn}
+        setBottonMenu={setBottonMenuOn}
+        toggleScheduleVisible={toggleScheduleVisible}
+      />
       {isBottomMenuOn ? (
         <ChatBottomMenu toggleScheduleVisible={toggleScheduleVisible} />
-      ) : null}
+      ) : null} */}
+      <ChatBottonContainer
+        toggleMenu={toggleBottomMenu}
+        isMenuOn={isBottomMenuOn}
+        toggleScheduleVisible={toggleScheduleVisible}
+        setBottonMenu={setBottonMenuOn}
+      />
     </SafeAreaView>
   );
 }

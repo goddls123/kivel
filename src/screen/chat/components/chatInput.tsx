@@ -17,14 +17,14 @@ import {
 interface chatInputProps {
   toggleMenu(): any;
   isMenuOn: boolean;
+  setBottonMenu(flag: boolean): any;
+  toggleScheduleVisible(): any;
 }
 
 export function ChatInput(props: chatInputProps) {
   const [text, onChangeText] = React.useState('');
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+    <View style={styles.container}>
       <TouchableOpacity onPress={() => props.toggleMenu()}>
         <Image
           source={
@@ -40,6 +40,10 @@ export function ChatInput(props: chatInputProps) {
           style={styles.input}
           onChangeText={onChangeText}
           placeholder="메시지 입력"
+          onFocus={() => {
+            console.log('focus');
+            props.setBottonMenu(false);
+          }}
         />
       </View>
       <TouchableOpacity>
@@ -49,7 +53,7 @@ export function ChatInput(props: chatInputProps) {
           <Image source={require('../../../assets/icons/ic_send_off.png')} />
         )}
       </TouchableOpacity>
-    </KeyboardAvoidingView>
+    </View>
   );
 }
 const styles = StyleSheet.create({
