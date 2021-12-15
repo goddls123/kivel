@@ -63,7 +63,6 @@ export default function chatRoom(props: chatRoomProps) {
 
   useEffect(() => {
     const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
-      // setBottonMenuOn(false);
       console.log('keyboard show');
     });
     const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
@@ -121,21 +120,28 @@ export default function chatRoom(props: chatRoomProps) {
           </TouchableOpacity>
         </View>
       </View>
-      <FlatList
-        data={data}
-        inverted
-        keyExtractor={item => item.id}
-        renderItem={({item}) => {
-          return (
-            <ChatBox
-              id={item.id}
-              text={item.text}
-              image={item?.image}
-              setModalData={onLongPress}
-            />
-          );
-        }}
-      />
+      <TouchableWithoutFeedback
+        onPress={() => {
+          console.log('press');
+          // setBottonMenuOn(false);
+        }}>
+        <FlatList
+          style={{backgroundColor: 'orange'}}
+          data={data}
+          inverted
+          keyExtractor={item => item.id}
+          renderItem={({item}) => {
+            return (
+              <ChatBox
+                id={item.id}
+                text={item.text}
+                image={item?.image}
+                setModalData={onLongPress}
+              />
+            );
+          }}
+        />
+      </TouchableWithoutFeedback>
       <ChatBottonContainer
         // toggleMenu={toggleBottomMenu}
         isMenuOn={isBottomMenuOn}
@@ -158,7 +164,7 @@ export default function chatRoom(props: chatRoomProps) {
 const styles = StyleSheet.create({
   safeContainer: {
     flex: 1,
-    backgroundColor: 'green',
+    // backgroundColor: 'green',
   },
   header: {
     display: 'flex',

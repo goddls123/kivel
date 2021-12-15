@@ -33,15 +33,7 @@ export function chatTab(props: chatTabProps) {
           <Icon style={styles.iconStyle} name="arrow-back"></Icon>
         </TouchableOpacity>
         <View style={styles.headerCenter}>
-          <Text
-            style={{
-              fontSize: 20,
-              color: FONT_COLOR_BLACK,
-              fontStyle: 'normal',
-              fontWeight: '500',
-            }}>
-            치료사와 채팅
-          </Text>
+          <Text style={styles.headerText}>치료사와 채팅</Text>
         </View>
         <View style={styles.headerBack}>
           <Icon
@@ -90,6 +82,12 @@ const styles = StyleSheet.create({
   headerBack: {
     display: 'flex',
     flexDirection: 'row',
+  },
+  headerText: {
+    fontSize: 20,
+    color: FONT_COLOR_BLACK,
+    fontStyle: 'normal',
+    fontWeight: '500',
   },
   iconStyle: {
     fontSize: 24,
