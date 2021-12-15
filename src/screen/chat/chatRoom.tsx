@@ -136,7 +136,12 @@ export default function chatRoom(props: chatRoomProps) {
           );
         }}
       />
-
+      <ChatBottonContainer
+        // toggleMenu={toggleBottomMenu}
+        isMenuOn={isBottomMenuOn}
+        toggleScheduleVisible={toggleScheduleVisible}
+        setBottonMenu={setBottonMenuOn}
+      />
       <ChatSlideMenu
         toggleVisible={toggleSlideVisible}
         isVisible={isSlideVisible}
@@ -145,21 +150,6 @@ export default function chatRoom(props: chatRoomProps) {
       <ScheduleModal
         isVisible={isScheduleVisible}
         toggleVisible={toggleScheduleVisible}
-      />
-      {/* <ChatInput
-        toggleMenu={toggleBottomMenu}
-        isMenuOn={isBottomMenuOn}
-        setBottonMenu={setBottonMenuOn}
-        toggleScheduleVisible={toggleScheduleVisible}
-      />
-      {isBottomMenuOn ? (
-        <ChatBottomMenu toggleScheduleVisible={toggleScheduleVisible} />
-      ) : null} */}
-      <ChatBottonContainer
-        toggleMenu={toggleBottomMenu}
-        isMenuOn={isBottomMenuOn}
-        toggleScheduleVisible={toggleScheduleVisible}
-        setBottonMenu={setBottonMenuOn}
       />
     </SafeAreaView>
   );

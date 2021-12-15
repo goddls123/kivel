@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  Image,
-  TextInput,
-  KeyboardAvoidingView,
-  Platform,
-} from 'react-native';
+import {View, StyleSheet, Image, TextInput, Keyboard} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {
   GREY_BACKGOUND_COLOR,
@@ -15,7 +8,7 @@ import {
 } from '../../common/constants';
 
 interface chatInputProps {
-  toggleMenu(): any;
+  // toggleMenu(): any;
   isMenuOn: boolean;
   setBottonMenu(flag: boolean): any;
   toggleScheduleVisible(): any;
@@ -23,9 +16,20 @@ interface chatInputProps {
 
 export function ChatInput(props: chatInputProps) {
   const [text, onChangeText] = React.useState('');
+  const inputRef = React.useRef();
+
+  const toggleMenu = () => {
+    if (props.isMenuOn) {
+      inputRef.current?.focus();
+      props.setBottonMenu(false);
+    } else {
+      Keyboard.dismiss();
+      props.setBottonMenu(true);
+    }
+  };
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => props.toggleMenu()}>
+      <TouchableOpacity onPress={() => toggleMenu()}>
         <Image
           source={
             props.isMenuOn
@@ -37,12 +41,16 @@ export function ChatInput(props: chatInputProps) {
       <View style={styles.inputBox}>
         <TextInput
           value={text}
+          ref={inputRef}
           style={styles.input}
           onChangeText={onChangeText}
           placeholder="메시지 입력"
           onFocus={() => {
             console.log('focus');
             props.setBottonMenu(false);
+          }}
+          onBlur={() => {
+            console.log('focus out');
           }}
         />
       </View>

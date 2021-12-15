@@ -1,10 +1,10 @@
 import React from 'react';
-import {KeyboardAvoidingView, Platform, View} from 'react-native';
+import {KeyboardAvoidingView, Platform} from 'react-native';
 import ChatBottomMenu from './chatBottomMenu';
 import {ChatInput} from './chatInput';
 
 interface chatBootomContainer {
-  toggleMenu(): any;
+  //   toggleMenu(): any;
   isMenuOn: boolean;
   setBottonMenu(flag: boolean): void;
   toggleScheduleVisible(): void;
@@ -12,9 +12,10 @@ interface chatBootomContainer {
 export default function ChatBottonContainer(props: chatBootomContainer) {
   return (
     <KeyboardAvoidingView
+      focusable
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <ChatInput
-        toggleMenu={props.toggleMenu}
+        // toggleMenu={props.toggleMenu}
         isMenuOn={props.isMenuOn}
         setBottonMenu={props.setBottonMenu}
         toggleScheduleVisible={props.toggleScheduleVisible}

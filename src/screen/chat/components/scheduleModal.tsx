@@ -37,6 +37,7 @@ export default function ScheduleModal(props: ScheduleModal) {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <View style={styles.container}>
           <View style={styles.header}>
+            <View style={styles.whiteBox}></View>
             <Text style={styles.category}>일정조율</Text>
             <TouchableOpacity onPress={() => props.toggleVisible()}>
               <Image
@@ -89,7 +90,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   container: {
-    // flex: 1,
     width: SIZE_WIDTH,
     backgroundColor: WHITE,
     paddingHorizontal: 16,
@@ -99,10 +99,14 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     height: SIZE_HEIGHT * 0.4,
   },
+  whiteBox: {
+    width: 22,
+    height: 22,
+  },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
   },
   category: {
     fontSize: 16,
